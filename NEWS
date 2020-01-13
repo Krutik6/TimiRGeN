@@ -1,0 +1,75 @@
+smiRk v0.2.6 (Date: 21/10/2019)
+===============================
+Changes :
+
+* Removed examples for dloadmiRDB and dloadTargetScans as they take up too much time.
+* Added BiocManager to NAMESPACE and DESCRIPTION as a package to import.
+
+smiRk v0.2.6 (Date: 23/10/2019)
+===============================
+Changes :
+
+* Added more biocViews e.g. Networks, Visualisation, miRNA.
+* Tidied up code in man and R files.
+* 5 Notes in Bc and 1 Note in CMD check.
+
+smiRk v0.3.0 (Date: 17/12/2019)
+===============================
+Changes :
+
+* Editted get_mRNA functions to make the download process faster. UseEnsembl rather than useMart.
+* Editted Quickdot and Quickbar to make them look nicer and warnings have been fixed.
+* CytoMake works now.
+* MatrixFilter can now filter by average correlation.
+* Enames now has ID_Column as a parameter rather than entezColumn.
+
+smiRk v0.3.1 (Date: 19/12/2019)
+===============================
+Changes :
+
+* Fixed many notes in the CMD check.
+* Now using dev.new() instead of x11().
+
+smiRk v0.3.2 (Date: 20/12/2019)
+===============================
+Changes :
+
+* getIDs_miR_mousetohuman is not <= 50 lines.
+* New internal function non_unique was created and test made.
+
+smiRk v0.3.3 (Date: 30/12/2019)
+===============================
+Changes :
+
+* Updated vignette.
+* Fixed error in test_getIDs_miR_mousetohuman.
+
+smiRk v0.3.4 (Date: 31/12/2019)
+===============================
+Changes :
+
+* Made changes to tests so they run quicker.
+* Made changes to some examples so they run quicker.
+
+smiRk v0.3.5 (Date: 04/01/2020)
+===============================
+Changes :
+
+* Reduced tests time greatly.
+* Updated vignette.
+
+smiRk v0.3.6 (Date: 09/01/2020)
+===============================
+Changes :
+
+* Created a HTML version of vignette.
+* Added references to the vignette.
+
+smiRk v0.9.9 (Date: 13/01/2020)
+===============================
+Changes :
+
+* Finnished Vignette and all checks.
+* CMD + unit tests = 0E, 0W, 1N.
+* Biocondutor checks = 0E, 0W, 3N.
+* Will link this version to github repo and submit to bioconductor.

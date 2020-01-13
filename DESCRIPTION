@@ -1,0 +1,45 @@
+Package: smiRk
+Type: Package
+Title: microRNA-mRNA integration, analysis and network generation tool
+Version: 0.99.0
+Author@R: person("Krutik", "Patel", role = c("aut", "cre"), email = "K.Patel5@newcastle.ac.uk")
+Author: Krutik Patel [aut, cre]
+Maintainer: Krutik Patel <K.Patel5@newcastle.ac.uk>
+Description: Functionally analyses and integrated time course mRNA and miR data based on empirical evidences. Can be used to reduce the volume of data without loosing grasp of the biology.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Imports:
+      BiocManager,
+      dplyr,
+      gtools,
+      rWikiPathways,
+      tidyr,
+      stringr,
+      tidyverse,
+      clusterProfiler,
+      biomaRt,
+      readxl,
+      Mfuzz,
+      igraph,
+      grDevices,
+      graphics,
+      stats,
+      RCy3,
+      ggplot2,
+      org.Hs.eg.db,
+      org.Mm.eg.db
+Suggests: 
+      knitr,
+      testthat,
+      kableExtra
+VignetteBuilder: knitr
+biocViews: Software,
+           Network,
+           TimeCourse,
+           miRNA,
+           Clustering,
+           Pathways,
+           Visualization
+Depends: R (>= 3.6.0)

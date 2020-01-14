@@ -171,6 +171,11 @@ from differential expression analysis. Note there should only be one '.'
 in each column name and no '-' characters. Having more than one '.' any '-' 
 characters will confuse some functions.
 
+Note. There should be no NAs in your miR and mRNA data files. Some
+differential expression tools lead to some NAs appearing. If this is the case
+please change all NA to 1, or another high number so they are removed during
+downstream filtration stages of the pipeline.
+
 ## Retreive Gene IDs
 
 EntrezIDs and Ensembl gene names should be retrieved from the gene names (row 
@@ -480,7 +485,7 @@ getPathwayInfo("WP200")
 
 ## Take Selected Pathways Forward
 
-The `Express` function will retreive one specific of the differential
+The `Express` function will retrieve one specific of the differential
 expression result type, along with either entrez gene IDs or ensembl gene IDs
 from a `getIDs` function. It is recommend to use Log2FC or normalised 
 expression values here as these values will be averaged further downstream of
@@ -813,7 +818,7 @@ path_gene = path_gene, path_name = path_name, ID = 'ENTREZID',
 universe = path_gene$gene) -> sigwiki
 ```
 
-Note that if there are not enough pathway enrichments found the `"s"`
+Note that if there are not enough pathway enrichment found the `"s"`
 enrichment method will fail. This occurs often with microRNA data since not
 many pathways have microRNAs within them. If this occurs, stick to `"c"` method
 for miR-mRNA GSEA analysis.
@@ -860,7 +865,7 @@ gsub(rownames(miR), pattern = "\\.", replacement =  "-") -> rownames(miR)
 
 ##Retreive Human gene IDs
 
-Next we retreive ensembl or entrezIDs for our human data. smiRk can only work
+Next we retrieve ensembl or entrezIDs for our human data. smiRk can only work
 with human and mouse data atm. 
 
 ```{r gethuman, warning=FALSE, message=FALSE}

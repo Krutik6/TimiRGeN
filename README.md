@@ -17,4 +17,4 @@ handful, which would be more suitable for further computational or experimental
 work. One unique output is the ability to generate gene regulatory
 networks from the output of smiRk and Pathvisio. 
 
-Please read the vignette for more information. 
+Please read the vignette for more information.

@@ -20,11 +20,12 @@ getIDs_mRNA_mousetohuman <- function(mRNA, mirror = 'useast'){
         columns are results from differential
         expression analysis.')
         mRNA$musGenes <- rownames(mRNA)
-        human = useEnsembl(biomart = "ensembl",
-        dataset = "hsapiens_gene_ensembl", mirror = 'useast')
-        mouse = useEnsembl(biomart = "ensembl",
-        dataset = "mmusculus_gene_ensembl", mirror = 'useast')
-        genesV2 = getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol",
+        human <- biomaRt::useEnsembl("ensembl", dataset="hsapiens_gene_ensembl",
+        GRCh=37, host = paste0(mirror, ".ensembl.org"))
+        mouse <- biomaRt::useEnsembl("ensembl",
+        dataset="mmusculus_gene_ensembl",
+        GRCh=37, host = paste0(mirror, ".ensembl.org"))
+        genesV2 <- getLDS(attributes = c("mgi_symbol"), filters = "mgi_symbol",
         values = mRNA$musGenes ,
         mart = mouse, attributesL = c("hgnc_symbol",
         "entrezgene_id",
@@ -39,11 +40,11 @@ getIDs_mRNA_mousetohuman <- function(mRNA, mirror = 'useast'){
         by.y = "MGI.symbol") -> Human_merged
         rownames(Human_merged) <- Human_merged$musGenes
         as.data.frame(cbind(GENENAME = rownames(Human_merged),
-        ID = Human_merged$NCBI.gene.ID)) -> mRNA_entrez
+        ID = Human_merged$EntrezGene.ID)) -> mRNA_entrez
         as.data.frame(cbind(GENENAME =rownames(Human_merged),
         ID = Human_merged$Gene.stable.ID)) -> mRNA_ensembl
         Human_merged$musGenes <- Human_merged$HGNC.symbol <-
-        Human_merged$NCBI.gene.ID <- Human_merged$Gene.stable.ID <- NULL
+        Human_merged$EntrezGene.ID <- Human_merged$Gene.stable.ID <- NULL
         mRNA_nested <- list(mRNA_human_renamed = Human_merged,
         mRNA_entrez = mRNA_entrez,
         mRNA_ensembl = mRNA_ensembl)

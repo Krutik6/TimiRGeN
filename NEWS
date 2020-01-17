@@ -65,7 +65,7 @@ Changes :
 * Created a HTML version of vignette.
 * Added references to the vignette.
 
-smiRk v0.9.9 (Date: 13/01/2020)
+smiRk v0.99 (Date: 13/01/2020)
 ===============================
 Changes :
 
@@ -73,3 +73,23 @@ Changes :
 * CMD + unit tests = 0E, 0W, 1N.
 * Biocondutor checks = 0E, 0W, 3N.
 * Will link this version to github repo and submit to bioconductor.
+
+smiRk v0.99.01 (Date: 15/01/2020)
+===============================
+Changes :
+
+* Sorted out unit tests so that test_check("smiRk") will start from CMD check
+
+smiRk v0.99.02 (Date: 16/01/2020)
+===============================
+Changes :
+
+* Using a faster method to Get ensembl and entrez IDs from the data.
+* CURL error sorted.
+
+smiRk v0.99.03 (Date: 17/01/2020)
+===============================
+Changes :
+
+* Fixed windows build error by removing xlsx file earlier in dloadmiRTarBase function.
+* Removed excess files within functions: dloadmiRTarBase, dloadTargetscans, downloadGMT.

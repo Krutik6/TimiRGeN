@@ -14,14 +14,14 @@
 #' library(biomaRt)
 #' hs_mRNA -> mRNA
 #' mRNA[1:200,] -> mRNA
-#' getIDs_mRNA_human(mRNA, mirror = 'useast')
-getIDs_mRNA_human <- function(mRNA, mirror = 'useast'){
+#' getIDs_mRNA_human(mRNA, mirror = "useast")
+getIDs_mRNA_human <- function(mRNA, mirror = "useast"){
         if(missing(mRNA)) stop('Add microRNA dataframe. Rownames are genes
         and columns are results from differential
         expression analysis.')
         rownames(mRNA) -> mRNA$Genes
-        human = useEnsembl(biomart = "ensembl",
-        dataset = "hsapiens_gene_ensembl", mirror = mirror)
+        human <- biomaRt::useEnsembl("ensembl", dataset="hsapiens_gene_ensembl",
+        GRCh=37, host = paste0(mirror, ".ensembl.org"))
         glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
         "entrezgene_id"),
         filters = "external_gene_name", values = mRNA$Genes,

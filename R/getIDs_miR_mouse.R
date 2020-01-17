@@ -14,8 +14,7 @@
 #' getIDs_miR_mouse(miR)
 getIDs_miR_mouse <- function(miR){
 if (missing(miR)) stop('Add microRNA dataframe. Rownames are genes and
-columns are results from differential
-expression analysis.')
+columns are results from differential expression analysis.')
 miR$Genes <- miR$names <- rownames(miR)
 sub(x = miR$Genes, pattern = "-3p", replacement = "") -> miR$Genes
 sub(x = miR$Genes, pattern = "-5p", replacement = "") -> miR$Genes
@@ -30,14 +29,10 @@ merge(x = miR_merged, y = miR_entrez, by.x = 'Genes', by.y = 'GENENAME',
 all = TRUE) -> miR_merged
 miR_merged[!duplicated(miR_merged$names),] -> miR_merged
 miR_merged[order(miR_merged$names),] -> miR_merged
-ave(as.character(miR_merged$ENTREZID), miR_merged$ENTREZID,
-FUN = function(x) if (length(x)>1)
-paste0(x[1], '.', seq_along(x), '')
-else x) -> miR_merged$ENTREZID_adjusted
-ave(as.character(miR_merged$ENSEMBL), miR_merged$ENSEMBL,
-FUN = function(x) if (length(x)>1)
-paste0(x[1], '.', seq_along(x), '')
-else x) -> miR_merged$ENSEMBL_adjusted
+non_unique(Col = miR_merged$ENTREZID, sep = ".",
+suffix = "") -> miR_merged$ENTREZID_adjusted
+non_unique(Col = miR_merged$ENSEMBL, sep = ".",
+suffix = "") -> miR_merged$ENSEMBL_adjusted
 miR_entrez <- as.data.frame(cbind(GENENAME = miR_merged$names,
 ID = miR_merged$ENTREZID))
 miR_adjusted_entrez <- as.data.frame(cbind(GENENAME = miR_merged$names,

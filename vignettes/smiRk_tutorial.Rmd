@@ -956,13 +956,6 @@ Quickbar(X = sigwiki[[1]], Y = sigwiki[1])
 knitr::include_graphics("plots/quickbar.jpeg")
 ```
 
-
-```{r rmplots, echo=FALSE, message=FALSE, warning=FALSE}
-file.remove("mus.gmt")
-file.remove("miRTarBase.csv")
-file.remove("Predicted_Targets_Context_Scores.default_predictions.txt")
-```
-
 \newpage
 
 #References

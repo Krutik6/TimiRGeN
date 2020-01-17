@@ -25,5 +25,5 @@ for human mRNAs.
 library(biomaRt)
 hs_mRNA -> mRNA
 mRNA[1:200,] -> mRNA
-getIDs_mRNA_human(mRNA, mirror = 'useast')
+getIDs_mRNA_human(mRNA, mirror = "useast")
 }

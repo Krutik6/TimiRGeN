@@ -20,5 +20,6 @@ TargetScans <- read.table(
 'Predicted_Targets_Context_Scores.default_predictions.txt',
 fill = TRUE, header = TRUE)
 TargetScans[,seq_len(5)] -> TargetScans
+file.remove("Predicted_Targets_Context_Scores.default_predictions.txt")
 return(TargetScans)
 }

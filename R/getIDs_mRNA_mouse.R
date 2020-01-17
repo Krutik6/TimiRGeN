@@ -18,8 +18,9 @@ getIDs_mRNA_mouse <- function(mRNA, mirror = 'useast'){
         if (missing(mRNA)) stop('Add microRNA dataframe. Rownames are genes and
         columns are results from differential
         expression analysis.')
-        mouse = useEnsembl(biomart = "ensembl",
-        dataset = "mmusculus_gene_ensembl", mirror = mirror)
+        mouse <- biomaRt::useEnsembl("ensembl",
+        dataset="mmusculus_gene_ensembl",
+        GRCh=37, host = paste0(mirror, ".ensembl.org"))
         glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
         "entrezgene_id"),
         filters = "external_gene_name", values = rownames(mRNA),

@@ -1,10 +1,8 @@
 Package: smiRk
 Type: Package
 Title: microRNA-mRNA integration, analysis and network generation tool
-Version: 0.99.0
-Author@R: person("Krutik", "Patel", role = c("aut", "cre"), email = "K.Patel5@newcastle.ac.uk")
-Author: Krutik Patel [aut, cre]
-Maintainer: Krutik Patel <K.Patel5@newcastle.ac.uk>
+Version: 0.99.03
+Authors@R: person(given = "Krutik", family = "Patel", role = c("aut", "cre"), email = "K.Patel5@newcastle.ac.uk")
 Description: Functionally analyses and integrated time course mRNA and miR data based on empirical evidences. Can be used to reduce the volume of data without loosing grasp of the biology.
 License: GPL-3
 Encoding: UTF-8
@@ -42,4 +40,3 @@ biocViews: Software,
            Clustering,
            Pathways,
            Visualization
-Depends: R (>= 3.6.0)

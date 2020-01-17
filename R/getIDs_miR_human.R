@@ -33,14 +33,10 @@ merge(x = miR_merged, y = miR_entrez, by.x = 'MicroRNA', by.y = 'GENENAME',
 all = TRUE) -> miR_merged
 miR_merged[!duplicated(miR_merged$Genes),] -> miR_merged
 miR_merged[order(miR_merged$Genes),] -> miR_merged
-ave(as.character(miR_merged$ENTREZID), miR_merged$ENTREZID,
-FUN = function(x) if (length(x)>1)
-paste0(x[1], '.', seq_along(x), '')
-else x) -> miR_merged$ENTREZID_adjusted
-ave(as.character(miR_merged$ENSEMBL), miR_merged$ENSEMBL,
-FUN = function(x) if (length(x)>1)
-paste0(x[1], '.', seq_along(x), '')
-else x) -> miR_merged$ENSEMBL_adjusted
+non_unique(Col = miR_merged$ENTREZID, sep = ".",
+suffix = "") -> miR_merged$ENTREZID_adjusted
+non_unique(Col = miR_merged$ENSEMBL, sep = ".",
+suffix = "") -> miR_merged$ENSEMBL_adjusted
 miR_merged[! duplicated(miR_merged$Genes),] -> miR_merged
 miR_merged <- miR_merged[order(miR_merged$Genes),]
 rownames(miR_merged) <- miR_merged$Genes

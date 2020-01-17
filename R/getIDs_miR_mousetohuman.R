@@ -24,12 +24,12 @@ columns are results from differential expression analysis.')
 cbind(miR, Gene = rownames(miR), name = rownames(miR)) -> miR
 gsub(x = miR$Gene, pattern = "-3p", replacement = "") -> miR$Gene
 gsub(x = miR$Gene, pattern = "-5p", replacement = "") -> miR$Gene
-human = useEnsembl(biomart = "ensembl",
-dataset = "hsapiens_gene_ensembl", mirror = mirror)
-mouse = useEnsembl(biomart = "ensembl",
-dataset = "mmusculus_gene_ensembl", mirror = mirror)
-bmt = getLDS(attributes = c("mirbase_id"), filters = "mirbase_id",
-values = miR$Gene, mart = mouse, attributesL = c("mirbase_id"), martL = human)
+human <- biomaRt::useEnsembl("ensembl", dataset="hsapiens_gene_ensembl",
+GRCh=37, host = paste0(mirror, ".ensembl.org"))
+mouse <- biomaRt::useEnsembl("ensembl", dataset="mmusculus_gene_ensembl",
+GRCh=37, host = paste0(mirror, ".ensembl.org"))
+bmt <- getLDS(attributes = c("mirbase_id"), filters = "mirbase_id",
+values = miR$Gene,mart = mouse,attributesL = c("mirbase_id"), martL = human)
 colnames(bmt) <- c("Mm_n", "Hs_n")
 gsub(bmt$Mm_n, pattern = "mir", replacement = "miR") -> bmt$Mm_n
 gsub(bmt$Hs_n, pattern = "mir", replacement = "miR") -> bmt$Hs_n

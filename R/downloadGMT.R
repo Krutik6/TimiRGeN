@@ -18,12 +18,14 @@ download.file(paste("http://data.wikipathways.org/20190610/gmt/",
 "wikipathways-20190610-gmt-Mus_musculus.gmt", sep = ""),
 "mus.gmt")
 read.gmt("mus.gmt") -> gmt
+file.remove("mus.gmt")
 } else if (speciesInitials == "Hs") {
 download.file(paste("http://data.wikipathways.org/20190610/gmt/",
 "wikipathways-20190610-gmt-Homo_sapiens.gmt", sep = ""),
 "hom.gmt")
 ont <- wpid <- gene <- name <- NULL
 read.gmt("hom.gmt") -> gmt
+file.remove("hom.gmt")
 }
 pathways <- gmt %>% tidyr::separate(ont, c("name","version","wpid",
 "org"), "%")

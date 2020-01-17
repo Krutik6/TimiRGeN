@@ -19,8 +19,6 @@
 #' miR[1:100,] -> miR
 #' getIDs_miR_mousetohuman(miR = miR, mirror = 'useast')
 getIDs_miR_mousetohuman <- function(miR, mirror = 'useast'){
-if (missing(miR)) stop('Add mouse microRNA dataframe. Rownames are genes and
-columns are results from differential expression analysis.')
 cbind(miR, Gene = rownames(miR), name = rownames(miR)) -> miR
 gsub(x = miR$Gene, pattern = "-3p", replacement = "") -> miR$Gene
 gsub(x = miR$Gene, pattern = "-5p", replacement = "") -> miR$Gene
@@ -42,10 +40,12 @@ mh_d[order(mh_d$name),] -> mh_o
 MicroRNA_full(mh_o$Hs_n, 'hsa') -> mh_o$microRNA
 bitr(geneID = mh_o$microRNA, fromType = "GENENAME", toType = "ENTREZID",
 OrgDb = org.Hs.eg.db) -> Y
-merge(x =mh_o, y=Y, by.x="microRNA", by.y="GENENAME", all=TRUE)->miR_en
+Y[! duplicated(Y$GENENAME),] -> Y2
+merge(x =mh_o, y=Y2, by.x="microRNA", by.y="GENENAME", all=TRUE)->miR_en
 bitr(geneID = mh_o$microRNA, fromType = "GENENAME", toType = "ENSEMBL",
 OrgDb = org.Hs.eg.db) -> Z
-merge(x=miR_en, y=Z, by.x="microRNA", by.y="GENENAME", all=TRUE) -> miR_IDs
+Z[! duplicated(Z$GENENAME),] -> Z2
+merge(x=miR_en, y=Z2, by.x="microRNA", by.y="GENENAME", all=TRUE) -> miR_IDs
 non_unique(Col = miR_IDs$Hs_n, sep = '-', suffix = 'p') -> miR_IDs$Hs_n
 gsub(miR_IDs$Hs_n, pattern = "-1p", replacement = "-3p") -> miR_IDs$Hs_n
 gsub(miR_IDs$Hs_n, pattern = "-2p", replacement = "-5p") -> miR_IDs$Hs_n

@@ -93,3 +93,10 @@ Changes :
 
 * Fixed windows build error by removing xlsx file earlier in dloadmiRTarBase function.
 * Removed excess files within functions: dloadmiRTarBase, dloadTargetscans, downloadGMT.
+
+smiRk v0.99.04 (Date: 17/01/2020)
+===============================
+Changes :
+
+* Minor edits of getIDs_miR_humantomouse because there were some duplication issues.
+* Will try to submit this version to Bioconductor as a depends on R 4.0.0 package.

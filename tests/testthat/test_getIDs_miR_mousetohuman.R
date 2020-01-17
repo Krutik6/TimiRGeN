@@ -9,10 +9,8 @@ mm_miR -> miR
 getIDs_miR_mousetohuman(miR)
 #check 1
 test_that("output of getIDs_miR_mousetohuman is as expected", {
-expect_equal(length(rownames(miR)),
-length(rownames(miR_ensembl)))
-expect_equal(length(rownames(miR_ensembl)),
-length(rownames(miR_human_renamed)))
+expect_equal(length(rownames(miR)),length(rownames(miR_ensembl)))
+expect_equal(length(rownames(miR_ensembl)),length(rownames(miR_human_renamed)))
 expect_equal(miR_ensembl$GENENAME, miR_adjusted_ensembl$GENENAME)
 expect_equal(miR_entrez$GENENAME, miR_adjusted_entrez$GENENAME)
 expect_false(isTRUE(all.equal(miR_ensembl$ID, miR_adjusted_ensembl$ID)))
@@ -63,15 +61,16 @@ mh_d[order(mh_d$name),] -> mh_o
 MicroRNA_full(mh_o$Hs_n, 'hsa') -> mh_o$microRNA
 bitr(geneID = mh_o$microRNA, fromType = "GENENAME", toType = "ENTREZID",
 OrgDb = org.Hs.eg.db) -> Y
-merge(x =mh_o, y=Y, by.x="microRNA", by.y="GENENAME", all=TRUE)->miR_en
+Y[! duplicated(Y$GENENAME),] -> Y2
+merge(x =mh_o, y=Y2, by.x="microRNA", by.y="GENENAME", all=TRUE)->miR_en
 bitr(geneID = mh_o$microRNA, fromType = "GENENAME", toType = "ENSEMBL",
 OrgDb = org.Hs.eg.db) -> Z
-merge(x=miR_en, y=Z, by.x="microRNA", by.y="GENENAME", all=TRUE) -> miR_IDs
+Z[! duplicated(Z$GENENAME),] -> Z2
+merge(x=miR_en, y=Z2, by.x="microRNA", by.y="GENENAME", all=TRUE) -> miR_IDs
 #check 5
 test_that("miR_IDs should have entrezID and Ensembl data", {
 expect_equal(length(names(miR_IDs)), 16)
-expect_equal(length(rownames(miR_IDs)),
-length(rownames(miR)))
+expect_equal(length(rownames(miR_IDs)), length(rownames(miR)))
 })
 #continue
 non_unique(Col = miR_IDs$Hs_n, sep = '-', suffix = 'p') -> miR_IDs$Hs_n
@@ -85,8 +84,7 @@ non_unique(Col=miR_IDs$ENSEMBL_adj,sep ='.',suffix='')->miR_IDs$ENSEMBL_adj
 test_that("new columns in miR_IDs are different from input columns", {
 expect_false(isTRUE(all.equal(miR_IDs$ENTREZID, miR_IDs$ENTREZID_adj)))
 expect_false(isTRUE(all.equal(miR_IDs$ENSEMBL, miR_IDs$ENSEMBL_adj)))
-expect_equal(length(rownames(miR_IDs)),
-length(rownames(miR)))
+expect_equal(length(rownames(miR_IDs)), length(rownames(miR)))
 })
 #continue
 miR_IDs[! duplicated(miR_IDs$Hs_n),] -> miR_IDs

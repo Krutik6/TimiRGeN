@@ -27,6 +27,7 @@ miRDB_data <- function(miRDB, species, orgDB){
 if (missing(miRDB)) stop('Input miRDB file.');
 if (missing(species)) stop('e.g hsa or mmu.');
 if (missing(orgDB)) stop('Input a speices library.');
+miR <- NULL
 names(miRDB) <- c('miR', 'Target', 'Score')
 miRDB %>%
 filter(str_detect(miR, species)) -> miRDB_s

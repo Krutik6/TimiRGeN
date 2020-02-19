@@ -29,6 +29,7 @@ download.file(paste("http://data.wikipathways.org/20200110/gmt/",
 gmt <- read.gmt("hom.gmt")
 file.remove("hom.gmt")
 }
+ont <- wpid <- gene <- name <- NULL
 pathways <- gmt %>% tidyr::separate(ont, c("name","version","wpid",
 "org"), "%")
 MAE@ExperimentList$path_gene <- as.data.frame(pathways%>%dplyr::select(wpid, 

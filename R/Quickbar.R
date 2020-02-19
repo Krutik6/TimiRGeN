@@ -32,6 +32,7 @@
 #' Quickbar(X = MAE@metadata$sigwiki$D7_wikipathways, 
 #' Y = MAE@metadata$sigwiki[4]) -> Q
 Quickbar <- function(X, Y){
+Description <- Count <- NULL
 if (missing(X)) stop('Input nested dataframe from list.');
 if (missing(Y)) stop('Input name of nested dataframe');
 ggplot(head(X[which(X$p.adjust < 0.05),],

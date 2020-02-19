@@ -26,6 +26,7 @@
 TargetScans_data <- function(targetScan, species){
 if (missing(targetScan)) stop('Input targetscans file.');
 if (missing(species)) stop('e.g hsa or mmu.');
+Transcript <- NULL
 targetScan %>%
 filter(str_detect(Transcript, species)) -> TargetScans_s
 if (species == 'hsa') {

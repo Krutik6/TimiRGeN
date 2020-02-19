@@ -34,7 +34,6 @@
 Quickbar <- function(X, Y){
 if (missing(X)) stop('Input nested dataframe from list.');
 if (missing(Y)) stop('Input name of nested dataframe');
-Description <- Count <- NULL
 ggplot(head(X[which(X$p.adjust < 0.05),],
 n = 15), aes(x=reorder(Description, -p.adjust),
 y=Count, fill=-p.adjust)) +

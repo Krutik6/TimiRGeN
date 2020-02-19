@@ -26,7 +26,6 @@ file.remove("mus.gmt")
 download.file(paste("http://data.wikipathways.org/20200110/gmt/",
 "wikipathways-20200110-gmt-Homo_sapiens.gmt", sep = ""),
 "hom.gmt")
-ont <- wpid <- gene <- name <- NULL
 gmt <- read.gmt("hom.gmt")
 file.remove("hom.gmt")
 }

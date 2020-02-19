@@ -22,7 +22,6 @@ vignette: >
         %\VignetteIndexEntry{TimiRGeN}
         %\VignetteEngine{knitr::rmarkdown}
         \usepackage[utf8]{inputenc}
-r_check_args: "--no-vignettes"
 ---
 
 ```{r setup, include=FALSE, results='asis', warning=FALSE}

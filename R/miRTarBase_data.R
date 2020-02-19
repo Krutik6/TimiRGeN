@@ -28,7 +28,6 @@
 miRTarBase_data <- function(mirtarbase, species){
         if (missing(mirtarbase)) stop('Input targetscans file.');
         if (missing(species)) stop('e.g hsa or mmu.');
-        miRNA <- NULL
         mirtarbase %>%
         filter(str_detect(miRNA, species)) -> miRTarBase_s
         miRTarBase_s[which(miRTarBase_s$Support.Type == 'Functional MTI'),

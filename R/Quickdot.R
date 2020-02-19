@@ -33,7 +33,6 @@
 Quickdot <- function(X, Y){
 if (missing(X)) stop('Input nested dataframe from list.');
 if (missing(Y)) stop('Input name of nested dataframe');
-Description <- Count <- NULL
 ggplot()+
 geom_dotplot(mapping = aes(x= reorder(Description, -p.adjust), y=Count,
 fill=-p.adjust),

@@ -1,7 +1,11 @@
 Package: TimiRGeN
 Type: Package
 Title: microRNA-mRNA integration, analysis and network generation tool
+<<<<<<< HEAD
 Version: 0.99.24
+=======
+Version: 0.99.3
+>>>>>>> development
 Authors@R: person(given = "Krutik", family = "Patel", role = c("aut", "cre"), email = "K.Patel5@newcastle.ac.uk")
 Description: Functionally analyses and integrated time course mRNA and miR data based on empirical evidences. Can be used to reduce the volume of data without loosing grasp of the biology.
 License: GPL-3

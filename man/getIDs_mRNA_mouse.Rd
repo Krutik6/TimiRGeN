@@ -4,9 +4,11 @@
 \alias{getIDs_mRNA_mouse}
 \title{getIDs_mRNA_mouse}
 \usage{
-getIDs_mRNA_mouse(mRNA, mirror)
+getIDs_mRNA_mouse(MAE, mRNA, mirror)
 }
 \arguments{
+\item{MAE}{MultiAssayObject created by StartObject}
+
 \item{mRNA}{Dataframe. Rownames should be genenames and colnames should be
 results from DE.}
 
@@ -14,8 +16,8 @@ results from DE.}
 locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
 }
 \value{
-2 new dataframes. One with entrez information and another with
-ensembl information.
+2 new dataframes in the MAE object. One with entrez information and 
+the other with ensembl information.
 }
 \description{
 getIDs_miR_mouse will produce ensembl and entrez data for
@@ -24,6 +26,8 @@ mouse mRNAs.
 \examples{
 library(biomaRt)
 mm_mRNA -> mRNA
-mRNA[1:200,] -> mRNA
-getIDs_mRNA_mouse(mRNA)
+mRNA[1:20,] -> mRNA
+StartObject(miR = NULL, mRNA = mRNA) -> MAE
+getIDs_mRNA_mouse(MAE = MAE, mRNA = MAE@ExperimentList$mRNA, 
+mirror = 'useast') -> MAE
 }

@@ -1,5 +1,5 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
 mm_miR -> miR
 mm_mRNA -> mRNA

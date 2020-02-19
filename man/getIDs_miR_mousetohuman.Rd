@@ -4,9 +4,11 @@
 \alias{getIDs_miR_mousetohuman}
 \title{getIDs_miR_mousetohuman}
 \usage{
-getIDs_miR_mousetohuman(miR, mirror = "useast")
+getIDs_miR_mousetohuman(MAE, miR, mirror)
 }
 \arguments{
+\item{MAE}{MultiAssayObject created by StartObject}
+
 \item{miR}{Dataframe. Rownames should be genenames and colnames should be
 results from DE.}
 
@@ -28,6 +30,8 @@ library(biomaRt)
 library(clusterProfiler)
 library(org.Hs.eg.db)
 mm_miR -> miR
-miR[1:100,] -> miR
-getIDs_miR_mousetohuman(miR = miR, mirror = 'useast')
+StartObject(miR = miR, mRNA = NULL) -> MAE
+miR[1:5,] -> miR
+getIDs_miR_mousetohuman(MAE, miR = MAE@ExperimentList$miR, 
+mirror = 'useast') -> MAE
 }

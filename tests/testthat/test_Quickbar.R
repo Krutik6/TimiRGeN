@@ -1,5 +1,5 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
 library(ggplot2)
 #load data

@@ -5,7 +5,6 @@
 #' species.
 #' @export
 #' @usage dloadTargetScans()
-#' @examples dloadTargetScans() -> TargetScans
 dloadTargetScans <- function(){
 download.file(paste("http://www.targetscan.org/vert_72/vert_72_data_download/",
 "Predicted_Targets_Context_Scores.default_predictions.txt.zip",

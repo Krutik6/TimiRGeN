@@ -4,13 +4,15 @@
 \alias{getIDs_miR_mouse}
 \title{getIDs_miR_mouse}
 \usage{
-getIDs_miR_mouse(miR)
+getIDs_miR_mouse(MAE, miR)
 }
 \arguments{
+\item{MAE}{MultiAssayObject created by StartObject}
+
 \item{miR}{Dataframe. Rownames are genes and columns are results of DE.}
 }
 \value{
-4 dataframes consisting of ID information.
+MAE object with 4 more dataframes consisting of ID information.
 }
 \description{
 getIDs_miR_human will produce ensembl and entrez data for mouse
@@ -21,5 +23,7 @@ are specific to multiple microRNAs.
 library(clusterProfiler)
 library(org.Mm.eg.db)
 mm_miR -> miR
-getIDs_miR_mouse(miR)
+miR[1:100,] -> miR
+StartObject(miR = miR, mRNA = NULL) -> MAE
+getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
 }

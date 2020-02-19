@@ -47,5 +47,11 @@ D2 = c("19946", "20226", "20341", "20342",  "20363", "20364",
 "17777", "18830"),
 D3 = c("1071", "11303", "11806", "11808", "11812", "11813",
 "11814", "11816", "13122", "13350", "20652", "20778"))
-WikiMatrix(e_list = e, wp_list = w) -> wmat
+
+mm_miR -> miR
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+MAE@metadata$elist <- e
+MAE@metadata$wlist <- w
+WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
 }

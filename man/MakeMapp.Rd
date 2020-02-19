@@ -24,9 +24,12 @@ Create input for the MAPP plugin in pathvisio.
 library(org.Mm.eg.db)
 library(clusterProfiler)
 mm_miR -> miR
-getIDs_miR_mouse(miR)
-Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
-"mmu-miR-27a-3p:Odc1"),
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
+
+MAE@ExperimentList$Int_matrix <- data.frame(row.names = c(
+"mmu-miR-320-3p:Acss1","mmu-miR-27a-3p:Odc1"),
 avecor = c(-0.9191653, 0.7826041),
 miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
 mRNA = c("Acss1", "Acss1"),
@@ -37,6 +40,8 @@ miRDB = c(0, 0),
 Predicted_Interactions = c(1, 0),
 miRTarBase = c(0, 1),
 Pred_Fun = c(1, 1))
-MakeMapp(filt_df = Int_matrix, miR_IDs_adj = miR_adjusted_entrez,
-Datatype = 'L')
+
+MakeMapp(filt_df = MAE@ExperimentList$Int_matrix, 
+miR_IDs_adj = MAE@ExperimentList$miR_adjusted_entrez, 
+Datatype = 'L') ->  MAE@ExperimentList$MAPPS
 }

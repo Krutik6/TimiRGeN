@@ -1,9 +1,9 @@
 #unit test check
 library(testthat)
-library(smiRk)
+library(TimiRGeN)
 
-test_check(package = "smiRk")
+test_check(package = "TimiRGeN")
 
 #bioconductor check
 #library(BiocCheck)
-#BiocCheck("~/Documents/Package/smiRk/")
+#BiocCheck("~/Documents/Package/TimiRGeN/")

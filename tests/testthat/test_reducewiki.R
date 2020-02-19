@@ -1,8 +1,9 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
+library(MultiAssayExperiment)
 #load data
-readRDS("mouse_wplist.rds") -> mm_wplist
+readRDS("wpdata.rds") -> mm_wplist
 mm_wplist[[3]] -> wp2data
 #run function
 ReduceWiki(path_data  = wp2data,
@@ -16,4 +17,4 @@ test_that("single and singlewiki should be the same", {
 expect_equal(single, singlewiki)
 })
 #save data
-saveRDS(single, "test_net.rds", compress = "xz")
+saveRDS(single, "interactions.rds", compress = "xz")

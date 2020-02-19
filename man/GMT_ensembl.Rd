@@ -4,9 +4,12 @@
 \alias{GMT_ensembl}
 \title{GMT_ensembl}
 \usage{
-GMT_ensembl(path_gene, path_data, orgDB)
+GMT_ensembl(MAE, path_gene, path_data, orgDB)
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment where the ensembl wikipathways data can 
+be stored.}
+
 \item{path_gene}{wikipathway-gene data from downloadGMT.}
 
 \item{path_data}{wikipathway-gene-wikipathway full name data from
@@ -22,7 +25,12 @@ Change entrez IDs in wpid2gene and wp_data into ensembl IDs
 }
 \examples{
 library(org.Mm.eg.db)
-downloadGMT(speciesInitial = "Mm")
-GMT_ensembl(path_gene, path_data, org.Mm.eg.db)
-file.remove("mus.gmt")
+mm_miR -> miR
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+
+dloadGMT(MAE = MAE, speciesInitials = "Mm") -> MAE
+
+GMT_ensembl(MAE = MAE, MAE@ExperimentList$path_gene,
+MAE@ExperimentList$path_data, org.Mm.eg.db) -> MAE
 }

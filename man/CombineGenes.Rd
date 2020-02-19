@@ -12,7 +12,8 @@ CombineGenes(miR_data, mRNA_data)
 \item{mRNA_data}{mRNA dataframe}
 }
 \value{
-A dataframe with combines miR and mRNA data.
+A dataframe with combines miR and mRNA data which can be stored 
+within the MAE object.
 }
 \description{
 Combines miR and mRNA data into one dataframe. Input columns
@@ -20,7 +21,11 @@ should be written as follows:
 timepoint.DEresult e.g. D1.log2fc or H6.adjPval.
 }
 \examples{
-miR <- mm_miR
-mRNA <- mm_mRNA
-CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
+library(clusterProfiler)
+library(org.Mm.eg.db)
+mm_miR -> miR
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
+MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
 }

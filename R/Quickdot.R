@@ -13,12 +13,23 @@
 #' library(ggplot2)
 #' library(org.Mm.eg.db)
 #' library(clusterProfiler)
-#' e_list -> elist
-#' downloadGMT(speciesInitial = "Mm")
-#' EnrichWiki(method = 'c', elist, org.Mm.eg.db,
-#' path_gene, path_name, ID = 'ENTREZID',
-#' universe = path_gene$gene) -> sigwiki
-#' Quickdot(X = sigwiki$D7_wikipathways, Y = sigwiki[4]) -> Q
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' 
+#' e_list -> MAE@metadata$elist
+#' dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+#' 
+#' MAE@metadata$sigwiki <- EnrichWiki(method = "c",
+#' e_list = MAE@metadata$elist,
+#' orgDB = org.Mm.eg.db, 
+#' path_gene = MAE@ExperimentList$path_gene, 
+#' path_name = MAE@ExperimentList$path_name, 
+#' ID = "ENTREZID", 
+#' universe = MAE@ExperimentList$path_gene$gene)
+#' 
+#' Quickdot(X = MAE@metadata$sigwiki$D7_wikipathways, 
+#' Y = MAE@metadata$sigwiki[4]) -> Q
 Quickdot <- function(X, Y){
 if (missing(X)) stop('Input nested dataframe from list.');
 if (missing(Y)) stop('Input name of nested dataframe');

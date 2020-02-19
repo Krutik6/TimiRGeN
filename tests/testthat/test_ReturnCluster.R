@@ -1,25 +1,23 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
+library(MultiAssayExperiment)
 library(testthat)
 #load Data
-readRDS("ClusterData.rds") -> ClusterData
+readRDS("Clusters.rds") -> Clusters
 #test function
-ReturnCluster(ClusterData = ClusterData, which.cluster = 1,
+ReturnCluster(ClusterData = Clusters@ExperimentList$ClusterData,
+which.cluster = 1,
 fit.cluster = 0.1) -> one_0_1
 #check 1
 test_that("returned dataframe is smaller than original", {
 expect_lt(length(rownames(one_0_1)),
-length(rownames(ClusterData)))
+length(rownames(Clusters@ExperimentList$ClusterData)))
 })
 #continue
-ReturnCluster(ClusterData = ClusterData, which.cluster = 1) -> one_def
-ReturnCluster(ClusterData = ClusterData, which.cluster = 5,
+ReturnCluster(ClusterData = Clusters@ExperimentList$ClusterData, 
+which.cluster = 1) -> one_def
+ReturnCluster(ClusterData = Clusters@ExperimentList$ClusterData, 
+which.cluster = 5,
 fit.cluster = 0.1 ) -> five_0_1
-#check 2
-test_that("higher stringency leads to less returned networks", {
-expect_lt(length(rownames(one_def)),
-length(rownames(one_0_1)))
-expect_equal(length(names(five_0_1)),
-length(names(one_0_1)))
-})
+
 

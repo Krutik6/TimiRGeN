@@ -4,9 +4,11 @@
 \alias{getIDs_mRNA_mousetohuman}
 \title{getIDs_mRNA_mousetohuman}
 \usage{
-getIDs_mRNA_mousetohuman(mRNA, mirror)
+getIDs_mRNA_mousetohuman(MAE, mRNA, mirror)
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object to store ID data.}
+
 \item{mRNA}{Dataframe. Rownames should be genenames and colnames should be
 results from DE.}
 
@@ -25,6 +27,8 @@ for mouse mRNAs. Also a new dataframe of human named mRNAs will be made.
 \examples{
 library(biomaRt)
 mm_mRNA -> mRNA
-mRNA[1:200,] -> mRNA
-getIDs_mRNA_mousetohuman(mRNA = mRNA, mirror = 'useast')
+mRNA[1:5,] -> mRNA
+StartObject(miR = NULL, mRNA = mRNA) -> MAE
+getIDs_mRNA_mousetohuman(MAE, mRNA = MAE@ExperimentList$mRNA, 
+mirror = 'useast') -> MAE
 }

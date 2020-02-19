@@ -25,19 +25,27 @@ Make expression data input for pathvisio so changes over time
 can be visualised.
 }
 \examples{
-library(biomaRt)
 library(org.Mm.eg.db)
 library(clusterProfiler)
-mm_mRNA -> mRNA
+library(biomaRt)
+
 mm_miR -> miR
-getIDs_mRNA_mouse(mRNA)
-getIDs_miR_mouse(miR)
-Express(df = mRNA, dataType = 'Log2FC', genes_ID = mRNA_entrez,
-idColumn = 'GENENAME') -> mRNA_express
-Express(df = miR, dataType = 'Log2FC', genes_ID = miR_entrez,
-idColumn = 'GENENAME') -> miR_express
-MakeDynamic(miR_expression = miR_express,
-mRNA_expression = mRNA_express,
-miR_IDs = miR_adjusted_entrez,
-Datatype = 'L') -> Dynamics
+mm_mRNA -> mRNA
+
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+
+getIDs_mRNA_mouse(MAE, MAE@ExperimentList$mRNA, "useast") -> MAE
+getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
+
+Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
+genes_ID = MAE@ExperimentList$mRNA_entrez,
+idColumn = 'GENENAME') -> MAE@ExperimentList$mRNA_express
+Express(df = MAE@ExperimentList$miR, dataType = 'Log2FC',
+genes_ID = MAE@ExperimentList$miR_entrez,
+idColumn = 'GENENAME') -> MAE@ExperimentList$miR_express
+
+MakeDynamic(miR_expression = MAE@ExperimentList$miR_express, 
+mRNA_expression = MAE@ExperimentList$mRNA_express, 
+miR_IDs_adj = MAE@ExperimentList$miR_entrez, Datatype = "L"
+) -> MAE@ExperimentList$Dynamics
 }

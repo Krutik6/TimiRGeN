@@ -11,17 +11,23 @@
 #' dataframes which should be point of filtration e.g. pval, adjPval,
 #' qval. Make sure this matches the colnames.
 #' @return A list in a similair structure but with only significantly
-#' differentially expressed genes.
+#' differentially expressed genes which will also be stores in the 
+#' metadata area of an MAE object.
 #' @export
 #' @usage SignificantVals(method = '', geneList, maxVal, stringVal = '')
 #' @examples
-#' miR <- mm_miR
-#' mRNA <- mm_mRNA
-#' CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
-#' GenesList(method = 'c', genetic_data = genetic_data,
-#' timeString = 'D') -> genelist
-#' SignificantVals(method = 'c', geneList = genelist, maxVal = 0.05,
-#' stringVal = 'adjPVal') -> filtered_genelist
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' StartObject(miR = miR, mRNA = mRNA) -> Data
+#' 
+#' CombineGenes(miR_data = Data@ExperimentList$miR, mRNA_data = 
+#' Data@ExperimentList$mRNA) -> Data@ExperimentList$genetic_data
+#' 
+#' GenesList(method = 'c', genetic_data = Data@ExperimentList$genetic_data,
+#' timeString = 'D') -> Data@metadata$genelist
+#' 
+#' SignificantVals(method = "c", geneList = Data@metadata$genelist, 
+#' maxVal = 0.05, stringVal = "adjPVal") -> Data@metadata$filtered_genelist
 SignificantVals <- function(method, geneList, maxVal, stringVal){
 if (missing(method)) stop('method should be s for separate analysis and
 c for combined analysis.')
@@ -31,8 +37,8 @@ if(missing(maxVal)) stop('Input integer as cutoff threshold e.g. 0.05.');
 if(missing(stringVal)) stop('Input differential expression result type
 to use as filtration point e.g. log2FC,
 adjPval, qVal.');
-lapply(geneList, function(df) df[df[[grep(stringVal, names(df),
-value = TRUE)]] < maxVal,]) -> X
+X <- lapply(geneList, function(df) df[df[[grep(stringVal, names(df),
+value = TRUE)]] < maxVal,])
 return(X)
 } else if (method == 's') {
 if(missing(geneList)) stop('Input list of miR and mRNA data.');

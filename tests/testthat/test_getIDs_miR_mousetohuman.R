@@ -1,54 +1,57 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
 library(biomaRt)
 library(clusterProfiler)
 library(org.Hs.eg.db)
+library(MultiAssayExperiment)
 #load data
 mm_miR -> miR
-getIDs_miR_mousetohuman(miR)
+miR[1:20,]-> miR
+MAE <- StartObject(miR = miR, mRNA = NULL)
+getIDs_miR_mousetohuman(MAE, MAE@ExperimentList$miR) -> MAE
 #check 1
 test_that("output of getIDs_miR_mousetohuman is as expected", {
-expect_equal(length(rownames(miR)),length(rownames(miR_ensembl)))
-expect_equal(length(rownames(miR_ensembl)),length(rownames(miR_human_renamed)))
-expect_equal(miR_ensembl$GENENAME, miR_adjusted_ensembl$GENENAME)
-expect_equal(miR_entrez$GENENAME, miR_adjusted_entrez$GENENAME)
-expect_false(isTRUE(all.equal(miR_ensembl$ID, miR_adjusted_ensembl$ID)))
-expect_false(isTRUE(all.equal(miR_entrez$ID, miR_adjusted_entrez$ID)))
+expect_equal(length(rownames(MAE@ExperimentList$miR)),
+length(rownames(MAE@ExperimentList$miR_ensembl)))
+expect_equal(length(rownames(MAE@ExperimentList$miR_ensembl)),
+length(rownames(MAE@ExperimentList$miR_human_renamed)))
+expect_equal(MAE@ExperimentList$miR_ensembl$GENENAME,
+MAE@ExperimentList$miR_adjusted_ensembl$GENENAME)
+expect_equal(MAE@ExperimentList$miR_entrez$GENENAME,
+MAE@ExperimentList$miR_adjusted_entrez$GENENAME)
+expect_false(isTRUE(all.equal(MAE@ExperimentList$miR_ensembl$ID, 
+MAE@ExperimentList$miR_adjusted_ensembl$ID)))
+expect_false(isTRUE(all.equal(MAE@ExperimentList$miR_entrez$ID,
+MAE@ExperimentList$miR_adjusted_entrez$ID)))
 })
 #internal checks
-cbind(miR, Gene = rownames(miR), name = rownames(miR)) -> miR
-gsub(x = miR$Gene, pattern = "-3p", replacement = "") -> miR$Gene
-gsub(x = miR$Gene, pattern = "-5p", replacement = "") -> miR$Gene
+miR <-cbind(miR, Gene = rownames(miR), name = rownames(miR))
+miR$Gene <- gsub(x = miR$Gene, pattern = "-3p", replacement = "") 
+miR$Gene <- gsub(x = miR$Gene, pattern = "-5p", replacement = "")
 #check 2
 test_that("musGenes is different from rownames", {
 expect_equal(length(colnames(miR)), 12)
-expect_false(isTRUE(all.equal(miR$musGenes, rownames(miR))))
 })
 #continue
 human <- biomaRt::useEnsembl("ensembl", dataset="hsapiens_gene_ensembl",
-GRCh=37, host = paste0(mirror, "useast.ensembl.org"))
-mouse <- biomaRt::useEnsembl("ensembl",
-dataset="mmusculus_gene_ensembl",
-GRCh=37, host = paste0(mirror, "useast.ensembl.org"))
-bmt <- getLDS(attributes = c("mirbase_id"),
-              filters = "mirbase_id",
-              values = miR$Gene,
-              mart = mouse,
-              attributesL = c("mirbase_id"),
-              martL = human)
+GRCh=37, host = paste0(mirror, ".ensembl.org"))
+mouse <- biomaRt::useEnsembl("ensembl", dataset="mmusculus_gene_ensembl",
+GRCh=37, host = paste0(mirror, ".ensembl.org"))
+bmt <- getLDS(attributes = c("mirbase_id"), filters = "mirbase_id",
+values = miR$Gene,mart = mouse,attributesL = c("mirbase_id"), martL = human)
 colnames(bmt) <- c("Mm_n", "Hs_n")
 #check 3
 test_that("mouse and human genes are different",{
 expect_false(isTRUE(all.equal(bmt$Mm_n,bmt$Hs_n)))})
 #continue
-gsub(bmt$Mm_n, pattern = "mir", replacement = "miR") -> bmt$Mm_n
-gsub(bmt$Hs_n, pattern = "mir", replacement = "miR") -> bmt$Hs_n
-merge(x = miR, y = bmt, by.x = "Gene", by.y = "Mm_n", all = TRUE) -> mh_m
-mh_m[!duplicated(mh_m$name),] -> mh_d
+bmt$Mm_n <- gsub(bmt$Mm_n, pattern = "mir", replacement = "miR")
+bmt$Hs_n <- gsub(bmt$Hs_n, pattern = "mir", replacement = "miR")
+mh_m <- merge(x = miR, y = bmt, by.x = "Gene", by.y = "Mm_n", all = TRUE) 
+mh_d <- mh_m[!duplicated(mh_m$name),] 
 rownames(mh_d) <- mh_d$name
 mh_d$Hs_n[is.na(mh_d$Hs_n)] <- as.character(mh_d$Gene[is.na(mh_d$Hs_n)])
-gsub(mh_d$Hs_n, pattern = 'mmu', replacement = 'hsa') -> mh_d$Hs_n
+mh_d$Hs_n <- gsub(mh_d$Hs_n, pattern = 'mmu', replacement = 'hsa')
 #check 4
 test_that("aspects of nodups are as expected", {
 expect_equal(length(rownames(mh_d)),
@@ -87,24 +90,29 @@ expect_false(isTRUE(all.equal(miR_IDs$ENSEMBL, miR_IDs$ENSEMBL_adj)))
 expect_equal(length(rownames(miR_IDs)), length(rownames(miR)))
 })
 #continue
-miR_IDs[! duplicated(miR_IDs$Hs_n),] -> miR_IDs
-miR_IDs$Hs_n -> rownames(miR_IDs)
-as.data.frame(cbind(GENENAME=rownames(miR_IDs),
-ID=miR_IDs$ENTREZID))->miR_entrez_manual
-as.data.frame(cbind(GENENAME = rownames(miR_IDs),
-ID = miR_IDs$ENTREZID_adj)) -> miR_entrez_adj_manual
-as.data.frame(cbind(GENENAME=rownames(miR_IDs),
-ID=miR_IDs$ENSEMBL))->miR_ensembl_manual
-as.data.frame(cbind(GENENAME = rownames(miR_IDs),
-ID = miR_IDs$ENSEMBL_adj)) -> miR_ensembl_adj_manual
+MAE2 <- MultiAssayExperiment()
+MAE2@ExperimentList$miR_entrez <- as.data.frame(cbind(GENENAME=rownames(
+miR_IDs),ID=miR_IDs$ENTREZID))
+MAE2@ExperimentList$miR_ensembl <- as.data.frame(cbind(GENENAME=rownames(
+miR_IDs),ID=miR_IDs$ENSEMBL))
+MAE2@ExperimentList$miR_adjusted_entrez <- as.data.frame(cbind(
+GENENAME = rownames(miR_IDs), ID = miR_IDs$ENTREZID_adj))
+MAE2@ExperimentList$miR_adjusted_ensembl <- as.data.frame(cbind(
+GENENAME = rownames(miR_IDs), ID = miR_IDs$ENSEMBL_adj))
 miR_IDs$microRNA<-miR_IDs$Gene<-miR_IDs$name<-miR_IDs$Hs_n<-miR_IDs$ENTREZID<-
 miR_IDs$ENSEMBL<-miR_IDs$ENTREZID_adj<-miR_IDs$ENSEMBL_adj<-NULL
+MAE2@ExperimentList$miR_human_renamed <- miR_IDs
 #check 7
 test_that("manual and functional outputs should be the same", {
-expect_equal(dim(miR_ensembl), dim(miR_ensembl_manual))
-expect_equal(dim(miR_adjusted_ensembl), dim(miR_ensembl_adj_manual))
-expect_equal(dim(miR_entrez), dim(miR_entrez_manual))
-expect_equal(dim(miR_adjusted_entrez), dim(miR_entrez_adj_manual))
-expect_equal(dim(miR_IDs), dim(miR_human_renamed))
+expect_equal(dim(MAE@ExperimentList$miR_ensembl),
+dim(MAE2@ExperimentList$miR_ensembl))
+expect_equal(dim(MAE@ExperimentList$miR_adjusted_ensembl), 
+dim(MAE2@ExperimentList$miR_adjusted_ensembl))
+expect_equal(dim(MAE@ExperimentList$miR_entrez), 
+dim(MAE2@ExperimentList$miR_entrez))
+expect_equal(dim(MAE@ExperimentList$miR_adjusted_entrez),
+dim(MAE2@ExperimentList$miR_adjusted_entrez))
+expect_equal(dim(MAE@ExperimentList$miR_human_renamed), 
+dim(MAE2@ExperimentList$miR_human_renamed))
 })
 

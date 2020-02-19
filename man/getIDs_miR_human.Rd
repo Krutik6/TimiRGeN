@@ -4,13 +4,16 @@
 \alias{getIDs_miR_human}
 \title{getIDs_miR_human}
 \usage{
-getIDs_miR_human(miR)
+getIDs_miR_human(MAE, miR)
 }
 \arguments{
-\item{miR}{Dataframe. Rownames are genes and columns are results of DE.}
+\item{MAE}{MultiAssayObject created by StartObject}
+
+\item{miR}{Dataframe. Rownames are genes and columns are 
+results of DE.}
 }
 \value{
-4 dataframes consisting of ID information.
+MAE object with 4 more dataframes consisting of ID information.
 }
 \description{
 getIDs_miR_human will produce ensembl and entrez data for human
@@ -22,6 +25,8 @@ library(biomaRt)
 library(org.Hs.eg.db)
 library(clusterProfiler)
 hs_miR -> miR
+miR[1:100,] -> miR
 gsub(rownames(miR), pattern = "\\\\.", replacement =  "-") -> rownames(miR)
-getIDs_miR_human(miR)
+StartObject(miR = miR, mRNA = NULL) -> MAE
+getIDs_miR_human(MAE = MAE, miR = MAE@ExperimentList$miR) -> MAE
 }

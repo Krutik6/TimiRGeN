@@ -1,11 +1,9 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
-#load mouse data
-readRDS("mm_miR_entrez.rds") -> miR_entrez
-readRDS("mm_mRNA_entrez.rds") -> mRNA_entrez
+library(MultiAssayExperiment)
 #load gene_entrez
-readRDS("gene_entrez.rds") -> gene_entrez
+readRDS("gene_entrez_c.rds") -> gene_entrez
 #perform function
 eNames(method = 'c', gene_IDs = gene_entrez, ID_Column = 4) -> e_list
 #internal checks
@@ -16,5 +14,3 @@ lapply(e, function(x){ x[complete.cases(x)]}) -> y
 test_that("Output is as expects", {
 expect_equal(y, e_list)
 })
-#save data
-saveRDS(e_list, "elist.rds", compress = "xz")

@@ -14,6 +14,3 @@ species.
 Downloads most recent version (7.2) of predicted targets from
 targetscan database.
 }
-\examples{
-dloadTargetScans() -> TargetScans
-}

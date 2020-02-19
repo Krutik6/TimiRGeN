@@ -4,9 +4,11 @@
 \alias{getIDs_mRNA_human}
 \title{getIDs_mRNA_human}
 \usage{
-getIDs_mRNA_human(mRNA, mirror)
+getIDs_mRNA_human(MAE, mRNA, mirror)
 }
 \arguments{
+\item{MAE}{MultiAssayObject created by StartObject}
+
 \item{mRNA}{Dataframe. Rownames should be genenames and colnames should
 be results from DE.}
 
@@ -24,6 +26,7 @@ for human mRNAs.
 \examples{
 library(biomaRt)
 hs_mRNA -> mRNA
-mRNA[1:200,] -> mRNA
-getIDs_mRNA_human(mRNA, mirror = "useast")
+mRNA[1:20,] -> mRNA
+StartObject(miR = NULL, mRNA = mRNA) -> MAE
+getIDs_mRNA_human(MAE, MAE@ExperimentList$mRNA, mirror = "useast") -> MAE
 }

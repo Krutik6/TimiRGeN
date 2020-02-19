@@ -32,15 +32,15 @@
 #' MatrixFilter(miningMatrix = Int_matrix, NegativeOnly = TRUE,
 #' THRESHOLD = 3, PredictedOnly = FALSE) -> Filt_df
 MatrixFilter <- function(miningMatrix, NegativeOnly = TRUE,
-        PredictedOnly = TRUE, THRESHOLD = 1, maxCor = 1){
-        if (missing(miningMatrix)) stop('Input miningmatrix from
-        DataMiningMatrix function');
-        if (NegativeOnly == TRUE) {
-        miningMatrix[which(miningMatrix$avecor < 0),] -> Filter1
-        } else miningMatrix -> Filter1
-        if (PredictedOnly == TRUE) {
-        Filter1[which(Filter1$Predicted_Interactions >= THRESHOLD),] -> Filter2
-        } else Filter1[which(Filter1$Pred_Fun >= THRESHOLD),] -> Filter2
-        Filter2[which(Filter2$avecor <= maxCor),] -> Filter3
+PredictedOnly = TRUE, THRESHOLD = 1, maxCor = 1){
+if (missing(miningMatrix)) stop('Input miningmatrix from
+DataMiningMatrix function');
+if (NegativeOnly == TRUE) {
+miningMatrix[which(miningMatrix$avecor < 0),] -> Filter1
+} else miningMatrix -> Filter1
+if (PredictedOnly == TRUE) {
+Filter1[which(Filter1$Predicted_Interactions >= THRESHOLD),] -> Filter2
+} else Filter1[which(Filter1$Pred_Fun >= THRESHOLD),] -> Filter2
+Filter2[which(Filter2$avecor <= maxCor),] -> Filter3
 return(Filter3)
 }

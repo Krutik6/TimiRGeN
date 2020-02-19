@@ -36,7 +36,7 @@ be used. Look into clusterProfiler function enricher for more options.}
 }
 \value{
 A large list of data which identifies which wikipathways are
-most enriched in the input data.
+most enriched in the input data which can be stored in an MAE object.
 }
 \description{
 Finds which wikipathways are enriched within the data.
@@ -44,10 +44,19 @@ Finds which wikipathways are enriched within the data.
 \examples{
 library(org.Mm.eg.db)
 library(clusterProfiler)
-e_list -> elist
-downloadGMT(speciesInitial = "Mm")
-file.remove("mus.gmt")
-EnrichWiki(method = 'c', elist, org.Mm.eg.db,
-path_gene, path_name, ID = 'ENTREZID',
-universe = path_gene$gene) -> sigwiki
+mm_miR -> miR
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+
+e_list -> MAE@metadata$elist
+dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+
+MAE@metadata$sigwiki <- EnrichWiki(method = "c",
+e_list = MAE@metadata$elist,
+orgDB = org.Mm.eg.db, 
+path_gene = MAE@ExperimentList$path_gene, 
+path_name = MAE@ExperimentList$path_name, 
+ID = "ENTREZID", 
+universe = MAE@ExperimentList$path_gene$gene)
+
 }

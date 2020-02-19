@@ -11,17 +11,17 @@
 #' @export
 #' @usage CytoMake(interaction_data, titleString = '', collectionString = '')
 CytoMake <- function(interaction_data, titleString, collectionString){
-        nodes <- data.frame(id = c(as.character(interaction_data$miR),
-        as.character(interaction_data$mRNA)),
-        stringsAsFactors = FALSE)
-        edges <- data.frame(source = interaction_data$miR,
-        target = interaction_data$mRNA,
-        interaction = 'inhibits',
-        weight = NA,
-        stringsAsFactors = FALSE)
-        createNetworkFromDataFrames(nodes,edges, title= titleString,
-        collection= collectionString)
-        setVisualStyle('Marquee')
-        layoutNetwork('cose defaultSpringCoefficient=0.000008
-        defaultSpringLength=50')
+nodes <- data.frame(id = c(as.character(interaction_data$miR),
+as.character(interaction_data$mRNA)),
+stringsAsFactors = FALSE)
+edges <- data.frame(source = interaction_data$miR,
+target = interaction_data$mRNA,
+interaction = 'inhibits',
+weight = NA,
+stringsAsFactors = FALSE)
+createNetworkFromDataFrames(nodes,edges, title= titleString,
+collection= collectionString)
+setVisualStyle('Marquee')
+layoutNetwork('cose defaultSpringCoefficient=0.000008
+defaultSpringLength=50')
 }

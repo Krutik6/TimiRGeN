@@ -19,19 +19,30 @@
 #' @param mRNA_data If 's', a dataframe of mRNA data. Rownames are genes
 #' and colnames are like so; genetype_timepoint.resulttype.
 #' timepoint.resulttype should be the same in mRNA and miR data.
-#' @return A list of dataframes separated by features in the column names.
+#' @return A list of dataframes separated by features in the column names which
+#' can be stored in the metadata area of an MAE object.
 #' @export
 #' @importFrom stringr str_extract
 #' @usage GenesList(method, genetic_data, timeString, miR_data, mRNA_data)
 #' @examples
-#' miR <- mm_miR
-#' mRNA <- mm_mRNA
-#' miR_p <- AddPrefix(gene_df = miR, prefixString = 'miR')
-#' mRNA_p <- AddPrefix(gene_df = mRNA, prefixString = 'mRNA')
-#' GenesList(method = 's', miR_data = miR_p, mRNA_data = mRNA_p) -> genelist
-#' CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
-#' GenesList(method = 'c', genetic_data = genetic_data,
-#' timeString = 'D') -> genelist
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' 
+#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' 
+#' AddPrefix(gene_df = MAE@ExperimentList$miR,
+#' prefixString = "miR" ) -> MAE@ExperimentList$miR_p
+#' AddPrefix(gene_df = MAE@ExperimentList$mRNA, 
+#' prefixString = "mRNA") -> MAE@ExperimentList$mRNA_p
+#' 
+#' GenesList(method = "s", miR_data = MAE@ExperimentList$miR_p,
+#' mRNA_data = MAE@ExperimentList$mRNA_p) -> MAE@metadata$genelist
+#' 
+#' CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
+#' MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+#' 
+#' GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
+#' timeString = 'D') -> MAE@metadata$genelist
 GenesList <- function(method, genetic_data, timeString, miR_data, mRNA_data){
 if (method == 'c') {
 if (missing(genetic_data)) stop('Input combined miR and mRNA data.
@@ -39,11 +50,11 @@ Colnames structure should be
 timepoint.resulttype.');
 if (missing(timeString)) stop('Input timepoint. E.g. if colnames were D1,
 D2, D3; then timeString should be D.');
-gsub(x = colnames(genetic_data), pattern = timeString,
-replacement = 'TP') -> colnames(genetic_data)
-lapply(split.default(genetic_data, sub("(TP\\d+).*", "\\1",
-names(genetic_data))), as.list) -> X
-gsub(names(X), pattern = 'TP', replacement = timeString) -> names(X)
+colnames(genetic_data) <- gsub(x = colnames(genetic_data), pattern = timeString,
+replacement = 'TP')
+X <- lapply(split.default(genetic_data, sub("(TP\\d+).*", "\\1",
+names(genetic_data))), as.list)
+names(X) <- gsub(names(X), pattern = 'TP', replacement = timeString) 
 L1 <- lapply(X, data.frame, stringsAsFactors = FALSE)
 L2 <- lapply(L1, function(DF) {rownames(DF) <- rownames(genetic_data); DF})
 L3 <- L2[gtools::mixedsort(names(L2))]
@@ -54,12 +65,13 @@ x}
 )
 return(X)
 } else if (method == 's') {
-
 if (missing(miR_data)) stop('Input miR data.
 Colnames structure should be
 genetype_timepoint.resulttype.');
 if (missing(mRNA_data)) stop('Input mRNA data. Colnames structure should
 be genetype_timepoint.resulttype.');
+miR_data <- as.data.frame(miR_data)
+mRNA_data <- as.data.frame(mRNA_data)
 genedata <- list(miR_data = miR_data, mRNA_data = mRNA_data)
 genes.split <- lapply(genedata, function(df)
 {

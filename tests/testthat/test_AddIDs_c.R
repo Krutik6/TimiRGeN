@@ -1,31 +1,37 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
+library(MultiAssayExperiment)
 #load filtered_genelist
-readRDS("filtered_genelist.rds") -> filtered_genelist
+MAE <- MultiAssayExperiment()
+MAE@metadata$filtered_genelist <- readRDS("filtered_genelist_c.rds") 
 #load mouse data
-readRDS("mm_miR_entrez.rds") -> miR_entrez
-readRDS("mm_mRNA_entrez.rds") -> mRNA_entrez
+miR <- readRDS("IDs_mouse_miR.rds")
+mRNA <- readRDS("IDs_mouse_mRNA.rds")
 #use function
-AddIDs(method = 'c', filtered_genelist = filtered_genelist,
-miR_IDs = miR_entrez, mRNA_IDs = mRNA_entrez) -> gene_entrez
+AddIDs(method = 'c', filtered_genelist = MAE@metadata$filtered_genelist,
+miR_IDs = miR@ExperimentList$miR_entrez, 
+mRNA_IDs = mRNA@ExperimentList$mRNA_entrez) -> MAE@metadata$gene_entrez
 #internal checks
-colnames(miR_entrez) <- c("GENENAME", "ID")
-colnames(mRNA_entrez) <- c("GENENAME", "ID")
+colnames(miR@ExperimentList$miR_entrez) <- c("GENENAME", "ID")
+colnames(mRNA@ExperimentList$mRNA_entrez) <- c("GENENAME", "ID")
 #check 1
 #colnames should be the same and the first column is GENENAME, second column
 #is ID
 test_that("miR_entrez and mRNA_entrez have the same column names",{
-expect_equal(colnames(miR_entrez), colnames(mRNA_entrez))
-expect_equal(colnames(miR_entrez[1]), "GENENAME")
-expect_equal(colnames(miR_entrez[2]), "ID")
-expect_equal(colnames(mRNA_entrez[1]), "GENENAME")
-expect_equal(colnames(mRNA_entrez[2]), "ID")
+expect_equal(colnames(miR@ExperimentList$miR_entrez), 
+colnames(mRNA@ExperimentList$mRNA_entrez))
+expect_equal(colnames(miR@ExperimentList$miR_entrez[1]), "GENENAME")
+expect_equal(colnames(miR@ExperimentList$miR_entrez[2]), "ID")
+expect_equal(colnames(mRNA@ExperimentList$mRNA_entrez[1]), "GENENAME")
+expect_equal(colnames(mRNA@ExperimentList$mRNA_entrez[2]), "ID")
 })
 #continue
-rbind(miR_entrez, mRNA_entrez) -> geneIDs
+rbind(miR@ExperimentList$miR_entrez,
+mRNA@ExperimentList$mRNA_entrez) -> geneIDs
 geneIDs[! duplicated(geneIDs$GENENAME),] -> genes_id
-lapply(filtered_genelist, function(x){cbind('GENENAME' = rownames(x),
+lapply(MAE@metadata$filtered_genelist, function(x){cbind(
+'GENENAME' = rownames(x),
 x)})-> X
 #check 2
 #each DF should have 3 columns
@@ -33,7 +39,7 @@ test_that("Each nested dataframe in X should have 1 more column
 than input", {
 for (i in 1:5) {
 expect_gt(length(colnames(X[[i]])),
-length(colnames(filtered_genelist[[i]])))
+length(colnames(MAE@metadata$filtered_genelist[[i]])))
 }
 })
 #continue
@@ -51,8 +57,9 @@ expect_true(colnames(Y[[i]][4]) == "ID")
 #check 4
 #check functional and manual outputs are the same
 test_that("Functional output and manual outputs are the same",{
-expect_equal(gene_entrez, Y)
+expect_equal(MAE@metadata$gene_entrez, Y)
 })
 #save data
-saveRDS(gene_entrez, "gene_entrez.rds", compress = "xz")
+saveRDS(MAE@metadata$gene_entrez, "gene_entrez_c.rds",
+compress = "xz")
 

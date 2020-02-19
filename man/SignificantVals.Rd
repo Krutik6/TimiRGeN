@@ -22,18 +22,24 @@ qval. Make sure this matches the colnames.}
 }
 \value{
 A list in a similair structure but with only significantly
-differentially expressed genes.
+differentially expressed genes which will also be stores in the 
+metadata area of an MAE object.
 }
 \description{
 Filter out genes in each nested dataframe which are not deemed
 significantly differentially expressed.
 }
 \examples{
-miR <- mm_miR
-mRNA <- mm_mRNA
-CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
-GenesList(method = 'c', genetic_data = genetic_data,
-timeString = 'D') -> genelist
-SignificantVals(method = 'c', geneList = genelist, maxVal = 0.05,
-stringVal = 'adjPVal') -> filtered_genelist
+mm_miR -> miR
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> Data
+
+CombineGenes(miR_data = Data@ExperimentList$miR, mRNA_data = 
+Data@ExperimentList$mRNA) -> Data@ExperimentList$genetic_data
+
+GenesList(method = 'c', genetic_data = Data@ExperimentList$genetic_data,
+timeString = 'D') -> Data@metadata$genelist
+
+SignificantVals(method = "c", geneList = Data@metadata$genelist, 
+maxVal = 0.05, stringVal = "adjPVal") -> Data@metadata$filtered_genelist
 }

@@ -18,7 +18,7 @@
 #' library(clusterProfiler)
 #'data.frame(row.names = c("5151919", "5161682", "5151921", "5151922"),
 #'"V1" = c("mmu-let-7a-1-3p", "mmu-let-7c-2-3p", "mmu-let-7k",
-#'         "mmu-miR-100-3p"),
+#'"mmu-miR-100-3p"),
 #'"V2" = c("NM_144958", "NM_178648", "NM_133355", "NM_172405"),
 #'"V3" = c(53.89190, 53.99680, 83.25980,64.69390)) -> miRDB_data
 #' miRDB_data(miRDB = miRDB_data, species = 'mmu',
@@ -31,10 +31,10 @@ miRDB_data <- miR <- NULL
 names(miRDB) <- c('miR', 'Target', 'Score')
 miRDB %>%
 filter(str_detect(miR, species)) -> miRDB_s
-bitr(miRDB_s$Target, fromType = 'REFSEQ', toType = 'SYMBOL',
-OrgDb = orgDB) -> miRDB_mRNA
-merge(miRDB_s, miRDB_mRNA, by.x = 'Target', by.y = 'REFSEQ',
-all = TRUE) -> mirDB_merged
+miRDB_mRNA <- bitr(miRDB_s$Target, fromType = 'REFSEQ', toType = 'SYMBOL',
+OrgDb = orgDB)
+mirDB_merged <- merge(miRDB_s, miRDB_mRNA, by.x = 'Target', by.y = 'REFSEQ',
+all = TRUE)
 miRDB_df <- data.frame(miRDB_Interactions = paste(mirDB_merged$miR,
 ':', mirDB_merged$SYMBOL,sep = ''),
 miRDB_miR = mirDB_merged$miR,

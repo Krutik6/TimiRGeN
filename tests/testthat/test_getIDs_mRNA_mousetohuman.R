@@ -1,17 +1,20 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
+library(MultiAssayExperiment)
 library(testthat)
 library(biomaRt)
 #load data
-mm_mRNA -> mRNA
-mRNA[1:50,] -> mRNA
+mRNA <- mm_mRNA
+mRNA <- mRNA[1:20,]
+MAE <- StartObject(miR = NULL, mRNA = mRNA)
 #test function
-getIDs_mRNA_mousetohuman(mRNA)
+MAE <- getIDs_mRNA_mousetohuman(MAE = MAE, MAE@ExperimentList$mRNA,
+mirror = "useast")
 #check 1
 test_that("mRNA output is as expected", {
-expect_equal(length(names(mRNA_ensembl)), 2)
-expect_equal(length(names(mRNA_entrez)), 2)
-expect_equal(length(names(mRNA_human_renamed)), 10)
+expect_equal(length(names(MAE@ExperimentList$mRNA_ensembl)), 2)
+expect_equal(length(names(MAE@ExperimentList$mRNA_entrez)), 2)
+expect_equal(length(names(MAE@ExperimentList$mRNA_human_renamed)), 10)
 })
 #internal checks
 musGenes <- rownames(mRNA)
@@ -34,11 +37,6 @@ genesV2[! duplicated(genesV2$MGI.symbol),] -> mh
 mh[! duplicated(mh$HGNC.symbol),] -> mhu
 mhu[order(mhu$MGI.symbol),] -> mouse_human
 mouse_human[which(mouse_human$MGI.symbol %in% rownames(mRNA) == TRUE),] -> mh_f
-#check 3
-test_that("dataframes have progressively fewer rows", {
-expect_gt(length(rownames(genesV2)),
-length(rownames(mh)))
-})
 #continue
 mRNA[which(rownames(mRNA) %in% mh_f$MGI.symbol == TRUE),] -> mRNA_f
 mRNA_f[order(rownames(mRNA_f)),] -> mRNA_o
@@ -49,16 +47,21 @@ expect_equal(rownames(mRNA_f), mh_f$MGI.symbol)
 #continue
 cbind(mRNA_o, mh_f) -> mRNA_data
 rownames(mRNA_data) <- mRNA_data$HGNC.symbol
-as.data.frame(cbind(GENENAME = rownames(mRNA_data),
-ID = mRNA_data$EntrezGene.ID)) -> mRNA_entrez_manual
-as.data.frame(cbind(GENENAME = rownames(mRNA_data),
-ID = mRNA_data$Gene.stable.ID)) -> mRNA_ensembl_manual
-mRNA_data$MGI.symbol <- mRNA_data$HGNC.symbol <- mRNA_data$EntrezGene.ID <-
-mRNA_data$Gene.stable.ID <- NULL
+MAE2 <- MultiAssayExperiment()
+MAE2@ExperimentList$mRNA_entrez <- as.data.frame(cbind(
+GENENAME = rownames(mRNA_data), ID = mRNA_data$EntrezGene.ID))
+MAE2@ExperimentList$mRNA_ensembl <- as.data.frame(cbind(GENENAME =rownames(
+mRNA_data), ID = mRNA_data$Gene.stable.ID))
+mRNA_data$MGI.symbol <- mRNA_data$HGNC.symbol <-
+mRNA_data$EntrezGene.ID <- mRNA_data$Gene.stable.ID <- NULL
+MAE2@ExperimentList$mRNA_human_renamed <- mRNA_data
 #check 5
 test_that("manual and funcitonal outputs are the same", {
-expect_equal(dim(mRNA_ensembl), dim(mRNA_ensembl_manual))
-expect_equal(dim(mRNA_entrez), dim(mRNA_entrez_manual))
-expect_equal(dim(mRNA_human_renamed), dim(mRNA_data))
+expect_equal(dim(MAE2@ExperimentList$mRNA_ensembl),
+dim(MAE@ExperimentList$mRNA_ensembl))
+expect_equal(dim(MAE2@ExperimentList$mRNA_entrez),
+dim(MAE@ExperimentList$mRNA_entrez))
+expect_equal(dim(MAE2@ExperimentList$mRNA_human_renamed),
+dim(MAE@ExperimentList$mRNA_human_renamed))
 })
 

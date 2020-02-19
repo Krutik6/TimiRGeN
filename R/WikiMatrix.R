@@ -37,13 +37,19 @@
 #'"17777", "18830"),
 #'D3 = c("1071", "11303", "11806", "11808", "11812", "11813",
 #'"11814", "11816", "13122", "13350", "20652", "20778"))
-#'WikiMatrix(e_list = e, wp_list = w) -> wmat
+#' 
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' MAE@metadata$elist <- e
+#' MAE@metadata$wlist <- w
+#'WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
 WikiMatrix <- function(e_list, wp_list){
-        if (missing(e_list)) stop('Input list of list of genenames.');
-        if (missing(wp_list)) stop('Input list of list of wikipathways.');
-        sapply(wp_list, function(x) {
-        sapply(e_list, function(y) sum(x %in% y))}) -> wmat
-        lapply(wp_list, function(x){length(x)}) -> L
-        rbind(wmat, Total = unlist(L)) -> wmat2
+if (missing(e_list)) stop('Input list of list of genenames.');
+if (missing(wp_list)) stop('Input list of list of wikipathways.');
+sapply(wp_list, function(x) {
+sapply(e_list, function(y) sum(x %in% y))}) -> wmat
+lapply(wp_list, function(x){length(x)}) -> L
+as.data.frame(rbind(wmat, Total = unlist(L))) -> wmat2
 return(wmat2)
 }

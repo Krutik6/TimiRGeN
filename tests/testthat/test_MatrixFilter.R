@@ -1,6 +1,7 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
+library(MultiAssayExperiment)
 #load data
 readRDS("MiningMatrix.rds") -> DatMat
 #run function
@@ -13,6 +14,8 @@ expect_equal(names(DatMat), names(Filt_df))
 expect_gt(length(rownames(DatMat)),
 length(rownames(Filt_df)))
 })
+# edit to create some interactions
+DatMat$Pred_Fun[1:5] <- 1
 #continue
 MatrixFilter(miningMatrix = DatMat, PredictedOnly = FALSE, THRESHOLD = 1,
 NegativeOnly = FALSE) -> Filt_df2
@@ -22,6 +25,5 @@ expect_equal(names(DatMat), names(Filt_df))
 expect_gt(length(rownames(DatMat)),
 length(rownames(Filt_df)))
 })
-Filt_df2[which(Filt_df2$avecor <= -0.9),]
 #save data
 saveRDS(Filt_df2, "filt_df.rds", compress = "xz")

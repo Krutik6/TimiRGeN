@@ -100,3 +100,43 @@ Changes :
 
 * Minor edits of getIDs_miR_humantomouse because there were some duplication issues.
 * Will try to submit this version to Bioconductor as a depends on R 4.0.0 package.
+
+smiRk v0.99.05 (Date: 27/01/2020)
+===============================
+Changes :
+
+* Changed back to 3.6.2 to edit the package.
+* Names now function in SavePlots. 
+
+TimiRGeN v0.99.1 (Date: 11/02/2020)
+===============================
+* Officially have changed the name form smiRk to TimiRGeN for 2 reasons 1) a previous paper has be found to use a similiar name, 2) this name reflect the package more.
+* Have started the process of changing the format from data frames/ lists to multiassayexperiment (MAE).
+
+TimiRGeN v0.99.11 (Date: 12/02/2020)
+===============================
+* Fixed bug introduced to getIDs_miR_mousetohuman.
+* Changes sections of the vignette and tests to adhere to new structure of the package.
+
+TimiRGeN v0.99.2 (Date: 13/02/2020)
+===============================
+* Package now passes all checks with MAE.
+
+TimiRGeN v0.99.21 (Date: 16/02/2020)
+===============================
+* Added description column to ClusterData.
+* Fixed bug in Saveplots.
+* Added a pdf file to explain how to create GRNs from TimiRGeN.
+
+TimiRGeN v0.99.22 (Date: 18/02/2020)
+===============================
+* Reduced check and tests time to ~7 minutes.
+* Changed function name to dloadData.
+* Editted SavePlots function again to make output larger.
+* Will get this package ready for a github upload. 
+* Compressed GRN construction pdf file.
+
+TimiRGeN v0.99.24 (Date: 19/02/2020)
+===============================
+* Editted vignette.
+* Tested on windows - no errors or warnings but >20m check + tests time.

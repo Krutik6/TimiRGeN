@@ -34,8 +34,16 @@
 #'"17777", "18830"),
 #'D3 = c("1071", "11303", "11806", "11808", "11812", "11813",
 #'"11814", "11816", "13122", "13350", "20652", "20778"))
-#'WikiMatrix(e_list = e, wp_list = w) -> wmat
-#'TurnPercent(wikiMatrix = wmat, rowInt = 4) -> pmat
+#'
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' MAE@metadata$elist <- e
+#' MAE@metadata$wlist <- w
+#'WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
+#'
+#'TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
+#'rowInt = 4) -> MAE@ExperimentList$Pmat
 TurnPercent <- function(wikiMatrix, rowInt){
         as.matrix(wikiMatrix) -> df1
         t(t(df1)/df1[rowInt,]*100) -> X

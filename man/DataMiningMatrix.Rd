@@ -4,18 +4,17 @@
 \alias{DataMiningMatrix}
 \title{DataMiningMatrix}
 \usage{
-DataMiningMatrix(interactionsDF, targetscanInt ,
-mirdbInt, mirtarbaseInt)
+DataMiningMatrix(corrTable, targetscan , mirdb, mirtarbase)
 }
 \arguments{
-\item{interactionsDF}{Correlation matrix between the mRNAs from the
+\item{corrTable}{Correlation matrix between the mRNAs from the
 wikipathway of interest and miRNA data.}
 
-\item{targetscanInt}{Targetscans predicted interactions.}
+\item{targetscan}{Targetscans predicted interactions.}
 
-\item{mirdbInt}{miRDB predcited interactions.}
+\item{mirdb}{miRDB predcited interactions.}
 
-\item{mirtarbaseInt}{miRTarBase functional interactions.}
+\item{mirtarbase}{miRTarBase functional interactions.}
 }
 \value{
 A matrix of information which cross references the occurance of

@@ -21,7 +21,7 @@ this.}
 }
 \value{
 list of dataframes with entrezIDs and genenames additional
-as columns.
+as columns which can be stored in metadata section of an MAE.
 }
 \description{
 Adds entrez or ensembl IDs to the nested dataframes within
@@ -30,17 +30,22 @@ the filtered_genelist.
 \examples{
 library(clusterProfiler)
 library(org.Mm.eg.db)
-miR <- mm_miR
-miR <- miR[1:100,]
-mRNA <- mm_mRNA
-mRNA <- mRNA[1:200,]
-getIDs_miR_mouse(miR = miR)
-getIDs_mRNA_mouse(mRNA = mRNA)
-CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
-GenesList(method = 'c', genetic_data = genetic_data,
-timeString = 'D') -> genelist
-SignificantVals(method = 'c', geneList = genelist, maxVal = 0.05,
-stringVal = 'adjPVal') -> filtered_genelist
-AddIDs(method = 'c', filtered_genelist = filtered_genelist,
-miR_IDs = miR_entrez, mRNA_IDs = mRNA_entrez) -> gene_entrez
+mm_miR -> miR
+mm_mRNA -> mRNA
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+getIDs_miR_mouse(MAE = MAE, miR = MAE@ExperimentList$miR) -> MAE
+getIDs_mRNA_mouse(MAE = MAE, mRNA = MAE@ExperimentList$mRNA) -> MAE
+
+CombineGenes(miR_data = MAE@ExperimentList$miR, 
+mRNA_data = MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+
+GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
+timeString = 'D') -> MAE@metadata$genelist
+
+SignificantVals(method = "c", geneList = MAE@metadata$genelist, 
+maxVal = 0.05, stringVal = "adjPVal") -> MAE@metadata$filtered_genelist
+
+AddIDs(method = "c", filtered_genelist = MAE@metadata$filtered_genelist, 
+miR_IDs = MAE@ExperimentList$miR_entrez,
+mRNA_IDs = MAE@ExperimentList$mRNA_entrez) -> MAE@metadata$gene_entrez
 }

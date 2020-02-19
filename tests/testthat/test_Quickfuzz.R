@@ -1,16 +1,17 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
+library(MultiAssayExperiment)
 library(Mfuzz)
 #load data
 readRDS("Clusters.rds") -> Clusters
-readRDS("Mfuzzdata.rds") -> Mfuzzdata
 #check function
-Quickfuzz(Mfuzzdata = Mfuzzdata, Clusters = Clusters, W = FALSE)
+Quickfuzz(Mfuzzdata = Clusters@ExperimentList$MfuzzData,
+Clusters = Clusters@metadata$Clusters, W = FALSE)
 dev.off()
 #there are 5 graphs showing indication 5 clusters
 test_that("Clusters and Mfuzzdata have 5 clusters", {
-expect_equal(max(unique(Clusters$cluster)), 5)
-expect_equal(length(rownames(Mfuzzdata@phenoData@data)), 5)
+expect_equal(max(unique(Clusters@metadata$Clusters$cluster)), 5)
+expect_equal(length(rownames(Clusters@ExperimentList$MfuzzData@phenoData)), 5)
 })
 

@@ -25,7 +25,8 @@ and colnames are like so; genetype_timepoint.resulttype.
 timepoint.resulttype should be the same in mRNA and miR data.}
 }
 \value{
-A list of dataframes separated by features in the column names.
+A list of dataframes separated by features in the column names which
+can be stored in the metadata area of an MAE object.
 }
 \description{
 Will produce a list of nested dataframes. For combined
@@ -38,12 +39,22 @@ will have dataframes which have been made by separating by 'timepoint.'.
 Make sure to follow colname nomenclature carefully.
 }
 \examples{
-miR <- mm_miR
-mRNA <- mm_mRNA
-miR_p <- AddPrefix(gene_df = miR, prefixString = 'miR')
-mRNA_p <- AddPrefix(gene_df = mRNA, prefixString = 'mRNA')
-GenesList(method = 's', miR_data = miR_p, mRNA_data = mRNA_p) -> genelist
-CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
-GenesList(method = 'c', genetic_data = genetic_data,
-timeString = 'D') -> genelist
+mm_miR -> miR
+mm_mRNA -> mRNA
+
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+
+AddPrefix(gene_df = MAE@ExperimentList$miR,
+prefixString = "miR" ) -> MAE@ExperimentList$miR_p
+AddPrefix(gene_df = MAE@ExperimentList$mRNA, 
+prefixString = "mRNA") -> MAE@ExperimentList$mRNA_p
+
+GenesList(method = "s", miR_data = MAE@ExperimentList$miR_p,
+mRNA_data = MAE@ExperimentList$mRNA_p) -> MAE@metadata$genelist
+
+CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
+MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+
+GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
+timeString = 'D') -> MAE@metadata$genelist
 }

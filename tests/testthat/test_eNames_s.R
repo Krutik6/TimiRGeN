@@ -1,8 +1,9 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
+library(MultiAssayExperiment)
 library(testthat)
 #load filtered_genelist
-readRDS("ensembl_genes.rds") -> ensembl_genes
+readRDS("ensembl_genes_s.rds") -> ensembl_genes
 #test function
 eNames(method = 's', gene_IDs = ensembl_genes, ID_Column = 4) -> e_list
 #check 1
@@ -33,5 +34,3 @@ lapply(Y, function(x){ x[complete.cases(x)]}) -> y
 test_that("outputs are the same", {
 expect_identical(e_list, y)
 })
-#save data
-saveRDS(e_list, file = "elist_s.rds", compress = "xz")

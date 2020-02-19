@@ -1,4 +1,5 @@
 #' @title EnrichWiki
+#' @aliases EnrichWiki
 #' @description Finds which wikipathways are enriched within the data.
 #' @param method Respectively either 'c' or 's' for combined or separated
 #' analysis.
@@ -17,7 +18,7 @@
 #' @param padjustmethod Default is 'BH'. Which pvalue adjustment method should
 #' be used. Look into clusterProfiler function enricher for more options.
 #' @return A large list of data which identifies which wikipathways are
-#' most enriched in the input data.
+#' most enriched in the input data which can be stored in an MAE object.
 #' @export
 #' @importFrom clusterProfiler enricher setReadable
 #' @usage EnrichWiki(method = '', e_list, orgDB, path_gene, path_name, ID = '',
@@ -25,12 +26,21 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #' library(clusterProfiler)
-#' e_list -> elist
-#' downloadGMT(speciesInitial = "Mm")
-#' file.remove("mus.gmt")
-#' EnrichWiki(method = 'c', elist, org.Mm.eg.db,
-#' path_gene, path_name, ID = 'ENTREZID',
-#' universe = path_gene$gene) -> sigwiki
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' 
+#' e_list -> MAE@metadata$elist
+#' dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+#' 
+#' MAE@metadata$sigwiki <- EnrichWiki(method = "c",
+#' e_list = MAE@metadata$elist,
+#' orgDB = org.Mm.eg.db, 
+#' path_gene = MAE@ExperimentList$path_gene, 
+#' path_name = MAE@ExperimentList$path_name, 
+#' ID = "ENTREZID", 
+#' universe = MAE@ExperimentList$path_gene$gene)
+#' 
 EnrichWiki <- function(method, e_list, orgDB, path_gene, path_name, ID,
 universe, pvalcutoff = 0.05, qvaluecutoff = 0.2,
 padjustmethod = "BH"){
@@ -61,4 +71,3 @@ return(W_list)
 }else {stop('Please insert method c for combined analysis or s for
 seperate analysis.')}
 }
-

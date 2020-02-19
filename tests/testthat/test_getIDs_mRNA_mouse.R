@@ -1,15 +1,17 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
 library(biomaRt)
+library(MultiAssayExperiment)
 # load data
 mm_mRNA -> mRNA
-mRNA[1:50,] -> mRNA
-getIDs_mRNA_mouse(mRNA)
+mRNA[1:20,] -> mRNA
+StartObject(miR = NULL, mRNA = mRNA) -> MAE
+getIDs_mRNA_mouse(MAE = MAE, mRNA =  MAE@ExperimentList$mRNA) -> MAE
 #test outputs have expected number of columns
 test_that("mRNA_Id data have two columns", {
-expect_that(as.numeric(ncol(mRNA_entrez)), equals(2))
-expect_that(as.numeric(ncol(mRNA_ensembl)), equals(2))
+expect_that(as.numeric(ncol(MAE@ExperimentList$mRNA_entrez)), equals(2))
+expect_that(as.numeric(ncol(MAE@ExperimentList$mRNA_ensembl)), equals(2))
 })
 #internal checks
 mouse <- biomaRt::useEnsembl("ensembl", dataset="mmusculus_gene_ensembl",
@@ -42,20 +44,21 @@ expect_that(rev(names(m_dat))[2], equals("ensembl_gene_id"))
 })
 #continue
 rownames(m_dat) <- m_dat$`rownames(mRNA)`
-as.data.frame(cbind(GENENAME = rownames(m_dat),
-ID = m_dat$entrezgene_id))-> mRNA_entrez_man
-as.data.frame(cbind(GENENAME = rownames(m_dat),
-ID = m_dat$ensembl_gene_id)) -> mRNA_ensembl_man
+MAE2 <- MultiAssayExperiment()
+MAE2@ExperimentList$mRNA_entrez <- as.data.frame(cbind(GENENAME = rownames(
+m_dat), ID = m_dat$entrezgene_id)) 
+MAE2@ExperimentList$mRNA_ensembl <- as.data.frame(cbind(GENENAME = rownames(
+m_dat), ID = m_dat$ensembl_gene_id))
 #check 3
 #function output is the same as manual output
 test_that("manual output == funciton output", {
-expect_identical(mRNA_ensembl, mRNA_ensembl_man)
-expect_identical(mRNA_entrez, mRNA_entrez_man)
+expect_identical(MAE@ExperimentList$mRNA_ensembl, MAE2@ExperimentList$mRNA_ensembl)
+expect_identical(MAE@ExperimentList$mRNA_entrez, MAE2@ExperimentList$mRNA_entrez)
 })
 
 #save output
-saveRDS(mRNA_ensembl, "mm_mRNA_ensembl.rds")
-saveRDS(mRNA_entrez, "mm_mRNA_entrez.rds")
+saveRDS(MAE, "IDs_mouse_mRNA.rds", compress = "xz")
+
 
 
 

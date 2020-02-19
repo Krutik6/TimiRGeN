@@ -1,18 +1,21 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
+library(MultiAssayExperiment)
 library(testthat)
 library(biomaRt)
 #load data
 hs_mRNA -> mRNA
-mRNA[1:50,] -> mRNA
+mRNA[1:20,] -> mRNA
+StartObject(miR = NULL, mRNA = mRNA) -> MAE
 #test function
-getIDs_mRNA_human(mRNA = mRNA, mirror = 'useast')
+getIDs_mRNA_human(MAE, mRNA = MAE@ExperimentList$mRNA, 
+mirror = 'useast') -> MAE
 #check 1
 test_that("output have two columns", {
-expect_equal(length(colnames(mRNA_ensembl)), 2)
-expect_equal(length(colnames(mRNA_entrez)), 2)
-expect_equal(length(rownames(mRNA_entrez)),
-length(rownames(mRNA_ensembl)))
+expect_equal(length(colnames(MAE@ExperimentList$mRNA_ensembl)), 2)
+expect_equal(length(colnames(MAE@ExperimentList$mRNA_entrez)), 2)
+expect_equal(length(rownames(MAE@ExperimentList$mRNA_entrez)),
+length(rownames(MAE@ExperimentList$mRNA_ensembl)))
 })
 #internal checks
 rownames(mRNA) -> mRNA$Genes
@@ -35,20 +38,21 @@ rownames(m_dat) <- m_dat$Genes
 #check 3
 test_that("Genes and rownames are the same", {
 expect_equal(length(colnames(m_dat)), 9)
-expect_equal(length(rownames(m_dat)), 50)
+expect_equal(length(rownames(m_dat)), 20)
 expect_equal(rownames(m_dat),
 m_dat$Genes)
 })
 #continue
-as.data.frame(cbind(GENENAME = rownames(m_dat),
-ID = m_dat$entrezgene_id)) -> mRNA_entrez_manual
-as.data.frame(cbind(GENENAME = rownames(m_dat),
-ID = m_dat$ensembl_gene_id)) -> mRNA_ensembl_manual
+MAE2 <- MultiAssayExperiment()
+MAE2@ExperimentList$mRNA_entrez <- as.data.frame(cbind(GENENAME = rownames(
+m_dat), ID = m_dat$entrezgene_id))
+MAE2@ExperimentList$mRNA_ensembl <- as.data.frame(cbind(GENENAME = rownames(
+m_dat), ID = m_dat$ensembl_gene_id))
 #check 4
 test_that("functional and manual output is the same",{
-expect_equal(mRNA_entrez_manual, mRNA_entrez)
-expect_equal(mRNA_ensembl_manual, mRNA_ensembl)
+expect_equal(MAE2@ExperimentList$mRNA_entrez, MAE@ExperimentList$mRNA_entrez)
+expect_equal(MAE2@ExperimentList$mRNA_ensembl, MAE@ExperimentList$mRNA_ensembl)
 })
 #save data
-saveRDS(mRNA_ensembl, "hs_mRNA_ensembl.rds", compress = "xz")
-saveRDS(mRNA_entrez, "hs_mRNA_entrez.rds", compress = "xz")
+saveRDS(MAE, "IDs_human_mRNA.rds", compress = "xz")
+

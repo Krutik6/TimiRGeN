@@ -27,8 +27,12 @@ Get average data for one result type.
 }
 \examples{
 library(biomaRt)
+mm_miR -> miR
 mm_mRNA -> mRNA
-getIDs_mRNA_mouse(mRNA)
-Express(df = mRNA, dataType = 'Log2FC', genes_ID = mRNA_entrez,
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
+getIDs_mRNA_mouse(MAE, MAE@ExperimentList$mRNA, "useast") -> MAE
+Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
+genes_ID = MAE@ExperimentList$mRNA_entrez,
 idColumn = 'GENENAME') -> mRNA_express
 }

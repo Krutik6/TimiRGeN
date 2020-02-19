@@ -1,12 +1,15 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
+library(MultiAssayExperiment)
 #load data
-readRDS("wikimatrix.rds") -> wikimatrix
+MAE <- MultiAssayExperiment()
+MAE@ExperimentList$Wmat <- readRDS("wikimatrix.rds")
 #test TurnPercent
-TurnPercent(wikiMatrix = wikimatrix, rowInt = 6) -> wikipercent
+TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat, rowInt = 6
+) -> MAE@ExperimentList$Pmat
 #internal checks
-as.matrix(wikimatrix) -> df1
+as.matrix(MAE@ExperimentList$Wmat) -> df1
 #check 1
 #df1 should be a matrix
 test_that("df1 is a matrix", {
@@ -18,8 +21,8 @@ format(round(X, 2), nsmall = 2) -> X
 #check 2
 #manual output is the same as functional ouput
 test_that("check expected and observed output", {
-expect_equal(wikipercent, X)
+expect_equal(MAE@ExperimentList$Pmat, X)
 })
 #save file
 #save data
-saveRDS(wikipercent, "turnpercent.rds", compress = "xz")
+saveRDS(MAE@ExperimentList$Pmat, "Pmat.rds", compress = "xz")

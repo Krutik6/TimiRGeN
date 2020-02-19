@@ -7,7 +7,8 @@
 AddPrefix(gene_df, prefixString = '')
 }
 \arguments{
-\item{gene_df}{mRNA or miR results from differential expression analysis}
+\item{gene_df}{mRNA or miR results from differential expression analysis 
+inside of a MAE.}
 
 \item{prefixString}{miR_ or mRNA_}
 }
@@ -23,6 +24,9 @@ should end up in the following naming type: 'genetype_timepoint.datatype'.
 \examples{
 miR <- mm_miR
 mRNA <- mm_mRNA
-miR <- AddPrefix(gene_df = miR, prefixString = 'miR')
-mRNA <- AddPrefix(gene_df = mRNA, prefixString = 'mRNA')
+StartObject(miR = miR, mRNA = mRNA) -> MAE
+AddPrefix(gene_df = MAE@ExperimentList$miR,
+prefixString = "miR" ) -> MAE@ExperimentList$miR_p
+AddPrefix(gene_df = MAE@ExperimentList$mRNA, 
+prefixString = "mRNA") -> MAE@ExperimentList$mRNA_p
 }

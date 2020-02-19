@@ -6,19 +6,26 @@
 #' @param miR_data microRNA dataframe
 #' @param mRNA_data mRNA dataframe
 #'
-#' @return A dataframe with combines miR and mRNA data.
+#' @return A dataframe with combines miR and mRNA data which can be stored 
+#' within the MAE object.
 #' @export
 #' @import gtools
 #' @usage CombineGenes(miR_data, mRNA_data)
 #' @examples
-#' miR <- mm_miR
-#' mRNA <- mm_mRNA
-#' CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
+#' library(clusterProfiler)
+#' library(org.Mm.eg.db)
+#' mm_miR -> miR
+#' mm_mRNA -> mRNA
+#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
+#' MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
 CombineGenes <- function(miR_data, mRNA_data){
-        gtools::mixedsort(names(miR_data)) -> miR_order
-        gtools::mixedsort(names(mRNA_data)) -> mRNA_order
-        miR_data <- miR_data[miR_order]
-        mRNA_data <- mRNA_data[mRNA_order]
-        rbind(miR_data, mRNA_data) -> genetic_data
-        return(genetic_data)
+miR_data <- as.data.frame(miR_data)
+mRNA_data <- as.data.frame(mRNA_data)
+miR_order <- gtools::mixedsort(names(miR_data))
+mRNA_order <- gtools::mixedsort(names(mRNA_data)) 
+miR_data <- miR_data[miR_order]
+mRNA_data <- mRNA_data[mRNA_order]
+genetic_data <- as.data.frame(rbind(miR_data, mRNA_data))
+return(genetic_data)
 }

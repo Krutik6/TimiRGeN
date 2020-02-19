@@ -9,15 +9,15 @@
 #' @import rWikiPathways
 #' @usage WikiList(stringSpecies = '', stringSymbol = '')
 WikiList <- function(stringSpecies, stringSymbol){
-        if (missing(stringSpecies)) stop('Input a spieces name e.g. Homo
-        sapiens or Mus musculus.');
-        if (missing(stringSymbol)) stop('Input a symbol type e.g. H, L or
-        En.');
-        pathlist <- rWikiPathways::listPathways(stringSpecies)
-        lapply(pathlist, `[[`, 1) -> wpslist
-        lapply(wpslist, function(x) rWikiPathways::getXrefList(x,
-        stringSymbol)) -> listolists
-        names(listolists) <- wpslist
+if (missing(stringSpecies)) stop('Input a spieces name e.g. Homo
+sapiens or Mus musculus.');
+if (missing(stringSymbol)) stop('Input a symbol type e.g. H, L or
+En.');
+pathlist <- rWikiPathways::listPathways(stringSpecies)
+lapply(pathlist, `[[`, 1) -> wpslist
+lapply(wpslist, function(x) rWikiPathways::getXrefList(x,
+stringSymbol)) -> listolists
+names(listolists) <- wpslist
 return(listolists)
 }
 

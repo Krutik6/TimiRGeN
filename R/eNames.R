@@ -1,5 +1,6 @@
 #' @title eNames
-#' @description Extract the ID names from the nested dataframes.
+#' @description Extract the ID names from the nested dataframes within the
+#' metadata of the MAE object.
 #' @param method Respectively either 'c' or 's' for combined or separated
 #'analysis.
 #' @param gene_IDs A nested list of dataframes(c)/ list of lists of nested
@@ -11,23 +12,30 @@
 #' @export
 #' @usage eNames(method = '', gene_IDs, ID_Column)
 #' @examples
-#' library(biomaRt)
-#' library(clusterProfiler)
-#' library(org.Mm.eg.db)
-#' miR <- mm_miR
-#' miR <- miR[1:100,]
-#' mRNA <- mm_mRNA
-#' mRNA <- mRNA[1:200,]
-#' getIDs_miR_mouse(miR = miR)
-#' getIDs_mRNA_mouse(mRNA = mRNA)
-#' CombineGenes(miR_data = miR, mRNA_data = mRNA) -> genetic_data
-#' GenesList(method = 'c', genetic_data = genetic_data,
-#' timeString = 'D') -> genelist
-#' SignificantVals(method = 'c', geneList = genelist, maxVal = 0.05,
-#' stringVal = 'adjPVal') -> filtered_genelist
-#' AddIDs(method = 'c', filtered_genelist = filtered_genelist,
-#' miR_IDs = miR_entrez, mRNA_IDs = mRNA_entrez) -> gene_entrez
-#' eNames(method = 'c', gene_IDs = gene_entrez, ID_Column = 4) -> e_list
+#'library(biomaRt)
+#'library(clusterProfiler)
+#'library(org.Mm.eg.db)
+#'mm_miR -> miR
+#'mm_mRNA -> mRNA
+#'StartObject(miR = miR, mRNA = mRNA) -> MAE
+#'getIDs_miR_mouse(MAE = MAE, miR = MAE@ExperimentList$miR) -> MAE
+#'getIDs_mRNA_mouse(MAE = MAE, mRNA = MAE@ExperimentList$mRNA) -> MAE
+#'
+#'CombineGenes(miR_data = MAE@ExperimentList$miR,
+#'mRNA_data = MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+#' 
+#'GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
+#'timeString = 'D') -> MAE@metadata$genelist
+#' 
+#'SignificantVals(method = "c", geneList = MAE@metadata$genelist,
+#'maxVal = 0.05, stringVal = "adjPVal") -> MAE@metadata$filtered_genelist
+#' 
+#'AddIDs(method = "c", filtered_genelist = MAE@metadata$filtered_genelist,
+#'miR_IDs = MAE@ExperimentList$miR_entrez,
+#'mRNA_IDs = MAE@ExperimentList$mRNA_entrez) -> MAE@metadata$gene_entrez
+#' 
+#'eNames(method = "c", gene_IDs = MAE@metadata$gene_entrez, ID_Column = 4
+#') -> MAE@metadata$e_list
 eNames <- function(method, gene_IDs, ID_Column){
 if (missing(method)) stop('method should be s for separate analysis and
 c for combined analysis.')

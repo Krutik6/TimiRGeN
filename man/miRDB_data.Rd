@@ -28,7 +28,7 @@ library(tidyverse)
 library(clusterProfiler)
 data.frame(row.names = c("5151919", "5161682", "5151921", "5151922"),
 "V1" = c("mmu-let-7a-1-3p", "mmu-let-7c-2-3p", "mmu-let-7k",
-        "mmu-miR-100-3p"),
+"mmu-miR-100-3p"),
 "V2" = c("NM_144958", "NM_178648", "NM_133355", "NM_172405"),
 "V3" = c(53.89190, 53.99680, 83.25980,64.69390)) -> miRDB_data
 miRDB_data(miRDB = miRDB_data, species = 'mmu',

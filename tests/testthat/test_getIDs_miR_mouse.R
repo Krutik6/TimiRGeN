@@ -1,19 +1,23 @@
 #devtools::uses_testthat()
-library(smiRk)
+library(TimiRGeN)
 library(testthat)
 library(clusterProfiler)
+library(MultiAssayExperiment)
 library(org.Mm.eg.db)
 # load data
 mm_miR -> miR
-miR[1:50,]-> miR
+miR[1:20,]-> miR
+MAE <- StartObject(miR = miR, mRNA = NULL)
 #test function
-getIDs_miR_mouse(miR)
+getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
 #test outputs have expected number of columns
 test_that("miR_Id data have two columns", {
-expect_that(as.numeric(ncol(miR_entrez)), equals(2))
-expect_that(as.numeric(ncol(miR_ensembl)), equals(2))
-expect_that(as.numeric(ncol(miR_adjusted_entrez)), equals(2))
-expect_that(as.numeric(ncol(miR_adjusted_ensembl)), equals(2))
+expect_that(as.numeric(ncol(MAE@ExperimentList$miR_entrez)), equals(2))
+expect_that(as.numeric(ncol(MAE@ExperimentList$miR_ensembl)), equals(2))
+expect_that(as.numeric(ncol(MAE@ExperimentList$miR_adjusted_entrez)), 
+equals(2))
+expect_that(as.numeric(ncol(MAE@ExperimentList$miR_adjusted_ensembl)), 
+equals(2))
 })
 #internal checks
 miR$Genes <- miR$names <- rownames(miR)
@@ -62,25 +66,29 @@ test_that("miR_merged has 16 columns", {
 expect_equal(length(names(miR_merged)), 16)
 })
 #continue
-miR_entrez_manual <- as.data.frame(cbind(GENENAME = miR_merged$names,
-ID = miR_merged$ENTREZID))
-miR_adjusted_entrez_manual <- as.data.frame(cbind(GENENAME = miR_merged$names,
+MAE2 <- MultiAssayExperiment()
+MAE2@ExperimentList$miR_entrez <- as.data.frame(cbind(GENENAME = 
+rownames(miR_merged),ID = miR_merged$ENTREZID))
+MAE2@ExperimentList$miR_adjusted_entrez <- as.data.frame(
+cbind(GENENAME = rownames(miR_merged),
 ID = miR_merged$ENTREZID_adjusted))
-miR_ensembl_manual <- as.data.frame(cbind(GENENAME = miR_merged$names,
+MAE2@ExperimentList$miR_ensembl <- as.data.frame(cbind(
+GENENAME = rownames(miR_merged),
 ID = miR_merged$ENSEMBL))
-miR_adjusted_ensembl_manual <- as.data.frame(cbind(GENENAME = miR_merged$names,
+MAE2@ExperimentList$miR_adjusted_ensembl <- as.data.frame(cbind(
+GENENAME = rownames(miR_merged),
 ID = miR_merged$ENSEMBL_adjusted))
 #check 5
 test_that("manual and functional output are the same", {
-expect_equal(miR_ensembl, miR_ensembl_manual)
-expect_equal(miR_adjusted_ensembl, miR_adjusted_ensembl_manual)
-expect_equal(miR_entrez, miR_entrez_manual)
-expect_equal(miR_adjusted_entrez, miR_adjusted_entrez_manual)
+expect_equal(MAE2@ExperimentList$miR_ensembl, MAE2@ExperimentList$miR_ensembl)
+expect_equal(MAE2@ExperimentList$miR_adjusted_ensembl, 
+MAE2@ExperimentList$miR_adjusted_ensembl)
+expect_equal(MAE2@ExperimentList$miR_entrez, MAE2@ExperimentList$miR_entrez)
+expect_equal(MAE2@ExperimentList$miR_adjusted_entrez, 
+MAE2@ExperimentList$miR_adjusted_entrez)
 })
 #save output
-saveRDS(miR_adjusted_ensembl, "mm_miR_adjusted_ensembl.rds", compress = "xz")
-saveRDS(miR_adjusted_entrez, "mm_miR_adjusted_entrez.rds", compress = "xz")
-saveRDS(miR_ensembl, "mm_miR_ensembl.rds", compress = "xz")
-saveRDS(miR_entrez, "mm_miR_entrez.rds", compress = "xz")
+saveRDS(MAE, "IDs_mouse_miR.rds", compress = "xz")
+
 
 

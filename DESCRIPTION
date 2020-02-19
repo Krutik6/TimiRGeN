@@ -43,4 +43,4 @@ biocViews:
     Clustering,
     Pathways,
     Visualization
-Depends: R (>= 3.6)
+Depends: R (>= 4.0)

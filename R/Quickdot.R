@@ -39,11 +39,11 @@ geom_dotplot(mapping = aes(x= reorder(Description, -p.adjust), y=Count,
 fill=-p.adjust),
 data = head(X[which(X$p.adjust < 0.05),], n = 15),
 binaxis = 'y', dotsize = 2,
-method = 'dotdensity', binpositions = 'bygroup', binwidth = 0.3,
+method = 'dotdensity', binpositions = 'bygroup', binwidth = 0.2,
 stackdir = "center")+
 scale_fill_continuous(type = "gradient") +
 labs(y = "Associated genes", x = "wikipathways", fill = "p.adjust") +
-theme(axis.text=element_text(size=14)) +
+theme(axis.text=element_text(size=16)) +
 ggtitle(names(Y)) +
 theme(plot.title = element_text(2, face = "bold", hjust = 0.5),
 legend.key.size = unit(2, "line")) +

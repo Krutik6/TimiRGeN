@@ -41,7 +41,7 @@ y=Count, fill=-p.adjust)) +
 geom_bar(stat = "identity", width = 0.5) +
 scale_fill_continuous(type = "gradient") +
 labs(y = "Associated genes", x = "wikipathways", fill = "p.adjust") +
-theme(axis.text=element_text(size=14)) +
+theme(axis.text=element_text(size=16)) +
 ggtitle(names(Y)) +
 theme(plot.title = element_text(2, face = "bold", hjust = 0.5),
 legend.key.size = unit(2, "line")) +

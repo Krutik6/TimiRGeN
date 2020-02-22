@@ -11,8 +11,10 @@ dloadGMT(MAE, speciesInitials = 'Mm') -> MAE
 download.file("http://data.wikipathways.org/20200110/gmt/wikipathways-20200110-gmt-Mus_musculus.gmt",
 "mus.gmt")
 read.gmt("mus.gmt") -> musgmt
-full_list <- musgmt %>% tidyr::separate(ont, c("name","version","wpid",
-"org"), "%")
+as.data.frame(musgmt) -> musgmt
+colnames(musgmt) <- c("ont", "gene")
+musgmt %>% tidyr::separate(ont, c("name","version","wpid",
+"org"), "%") -> full_list
 #check 1
 #aspects of full_list
 test_that("aspects of the mouse wikipathway data", {

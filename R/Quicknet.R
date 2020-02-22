@@ -31,7 +31,7 @@ Quicknet <- function(net){
         legend(x = -2.4, y = -0.4, legend = round(c(min(E(net)$Correlation),
         median(E(net)$Correlation), max(E(net)$Correlation)), 2),
         fill = legcol, border = NA, y.intersp = 0.7, cex = 0.8,
-        text.font = 0.2, title = "Correlations")
+        text.font = 0.2, title = "Corr")
         legend(x=-2.4, y=-0.8, c("microRNA","mRNA"), pch=21, col="#777777",
         pt.bg= c("pink", "lightblue"), pt.cex=2, cex=1, bty="n", ncol=1)
 }

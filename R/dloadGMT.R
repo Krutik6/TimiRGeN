@@ -7,6 +7,8 @@
 #'fullnames 3) combination of 1 and 2. All of which can be sotred in an MAE.
 #' @export
 #' @importFrom clusterProfiler read.gmt
+#' @importFrom tidyr separate
+#' @importFrom dplyr select
 #' @usage dloadGMT(MAE, speciesInitials = "")
 #' @examples
 #' mm_miR -> miR
@@ -16,22 +18,23 @@
 dloadGMT <- function(MAE, speciesInitials){
 if (missing(speciesInitials)) stop('speciesInitials should be either Mm
 for mouse data or Hs for human data.')
+ont <- wpid <- gene <- name <- NULL
 if (speciesInitials == "Mm") {
 download.file(paste("http://data.wikipathways.org/20200110/gmt/",
 "wikipathways-20200110-gmt-Mus_musculus.gmt", sep = ""),
 "mus.gmt")
-gmt <- read.gmt("mus.gmt")
+read.gmt("mus.gmt") -> gmt
 file.remove("mus.gmt")
 } else if (speciesInitials == "Hs") {
 download.file(paste("http://data.wikipathways.org/20200110/gmt/",
 "wikipathways-20200110-gmt-Homo_sapiens.gmt", sep = ""),
 "hom.gmt")
-gmt <- read.gmt("hom.gmt")
+read.gmt("hom.gmt") -> gmt
 file.remove("hom.gmt")
 }
-ont <- wpid <- gene <- name <- NULL
-pathways <- gmt %>% tidyr::separate(ont, c("name","version","wpid",
-"org"), "%")
+as.data.frame(gmt) -> gmt
+colnames(gmt) <- c("ont", "gene")
+gmt %>% separate(ont, c("name","version","wpid","org"), "%") -> pathways
 MAE@ExperimentList$path_gene <- as.data.frame(pathways%>%dplyr::select(wpid, 
 gene))
 MAE@ExperimentList$path_name <- as.data.frame(pathways%>%dplyr::select(wpid, 

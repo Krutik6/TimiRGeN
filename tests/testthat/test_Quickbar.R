@@ -6,7 +6,7 @@ library(ggplot2)
 readRDS("EnrichWiki.rds") -> sigwiki
 #test Quickbar
 Quickbar(X = sigwiki$D7_wikipathways,
-         Y = sigwiki[4]) -> p
+         Y = sigwiki[4]) -> p1
 #test plot
 ggplot(head(sigwiki$D7_wikipathways[which(
 sigwiki$D7_wikipathways$p.adjust < 0.05),],
@@ -15,7 +15,7 @@ y=Count, fill=-p.adjust)) +
 geom_bar(stat = "identity", width = 0.5) +
 scale_fill_continuous(type = "gradient") +
 labs(y = "Associated genes", x = "wikipathways", fill = "p.adjust") +
-theme(axis.text=element_text(size=14)) +
+theme(axis.text=element_text(size=18)) +
 ggtitle(names(sigwiki[4])) +
 theme(plot.title = element_text(2, face = "bold", hjust = 0.5),
 legend.key.size = unit(2, "line")) +

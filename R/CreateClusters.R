@@ -34,9 +34,9 @@
 #'wp_list = MAE@metadata$wlist) -> MAE@ExperimentList$Wmat
 #'
 #'TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-#'rowInt = 4) -> MAE@ExperimentList$Pmat
+#'rowInt = 4) -> MAE@metadata$Pmat
 #'
-#'CreateClusters(method = "c", MAE, Percent_matrix = MAE@ExperimentList$Pmat,
+#'CreateClusters(method = "c", MAE, Percent_matrix = MAE@metadata$Pmat,
 #' no.clusters = 2, Variance = 0.99) -> MAE
 CreateClusters <- function(method, MAE, Percent_matrix, no.clusters = 5,
 Data_string, Variance = 0){

@@ -43,7 +43,7 @@
 #'WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
 #'
 #'TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-#'rowInt = 4) -> MAE@ExperimentList$Pmat
+#'rowInt = 4) -> MAE@metadata$Pmat
 TurnPercent <- function(wikiMatrix, rowInt){
         as.matrix(wikiMatrix) -> df1
         t(t(df1)/df1[rowInt,]*100) -> X

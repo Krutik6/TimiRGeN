@@ -329,7 +329,7 @@ between  each pathway, in each time point.
 
 ```{r Percent, message=FALSE, warning=FALSE}
 TurnPercent(wikiMatrix = Data@ExperimentList$Wmat, rowInt = 6
-) -> Data@ExperimentList$Pmat
+) -> Data@metadata$Pmat
 ```
 
 The final row is the total number of genes in each pathway. The `rowInt` 
@@ -340,7 +340,7 @@ parameter in the `TurnPercent` function should point to the final row in the
 
 ```{r CreateClusters, message=FALSE, warning=FALSE, fig.align ="center",dpi=80}
 CreateClusters(MAE =  Data, 
-method = "c", Percent_matrix = Data@ExperimentList$Pmat,
+method = "c", Percent_matrix = Data@metadata$Pmat,
 no.clusters = 12, Variance = 0.99) -> Data
 ```
 
@@ -707,7 +707,7 @@ WikiMatrix(e_list = MAE@metadata$e_list, wp_list = MAE@metadata$w_list
 ) -> MAE@ExperimentList$Wmat
 
 TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat, rowInt = 7
-) -> MAE@ExperimentList$Pmat
+) -> MAE@metadata$Pmat
 ```
 
 ###Create Clusterplot
@@ -717,7 +717,7 @@ was added with `AddPrefix`, then add that.
 
 ```{r warning=FALSE, message=FALSE, eval=FALSE}
 CreateClusters(method = "s", MAE = MAE, 
-Percent_matrix = MAE@ExperimentList$Pmat, no.clusters = 8, 
+Percent_matrix = MAE@metadata$Pmat, no.clusters = 8, 
 Data_string = "mRNA", Variance = 0.5) -> MAE
 
 ClusterCheck(Clusters = Clusters, W = FALSE)

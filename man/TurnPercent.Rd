@@ -55,5 +55,5 @@ MAE@metadata$wlist <- w
 WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
 
 TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-rowInt = 4) -> MAE@ExperimentList$Pmat
+rowInt = 4) -> MAE@metadata$Pmat
 }

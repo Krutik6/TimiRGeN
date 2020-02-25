@@ -487,19 +487,15 @@ and format them for database mining.
 
 For human analysis use `"hsa"` and `org.Hs.eg.db`.
 
-```{r Targetscans data, message=FALSE, warning=FALSE}
+```{r Targetscans data, message=FALSE, warning=FALSE, eval=FALSE}
 dloadTargetScans() -> Data@ExperimentList$TargetScans
 TargetScans_data(targetScan = Data@ExperimentList$TargetScans, species = "mmu"
 ) -> Data@ExperimentList$TargetScans_res
-```
 
-```{r miRDB data, message=FALSE, warning=FALSE}
 dloadmiRDB() -> Data@ExperimentList$miRDB
 miRDB_data(miRDB = Data@ExperimentList$miRDB, species = "mmu", 
 orgDB = org.Mm.eg.db) -> Data@ExperimentList$miRDB_res
-```
 
-```{r miRtarBase data,  message=FALSE, warning=FALSE}
 dloadmiRTarBase() -> Data@ExperimentList$miRTarBase
 miRTarBase_data(mirtarbase = Data@ExperimentList$miRTarBase, 
 species = "mmu") -> Data@ExperimentList$miRTarBase_res
@@ -512,13 +508,18 @@ miR-mRNA interactions can be trusted to a higher degree.
 
 ## Mine Predicted or Funtionally Assessed miR-mRNA Interactions
 
-```{r Datamining, message=FALSE, warning=FALSE}
+```{r Datamining, message=FALSE, warning=FALSE, eval=FALSE}
 DataMiningMatrix(corrTable = Data@ExperimentList$Corr_matrix, 
 targetscan = Data@ExperimentList$TargetScans_res, 
 mirdb = Data@ExperimentList$miRDB_res,
 mirtarbase = Data@ExperimentList$miRTarBase_res
 ) -> Data@ExperimentList$mining_matrix                    
 ```
+
+```{r addMiningmatrix, echo=FALSE}
+Int_data -> Data@ExperimentList$mining_matrix 
+```
+
 
 The `DataMiningMatrix` will find identify if any of the potential 
 interactions from the `Corr_matrix` are predicted/ functionally assessed, and 
@@ -528,8 +529,8 @@ display this as intergers.
 
 ```{r MatrixFilter, warning=FALSE, message=FALSE}
 MatrixFilter(miningMatrix = Data@ExperimentList$mining_matrix,
-NegativeOnly = TRUE, THRESHOLD = 2, PredictedOnly = FALSE, maxCor = -0.5
-) -> Data@ExperimentList$filt_df
+NegativeOnly = TRUE, THRESHOLD = 2, PredictedOnly = FALSE,
+maxCor = 0.2) -> Data@ExperimentList$filt_df
 ```
 
 Potential interactions with no-little evidence can be filtered out using 
@@ -560,7 +561,7 @@ knitr::include_graphics("Complement.jpeg")
 Note. Adjust size of the plot window to access the key in the bottom left 
 hand side. 
 
-Note. Having more than 15 interactions will be very difficult to see in R and
+Note. Having many interactions will be very difficult to see in R and
 we recommend exporting to Cytoscape in these cases.
 
 This plot can give an idea on how many interesting miR-mRNA interactions there
@@ -570,18 +571,21 @@ Cytoscape or Pathvisio.
 
 ## Output for Pathvisio
 
-```{r Makestuff}
+```{r MakeOutputforPathvisio}
 MakeDynamic(miR_expression = Data@ExperimentList$miRNA_log2fc, 
 mRNA_expression = Data@ExperimentList$mRNA_log2fc, 
-miR_IDs_adj = Data@ExperimentList$miR_entrez, Datatype = "L"
-) -> Data@ExperimentList$Dynamics
-
-write.csv(Data@ExperimentList$Dynamics, "Dynamics.csv", row.names = TRUE,
-quote = FALSE)
+miR_IDs_adj = Data@ExperimentList$miR_entrez,
+Datatype = "L") -> Data@ExperimentList$Dynamics
 
 MakeMapp(filt_df = Data@ExperimentList$filt_df,
-miR_IDs_adj = Data@ExperimentList$miR_entrez, Datatype = "L"
-) -> Data@ExperimentList$MAPP
+miR_IDs_adj = Data@ExperimentList$miR_entrez,
+Datatype = "L") -> Data@ExperimentList$MAPP
+```
+
+
+```{r writeout, eval=FALSE}
+write.csv(Data@ExperimentList$Dynamics, "Dynamics.csv", row.names = TRUE,
+quote = FALSE)
 
 write.table(Data@ExperimentList$MAPP, "MAPP.txt", quote = FALSE,
 row.names = FALSE, col.names = FALSE, sep = "\t")

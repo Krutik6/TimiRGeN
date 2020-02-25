@@ -31,7 +31,7 @@ library(clusterProfiler)
 library(org.Hs.eg.db)
 mm_miR -> miR
 StartObject(miR = miR, mRNA = NULL) -> MAE
-miR[1:5,] -> miR
+miR[1:10,] -> miR
 getIDs_miR_mousetohuman(MAE, miR = MAE@ExperimentList$miR, 
 mirror = 'useast') -> MAE
 }

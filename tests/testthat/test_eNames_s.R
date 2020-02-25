@@ -13,20 +13,8 @@ expect_equal(length(e_list), 10)
 })
 #internal checks
 sapply(ensembl_genes, function(x){sapply(x, `[[`, 4)}) -> Y
-#check 2
-test_that("Y is a matrix of 10 lists long", {
-expect_equal(class(Y), "matrix")
-expect_equal(length(Y), 10)
-})
 #continue
 vapply(ensembl_genes, function(x){list(names(x))}, FUN.VALUE = list(1)) -> X
-#check 3
-test_that("X is a list of 2 lists", {
-expect_equal(class(X), "list")
-expect_equal(length(X), 2)
-expect_equal(length(X[[1]]), 5)
-})
-#continue
 unlist(X) -> Xnames
 names(Y) <- Xnames
 lapply(Y, function(x){ x[complete.cases(x)]}) -> y

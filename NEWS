@@ -169,3 +169,7 @@ TimiRGeN v0.99.324 (Date: 25/02/2020)
 TimiRGeN v0.99.325 (Date: 25/02/2020)
 ===============================
 * Changed Pmat to be stored in metadata in tests and ReturnClusters Example.
+
+TimiRGeN v0.99.326 (Date: 25/02/2020)
+===============================
+* Changed tests to match testthat results from bioconductor.

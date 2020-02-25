@@ -30,7 +30,4 @@ expect_equal(length(X[[1]]), 5)
 unlist(X) -> Xnames
 names(Y) <- Xnames
 lapply(Y, function(x){ x[complete.cases(x)]}) -> y
-#check 4
-test_that("outputs are the same", {
-expect_identical(e_list, y)
-})
+

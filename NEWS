@@ -165,3 +165,7 @@ TimiRGeN v0.99.323 (Date: 22/02/2020)
 TimiRGeN v0.99.324 (Date: 25/02/2020)
 ===============================
 * Added the mining matrix as a internal data set so the databases do not have to be downloaded during vignette-building. This is causing an error on the bioconductor systems as their system cannot download these files during build.
+
+TimiRGeN v0.99.325 (Date: 25/02/2020)
+===============================
+* Changed Pmat to be stored in metadata in tests and ReturnClusters Example.

@@ -6,9 +6,9 @@ library(MultiAssayExperiment)
 library(rWikiPathways)
 #load data
 MAE <- MultiAssayExperiment()
-MAE@ExperimentList$pmat <- readRDS("Pmat.rds")
+MAE@metadata$pmat <- readRDS("Pmat.rds")
 #test function
-CreateClusters(MAE, method = 'c', Percent_matrix = MAE@ExperimentList$pmat,
+CreateClusters(MAE, method = 'c', Percent_matrix = MAE@metadata$pmat,
 no.clusters = 5, Variance = 0) -> MAE
 dev.off()
 #test output
@@ -19,10 +19,10 @@ expect_true(is.list(MAE@metadata$Clusters))
 expect_equal(class(MAE@ExperimentList$Mfuzzdata)[1], "NULL")
 })
 #internal checks
-as.data.frame(t(MAE@ExperimentList$pmat)) -> df
+as.data.frame(t(MAE@metadata$pmat)) -> df
 #check 2
 test_that("df has the correct number of columns", {
-expect_equal(length(rownames(MAE@ExperimentList$pmat)),
+expect_equal(length(rownames(MAE@metadata$pmat)),
 length(colnames(df)))
 })
 #continue

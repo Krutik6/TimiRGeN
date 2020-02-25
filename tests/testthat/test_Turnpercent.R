@@ -7,7 +7,7 @@ MAE <- MultiAssayExperiment()
 MAE@ExperimentList$Wmat <- readRDS("wikimatrix.rds")
 #test TurnPercent
 TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat, rowInt = 6
-) -> MAE@ExperimentList$Pmat
+) -> MAE@metadata$Pmat
 #internal checks
 as.matrix(MAE@ExperimentList$Wmat) -> df1
 #check 1
@@ -21,8 +21,8 @@ format(round(X, 2), nsmall = 2) -> X
 #check 2
 #manual output is the same as functional ouput
 test_that("check expected and observed output", {
-expect_equal(MAE@ExperimentList$Pmat, X)
+expect_equal(MAE@metadata$Pmat, X)
 })
 #save file
 #save data
-saveRDS(MAE@ExperimentList$Pmat, "Pmat.rds", compress = "xz")
+saveRDS(MAE@metadata$Pmat, "Pmat.rds", compress = "xz")

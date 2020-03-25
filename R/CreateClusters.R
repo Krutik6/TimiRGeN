@@ -57,6 +57,8 @@ CreateClusters <- function(MAE, method, percentMatrix, noClusters = 5,
               df, is.factor, logical(1))], 
               function(x) as.numeric(as.character(x)))
     
+    df <- as.matrix(df)
+    
     df <- round(df, 0)
     df <- na.omit(df)
     # If == s then subset data by common string e.g mRNA, miR

@@ -184,3 +184,9 @@ TimiRGeN v0.99.4 (Date: 24/03/2020)
 * Vast majority of code now only uses <- to assign new objects.
 * Using indents to make the code easier to read.
 * Added some description to some R functions.
+
+TimiRGeN v0.99.41 (Date: 25/03/2020)
+===============================
+* Remade CreateCluster function so that it does not cause errors during bioconductor checks. 
+* Removed some tests to speed up bioconductor checks.
+* Modified some examples to speed up bioconductor checks.

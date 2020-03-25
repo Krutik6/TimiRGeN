@@ -23,7 +23,6 @@
 #' CreateClusters(MAE, method, percentMatrix, noClusters, dataString = '',
 #'                variance)
 #' @examples
-#' \dontrun{
 #' library(MultiAssayExperiment)
 #' library(Mfuzz)
 #' MAE <- MultiAssayExperiment()
@@ -39,7 +38,6 @@
 #'MAE <- CreateClusters(MAE, method = "c", 
 #'                     percentMatrix = assay(MAE, 2),
 #'                     noClusters = 2, variance = 0.99)
-#'}
 CreateClusters <- function(MAE, method, percentMatrix, noClusters = 5,
                            dataString, variance = 0){
     
@@ -55,8 +53,7 @@ CreateClusters <- function(MAE, method, percentMatrix, noClusters = 5,
     df <- as.data.frame(t(X))
     df$Total <- NULL
     # Convert factors into numeric
-    df[vapply(df, is.factor, logical(1))] <- lapply(df[vapply(df, is.factor, logical(1))], 
-                                                    function(x) as.numeric(as.character(x)))
+    df <- data.matrix(frame = df, rownames.force = NA)
     
     df <- round(df, 0)
     df <- na.omit(df)

@@ -307,16 +307,12 @@ parameter in the `TurnPercent` function should point to the final row in the
 
 ### Temporal Pathway Clustering
 
-```{r CreateClusters_slow, eval=FALSE, fig.align ="center",dpi=80}
+```{r CreateClusters_slow, fig.align ="center",dpi=80}
 MAE2 <- CreateClusters(MAE = MAE2, method = "c",
                        percentMatrix = assay(MAE2, 5),
                        noClusters = 12, variance = 0.99)
 ```
 
-```{r CreateClusters_working, echo=FALSE, fig.align ="center",dpi=80}
-C <- Clusters
-MAE2 <- c(MAE2, C)
-```
 
 `CreatClusters` uses functions from Mfuzz [6] to separate the percent matrix
 into a number of clusters based on temporal changes. In our example we created

@@ -9,11 +9,18 @@ Matrix of cluster information for the vignette.
 }
 \usage{data("c_matrix")}
 \format{
-The format is:
-num [1:202, 1:12] 0.06292 0.00064 0.03325 0.02371 0.02164 ...
-- attr(*, "dimnames")=List of 2
-..$ : chr [1:202] "WP1" "WP10" "WP103" "WP108" ...
-..$ : chr [1:12] "1" "2" "3" "4" ...
+\describe{
+\item{\code{1}}{a numeric vector}
+\item{\code{2}}{a numeric vector}
+\item{\code{3}}{a numeric vector}
+\item{\code{4}}{a numeric vector}
+\item{\code{5}}{a numeric vector}
+\item{\code{6}}{a numeric vector}
+\item{\code{7}}{a numeric vector}
+\item{\code{8}}{a numeric vector}
+\item{\code{9}}{a numeric vector}
+\item{\code{10}}{a numeric vector}
+}
 }
 \details{
 Matrix of cluster to wikipathways information.

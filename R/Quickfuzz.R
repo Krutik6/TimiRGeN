@@ -12,11 +12,23 @@
 #' @importFrom Mfuzz mfuzz.plot2
 #' @usage Quickfuzz(Mfuzzdata, Clusters, W)
 #' @examples
-#' library(Mfuzz)
 #' library(MultiAssayExperiment)
-#' MAE <- Clusters
-#' Quickfuzz(Mfuzzdata = experiments(MAE)[[2]],
-#'           Clusters = metadata(MAE)[[1]], W = FALSE)
+#' library(Mfuzz)
+#' MAE <- MultiAssayExperiment()
+#' metadata(MAE)[["e_list"]] <- e_list
+#' metadata(MAE)[["w_list"]] <- w_list[1:10]
+#' MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
+#'                   wp_list = metadata(MAE)[[2]])
+#'  
+#' MAE <- TurnPercent(MAE = MAE, 
+#'                    wikiMatrix = assay(MAE, 1),
+#'                    rowInt = 6)
+#' 
+#'MAE <- CreateClusters(MAE, method = "c", 
+#'                     percentMatrix = assay(MAE, 2),
+#'                     noClusters = 2, variance = 0.99)
+#' Quickfuzz(Mfuzzdata = experiments(MAE)[[4]],
+#'           Clusters = metadata(MAE)[[3]], W = FALSE)
 Quickfuzz <- function(Mfuzzdata, Clusters, W = TRUE){
     
     lab <- colnames(Clusters$centers)

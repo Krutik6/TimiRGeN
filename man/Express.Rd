@@ -4,9 +4,11 @@
 \alias{Express}
 \title{Express}
 \usage{
-Express(df, dataType = '', genes_ID, idColumn = '')
+Express(MAE, df, dataType = '', genes_ID, idColumn = '', name = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment Object.}
+
 \item{df}{mRNA or miR dataframe (rownames as genes and experimental
 variables as columns.)}
 
@@ -17,6 +19,8 @@ pval.}
 or miR_entrez.}
 
 \item{idColumn}{Name of column to use as the merge point.}
+
+\item{name}{= New name of the dataframe.}
 }
 \value{
 Returns the average of whichever data the user was interested e.g.
@@ -27,12 +31,14 @@ Get average data for one result type.
 }
 \examples{
 library(biomaRt)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
-getIDs_mRNA_mouse(MAE, MAE@ExperimentList$mRNA, "useast") -> MAE
-Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
-genes_ID = MAE@ExperimentList$mRNA_entrez,
-idColumn = 'GENENAME') -> mRNA_express
+library(MultiAssayExperiment)
+miR <- mm_miR[1:100,]
+mRNA <- mm_mRNA[1:200,]
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
+MAE <- getIDs_mRNA_mouse(MAE, assay(MAE, 2), "useast")
+MAE <- Express(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
+               genes_ID = assay(MAE, 7),
+               idColumn = 'GENENAME',
+               name = "mRNA_log2fc")
 }

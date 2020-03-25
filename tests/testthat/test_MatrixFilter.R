@@ -3,27 +3,24 @@ library(TimiRGeN)
 library(testthat)
 library(MultiAssayExperiment)
 #load data
-readRDS("MiningMatrix.rds") -> DatMat
+DatMat <- readRDS("MiningMatrix.rds")
+MAE <- MultiAssayExperiment()
 #run function
-MatrixFilter(miningMatrix = DatMat, NegativeOnly = FALSE, PredictedOnly = FALSE,
-THRESHOLD = 1) -> Filt_df
+MAE <- MatrixFilter(MAE, miningMatrix = DatMat, negativeOnly = FALSE, 
+                        predictedOnly = FALSE, threshold = 1)
 #check 1
 #both DFs should have the same number of columns
 test_that("filt_df aspects", {
-expect_equal(names(DatMat), names(Filt_df))
-expect_gt(length(rownames(DatMat)),
-length(rownames(Filt_df)))
+    expect_equal(names(DatMat), names(assay(MAE, 1)))
+    expect_gt(length(rownames(DatMat)),
+    length(rownames(assay(MAE, 1))))
 })
 # edit to create some interactions
 DatMat$Pred_Fun[1:5] <- 1
 #continue
-MatrixFilter(miningMatrix = DatMat, PredictedOnly = FALSE, THRESHOLD = 1,
-NegativeOnly = FALSE) -> Filt_df2
-#check 2
-test_that("filt_df2 is more flexible than filt_df", {
-expect_equal(names(DatMat), names(Filt_df))
-expect_gt(length(rownames(DatMat)),
-length(rownames(Filt_df)))
-})
+MAE2 <- MultiAssayExperiment()
+MAE2 <- MatrixFilter(MAE2, miningMatrix = DatMat, predictedOnly = FALSE,
+                         threshold = 1,
+                         negativeOnly = FALSE)
 #save data
-saveRDS(Filt_df2, "filt_df.rds", compress = "xz")
+saveRDS(assay(MAE2, 1), "filt_df.rds", compress = "xz")

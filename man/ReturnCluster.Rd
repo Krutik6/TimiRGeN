@@ -4,15 +4,17 @@
 \alias{ReturnCluster}
 \title{ReturnCluster}
 \usage{
-ReturnCluster(ClusterData, which.cluster, fit.cluster)
+ReturnCluster(MAE, clusterData, whichCluster, fitCluster)
 }
 \arguments{
-\item{ClusterData}{Output after CreateClusters. A list.}
+\item{MAE}{MultiAssayExperiment object.}
 
-\item{which.cluster}{Integer should correspond to the order of clusters
+\item{clusterData}{Output after CreateClusters. A list.}
+
+\item{whichCluster}{Integer should correspond to the order of clusters
 displayed.}
 
-\item{fit.cluster}{How well should the wikipathways fit into the this
+\item{fitCluster}{How well should the wikipathways fit into the this
 cluster? Integer from 0-1. Default is 0.99.}
 }
 \value{
@@ -25,21 +27,21 @@ with a specific cluster.
 }
 \examples{
 library(Mfuzz)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-e_list -> MAE@metadata$elist
-w_list[1:10] -> MAE@metadata$wlist
-WikiMatrix(e_list = MAE@metadata$elist, 
-wp_list = MAE@metadata$wlist) -> MAE@ExperimentList$Wmat
+library(MultiAssayExperiment)
+MAE <- MultiAssayExperiment()
+metadata(MAE)[["e_list"]] <- e_list
+metadata(MAE)[["w_list"]] <- w_list[1:10]
+MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
+                  wp_list = metadata(MAE)[[2]])
+ 
+MAE <- TurnPercent(MAE = MAE, 
+                   wikiMatrix = assay(MAE, 1),
+                   rowInt = 6)
 
-TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-rowInt = 4) -> MAE@metadata$Pmat
+MAE <- CreateClusters(MAE, method = "c", 
+                   percentMatrix = assay(MAE, 2),
+                   noClusters = 2, variance = 0.99)
 
-CreateClusters(method = "c", MAE =  MAE,
-Percent_matrix = MAE@metadata$Pmat,
-no.clusters = 2, Variance = 0.99) -> MAE
-
-ReturnCluster(ClusterData = MAE@ExperimentList$ClusterData, 
-which.cluster = 1, fit.cluster = 0.9) -> MAE@ExperimentList$CLUST1
+MAE <- ReturnCluster(MAE, clusterData = assay(MAE, 3), whichCluster = 1, 
+                     fitCluster = 0.5)
 }

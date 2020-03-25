@@ -4,9 +4,11 @@
 \alias{SignificantVals}
 \title{SignificantVals}
 \usage{
-SignificantVals(method = '', geneList, maxVal, stringVal = '')
+SignificantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
@@ -30,16 +32,18 @@ Filter out genes in each nested dataframe which are not deemed
 significantly differentially expressed.
 }
 \examples{
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> Data
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+Data <- StartObject(miR = miR, mRNA = mRNA)
 
-CombineGenes(miR_data = Data@ExperimentList$miR, mRNA_data = 
-Data@ExperimentList$mRNA) -> Data@ExperimentList$genetic_data
+Data <- CombineGenes(MAE = Data, miR_data = assay(Data, 1), 
+                     mRNA_data = assay(Data, 2))
 
-GenesList(method = 'c', genetic_data = Data@ExperimentList$genetic_data,
-timeString = 'D') -> Data@metadata$genelist
+Data <- GenesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+                  timeString = 'D')
 
-SignificantVals(method = "c", geneList = Data@metadata$genelist, 
-maxVal = 0.05, stringVal = "adjPVal") -> Data@metadata$filtered_genelist
+Data <- SignificantVals(MAE = Data, method = 'c', 
+                        geneList = metadata(Data)[[1]], 
+                        maxVal = 0.05, stringVal = "adjPVal")
 }

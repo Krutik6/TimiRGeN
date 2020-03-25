@@ -24,25 +24,28 @@ saves tiff files of all plots in current dir
 Saves all possible plots in the current directory.
 }
 \examples{
+\donttest{
 library(biomaRt)
 library(ggplot2)
 library(org.Mm.eg.db)
 library(clusterProfiler)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA) -> MAE
 
-e_list -> MAE@metadata$elist
-dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+metadata(MAE)[["ID_list"]] <- e_list
+MAE <- dloadGMT(MAE, speciesInitial = "Mm")
 
-MAE@metadata$sigwiki <- EnrichWiki(method = "c",
-e_list = MAE@metadata$elist,
-orgDB = org.Mm.eg.db, 
-path_gene = MAE@ExperimentList$path_gene, 
-path_name = MAE@ExperimentList$path_name, 
-ID = "ENTREZID", 
-universe = MAE@ExperimentList$path_gene$gene)
+metadata(MAE)[["sigwiki"]] <- EnrichWiki(MAE, method = "c",
+                                         ID_list = metadata(MAE)[[1]],
+                                         orgDB = org.Mm.eg.db, 
+                                         path_gene = assay(MAE, 3), 
+                                         path_name = assay(MAE, 4), 
+                                         ID = "ENTREZID", 
+                                         universe = assay(MAE, 3)[2])
 
-SavePlots(largeList = MAE@metadata$sigwiki, maxInt = 5, 
-quickType = Quickdot, fileType = "jpg") -> P
+SavePlots(largeList = metadat(MAE)[[2]], maxInt = 5, 
+         quickType = Quickdot, fileType = "jpg")
+}
 }

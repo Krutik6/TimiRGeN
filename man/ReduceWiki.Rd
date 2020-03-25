@@ -4,9 +4,11 @@
 \alias{ReduceWiki}
 \title{ReduceWiki}
 \usage{
-ReduceWiki(path_data, stringWiki = '')
+ReduceWiki(MAE, path_data, stringWiki = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{path_data}{File with wikipathway - gene data.}
 
 \item{stringWiki}{Full name of the wikipathway of interest.}
@@ -19,10 +21,12 @@ interest.
 Return gene names for a single wikipathway of interest.
 }
 \examples{
-path_data <- data.frame("wpid" = c(rep("WP571", 6)),
-"gene" = c(16175, 12370,26419, 19249, 19645, 18479),
-"name" = c(rep("Fas pathway and Stress induction of HSP regulation", 6)))
-ReduceWiki(path_data = path_data,
-stringWiki = 'Fas pathway and Stress induction of
-HSP regulation') -> singlewiki
+library(MultiAssayExperiment)
+MAE <- MultiAssayExperiment(list(path_data = data.frame(
+                        "wpid" = c(rep("WP571", 6)),
+                        "gene" = c(16175, 12370,26419, 19249, 19645, 18479),
+                        "name" = c(rep("Fas pathway and Stress induction of HSP regulation", 
+                        6)))))
+MAE <- ReduceWiki(MAE, path_data = assay(MAE, 1), 
+                 stringWiki = 'Fas pathway and Stress induction of HSP regulation')
 }

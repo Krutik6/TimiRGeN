@@ -21,12 +21,13 @@ microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that are
 specific to multiple microRNAs.
 }
 \examples{
-library(biomaRt)
-library(org.Hs.eg.db)
 library(clusterProfiler)
-hs_miR -> miR
-miR[1:100,] -> miR
-gsub(rownames(miR), pattern = "\\\\.", replacement =  "-") -> rownames(miR)
-StartObject(miR = miR, mRNA = NULL) -> MAE
-getIDs_miR_human(MAE = MAE, miR = MAE@ExperimentList$miR) -> MAE
+library(org.Hs.eg.db)
+library(MultiAssayExperiment)
+miR <- hs_miR
+rownames(miR) <- gsub(rownames(miR), pattern = "\\\\.", replacement = "-")
+rownames(miR) <- sub("-$", "*", rownames(miR))
+miR <- miR[1:100,]
+MAE <- StartObject(miR = miR, mRNA = NULL)
+MAE <- getIDs_miR_human(MAE, assay(MAE, 1))
 }

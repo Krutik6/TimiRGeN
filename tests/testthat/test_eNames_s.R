@@ -3,19 +3,22 @@ library(TimiRGeN)
 library(MultiAssayExperiment)
 library(testthat)
 #load filtered_genelist
-readRDS("ensembl_genes_s.rds") -> ensembl_genes
+ensembl_genes <- readRDS("ensembl_genes_s.rds")
+MAE <- MultiAssayExperiment()
+metadata(MAE)[["ensembl_genes"]] <- ensembl_genes
 #test function
-eNames(method = 's', gene_IDs = ensembl_genes, ID_Column = 4) -> e_list
+MAE<- eNames(MAE, method = 's',  gene_IDs = metadata(MAE)[[1]],
+              ID_Column = 4)
 #check 1
 test_that("e_list has 10 lists", {
-expect_equal(class(e_list), "list")
-expect_equal(length(e_list), 10)
+    expect_equal(class(metadata(MAE)[[2]]), "list")
+    expect_equal(length(metadata(MAE)[[2]]), 10)
 })
 #internal checks
-sapply(ensembl_genes, function(x){sapply(x, `[[`, 4)}) -> Y
+Y <- sapply(ensembl_genes, function(x){sapply(x, `[[`, 4)})
 #continue
-vapply(ensembl_genes, function(x){list(names(x))}, FUN.VALUE = list(1)) -> X
-unlist(X) -> Xnames
+X <- vapply(ensembl_genes, function(x){list(names(x))}, FUN.VALUE = list(1))
+Xnames <- unlist(X)
 names(Y) <- Xnames
-lapply(Y, function(x){ x[complete.cases(x)]}) -> y
-
+ID_list <- lapply(Y, function(x){ x[complete.cases(x)]})
+metadata(MAE)[["ID_list"]] <- ID_list

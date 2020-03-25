@@ -4,13 +4,17 @@
 \alias{WikimRNA}
 \title{WikimRNA}
 \usage{
-WikimRNA(mRNA_express, SingleWiki)
+WikimRNA(MAE, mRNA_express, singleWiki, stringWiki='')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{mRNA_express}{Output from the Express function on mRNA data.}
 
-\item{SingleWiki}{Output from ReduceWiki function on a Wikipathway
+\item{singleWiki}{Output from ReduceWiki function on a Wikipathway
 of interest.}
+
+\item{stringWiki}{Name of the pathway of interest.}
 }
 \value{
 A dataframe of mRNA entries which are also found in the wikipathway
@@ -22,18 +26,23 @@ wikipathway of interest.
 }
 \examples{
 library(biomaRt)
-mm_mRNA -> mRNA
-StartObject(miR = NULL, mRNA = mRNA) -> MAE
-getIDs_mRNA_mouse(MAE, MAE@ExperimentList$mRNA) -> MAE
-Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC', 
-genes_ID = MAE@ExperimentList$mRNA_entrez,
-idColumn = 'GENENAME') -> mRNA_express
-dloadGMT(MAE = MAE, speciesInitials = "Mm") -> MAE
-ReduceWiki(path_data = MAE@ExperimentList$path_data,
-stringWiki = 'TGF Beta Signaling Pathway') -> singlewiki
-Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
-genes_ID = MAE@ExperimentList$mRNA_entrez,
-idColumn = 'GENENAME') -> MAE@ExperimentList$mRNA_express
-WikimRNA(mRNA_express = MAE@ExperimentList$mRNA_express,
-SingleWiki = singlewiki) -> MAE@ExperimentList$GenesofInterest
+library(MultiAssayExperiment)
+miR <- mm_miR[1:100,]
+mRNA <- mm_mRNA[1:200,]
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
+MAE <- getIDs_mRNA_mouse(MAE, assay(MAE, 2), "useast")
+MAE <- dloadGMT(MAE = MAE, speciesInitials = "Mm")
+
+MAE <- ReduceWiki(MAE, path_data = assay(MAE, 11),
+                  stringWiki = 'TGF Beta Signaling Pathway')
+
+MAE <- Express(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
+               genes_ID = assay(MAE, 7),
+               idColumn = 'GENENAME', 
+               name = "mRNA_log")
+
+MAE <- WikimRNA(MAE, mRNA_express = assay(MAE, 13),
+                singleWiki = assay(MAE, 12),
+                stringWiki = 'TGF Beta Signaling Pathway')
 }

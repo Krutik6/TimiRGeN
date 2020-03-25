@@ -25,21 +25,20 @@ taken for further miR-mRNA interaction analysis.
 }
 \examples{
 library(Mfuzz)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-e_list -> MAE@metadata$elist
-w_list[1:10] -> MAE@metadata$wlist
-WikiMatrix(e_list = MAE@metadata$elist, 
-wp_list = MAE@metadata$wlist) -> MAE@ExperimentList$Wmat
+library(MultiAssayExperiment)
+MAE <- MultiAssayExperiment()
+metadata(MAE)[["e_list"]] <- e_list
+metadata(MAE)[["w_list"]] <- w_list[1:10]
+MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
+                  wp_list = metadata(MAE)[[2]])  
+MAE <- TurnPercent(MAE = MAE, 
+                   wikiMatrix = assay(MAE, 1),
+                   rowInt = 6)
 
-TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-rowInt = 4) -> MAE@metadata$Pmat
+MAE <- CreateClusters(MAE, method = "c", 
+                   percentMatrix = assay(MAE, 2),
+                   noClusters = 2, variance = 0.99)
 
-CreateClusters(method = "c", MAE =  MAE,
-Percent_matrix = MAE@metadata$Pmat,
-no.clusters = 2, Variance = 0.99) -> MAE
-
-Quickfuzz(Mfuzzdata = MAE@ExperimentList$MfuzzData,
-Clusters = MAE@metadata$Clusters, W = FALSE)
+Quickfuzz(Mfuzzdata = experiments(MAE)[[4]],
+          Clusters = metadata(MAE)[[3]], W = FALSE)
 }

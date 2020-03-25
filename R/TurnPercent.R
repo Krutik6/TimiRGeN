@@ -1,52 +1,35 @@
 #' @title TurnPercent
 #' @description Converts integers into percentages, within a matrix.
+#' @param MAE MultiAssayExperiment object.
 #' @param wikiMatrix Matrix of wikipathways and samples.
 #' @param rowInt Which row contains the total number of genes per wikipathway?
 #' @return A percentage matrix.
 #' @export
-#' @usage TurnPercent(wikiMatrix, rowInt)
+#' @usage TurnPercent(MAE, wikiMatrix, rowInt)
 #' @examples
-#'w <- list(WP1 = c("1071", "11303", "11806", "11808", "11812", "11813",
-#'"11814", "11816", "13122", "13350", "15357", "15450",
-#'"16816",  "16835", "16956", "16971", "17777", "18830",
-#'"20652", "20778"),
-#'WP10 = c("11651", "12702", "14784", "16186", "16198", "16199",
-#'"16367", "16451", "16453", "18708", "19247", "20416", "20846",
-#'"20848", "20850", "20851", "26395", "26396", "26413", "26417",
-#'"269523", "384783", "54721", "81601"),
-#'WP103 = c("110196", "13121",  "13360", "14137", "15357", "16987",
-#'"17855", "18194", "192156", "20775", "208715", "235293",
-#'"319554", "66234", "68603"),
-#'WP108 = c("107585",  "107869", "109079", "109815", "114679", "12916",
-#'"13370", "13371",  "14080", "14281", "14775", "14776",
-#'"14778", "16476", "18024",  "18033", "18986", "19697",
-#'"19946", "20226", "20341", "20342",  "20363", "20364",
-#'"20683", "20687", "20768", "211006", "214580",
-#'"223776", "232223", "26462", "27361", "28042", "280621",
-#'"433003", "50493", "50880", "619883", "625249", "625281",
-#'"65967", "664969",  "69227", "71787", "71984", "72657",
-#'"74777", "75420", "75512",  "80795", "9403"),
-#'WP113 = c("12159", "12387", "12393", "12399"))
-#'e <- list(D1 = c("1071", "11303", "11806", "11808", "223776", "232223",
-#'"26462", "27361", "17855", "18194", "192156" ),
-#'D2 = c("19946", "20226", "20341", "20342",  "20363", "20364",
-#'"20683", "20687", "20768", "211006", "214580", "16971",
-#'"17777", "18830"),
-#'D3 = c("1071", "11303", "11806", "11808", "11812", "11813",
-#'"11814", "11816", "13122", "13350", "20652", "20778"))
-#'
-#' mm_miR -> miR
-#' mm_mRNA -> mRNA
-#' StartObject(miR = miR, mRNA = mRNA) -> MAE
-#' MAE@metadata$elist <- e
-#' MAE@metadata$wlist <- w
-#'WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
-#'
-#'TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-#'rowInt = 4) -> MAE@metadata$Pmat
-TurnPercent <- function(wikiMatrix, rowInt){
-        as.matrix(wikiMatrix) -> df1
-        t(t(df1)/df1[rowInt,]*100) -> X
-        format(round(X, 2), nsmall = 2) -> X
-return(X)
+#' library(MultiAssayExperiment)
+#' MAE <- MultiAssayExperiment()
+#' metadata(MAE)["e_list"] <- e_list
+#' metadata(MAE)["w_list"] <- w_list[1:10]
+#' MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
+#'                   wp_list = metadata(MAE)[[2]])
+#'  
+#' MAE <- TurnPercent(MAE = MAE, 
+#'                    wikiMatrix = assay(MAE, 1),
+#'                    rowInt = 6)
+TurnPercent <- function(MAE, wikiMatrix, rowInt){
+    
+    if (missing(MAE)) stop('Add MAE object');
+    if (missing(wikiMatrix)) stop('Add matrix of wikipathways and samples.');
+    if (missing(rowInt)) stop('Add the total number of samples.');
+    
+    df1 <- as.matrix(wikiMatrix)
+    
+    X <- t(t(df1)/df1[rowInt,]*100)
+    X <- format(round(X, 2), nsmall = 2)
+    
+    MAE2 <- suppressMessages(MultiAssayExperiment(list(
+                             "Percentmatrix" = as.data.frame(X))))
+    MAE <- c(MAE, MAE2)
+return(MAE)
 }

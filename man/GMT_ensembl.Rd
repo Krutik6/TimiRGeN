@@ -24,13 +24,13 @@ downloadGMT.}
 Change entrez IDs in wpid2gene and wp_data into ensembl IDs
 }
 \examples{
+library(MultiAssayExperiment)
 library(org.Mm.eg.db)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- dloadGMT(MAE, speciesInitial = "Mm")
 
-dloadGMT(MAE = MAE, speciesInitials = "Mm") -> MAE
-
-GMT_ensembl(MAE = MAE, MAE@ExperimentList$path_gene,
-MAE@ExperimentList$path_data, org.Mm.eg.db) -> MAE
+MAE <- GMT_ensembl(MAE = MAE, assay(MAE, 3),
+                   assay(MAE, 5), org.Mm.eg.db)
 }

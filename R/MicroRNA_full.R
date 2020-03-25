@@ -6,17 +6,24 @@
 #' @return hsa-miR-140-5p would be changed to microRNA 140-1
 #' @export
 #' @examples
-#' mm_miR -> miR
-#' MicroRNA_full(rownames(miR), species = "mmu") -> microRNA_genenames
+#' miR <- mm_miR
+#' microRNA_genenames <- MicroRNA_full(rownames(miR), species = "mmu") 
 MicroRNA_full <- function(miRdf, species){
-        if (missing(miRdf)) stop('Input rowname or column with microRNA
-        names.');
-        if (missing(species)) stop('e.g hsa or mmu.');
-        gsub(miRdf, pattern = paste0(species,'-miR-'),
-        replacement = 'microRNA ') -> x
-        gsub(x, pattern = species, replacement = 'microRNA ') -> x
-        gsub(x, pattern = '5p', replacement = '1') -> x
-        gsub(x, pattern = '3p', replacement = '2') -> x
-        gsub(x, pattern = '-let', replacement = 'let') -> x
+    
+    if (missing(miRdf)) stop('Input rowname or column with microRNA
+                              names.');
+    if (missing(species)) stop('e.g hsa or mmu.');
+    
+    x <- gsub(miRdf, pattern = paste0(species,'-miR-'),
+              replacement = 'microRNA ')
+    
+    x <- gsub(x, pattern = species, replacement = 'microRNA ')
+    
+    x <- gsub(x, pattern = '5p', replacement = '1')
+    
+    x <- gsub(x, pattern = '3p', replacement = '2')
+    
+    x <- gsub(x, pattern = '-let', replacement = 'let')
+    
 return(x)
 }

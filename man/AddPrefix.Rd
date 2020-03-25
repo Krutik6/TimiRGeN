@@ -4,9 +4,11 @@
 \alias{AddPrefix}
 \title{AddPrefix}
 \usage{
-AddPrefix(gene_df, prefixString = '')
+AddPrefix(MAE, gene_df, prefixString = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment}
+
 \item{gene_df}{mRNA or miR results from differential expression analysis 
 inside of a MAE.}
 
@@ -22,11 +24,15 @@ also add any other prefix, if user has other datatypes to explore. Colnames
 should end up in the following naming type: 'genetype_timepoint.datatype'.
 }
 \examples{
+library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-AddPrefix(gene_df = MAE@ExperimentList$miR,
-prefixString = "miR" ) -> MAE@ExperimentList$miR_p
-AddPrefix(gene_df = MAE@ExperimentList$mRNA, 
-prefixString = "mRNA") -> MAE@ExperimentList$mRNA_p
+
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+
+MAE <- AddPrefix(MAE = MAE, gene_df = assay(MAE, 1), 
+                 prefixString = "miR")
+
+MAE <- AddPrefix(MAE = MAE, gene_df = assay(MAE, 2), 
+                 prefixString = "mRNA")
 }

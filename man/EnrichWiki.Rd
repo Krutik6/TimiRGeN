@@ -4,14 +4,17 @@
 \alias{EnrichWiki}
 \title{EnrichWiki}
 \usage{
-EnrichWiki(method = '', e_list, orgDB, path_gene, path_name, ID = '',
-universe, pvalcutoff, qvaluecutoff, padjustmethod)
+EnrichWiki(MAE, method = '', ID_list, orgDB, path_gene, path_name, 
+                  ID = '', universe, pvalcutoff, qvaluecutoff, 
+                  padjustmethod)
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
-\item{e_list}{List of ensembl or entrez IDs for each sample.}
+\item{ID_list}{List of ensembl or entrez IDs for each sample.}
 
 \item{orgDB}{Library of species specific data.}
 
@@ -44,19 +47,16 @@ Finds which wikipathways are enriched within the data.
 \examples{
 library(org.Mm.eg.db)
 library(clusterProfiler)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
 
-e_list -> MAE@metadata$elist
-dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+metadata(MAE)[["e_list"]] <- e_list
+MAE <- dloadGMT(MAE, speciesInitial = "Mm")
 
-MAE@metadata$sigwiki <- EnrichWiki(method = "c",
-e_list = MAE@metadata$elist,
-orgDB = org.Mm.eg.db, 
-path_gene = MAE@ExperimentList$path_gene, 
-path_name = MAE@ExperimentList$path_name, 
-ID = "ENTREZID", 
-universe = MAE@ExperimentList$path_gene$gene)
-
+MAE <- EnrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
+                  orgDB = org.Mm.eg.db, path_gene = assay(MAE, 3), 
+                  path_name = assay(MAE, 4), ID = "ENTREZID", 
+                  universe = assay(MAE, 3)[[2]])
 }

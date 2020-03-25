@@ -3,10 +3,9 @@ library(TimiRGeN)
 library(testthat)
 library(MultiAssayExperiment)
 #load filtered_genelist
-readRDS("IDs_human_miR.rds") -> miR_IDs
+miR_IDs <- readRDS("IDs_mouse_miR.rds")
+X <- assay(miR_IDs, 3)
 
-non_unique(Col = miR_IDs@ExperimentList$miR_entrez$ID, 
-sep = '-', suffix = 'p') -> miR_IDs_dup
+miR_IDs_dup <- non_unique(Col = X$ID, sep = '-', suffix = 'p')
 
-expect_false(isTRUE(all.equal(miR_IDs@ExperimentList$miR_entrez$ID, 
-miR_IDs_dup)))
+expect_false(isTRUE(all.equal(X$ID,  miR_IDs_dup)))

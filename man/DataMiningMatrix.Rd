@@ -4,9 +4,11 @@
 \alias{DataMiningMatrix}
 \title{DataMiningMatrix}
 \usage{
-DataMiningMatrix(corrTable, targetscan , mirdb, mirtarbase)
+DataMiningMatrix(MAE, corrTable, targetscan , mirdb, mirtarbase)
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment.}
+
 \item{corrTable}{Correlation matrix between the mRNAs from the
 wikipathway of interest and miRNA data.}
 

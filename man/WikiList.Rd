@@ -4,9 +4,11 @@
 \alias{WikiList}
 \title{WikiList}
 \usage{
-WikiList(stringSpecies = '', stringSymbol = '')
+WikiList(MAE, stringSpecies = '', stringSymbol = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{stringSpecies}{species wikipathways relate to e.g. 'Homo sapiens'}
 
 \item{stringSymbol}{Type of gene code e.g. 'H'}
@@ -20,4 +22,11 @@ within that wikipathway as the value.
 }
 \details{
 install rWikiPathways.
+}
+\examples{
+\donttest{
+library(MultiAssayExperiment)
+MAE <- MultiAssayExperiment()
+MAE <- WikiList(MAE, stringSpecies = 'Homo sapiens', stringSymbol = 'En')
+}
 }

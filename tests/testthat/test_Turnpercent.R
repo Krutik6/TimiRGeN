@@ -3,26 +3,24 @@ library(TimiRGeN)
 library(testthat)
 library(MultiAssayExperiment)
 #load data
-MAE <- MultiAssayExperiment()
-MAE@ExperimentList$Wmat <- readRDS("wikimatrix.rds")
+Wmat <- readRDS("wikimatrix.rds")
+MAE <- MultiAssayExperiment(list("Wikimatrix" = Wmat))
 #test TurnPercent
-TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat, rowInt = 6
-) -> MAE@metadata$Pmat
+MAE <- TurnPercent(MAE, wikiMatrix = assay(MAE, 1), rowInt = 6)
 #internal checks
-as.matrix(MAE@ExperimentList$Wmat) -> df1
+df1 <- as.matrix(assay(MAE, 1))
 #check 1
 #df1 should be a matrix
 test_that("df1 is a matrix", {
-expect_true(is.matrix(df1))
+    expect_true(is.matrix(df1))
 })
 #continue
-t(t(df1)/df1[6,]*100) -> X
-format(round(X, 2), nsmall = 2) -> X
+X <- t(t(df1)/df1[6,]*100)
+X <- format(round(X, 2), nsmall = 2)
 #check 2
 #manual output is the same as functional ouput
 test_that("check expected and observed output", {
-expect_equal(MAE@metadata$Pmat, X)
+    expect_equal(assay(MAE, 2), as.data.frame(X))
 })
-#save file
 #save data
-saveRDS(MAE@metadata$Pmat, "Pmat.rds", compress = "xz")
+saveRDS(as.data.frame(X), "Pmat.rds", compress = "xz")

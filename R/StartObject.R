@@ -10,11 +10,12 @@
 #' @importFrom MultiAssayExperiment MultiAssayExperiment
 #' @usage StartObject(miR, mRNA)
 #' @examples
-#' mm_miR -> miR
-#' mm_mRNA -> mRNA
-#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' library(MultiAssayExperiment)
+#' miR <- mm_miR
+#' mRNA <- mm_mRNA
+#' MAE <- StartObject(miR = miR, mRNA = mRNA)
 StartObject <- function(miR, mRNA){
-Data <- list("miR" = as.data.frame(miR), "mRNA" = as.data.frame(mRNA))
-MAE <- MultiAssayExperiment(experiments = Data)
-return(MAE)
+    Data <- list("miR" = as.data.frame(miR), "mRNA" = as.data.frame(mRNA))
+    MAE <- suppressMessages(MultiAssayExperiment(experiments = Data))
+    return(MAE)
 }

@@ -11,36 +11,52 @@
 #' @importFrom dplyr select
 #' @usage dloadGMT(MAE, speciesInitials = "")
 #' @examples
-#' mm_miR -> miR
-#' mm_mRNA -> mRNA
-#' StartObject(miR = miR, mRNA = mRNA) -> MAE
-#' dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+#' miR <- mm_miR
+#' mRNA <- mm_mRNA
+#' MAE <- StartObject(miR = miR, mRNA = mRNA)
+#' MAE <- dloadGMT(MAE, speciesInitial = "Mm")
 dloadGMT <- function(MAE, speciesInitials){
-if (missing(speciesInitials)) stop('speciesInitials should be either Mm
-for mouse data or Hs for human data.')
-ont <- wpid <- gene <- name <- NULL
-if (speciesInitials == "Mm") {
-download.file(paste("http://data.wikipathways.org/20200110/gmt/",
-"wikipathways-20200110-gmt-Mus_musculus.gmt", sep = ""),
-"mus.gmt")
-read.gmt("mus.gmt") -> gmt
-file.remove("mus.gmt")
-} else if (speciesInitials == "Hs") {
-download.file(paste("http://data.wikipathways.org/20200110/gmt/",
-"wikipathways-20200110-gmt-Homo_sapiens.gmt", sep = ""),
-"hom.gmt")
-read.gmt("hom.gmt") -> gmt
-file.remove("hom.gmt")
-}
-as.data.frame(gmt) -> gmt
-colnames(gmt) <- c("ont", "gene")
-gmt %>% separate(ont, c("name","version","wpid","org"), "%") -> pathways
-MAE@ExperimentList$path_gene <- as.data.frame(pathways%>%dplyr::select(wpid, 
-gene))
-MAE@ExperimentList$path_name <- as.data.frame(pathways%>%dplyr::select(wpid, 
-name))
-MAE@ExperimentList$path_data <- as.data.frame(pathways%>%dplyr::select(wpid,
-gene,
-name))
-return(MAE)
+    
+    if (missing(MAE)) stop('Add MultiAssayExperiment');
+    if (missing(speciesInitials)) stop('speciesInitials should be either Mm
+                                       for mouse data or Hs for human data.');
+    
+    ont <- wpid <- gene <- name <- NULL
+    
+    # If mouse is selected?
+    if (speciesInitials == "Mm") {
+        download.file(paste("http://data.wikipathways.org/20200110/gmt/",
+                            "wikipathways-20200110-gmt-Mus_musculus.gmt",
+                            sep = ""),
+                            "mus.gmt")
+        gmt <- read.gmt("mus.gmt")
+        file.remove("mus.gmt")
+        
+    # If human is selected?    
+    } else if (speciesInitials == "Hs") {
+        download.file(paste("http://data.wikipathways.org/20200110/gmt/",
+                            "wikipathways-20200110-gmt-Homo_sapiens.gmt", 
+                            sep = ""),
+                            "hom.gmt")
+        gmt <- read.gmt("hom.gmt")
+        file.remove("hom.gmt")
+    }
+    
+    gmt <- as.data.frame(gmt)
+    colnames(gmt) <- c("ont", "gene")
+    # separate by % into data frame
+    pathways <- gmt %>% separate(ont, c("name","version","wpid","org"), "%")
+    
+    path_gene <- as.data.frame(pathways%>%dplyr::select(wpid, gene))
+    path_name <- as.data.frame(pathways%>%dplyr::select(wpid, name))
+    path_data <- as.data.frame(pathways%>%dplyr::select(wpid,gene,name))
+    
+    MAE2 <- suppressMessages(MultiAssayExperiment(list("path_gene" = path_gene, 
+                                                       "path_name" = path_name,
+                                                       "path_data" = path_data)
+                                                  ))
+    
+    MAE <- c(MAE, MAE2)
+    
+    return(MAE)
 }

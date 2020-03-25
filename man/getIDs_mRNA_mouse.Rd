@@ -25,9 +25,9 @@ mouse mRNAs.
 }
 \examples{
 library(biomaRt)
-mm_mRNA -> mRNA
-mRNA[1:20,] -> mRNA
-StartObject(miR = NULL, mRNA = mRNA) -> MAE
-getIDs_mRNA_mouse(MAE = MAE, mRNA = MAE@ExperimentList$mRNA, 
-mirror = 'useast') -> MAE
+library(MultiAssayExperiment)
+mRNA <- mm_mRNA
+mRNA <- mRNA[1:20,]
+MAE <- StartObject(miR = NULL, mRNA = mRNA)
+MAE <- getIDs_mRNA_mouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 }

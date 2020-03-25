@@ -20,8 +20,8 @@ fullnames 3) combination of 1 and 2. All of which can be sotred in an MAE.
 Provides mouse or human wikipathway information.
 }
 \examples{
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- dloadGMT(MAE, speciesInitial = "Mm")
 }

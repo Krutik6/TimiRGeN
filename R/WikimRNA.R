@@ -1,37 +1,50 @@
 #' @title WikimRNA
 #' @description Identify which mRNAs are in common with the genes found in the
 #' wikipathway of interest.
+#' @param MAE MultiAssayExperiment object.
 #' @param mRNA_express Output from the Express function on mRNA data.
-#' @param SingleWiki Output from ReduceWiki function on a Wikipathway
+#' @param singleWiki Output from ReduceWiki function on a Wikipathway
 #' of interest.
+#' @param stringWiki Name of the pathway of interest.
 #' @return A dataframe of mRNA entries which are also found in the wikipathway
 #' of interest.
 #' @export
-#' @usage WikimRNA(mRNA_express, SingleWiki)
+#' @usage WikimRNA(MAE, mRNA_express, singleWiki, stringWiki='')
 #' @examples
 #' library(biomaRt)
-#' mm_mRNA -> mRNA
-#' StartObject(miR = NULL, mRNA = mRNA) -> MAE
-#' getIDs_mRNA_mouse(MAE, MAE@ExperimentList$mRNA) -> MAE
-#' Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC', 
-#' genes_ID = MAE@ExperimentList$mRNA_entrez,
-#' idColumn = 'GENENAME') -> mRNA_express
-# 
-#' dloadGMT(MAE = MAE, speciesInitials = "Mm") -> MAE
-# 
-#' ReduceWiki(path_data = MAE@ExperimentList$path_data,
-#' stringWiki = 'TGF Beta Signaling Pathway') -> singlewiki
-# 
-#' Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
-#' genes_ID = MAE@ExperimentList$mRNA_entrez,
-#' idColumn = 'GENENAME') -> MAE@ExperimentList$mRNA_express
-# 
-#' WikimRNA(mRNA_express = MAE@ExperimentList$mRNA_express,
-#' SingleWiki = singlewiki) -> MAE@ExperimentList$GenesofInterest
-WikimRNA <- function(mRNA_express, SingleWiki){
-if (missing(mRNA_express)) stop("Use Express function of mRNA data.")
-if (missing(SingleWiki)) stop("Use ReduceWiki function on a Wikipathway
-of interest.")
-mRNA_express[which(mRNA_express$ID %in% SingleWiki[,2]),] -> GenesofInterest
-return(GenesofInterest)
+#' library(MultiAssayExperiment)
+#' miR <- mm_miR[1:100,]
+#' mRNA <- mm_mRNA[1:200,]
+#' MAE <- StartObject(miR = miR, mRNA = mRNA)
+#' MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
+#' MAE <- getIDs_mRNA_mouse(MAE, assay(MAE, 2), "useast")
+#' MAE <- dloadGMT(MAE = MAE, speciesInitials = "Mm")
+#' 
+#' MAE <- ReduceWiki(MAE, path_data = assay(MAE, 11),
+#'                   stringWiki = 'TGF Beta Signaling Pathway')
+#' 
+#' MAE <- Express(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
+#'                genes_ID = assay(MAE, 7),
+#'                idColumn = 'GENENAME', 
+#'                name = "mRNA_log")
+#' 
+#' MAE <- WikimRNA(MAE, mRNA_express = assay(MAE, 13),
+#'                 singleWiki = assay(MAE, 12),
+#'                 stringWiki = 'TGF Beta Signaling Pathway')
+WikimRNA <- function(MAE, mRNA_express, singleWiki, stringWiki){
+    
+    if (missing(MAE)) stop("Insert MAE object.");
+    if (missing(mRNA_express)) stop("Use Express function of mRNA data.");
+    if (missing(singleWiki)) stop("Use ReduceWiki function on a Wikipathway
+                                   of interest.");
+    if (missing(stringWiki)) stop("Name of the wikipathway.");
+    
+    mRNAs <- mRNA_express
+    pathway <- singleWiki
+    GenesofInterest <- mRNAs[which(mRNAs$ID %in% pathway[,2]),]
+    MAE2 <- suppressMessages(MultiAssayExperiment(list(x = GenesofInterest)))
+    a <- "GoI_"
+    names(MAE2) <- paste0(a, stringWiki)
+    MAE <- c(MAE, MAE2)
+    return(MAE)
 }

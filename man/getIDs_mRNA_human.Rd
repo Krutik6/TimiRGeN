@@ -25,8 +25,9 @@ for human mRNAs.
 }
 \examples{
 library(biomaRt)
-hs_mRNA -> mRNA
-mRNA[1:20,] -> mRNA
-StartObject(miR = NULL, mRNA = mRNA) -> MAE
-getIDs_mRNA_human(MAE, MAE@ExperimentList$mRNA, mirror = "useast") -> MAE
+library(MultiAssayExperiment)
+mRNA <- mm_mRNA
+mRNA <- mRNA[1:20,]
+MAE <- StartObject(miR = NULL, mRNA = mRNA)
+MAE <- getIDs_mRNA_human(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 }

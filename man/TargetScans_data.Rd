@@ -4,9 +4,11 @@
 \alias{TargetScans_data}
 \title{TargetScans_data}
 \usage{
-TargetScans_data(targetScan, species = '')
+TargetScans_data(MAE, targetScan, species = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiments.}
+
 \item{targetScan}{File of non-conserved miR-mRNA predicted targets.
 Downloaded from here
 http://www.targetscan.org/cgi-bin/targetscan/data_download.vert72.cgi.}
@@ -23,16 +25,21 @@ package.
 }
 \examples{
 library(tidyverse)
-data.frame(row.names = c("215", "216", "286", "287"),
-"Gene" = c("ENSG00000148584.10", "ENSG00000148584.10",
-"ENSG00000109576.9", "ENSG00000109576.9"),
-"ID" =c("A1CF", "A1CF", "AADAT", "AADAT"),
-"Gene.1" = c("ENST00000374001.2", "ENST00000374001.2",
-"ENST00000337664.4", "ENST00000337664.4"),
-"Symbol" = c("10090", "10090", "10090", "10090"),
-"Transcript" = c("mmu-miR-429-3p", "mmu-miR-374c-5p",
-"mmu-miR-182-5p",
-"mmu-miR-340-5p")) -> TargetScans
-TargetScans_data(targetScan = TargetScans,
-species = 'mmu') -> TargetScans_mmu
+library(MultiAssayExperiment)
+MAE <- MultiAssayExperiment(list(TargetScans = data.frame(
+                         row.names = c("215", "216", "286", "287"),
+                        "Gene" = c("ENSG00000148584.10", 
+                                   "ENSG00000148584.10",
+                                   "ENSG00000109576.9", 
+                                   "ENSG00000109576.9"),
+                         "ID" =c("A1CF", "A1CF", "AADAT", "AADAT"),
+                         "Gene.1" = c("ENST00000374001.2", 
+                                      "ENST00000374001.2",
+                                      "ENST00000337664.4", 
+                                      "ENST00000337664.4"),
+                        "Symbol" = c("10090", "10090", "10090", "10090"),
+                       "Transcript" = c("mmu-miR-429-3p", "mmu-miR-374c-5p", 
+                                    "mmu-miR-182-5p","mmu-miR-340-5p"))))
+TargetScans_df <- TargetScans_data(MAE, targetScan = assay(MAE, 1),
+                                  species = 'mmu')
 }

@@ -1,55 +1,36 @@
 #' @title WikiMatrix
 #' @description Creates a matrix which shows how many genes from the data are
 #'found in each wikipathway for a specific species.
-#' @param e_list list of gene names as strings
-#' @param wp_list list of list of wikipathways with gene names as strings
+#' @param MAE MultiAssayExperiment object.
+#' @param ID_list list of gene names as strings.
+#' @param wp_list list of list of wikipathways with gene names as strings.
 #'
 #' @return A matrix of timepoints and wikipathways.
 #' @export
-#' @usage WikiMatrix(e_list, wp_list)
+#' @usage WikiMatrix(MAE, ID_list, wp_list)
 #'
 #' @examples
-#'w <- list(WP1 = c("1071", "11303", "11806", "11808", "11812", "11813",
-#'"11814", "11816", "13122", "13350", "15357", "15450",
-#'"16816",  "16835", "16956", "16971", "17777", "18830",
-#'"20652", "20778"),
-#'WP10 = c("11651", "12702", "14784", "16186", "16198", "16199",
-#'"16367", "16451", "16453", "18708", "19247", "20416", "20846",
-#'"20848", "20850", "20851", "26395", "26396", "26413", "26417",
-#'"269523", "384783", "54721", "81601"),
-#'WP103 = c("110196", "13121",  "13360", "14137", "15357", "16987",
-#'"17855", "18194", "192156", "20775", "208715", "235293",
-#'"319554", "66234", "68603"),
-#'WP108 = c("107585",  "107869", "109079", "109815", "114679", "12916",
-#'"13370", "13371",  "14080", "14281", "14775", "14776",
-#'"14778", "16476", "18024",  "18033", "18986", "19697",
-#'"19946", "20226", "20341", "20342",  "20363", "20364",
-#'"20683", "20687", "20768", "211006", "214580",
-#'"223776", "232223", "26462", "27361", "28042", "280621",
-#'"433003", "50493", "50880", "619883", "625249", "625281",
-#'"65967", "664969",  "69227", "71787", "71984", "72657",
-#'"74777", "75420", "75512",  "80795", "9403"),
-#'WP113 = c("12159", "12387", "12393", "12399"))
-#'e <- list(D1 = c("1071", "11303", "11806", "11808", "223776", "232223",
-#'"26462", "27361", "17855", "18194", "192156" ),
-#'D2 = c("19946", "20226", "20341", "20342",  "20363", "20364",
-#'"20683", "20687", "20768", "211006", "214580", "16971",
-#'"17777", "18830"),
-#'D3 = c("1071", "11303", "11806", "11808", "11812", "11813",
-#'"11814", "11816", "13122", "13350", "20652", "20778"))
-#' 
-#' mm_miR -> miR
-#' mm_mRNA -> mRNA
-#' StartObject(miR = miR, mRNA = mRNA) -> MAE
-#' MAE@metadata$elist <- e
-#' MAE@metadata$wlist <- w
-#'WikiMatrix(e_list = e, wp_list = w) -> MAE@ExperimentList$Wmat
-WikiMatrix <- function(e_list, wp_list){
-if (missing(e_list)) stop('Input list of list of genenames.');
-if (missing(wp_list)) stop('Input list of list of wikipathways.');
-sapply(wp_list, function(x) {
-sapply(e_list, function(y) sum(x %in% y))}) -> wmat
-lapply(wp_list, function(x){length(x)}) -> L
-as.data.frame(rbind(wmat, Total = unlist(L))) -> wmat2
-return(wmat2)
+#' library(MultiAssayExperiment)
+#' MAE <- MultiAssayExperiment()
+#' metadata(MAE)[["ID_list"]] <- e_list
+#' metadata(MAE)[["w_list"]] <- w_list[1:10]
+#' MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
+#'                   wp_list = metadata(MAE)[[2]])
+WikiMatrix <- function(MAE, ID_list, wp_list){
+    
+    if (missing(MAE)) stop('Add MAE object');
+    if (missing(ID_list)) stop('Input list of list of genenames.');
+    if (missing(wp_list)) stop('Input list of list of wikipathways.');
+    
+    wmat <- sapply(wp_list, function(x) {
+        sapply(ID_list, function(y) sum(x %in% y))})
+    
+    L <- lapply(wp_list, function(x){length(x)})
+    
+    wmat2 <- as.data.frame(rbind(wmat, Total = unlist(L)))
+    
+    MAE2 <- suppressMessages(MultiAssayExperiment(list("wikimatrix" = wmat2)))
+    MAE <- c(MAE, MAE2)
+    
+    return(MAE)
 }

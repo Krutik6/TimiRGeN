@@ -4,9 +4,11 @@
 \alias{GenesList}
 \title{GenesLists}
 \usage{
-GenesList(method, genetic_data, timeString, miR_data, mRNA_data)
+GenesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 }
 \arguments{
+\item{MAE}{Multi Assay Experiment object.}
+
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
@@ -39,22 +41,24 @@ will have dataframes which have been made by separating by 'timepoint.'.
 Make sure to follow colname nomenclature carefully.
 }
 \examples{
-mm_miR -> miR
-mm_mRNA -> mRNA
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
 
-StartObject(miR = miR, mRNA = mRNA) -> MAE
+MAE <- StartObject(miR = miR, mRNA = mRNA)
 
-AddPrefix(gene_df = MAE@ExperimentList$miR,
-prefixString = "miR" ) -> MAE@ExperimentList$miR_p
-AddPrefix(gene_df = MAE@ExperimentList$mRNA, 
-prefixString = "mRNA") -> MAE@ExperimentList$mRNA_p
+MAE <- AddPrefix(MAE = MAE, gene_df = assay(MAE, 1), 
+                 prefixString = "miR")
 
-GenesList(method = "s", miR_data = MAE@ExperimentList$miR_p,
-mRNA_data = MAE@ExperimentList$mRNA_p) -> MAE@metadata$genelist
+MAE <- AddPrefix(MAE = MAE, gene_df = assay(MAE, 2), 
+                 prefixString = "mRNA")
 
-CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
-MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+MAE <- GenesList(MAE, method = "s", miR_data = assay(MAE, 3),
+                 mRNA_data = assay(MAE, 4))
 
-GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
-timeString = 'D') -> MAE@metadata$genelist
+MAE <- CombineGenes(MAE, miR_data = assay(MAE, 1), 
+                    mRNA_data = assay(MAE, 2))
+
+MAE <- GenesList(MAE, method = 'c', genetic_data = assay(MAE, 5),
+                 timeString = 'D')
 }

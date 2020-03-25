@@ -4,14 +4,16 @@
 \alias{MakeMapp}
 \title{MakeMapp}
 \usage{
-MakeMapp(filt_df, miR_IDs_adj, Datatype = '')
+MakeMapp(MAE, filt_df, miR_IDs_adj, dataType = '')
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{filt_df}{Dataframe of mined microRNA-mRNA interactions}
 
 \item{miR_IDs_adj}{miR_enseml_adj or miR_entrez_adj}
 
-\item{Datatype}{L for entrez or En for ensembl}
+\item{dataType}{L for entrez or En for ensembl}
 }
 \value{
 A dataframe which should be saved as a text file for import into
@@ -21,27 +23,26 @@ pathvisio.
 Create input for the MAPP plugin in pathvisio.
 }
 \examples{
-library(org.Mm.eg.db)
-library(clusterProfiler)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
+library(biomaRt)
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
 
-MAE@ExperimentList$Int_matrix <- data.frame(row.names = c(
-"mmu-miR-320-3p:Acss1","mmu-miR-27a-3p:Odc1"),
-avecor = c(-0.9191653, 0.7826041),
-miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
-mRNA = c("Acss1", "Acss1"),
-miR_Entrez = c(NA, NA),
-mRNA_Entrez = c(68738, 18263),
-TargetScan = c(1, 0),
-miRDB = c(0, 0),
-Predicted_Interactions = c(1, 0),
-miRTarBase = c(0, 1),
-Pred_Fun = c(1, 1))
+Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
+                                     "mmu-miR-27a-3p:Odc1"),
+                      avecor = c(-0.9191653, 0.7826041),
+                      miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
+                      mRNA = c("Acss1", "Acss1"),
+                      miR_Entrez = c(NA, NA),
+                      mRNA_Entrez = c(68738, 18263),
+                      TargetScan = c(1, 0),
+                      miRDB = c(0, 0),
+                      Predicted_Interactions = c(1, 0),
+                      miRTarBase = c(0, 1),
+                      Pred_Fun = c(1, 1))
 
-MakeMapp(filt_df = MAE@ExperimentList$Int_matrix, 
-miR_IDs_adj = MAE@ExperimentList$miR_adjusted_entrez, 
-Datatype = 'L') ->  MAE@ExperimentList$MAPPS
+MAE <- MakeMapp(MAE, filt_df = Filt_df, miR_IDs_adj = assay(MAE, 5), 
+                dataType = 'L')
 }

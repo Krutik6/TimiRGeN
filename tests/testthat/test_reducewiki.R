@@ -3,18 +3,17 @@ library(TimiRGeN)
 library(testthat)
 library(MultiAssayExperiment)
 #load data
-readRDS("wpdata.rds") -> mm_wplist
-mm_wplist[[3]] -> wp2data
+MAE <- readRDS("wpdata.rds")
 #run function
-ReduceWiki(path_data  = wp2data,
-stringWiki = "Amino Acid metabolism") -> single
+MAE <- ReduceWiki(MAE, path_data  = assay(MAE, 3), 
+                  stringWiki = "Amino Acid metabolism")
 #internal checks
-wp2data[which(wp2data$name == 'Amino Acid metabolism')
-,] -> singlewiki
+PD <- assay(MAE, 3)
+singlewiki <- PD[which(PD$name == 'Amino Acid metabolism'),]
 #check 1
 #test that output is the same in functional and manual code
 test_that("single and singlewiki should be the same", {
-expect_equal(single, singlewiki)
+    expect_equal(assay(MAE, 4), singlewiki)
 })
 #save data
-saveRDS(single, "interactions.rds", compress = "xz")
+saveRDS(singlewiki, "interactions.rds", compress = "xz")

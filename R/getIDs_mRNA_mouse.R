@@ -12,29 +12,47 @@
 #' @usage getIDs_mRNA_mouse(MAE, mRNA, mirror)
 #' @examples
 #' library(biomaRt)
-#' mm_mRNA -> mRNA
-#' mRNA[1:20,] -> mRNA
-#' StartObject(miR = NULL, mRNA = mRNA) -> MAE
-#' getIDs_mRNA_mouse(MAE = MAE, mRNA = MAE@ExperimentList$mRNA, 
-#' mirror = 'useast') -> MAE
+#' library(MultiAssayExperiment)
+#' mRNA <- mm_mRNA
+#' mRNA <- mRNA[1:20,]
+#' MAE <- StartObject(miR = NULL, mRNA = mRNA)
+#' MAE <- getIDs_mRNA_mouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 getIDs_mRNA_mouse <- function(MAE, mRNA, mirror = 'useast'){
-if (missing(mRNA)) stop('Add microRNA as.data.frame. Rownames are genes and
-columns are results from differential
-expression analysis.')
-mouse <- biomaRt::useEnsembl("ensembl",dataset="mmusculus_gene_ensembl",
-GRCh=37, host = paste0(mirror, ".ensembl.org"))
-glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
-"entrezgene_id"),
-filters = "external_gene_name", values = rownames(mRNA),
-mart = mouse, uniqueRows = TRUE)
-glist <- glist[! duplicated(glist$external_gene_name),]
-gene_data <- cbind(mRNA, rownames(mRNA))
-m_dat <- merge(x = gene_data, y = glist, by.x = 'rownames(mRNA)', by.y =
-'external_gene_name', all = TRUE)
-rownames(m_dat) <- m_dat$`rownames(mRNA)`
-MAE@ExperimentList$mRNA_entrez <- as.data.frame(cbind(GENENAME = rownames(
-m_dat), ID = m_dat$entrezgene_id)) 
-MAE@ExperimentList$mRNA_ensembl <- as.data.frame(cbind(GENENAME = rownames(
-m_dat), ID = m_dat$ensembl_gene_id))
+    
+    if(missing(MAE)) stop('Use the StartObject function.');
+    if (missing(mRNA)) stop('Add microRNA as.data.frame. Rownames are genes and
+                            columns are results from differential 
+                            expression analysis.');
+    
+    mouse <- biomaRt::useEnsembl("ensembl",dataset="mmusculus_gene_ensembl",
+                                 GRCh=37, host = paste0(mirror, ".ensembl.org"))
+    
+    # Get IDs
+    glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
+                                  "entrezgene_id"),
+                                  filters = "external_gene_name",
+                                  values = rownames(mRNA),
+                                  mart = mouse, uniqueRows = TRUE)
+    
+    glist <- glist[! duplicated(glist$external_gene_name),]
+    
+    gene_data <- cbind(mRNA, rownames(mRNA))
+    
+    m_dat <- merge(x = gene_data, y = glist, by.x = 'rownames(mRNA)', 
+                   by.y = 'external_gene_name', all = TRUE)
+    
+    rownames(m_dat) <- m_dat$`rownames(mRNA)`
+    
+    # Save to MAE object
+    MAE2 <- suppressMessages(MultiAssayExperiment(list(
+                                            mRNA_entrez = data.frame(cbind(
+                                                GENENAME = rownames(m_dat), 
+                                                ID = m_dat$entrezgene_id)),
+                                            mRNA_enembl = data.frame(cbind(
+                                                GENENAME = rownames(m_dat), 
+                                                ID = m_dat$ensembl_gene_id)))))
+    
+    MAE <- c(MAE, MAE2)
+
 return(MAE)
 }

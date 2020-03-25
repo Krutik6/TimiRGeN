@@ -4,34 +4,30 @@ library(MultiAssayExperiment)
 library(testthat)
 #load filtered_genelist
 MAE <- MultiAssayExperiment()
-MAE@metadata$filtered_genelist <- readRDS(
-"filtered_genelist_s.rds") 
+metadata(MAE)[["filtered_genelist"]] <- readRDS("filtered_genelist_s.rds") 
 #load mouse data
 miR <- readRDS("IDs_mouse_miR.rds")
 mRNA <- readRDS("IDs_mouse_mRNA.rds")
 #test function
-AddIDs(method = 's', filtered_genelist = MAE@metadata$filtered_genelist, 
-miR_IDs = miR@ExperimentList$miR_ensembl, 
-mRNA_IDs = mRNA@ExperimentList$mRNA_ensembl) -> MAE@metadata$ensembl_genes
+MAE <- AddIDs(MAE, method = 's', 
+            filtered_genelist = metadata(MAE)[[1]], 
+            miR_IDs = assay(miR, 2),  
+            mRNA_IDs = assay(mRNA, 2))
 #check 1
 test_that("ensembl_genes has qualities which are expected", {
-expect_equal(class(MAE@metadata$ensembl_genes), "list")
-expect_equal(length(MAE@metadata$ensembl_genes[[1]]),
-length(MAE@metadata$filtered_genelist[[1]]))
-expect_gt(length(MAE@metadata$ensembl_genes[[1]][[1]]),
-length(MAE@metadata$filtered_genelist[[1]][[1]]))
+    expect_equal(class(metadata(MAE)[[2]]), "list")
+    expect_equal(length(metadata(MAE)[[1]]), length(metadata(MAE)[[2]]))
 })
-#internal checks
-colnames(miR@ExperimentList$miR_ensembl) <- c("GENENAME", "ID")
-colnames(mRNA@ExperimentList$mRNA_ensembl) <- c("GENENAME", "ID")
-
-Map(function(x, y) lapply(x, function(dat) {dat$GENENAME <- row.names(dat);
-merge(dat, y)}), MAE@metadata$filtered_genelist,
-list(miR@ExperimentList$miR_ensembl, mRNA@ExperimentList$mRNA_ensembl)) -> X
+#continue
+metadata(MAE)[["data_IDs2"]] <- Map(function(x, y) lapply(x, function(dat) {
+                                     dat$GENENAME <- row.names(dat);
+                                     merge(dat, y)}), metadata(MAE)[[1]],
+                                     list(assay(miR, 2), assay(mRNA, 2)))
 #check 2
 test_that("outputs are the same", {
-expect_equal(X, MAE@metadata$ensembl_genes)
+    expect_equal(metadata(MAE)[[3]], metadata(MAE)[[2]])
 })
+
 #save data
-saveRDS(MAE@metadata$ensembl_genes,
-file = "ensembl_genes_s.rds", compress = "xz")
+saveRDS(metadata(MAE)[[2]],file = "ensembl_genes_s.rds", compress = "xz")
+

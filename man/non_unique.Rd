@@ -23,9 +23,10 @@ Internal function for getIDs_miR_mousetohuman. Helps data
 wrangling for -3p and -5p genes.
 }
 \examples{
-data.frame(name = c("mmu-miR-101a-3p", "mmu-miR-101a-5p", "mmu-miR-101c",
-"mmu-miR-106a-5p", "mmu-miR-106b-3p"),
-Hs_n = c("hsa-miR-101-1", "hsa-miR-101-1", "hsa-miR-101c",
-"hsa-miR-106a", "hsa-miR-106b")) -> sample
-non_unique(Col = sample$Hs_n, sep = '-', suffix = 'p') -> sample$Hs_n
+sample <- data.frame(name = c("mmu-miR-101a-3p", "mmu-miR-101a-5p", 
+                             "mmu-miR-101c","mmu-miR-106a-5p", 
+                             "mmu-miR-106b-3p"),
+          Hs_n = c("hsa-miR-101-1", "hsa-miR-101-1", "hsa-miR-101c",
+                   "hsa-miR-106a", "hsa-miR-106b"))
+sample$Hs_n <- non_unique(Col = sample$Hs_n, sep = '-', suffix = 'p') 
 }

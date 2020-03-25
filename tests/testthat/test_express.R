@@ -5,36 +5,39 @@ library(MultiAssayExperiment)
 #load data
 #format miR and mRNA data
 #load ID data
-readRDS("MAE_mm.rds") -> MAE
-readRDS("IDs_mouse_miR.rds") -> miR
-readRDS("IDs_mouse_mRNA.rds") -> mRNA
+MAE <- readRDS("MAE_mm.rds")
+miR <- readRDS("IDs_mouse_miR.rds")
+mRNA <- readRDS("IDs_mouse_mRNA.rds")
 #test function
-Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
-genes_ID = mRNA@ExperimentList$mRNA_entrez,
-idColumn = 'GENENAME') -> MAE@ExperimentList$mRNA_log2fc
+MAE <- Express(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
+                       genes_ID = assay(mRNA, 1), 
+                       idColumn = 'GENENAME', 
+                       'mRNA_log2fc')
 #internal checks on mRNA data
-exp <- cbind(names = rownames(MAE@ExperimentList$mRNA),
-MAE@ExperimentList$mRNA[,grep('Log2FC', colnames(MAE@ExperimentList$mRNA))])
+exp <- cbind(names = rownames(assay(MAE, 2)),
+             assay(MAE, 2)[,grep('Log2FC', colnames(assay(MAE, 2)))])
 #check 1
 #exp should be the same row length as mRNA
 test_that("aspects of exp should be similiar to mRNA", {
-expect_equal(length(rownames(MAE@ExperimentList$mRNA)),
-length(rownames(exp)))
-expect_equal(rownames(MAE@ExperimentList$mRNA), rownames(exp))
+    expect_equal(length(rownames(assay(MAE, 2))), length(rownames(exp)))
+    expect_equal(rownames(assay(MAE, 2)), rownames(exp))
 })
 #continue
-merge(exp, mRNA@ExperimentList$mRNA_entrez, by.x = 'names', by.y = 'GENENAME',
-all = TRUE) -> merged
+merged <- merge(exp, mRNA@ExperimentList$mRNA_entrez, by.x = 'names',
+                by.y = 'GENENAME',all = TRUE)
 rownames(merged) <- merged[[1]]
 merged[[1]] <- NULL
 #check 2
 #functional and manual output should be the same
 test_that("output is the same in merged and mRNA_log2fc", {
-expect_equal(merged, MAE@ExperimentList$mRNA_log2fc)
+    expect_equal(merged, assay(MAE, 3))
 })
 #Express on miRNA data
-Express(df = MAE@ExperimentList$miR, dataType = 'Log2FC', 
-genes_ID = miR@ExperimentList$miR_entrez,
-idColumn = 'GENENAME') -> MAE@ExperimentList$miR_log2fc
+MAE <- Express(MAE, df = assay(MAE, 1), 
+                    dataType = 'Log2FC', 
+                    genes_ID = assay(miR, 3),
+                    idColumn = 'GENENAME',
+                    name = 'miR_log2fc')
+
 #save data as rds
 saveRDS(MAE, "log2fc.rds", compress = "xz")

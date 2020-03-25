@@ -4,10 +4,10 @@
 \alias{CytoMake}
 \title{CytoMake}
 \usage{
-CytoMake(interaction_data, titleString = '', collectionString = '')
+CytoMake(interactionData, titleString = '', collectionString = '')
 }
 \arguments{
-\item{interaction_data}{Output from MatrixFiler. Requires a dataframe with
+\item{interactionData}{Output from MatrixFiler. Requires a dataframe with
 columns names MIR and mRNA}
 
 \item{titleString}{Title of the network.}
@@ -21,4 +21,32 @@ A network visible in cytoscape.
 Creates a cytoscape network based on the output of MatrixFilter.
 Requires RCy3 package and cytoscapePing() to be used. Make sure Cytoscape
 is open first.
+}
+\examples{
+\donttest{
+#' library(biomaRt)
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
+
+Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
+                                     "mmu-miR-27a-3p:Odc1"),
+                      avecor = c(-0.9191653, 0.7826041),
+                      miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
+                      mRNA = c("Acss1", "Acss1"),
+                      miR_Entrez = c(NA, NA),
+                      mRNA_Entrez = c(68738, 18263),
+                      TargetScan = c(1, 0),
+                      miRDB = c(0, 0),
+                      Predicted_Interactions = c(1, 0),
+                      miRTarBase = c(0, 1),
+                      Pred_Fun = c(1, 1))
+
+cytoscapePing()
+
+CytoMake(interactionData = Filt_df, titleString = 'test' ,
+         collectionString = 'collectiontest')                      
+}
 }

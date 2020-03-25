@@ -4,9 +4,11 @@
 \alias{AddIDs}
 \title{AddIDs}
 \usage{
-AddIDs(method, filtered_genelist, miR_IDs, mRNA_IDs)
+AddIDs(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs)
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment object.}
+
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
@@ -30,22 +32,23 @@ the filtered_genelist.
 \examples{
 library(clusterProfiler)
 library(org.Mm.eg.db)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-getIDs_miR_mouse(MAE = MAE, miR = MAE@ExperimentList$miR) -> MAE
-getIDs_mRNA_mouse(MAE = MAE, mRNA = MAE@ExperimentList$mRNA) -> MAE
+library(MultiAssayExperiment)
 
-CombineGenes(miR_data = MAE@ExperimentList$miR, 
-mRNA_data = MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+miR <- mm_miR
+mRNA <- mm_mRNA
+Data <- StartObject(miR = miR, mRNA = mRNA)
 
-GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
-timeString = 'D') -> MAE@metadata$genelist
+Data <- CombineGenes(MAE = Data, miR_data = assay(Data, 1), 
+                     mRNA_data = assay(Data, 2))
 
-SignificantVals(method = "c", geneList = MAE@metadata$genelist, 
-maxVal = 0.05, stringVal = "adjPVal") -> MAE@metadata$filtered_genelist
+Data <- GenesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+                  timeString = 'D')
 
-AddIDs(method = "c", filtered_genelist = MAE@metadata$filtered_genelist, 
-miR_IDs = MAE@ExperimentList$miR_entrez,
-mRNA_IDs = MAE@ExperimentList$mRNA_entrez) -> MAE@metadata$gene_entrez
+Data <- SignificantVals(MAE = Data, method = 'c', 
+                        geneList = metadata(Data)[[1]], 
+                        maxVal = 0.05, stringVal = "adjPVal")
+
+Data <- AddIDs(MAE = Data, method = "c", 
+              filtered_genelist = metadata(Data)[[2]],
+              miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 3))
 }

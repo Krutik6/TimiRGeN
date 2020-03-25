@@ -4,17 +4,19 @@
 \alias{MakeDynamic}
 \title{MakeDynamic}
 \usage{
-MakeDynamic(miR_expression, mRNA_expression, miR_IDs_adj,
-Datatype = '')
+MakeDynamic(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
+                   dataType = '')
 }
 \arguments{
+\item{MAE}{MultiAssayObject.}
+
 \item{miR_expression}{microRNA data after going through Express function.}
 
 \item{mRNA_expression}{mRNA data after going through Express function.}
 
 \item{miR_IDs_adj}{Either miR_ensembl_adj or miR_entrez_adj}
 
-\item{Datatype}{Either En (ensembl data) or L (entrez data)}
+\item{dataType}{Either En (ensembl data) or L (entrez data)}
 }
 \value{
 MicroRNA and mRNA dynamic data that can be used in pathvisio if
@@ -25,27 +27,24 @@ Make expression data input for pathvisio so changes over time
 can be visualised.
 }
 \examples{
-library(org.Mm.eg.db)
-library(clusterProfiler)
 library(biomaRt)
+library(MultiAssayExperiment)
+miR <- mm_miR[1:100,]
+mRNA <- mm_mRNA[1:200,]
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
+MAE <- getIDs_mRNA_mouse(MAE, assay(MAE, 2), "useast")
+MAE <- Express(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
+               genes_ID = assay(MAE, 3),
+               idColumn = 'GENENAME',
+               name = "miR_express")
+MAE <- Express(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
+               genes_ID = assay(MAE, 7),
+               idColumn = 'GENENAME',
+               name = 'mRNA_express')
 
-mm_miR -> miR
-mm_mRNA -> mRNA
-
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-
-getIDs_mRNA_mouse(MAE, MAE@ExperimentList$mRNA, "useast") -> MAE
-getIDs_miR_mouse(MAE, MAE@ExperimentList$miR) -> MAE
-
-Express(df = MAE@ExperimentList$mRNA, dataType = 'Log2FC',
-genes_ID = MAE@ExperimentList$mRNA_entrez,
-idColumn = 'GENENAME') -> MAE@ExperimentList$mRNA_express
-Express(df = MAE@ExperimentList$miR, dataType = 'Log2FC',
-genes_ID = MAE@ExperimentList$miR_entrez,
-idColumn = 'GENENAME') -> MAE@ExperimentList$miR_express
-
-MakeDynamic(miR_expression = MAE@ExperimentList$miR_express, 
-mRNA_expression = MAE@ExperimentList$mRNA_express, 
-miR_IDs_adj = MAE@ExperimentList$miR_entrez, Datatype = "L"
-) -> MAE@ExperimentList$Dynamics
+MAE <- MakeDynamic(MAE, miR_expression = assay(MAE, 9), 
+                  mRNA_expression = assay(MAE, 10), 
+                  miR_IDs_adj = assay(MAE, 5), 
+                  dataType = "L")
 }

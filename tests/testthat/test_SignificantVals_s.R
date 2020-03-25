@@ -4,28 +4,29 @@ library(testthat)
 library(MultiAssayExperiment)
 #load geneslist
 MAE <- MultiAssayExperiment()
-MAE@metadata$genelist <- readRDS("genelist_s.rds")
+metadata(MAE)[["geneslist"]] <- readRDS("genelist_s.rds")
 #test function
-MAE@metadata$filtered_genelist <- SignificantVals(method = 's', 
-geneList = MAE@metadata$genelist, maxVal = 0.05,
-stringVal = "adjPVal")
+MAE <- SignificantVals(MAE, method = 's', 
+                        geneList = metadata(MAE)[[1]], 
+                        maxVal = 0.05, stringVal = "adjPVal")
 #check 1
 test_that("filtered is less than original", {
-expect_lt(length(MAE@metadata$filtered_genelist[[1]][[1]][[1]]),
-length(MAE@metadata$genelist[[1]][[1]][[1]]))
+    metadata(MAE)[[1]] -> a
+    metadata(MAE)[[2]] -> b
+    expect_gt(length(a[[1]][[1]][[1]]),
+              length(b[[1]][[1]][[1]]))
 })
 #internal checks
-lapply(MAE@metadata$genelist, function(ls){lapply(ls, 
-function(df) df[df[[grep('adjPVal',
-names(df), value = TRUE)]] < 0.05, ])}) -> filt1
+filted_genelist <- lapply(metadata(MAE)[[1]], function(ls){lapply(ls, 
+                          function(df) df[df[[grep('adjPVal',
+                                                    names(df), 
+                                                   value = TRUE)]] < 0.05, ])})
 #check if outputs are the same
 #check 2
 test_that("outputs are the same", {
-expect_equal(class(filt1), "list")
-expect_equal(length(filt1[[1]]), 5)
-expect_identical(filt1, MAE@metadata$filtered_genelist)
+    expect_equal(class(metadata(MAE)[[2]]), "list")
+    expect_equal(length(metadata(MAE)[[2]][[1]]), 5)
+    expect_identical(filted_genelist, metadata(MAE)[[2]])
 })
 #save data
-saveRDS(MAE@metadata$filtered_genelist,
-"filtered_genelist_s.rds",
-compress = "xz")
+saveRDS(metadata(MAE)[[2]], "filtered_genelist_s.rds", compress = "xz")

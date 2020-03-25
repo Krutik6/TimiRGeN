@@ -3,23 +3,23 @@ library(TimiRGeN)
 library(testthat)
 library(MultiAssayExperiment)
 #load data
-MultiAssayExperiment() -> MAE
-w_list[1:5] -> MAE@metadata$wlist
-e_list -> MAE@metadata$elist
+MAE <- MultiAssayExperiment()
+metadata(MAE)[["w_list"]] <- w_list[1:5]
+metadata(MAE)[["e_list"]] <- e_list
 #perform function
-WikiMatrix(e_list =  MAE@metadata$elist,
-wp_list = MAE@metadata$wlist) -> MAE@ExperimentList$wikimatrix
+MAE <- WikiMatrix(MAE, ID_list =  metadata(MAE)[[2]],
+                         wp_list = metadata(MAE)[[1]])
 #internal checks
-sapply(MAE@metadata$wlist, function(x) {
-sapply(MAE@metadata$elist, function(y) sum(x %in% y))}) -> wmat
+wmat <- sapply(metadata(MAE)[[1]], function(x) {
+            sapply(metadata(MAE)[[2]], 
+                    function(y) sum(x %in% y))})
 #continue
-lapply(MAE@metadata$wlist, function(x){length(x)}) -> L
-rbind(wmat, Total = unlist(L)) -> wmat2
+L <- lapply(metadata(MAE)[[1]], function(x){length(x)})
+wmat2 <- rbind(wmat, Total = unlist(L))
 #check 2
 #wmat2 and wikimatrix should be the same
 test_that("wmat should be the same as wikimatrix", {
-expect_equal(as.matrix(wmat2), as.matrix(MAE@ExperimentList$wikimatrix))
+    expect_equal(as.matrix(wmat2), as.matrix(assay(MAE, 1)))
 })
 #savedata
-saveRDS(MAE@ExperimentList$wikimatrix,
-"wikimatrix.rds", compress = "xz")
+saveRDS(assay(MAE, 1),"wikimatrix.rds", compress = "xz")

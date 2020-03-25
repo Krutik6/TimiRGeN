@@ -7,6 +7,7 @@
 #' GenesList will make separate lists for 'genetype_'. Each of these lists
 #' will have dataframes which have been made by separating by 'timepoint.'.
 #' Make sure to follow colname nomenclature carefully.
+#' @param MAE Multi Assay Experiment object.
 #' @param method Respectively either 'c' or 's' for combined or separated
 #' analysis.
 #' @param genetic_data If 'c', this should be a dataframe with miR and mRNA
@@ -23,64 +24,92 @@
 #' can be stored in the metadata area of an MAE object.
 #' @export
 #' @importFrom stringr str_extract
-#' @usage GenesList(method, genetic_data, timeString, miR_data, mRNA_data)
+#' @usage GenesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 #' @examples
-#' mm_miR -> miR
-#' mm_mRNA -> mRNA
+#' library(MultiAssayExperiment)
+#' miR <- mm_miR
+#' mRNA <- mm_mRNA
 #' 
-#' StartObject(miR = miR, mRNA = mRNA) -> MAE
+#' MAE <- StartObject(miR = miR, mRNA = mRNA)
 #' 
-#' AddPrefix(gene_df = MAE@ExperimentList$miR,
-#' prefixString = "miR" ) -> MAE@ExperimentList$miR_p
-#' AddPrefix(gene_df = MAE@ExperimentList$mRNA, 
-#' prefixString = "mRNA") -> MAE@ExperimentList$mRNA_p
+#' MAE <- AddPrefix(MAE = MAE, gene_df = assay(MAE, 1), 
+#'                  prefixString = "miR")
 #' 
-#' GenesList(method = "s", miR_data = MAE@ExperimentList$miR_p,
-#' mRNA_data = MAE@ExperimentList$mRNA_p) -> MAE@metadata$genelist
+#' MAE <- AddPrefix(MAE = MAE, gene_df = assay(MAE, 2), 
+#'                  prefixString = "mRNA")
 #' 
-#' CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
-#' MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+#' MAE <- GenesList(MAE, method = "s", miR_data = assay(MAE, 3),
+#'                  mRNA_data = assay(MAE, 4))
 #' 
-#' GenesList(method = 'c', genetic_data = MAE@ExperimentList$genetic_data,
-#' timeString = 'D') -> MAE@metadata$genelist
-GenesList <- function(method, genetic_data, timeString, miR_data, mRNA_data){
-if (method == 'c') {
-if (missing(genetic_data)) stop('Input combined miR and mRNA data.
-Colnames structure should be
-timepoint.resulttype.');
-if (missing(timeString)) stop('Input timepoint. E.g. if colnames were D1,
-D2, D3; then timeString should be D.');
-colnames(genetic_data) <- gsub(x = colnames(genetic_data), pattern = timeString,
-replacement = 'TP')
-X <- lapply(split.default(genetic_data, sub("(TP\\d+).*", "\\1",
-names(genetic_data))), as.list)
-names(X) <- gsub(names(X), pattern = 'TP', replacement = timeString) 
-L1 <- lapply(X, data.frame, stringsAsFactors = FALSE)
-L2 <- lapply(L1, function(DF) {rownames(DF) <- rownames(genetic_data); DF})
-L3 <- L2[gtools::mixedsort(names(L2))]
-X <- lapply(L3, function(x) {
-colnames(x) <- sub(x = colnames(x), pattern = 'TP',
-replacement = timeString)
-x}
-)
-return(X)
-} else if (method == 's') {
-if (missing(miR_data)) stop('Input miR data.
-Colnames structure should be
-genetype_timepoint.resulttype.');
-if (missing(mRNA_data)) stop('Input mRNA data. Colnames structure should
-be genetype_timepoint.resulttype.');
-miR_data <- as.data.frame(miR_data)
-mRNA_data <- as.data.frame(mRNA_data)
-genedata <- list(miR_data = miR_data, mRNA_data = mRNA_data)
-genes.split <- lapply(genedata, function(df)
-{
-Unigenes <- unique(str_extract(names(df),"\\S+\\."))
-List <- lapply(Unigenes,function(name){return(df[,grep(name,names(df),
-fixed=TRUE)])})
-names(List) <- Unigenes
-return(List)
-})
-} else{ stop('Please insert method c for combined analysis or s for
-seperate analysis')}
+#' MAE <- CombineGenes(MAE, miR_data = assay(MAE, 1), 
+#'                     mRNA_data = assay(MAE, 2))
+#' 
+#' MAE <- GenesList(MAE, method = 'c', genetic_data = assay(MAE, 5),
+#'                  timeString = 'D')
+GenesList <- function(MAE, method, genetic_data, timeString, miR_data,
+                      mRNA_data){
+    if (missing(MAE)) stop('Add MAE a object');
+    
+    if (method == 'c') {
+        if (missing(genetic_data)) stop('Input combined miR and mRNA data.
+                                        Colnames structure should be
+                                        timepoint.resulttype.');
+        if (missing(timeString)) stop('Input timepoint. E.g. if colnames were
+                                      D1, D2, D3; then timeString should be D.
+                                      ');
+        metadata <- `metadata<-` <- NULL
+        
+        G <- genetic_data
+        # Change random string into common string
+        colnames(G) <- gsub(x = colnames(G), pattern = timeString,
+                            replacement = 'TP')
+        # Split into lists by TP
+        X <- lapply(split.default(G, sub("(TP\\d+).*", "\\1",
+                                         names(G))), as.list)
+        
+        names(X) <- gsub(names(X), pattern = 'TP', replacement = timeString)
+        
+        L1 <- lapply(X, data.frame, stringsAsFactors = FALSE)
+        L2 <- lapply(L1, function(DF) {rownames(DF) <- rownames(
+            genetic_data); DF})
+        L3 <- L2[gtools::mixedsort(names(L2))]
+        
+        geneslist <- lapply(L3, function(x) {
+            colnames(x) <- sub(x = colnames(x), pattern = 'TP',
+                               replacement = timeString)
+            x}
+        )
+        
+        metadata(MAE)[["geneslist"]] <- geneslist
+        return(MAE)
+    } else if (method == 's') {
+        if (missing(miR_data)) stop('Input miR data. Colnames structure
+                                    should be genetype_timepoint.resulttype.');
+        if (missing(mRNA_data)) stop('Input mRNA data. Colnames structure 
+                                     should be genetype_timepoint.resulttype.');
+        
+        miR_data <- as.data.frame(miR_data)
+        mRNA_data <- as.data.frame(mRNA_data)
+        
+        genedata <- list(miR_data = miR_data, mRNA_data = mRNA_data)
+        
+        
+        # Split into lists by TP and time point
+        geneslist <- lapply(genedata, function(df)
+        {
+            Unigenes <- unique(str_extract(names(df),"\\S+\\."))
+            List <- lapply(Unigenes,function(name){return(df[,grep(
+                                                                   name,
+                                                                   names(df),
+                                                                   fixed=TRUE
+                                                               )])})
+            names(List) <- Unigenes
+            return(List)
+        })
+        metadata(MAE)[["geneslist"]] <- geneslist
+            
+        return(MAE)
+        
+    } else{ stop('Please insert method c for combined analysis or s for
+                 seperate analysis')}
 }

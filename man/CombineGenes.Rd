@@ -4,9 +4,11 @@
 \alias{CombineGenes}
 \title{CombineGenes}
 \usage{
-CombineGenes(miR_data, mRNA_data)
+CombineGenes(MAE, miR_data, mRNA_data)
 }
 \arguments{
+\item{MAE}{MultiAssayExperiment}
+
 \item{miR_data}{microRNA dataframe}
 
 \item{mRNA_data}{mRNA dataframe}
@@ -23,9 +25,10 @@ timepoint.DEresult e.g. D1.log2fc or H6.adjPval.
 \examples{
 library(clusterProfiler)
 library(org.Mm.eg.db)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-CombineGenes(miR_data = MAE@ExperimentList$miR, mRNA_data = 
-MAE@ExperimentList$mRNA) -> MAE@ExperimentList$genetic_data
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
+MAE <- CombineGenes(MAE = MAE, miR_data = assay(MAE, 1),
+                    mRNA_data = assay(MAE, 2))
 }

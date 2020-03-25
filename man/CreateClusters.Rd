@@ -4,22 +4,22 @@
 \alias{CreateClusters}
 \title{CreateClusters}
 \usage{
-CreateClusters(method, MAE, Percent_matrix, no.clusters, Data_string = '',
-Variance)
+CreateClusters(MAE, method, percentMatrix, noClusters, dataString = '',
+               variance)
 }
 \arguments{
-\item{method}{Either C or S for combined or separate analysis.}
-
 \item{MAE}{MultiAssayObject where the cluster information will be stored.}
 
-\item{Percent_matrix}{Output after TurnPercent.}
+\item{method}{Either C or S for combined or separate analysis.}
 
-\item{no.clusters}{Number of clusters to create, the default is 5.}
+\item{percentMatrix}{Output after TurnPercent.}
 
-\item{Data_string}{Only for use in S analysis. Insert the prefix string e.g.
+\item{noClusters}{Number of clusters to create, the default is 5.}
+
+\item{dataString}{Only for use in S analysis. Insert the prefix string e.g.
 mRNA or miR.}
 
-\item{Variance}{Numeric from 0-1 to control strictness of filtering. Higher
+\item{variance}{Numeric from 0-1 to control strictness of filtering. Higher
 Variance means wikipathways that are undergoing a higher change in the
 data will be clustered.}
 }
@@ -36,19 +36,19 @@ gene abundance during your time course in different wikipathways.
 This function is to be used before ClusterCheck and Quickfuzz.
 }
 \examples{
+library(MultiAssayExperiment)
 library(Mfuzz)
-library(rWikiPathways)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
-e_list -> MAE@metadata$elist 
-w_list[1:10] -> MAE@metadata$wlist
-WikiMatrix(e_list = MAE@metadata$elist , 
-wp_list = MAE@metadata$wlist) -> MAE@ExperimentList$Wmat
+MAE <- MultiAssayExperiment()
+metadata(MAE)[["e_list"]] <- e_list
+metadata(MAE)[["w_list"]] <- w_list[1:10]
+MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
+                  wp_list = metadata(MAE)[[2]])
+ 
+MAE <- TurnPercent(MAE = MAE, 
+                   wikiMatrix = assay(MAE, 1),
+                   rowInt = 6)
 
-TurnPercent(wikiMatrix = MAE@ExperimentList$Wmat,
-rowInt = 4) -> MAE@metadata$Pmat
-
-CreateClusters(method = "c", MAE, Percent_matrix = MAE@metadata$Pmat,
-no.clusters = 2, Variance = 0.99) -> MAE
+MAE <- CreateClusters(MAE, method = "c", 
+                    percentMatrix = assay(MAE, 2),
+                    noClusters = 2, variance = 0.99)
 }

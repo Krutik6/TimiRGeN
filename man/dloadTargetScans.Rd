@@ -4,7 +4,10 @@
 \alias{dloadTargetScans}
 \title{dloadTargetScans}
 \usage{
-dloadTargetScans()
+dloadTargetScans(MAE)
+}
+\arguments{
+\item{MAE}{MultiAssayExperiment object.}
 }
 \value{
 A dataframe of predicted miR-mRNA interactions in different
@@ -13,4 +16,11 @@ species.
 \description{
 Downloads most recent version (7.2) of predicted targets from
 targetscan database.
+}
+\examples{
+\dontrun{
+library(MultiAssayExperiment)
+MAE <- MultiAssayExperiment()
+MAE <-dloadTargetScans(MAE)
+}
 }

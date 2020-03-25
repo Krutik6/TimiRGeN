@@ -24,21 +24,18 @@ timepoint and genetype.
 library(ggplot2)
 library(org.Mm.eg.db)
 library(clusterProfiler)
-mm_miR -> miR
-mm_mRNA -> mRNA
-StartObject(miR = miR, mRNA = mRNA) -> MAE
+library(MultiAssayExperiment)
+miR <- mm_miR
+mRNA <- mm_mRNA
+MAE <- StartObject(miR = miR, mRNA = mRNA)
 
-e_list -> MAE@metadata$elist
-dloadGMT(MAE, speciesInitial = "Mm") -> MAE
+metadata(MAE)[["e_list"]] <- e_list
+MAE <- dloadGMT(MAE, speciesInitial = "Mm")
 
-MAE@metadata$sigwiki <- EnrichWiki(method = "c",
-e_list = MAE@metadata$elist,
-orgDB = org.Mm.eg.db, 
-path_gene = MAE@ExperimentList$path_gene, 
-path_name = MAE@ExperimentList$path_name, 
-ID = "ENTREZID", 
-universe = MAE@ExperimentList$path_gene$gene)
+MAE <- EnrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
+                   orgDB = org.Mm.eg.db, path_gene = assay(MAE, 3), 
+                   path_name = assay(MAE, 4), ID = "ENTREZID", 
+                   universe = assay(MAE, 3)[[2]])
 
-Quickbar(X = MAE@metadata$sigwiki$D7_wikipathways, 
-Y = MAE@metadata$sigwiki[4]) -> Q
+Q <- Quickbar(X = metadata(MAE)[[2]][[1]], Y = metadata(MAE)[[2]][1])
 }

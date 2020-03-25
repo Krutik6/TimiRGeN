@@ -1,6 +1,7 @@
 #' @title SignificantVals
 #' @description Filter out genes in each nested dataframe which are not deemed
 #' significantly differentially expressed.
+#' @param MAE MultiAssayExperiment object.
 #' @param method Respectively either 'c' or 's' for combined or separated
 #' analysis.
 #' @param geneList A list of nested dataframes if 'c' or a list of lists
@@ -14,42 +15,56 @@
 #' differentially expressed genes which will also be stores in the 
 #' metadata area of an MAE object.
 #' @export
-#' @usage SignificantVals(method = '', geneList, maxVal, stringVal = '')
+#' @usage SignificantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 #' @examples
-#' mm_miR -> miR
-#' mm_mRNA -> mRNA
-#' StartObject(miR = miR, mRNA = mRNA) -> Data
+#' library(MultiAssayExperiment)
+#' miR <- mm_miR
+#' mRNA <- mm_mRNA
+#' Data <- StartObject(miR = miR, mRNA = mRNA)
 #' 
-#' CombineGenes(miR_data = Data@ExperimentList$miR, mRNA_data = 
-#' Data@ExperimentList$mRNA) -> Data@ExperimentList$genetic_data
+#' Data <- CombineGenes(MAE = Data, miR_data = assay(Data, 1), 
+#'                      mRNA_data = assay(Data, 2))
 #' 
-#' GenesList(method = 'c', genetic_data = Data@ExperimentList$genetic_data,
-#' timeString = 'D') -> Data@metadata$genelist
+#' Data <- GenesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+#'                   timeString = 'D')
 #' 
-#' SignificantVals(method = "c", geneList = Data@metadata$genelist, 
-#' maxVal = 0.05, stringVal = "adjPVal") -> Data@metadata$filtered_genelist
-SignificantVals <- function(method, geneList, maxVal, stringVal){
-if (missing(method)) stop('method should be s for separate analysis and
-c for combined analysis.')
-if (method == 'c') {
-if(missing(geneList)) stop('Input list of miR and mRNA data.');
-if(missing(maxVal)) stop('Input integer as cutoff threshold e.g. 0.05.');
-if(missing(stringVal)) stop('Input differential expression result type
-to use as filtration point e.g. log2FC,
-adjPval, qVal.');
-X <- lapply(geneList, function(df) df[df[[grep(stringVal, names(df),
-value = TRUE)]] < maxVal,])
-return(X)
-} else if (method == 's') {
-if(missing(geneList)) stop('Input list of miR and mRNA data.');
-if(missing(maxVal)) stop('Input integer as cutoff threshold e.g. 0.05.');
-if(missing(stringVal)) stop('Input differential expression result type
-to use as filtration point e.g. log2FC,
-adjPval, qVal.');
-lapply(geneList, function(ls){
-lapply(ls, function(df) df[df[[grep(stringVal, names(df),
-value = TRUE)]] < maxVal, ])
-})
-} else {stop('Please insert method c for combined
-analysis or s for seperate analysis')}
+#' Data <- SignificantVals(MAE = Data, method = 'c', 
+#'                         geneList = metadata(Data)[[1]], 
+#'                         maxVal = 0.05, stringVal = "adjPVal")
+SignificantVals <- function(MAE, method, geneList, maxVal, stringVal){
+    
+    if (missing(method)) stop('Use MultiAssayExperiment.');
+    if (missing(method)) stop('method should be s for separate analysis and
+                              c for combined analysis.');
+    if(missing(geneList)) stop('Input list of miR and mRNA data.');
+    if(missing(maxVal)) stop('Input integer as cutoff threshold e.g. 0.05.
+                                 ');
+    if(missing(stringVal)) stop('Input differential expression result type
+                                    to use as filtration point e.g. log2FC,
+                                    adjPval, qVal.');
+    
+    metadata <- `metadata<-` <- NULL
+    
+    if (method == 'c') {
+        
+        # Filter for maxVal within the stringVal in dataframes in a list
+        filtered_genelist <- lapply(geneList, function(df) df[df[[grep(
+            stringVal, names(df),value = TRUE)]] < maxVal,])
+        
+        metadata(MAE)[["filtered_genelist"]] <- filtered_genelist
+        
+        return(MAE)
+        
+    } else if (method == 's') {
+        # Filter for maxVal within the stringVal in dataframes in a list of 
+        # lists
+        filtered_genelist <- lapply(geneList, function(ls){
+            lapply(ls, function(df) df[df[[grep(stringVal, names(df), 
+                                                value = TRUE)]] < maxVal,])})
+        
+        metadata(MAE)[["filtered_genelist"]] <- filtered_genelist
+        return(MAE)
+        
+    } else {stop('Please insert method c for combined analysis or s for 
+                 seperate analysis')}
 }

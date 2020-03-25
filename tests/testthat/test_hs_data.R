@@ -1,8 +1,8 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-hs_miR -> miR
-hs_mRNA -> mRNA
+miR <- hs_miR
+mRNA <- hs_mRNA
 
 test_that("hs_miR is a dataframe", {
   expect_true(is.data.frame(miR))

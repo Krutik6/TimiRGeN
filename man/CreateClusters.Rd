@@ -36,6 +36,7 @@ gene abundance during your time course in different wikipathways.
 This function is to be used before ClusterCheck and Quickfuzz.
 }
 \examples{
+\dontrun{
 library(MultiAssayExperiment)
 library(Mfuzz)
 MAE <- MultiAssayExperiment()
@@ -51,4 +52,5 @@ MAE <- TurnPercent(MAE = MAE,
 MAE <- CreateClusters(MAE, method = "c", 
                     percentMatrix = assay(MAE, 2),
                     noClusters = 2, variance = 0.99)
+}
 }

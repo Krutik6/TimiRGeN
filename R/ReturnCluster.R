@@ -14,23 +14,9 @@
 #'
 #' @usage ReturnCluster(MAE, clusterData, whichCluster, fitCluster)
 #' @examples
-#' library(Mfuzz)
 #' library(MultiAssayExperiment)
-#' MAE <- MultiAssayExperiment()
-#' metadata(MAE)[["e_list"]] <- e_list
-#' metadata(MAE)[["w_list"]] <- w_list[1:10]
-#' MAE <- WikiMatrix(MAE, ID_list = metadata(MAE)[[1]], 
-#'                   wp_list = metadata(MAE)[[2]])
-#'  
-#' MAE <- TurnPercent(MAE = MAE, 
-#'                    wikiMatrix = assay(MAE, 1),
-#'                    rowInt = 6)
-#' 
-#'MAE <- CreateClusters(MAE, method = "c", 
-#'                    percentMatrix = assay(MAE, 2),
-#'                    noClusters = 2, variance = 0.99)
-#' 
-#' MAE <- ReturnCluster(MAE, clusterData = assay(MAE, 3), whichCluster = 1, 
+#' MAE <- Clusters
+#' MAE <- ReturnCluster(MAE, clusterData = assay(MAE, 1), whichCluster = 1, 
 #'                      fitCluster = 0.5)
 ReturnCluster <-function(MAE, clusterData, whichCluster, fitCluster = 0.99){
     X <- as.data.frame(clusterData)

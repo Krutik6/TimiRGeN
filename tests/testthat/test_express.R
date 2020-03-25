@@ -38,6 +38,5 @@ MAE <- Express(MAE, df = assay(MAE, 1),
                     genes_ID = assay(miR, 3),
                     idColumn = 'GENENAME',
                     name = 'miR_log2fc')
-
 #save data as rds
 saveRDS(MAE, "log2fc.rds", compress = "xz")

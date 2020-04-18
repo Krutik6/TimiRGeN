@@ -192,4 +192,10 @@ TimiRGeN v0.99.415 (Date: 25/03/2020)
 * Modified some examples to speed up bioconductor checks.
 * Reduced size of help files by re-formatting descriptions.
 
+TimiRGeN v0.99.4152 (Date: 18/04/2020)
+===============================
+* Added data files to get around using CreateClusters in vignette, this seems 
+to cause a bug in some systems.
+
+
 

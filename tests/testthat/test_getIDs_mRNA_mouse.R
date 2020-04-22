@@ -6,8 +6,8 @@ library(MultiAssayExperiment)
 # load data
 mRNA <- mm_mRNA
 mRNA <- mRNA[1:20,]
-MAE <- StartObject(miR = NULL, mRNA = mRNA)
-MAE <- getIDs_mRNA_mouse(MAE = MAE, mRNA =  assay(MAE, 2))
+MAE <- startObject(miR = NULL, mRNA = mRNA)
+MAE <- getIdsMrnaMouse(MAE = MAE, mRNA =  assay(MAE, 2))
 #test outputs have expected number of columns
 test_that("mRNA_Id data have two columns", {
     expect_that(as.numeric(ncol(assay(MAE, 3))), equals(2))
@@ -18,7 +18,7 @@ mouse <- biomaRt::useEnsembl("ensembl", dataset="mmusculus_gene_ensembl",
                              GRCh=37, host = "useast.ensembl.org")
 
 glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
-                              "entrezgene_id"), 
+                              "entrezgene_id"),
                filters = "external_gene_name",
                values = rownames(mRNA), mart = mouse, uniqueRows = TRUE)
 #check 1
@@ -49,10 +49,10 @@ rownames(m_dat) <- m_dat$`rownames(mRNA)`
 
 MAE2 <- MultiAssayExperiment(list(
                                     mRNA_entrez = data.frame(cbind(
-                                        GENENAME = rownames(m_dat), 
+                                        GENENAME = rownames(m_dat),
                                         ID = m_dat$entrezgene_id)),
                                     mRNA_enembl = data.frame(cbind(
-                                        GENENAME = rownames(m_dat), 
+                                        GENENAME = rownames(m_dat),
                                         ID = m_dat$ensembl_gene_id))))
 
 

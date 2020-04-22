@@ -6,10 +6,10 @@ library(biomaRt)
 #load data
 mRNA <- hs_mRNA
 mRNA <- mRNA[1:20,]
-MAE <- StartObject(miR = NULL, mRNA = mRNA)
+MAE <- startObject(miR = NULL, mRNA = mRNA)
 #test function
-MAE <- getIDs_mRNA_human(MAE, mRNA = assay(MAE, 2), 
-                         mirror = 'useast')
+MAE <- getIdsMrnaHuman(MAE, mRNA = assay(MAE, 2),
+                       mirror = 'useast')
 #check 1
 test_that("output have two columns", {
     expect_equal(length(colnames(assay(MAE, 3))), 2)
@@ -45,10 +45,10 @@ test_that("Genes and rownames are the same", {
 #continue
 MAE2 <- suppressMessages(MultiAssayExperiment(list(
                                                 mRNA_entrez = data.frame(cbind(
-                                                    GENENAME = rownames(m_dat), 
+                                                    GENENAME = rownames(m_dat),
                                                     ID = m_dat$entrezgene_id)),
                                                 mRNA_enembl = data.frame(cbind(
-                                                    GENENAME = rownames(m_dat), 
+                                                    GENENAME = rownames(m_dat),
                                                     ID = m_dat$ensembl_gene_id)
     ))))
 #check 4

@@ -33,19 +33,19 @@ library(MultiAssayExperiment)
 
 miR <- mm_miR
 mRNA <- mm_mRNA
-Data <- StartObject(miR = miR, mRNA = mRNA)
+Data <- startObject(miR = miR, mRNA = mRNA)
 
-Data <- CombineGenes(MAE = Data, miR_data = assay(Data, 1), 
+Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))
 
-Data <- GenesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
                   timeString = 'D')
 
-Data <- SignificantVals(MAE = Data, method = 'c', 
-                        geneList = metadata(Data)[[1]], 
+Data <- significantVals(MAE = Data, method = 'c',
+                        geneList = metadata(Data)[[1]],
                         maxVal = 0.05, stringVal = "adjPVal")
 
-Data <- AddIDs(MAE = Data, method = "c", 
+Data <- addIds(MAE = Data, method = "c",
               filtered_genelist = metadata(Data)[[2]],
               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 3))
 

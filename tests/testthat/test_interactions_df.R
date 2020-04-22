@@ -8,7 +8,7 @@ Ints <- readRDS("interactions.rds")
 #find which mRNAs are found in the wikipathway of interest
 mRNA_wiki <- Log2FC@ExperimentList$mRNA_log2fc[which(
             Log2FC@ExperimentList$mRNA_log2fc$ID %in% Ints$gene == TRUE),
-             ] 
+             ]
 #check 1
 #should be less in mRNA_wiki than mRNA_log2fc
 test_that("mRNA_wiki is smaller than mRNA_log2fc", {
@@ -18,7 +18,7 @@ test_that("mRNA_wiki is smaller than mRNA_log2fc", {
 name_combn <- expand.grid(rownames(Log2FC@ExperimentList$miR_log2fc),
 rownames(mRNA_wiki),
 stringsAsFactors = FALSE)
-interactions_df <- do.call(rbind,apply(name_combn, 1, CorrTable,
+interactions_df <- do.call(rbind,apply(name_combn, 1, corrTable,
 miR_exprs = Log2FC@ExperimentList$miR_log2fc,
 mRNA_wiki = mRNA_wiki, maxInt = 5))
 #continue

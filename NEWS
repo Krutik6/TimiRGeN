@@ -106,7 +106,7 @@ smiRk v0.99.05 (Date: 27/01/2020)
 Changes :
 
 * Changed back to 3.6.2 to edit the package.
-* Names now function in SavePlots. 
+* Names now function in SavePlots.
 
 TimiRGeN v0.99.1 (Date: 11/02/2020)
 ===============================
@@ -133,7 +133,7 @@ TimiRGeN v0.99.22 (Date: 18/02/2020)
 * Reduced check and tests time to ~7 minutes.
 * Changed function name to dloadData.
 * Editted SavePlots function again to make output larger.
-* Will get this package ready for a github upload. 
+* Will get this package ready for a github upload.
 * Compressed GRN construction pdf file.
 
 TimiRGeN v0.99.24 (Date: 19/02/2020)
@@ -178,24 +178,29 @@ TimiRGeN v0.99.4 (Date: 24/03/2020)
 ===============================
 * Now using MAE accessors instead of @/$ to access data in MAE objects.
 * Changed all functions to report back to common MAE objects.
-* Changed dloadmiRTarBase and miRTarBase_data to internally stored data, this was due to miRTarBase servers being down, most likely due to COVID-19 related reasons. 
+* Changed dloadmiRTarBase and miRTarBase_data to internally stored data, this was due to miRTarBase servers being down, most likely due to COVID-19 related reasons.
 * Removed several functions which were too 'experimental' i.e get_IDs_miR_mousetohuman, get_IDs_mouse_mousetohuman because they were too clunky and prone to bugs. May re-release these in future updates of the package.
-* Changed vignette to use be more streamline, more to the point and use MAE object more approproately. 
+* Changed vignette to use be more streamline, more to the point and use MAE object more approproately.
 * Vast majority of code now only uses <- to assign new objects.
 * Using indents to make the code easier to read.
 * Added some description to some R functions.
 
 TimiRGeN v0.99.415 (Date: 25/03/2020)
 ===============================
-* Remade CreateCluster function so that it does not cause errors during bioconductor checks. 
+* Remade CreateCluster function so that it does not cause errors during bioconductor checks.
 * Removed some tests to speed up bioconductor checks.
 * Modified some examples to speed up bioconductor checks.
 * Reduced size of help files by re-formatting descriptions.
 
 TimiRGeN v0.99.4152 (Date: 18/04/2020)
 ===============================
-* Added data files to get around using CreateClusters in vignette, this seems 
+* Added data files to get around using CreateClusters in vignette, this seems
 to cause a bug in some systems.
 
+TimiRGeN v0.99.4154 (Date: 22/04/2020)
+===============================
+* Changed function names to be consistent with captionCaps format.
+* Updated vignette and reformated the contents method.
+* Changed data file names, now no data files start with a Cap.
 
 

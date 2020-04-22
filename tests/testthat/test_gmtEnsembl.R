@@ -9,11 +9,11 @@ MAE <- readRDS("wpdata.rds")
 path_gene <- MAE[[1]]
 path_data <- MAE[[3]]
 #test GMT_ensembl function
-MAE <- GMT_ensembl(MAE = MAE, path_gene = path_gene,
+MAE <- gmtEnsembl(MAE = MAE, path_gene = path_gene,
                    path_data = path_data, orgDB = org.Mm.eg.db)
 #internal checks
 ensembl_values <- suppressWarnings(bitr(geneID = path_gene$gene,
-                                        fromType = 'ENTREZID', 
+                                        fromType = 'ENTREZID',
                                         toType = 'ENSEMBL',
                                         OrgDb = org.Mm.eg.db))
 #check 1
@@ -30,7 +30,7 @@ test_that("wpid2gene_ensembl_manual has 2 columns", {
     expect_that(length(names(path_gene_ensembl_manual)), equals(3))
 })
 #continue
-path_data_ensembl_manual <- merge(x = path_gene_ensembl_manual, 
+path_data_ensembl_manual <- merge(x = path_gene_ensembl_manual,
                                   y = path_data, by.x = 'gene',
                                   by.y = 'gene')
 #check 3
@@ -44,9 +44,9 @@ path_data_ensembl_corrected <- path_data_ensembl_manual[
 #check 4
 #column 2 and 4 are the same
 test_that("Columns 2 and 4 of DFs are the same but were different", {
-    expect_equal(path_data_ensembl_corrected[,2], 
+    expect_equal(path_data_ensembl_corrected[,2],
                  path_data_ensembl_corrected[,4])
-    expect_false(isTRUE(path_data_ensembl_manual[,2]), 
+    expect_false(isTRUE(path_data_ensembl_manual[,2]),
                  equals(path_data_ensembl_manual[,4]))
 })
 #continue

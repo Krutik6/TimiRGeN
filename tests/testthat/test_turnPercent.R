@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load data
 Wmat <- readRDS("wikimatrix.rds")
 MAE <- MultiAssayExperiment(list("Wikimatrix" = Wmat))

@@ -21,7 +21,6 @@ Creates a matrix which shows how many genes from the data are
 found in each wikipathway for a specific species.
 }
 \examples{
-library(MultiAssayExperiment)
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["ID_list"]] <- e_list
 metadata(MAE)[["w_list"]] <- w_list[1:10]

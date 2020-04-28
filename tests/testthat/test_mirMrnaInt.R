@@ -1,6 +1,5 @@
 library(clusterProfiler)
 library(org.Mm.eg.db)
-library(biomaRt)
 library(testthat)
 #load data
 #test function

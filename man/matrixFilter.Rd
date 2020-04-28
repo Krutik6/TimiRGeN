@@ -33,7 +33,6 @@ Filters out miR-mRNA interactions based on how many times an
 interaction has been predicted and or validated.
 }
 \examples{
-library(MultiAssayExperiment)
 Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                       "mmu-miR-27a-3p:Odc1"),
                         avecor = c(-0.9191653, 0.7826041),

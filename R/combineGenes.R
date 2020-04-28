@@ -9,12 +9,10 @@
 #' @return A dataframe with combines miR and mRNA data which can be stored
 #' within the MAE object.
 #' @export
-#' @import gtools
+#' @importFrom gtools mixedsort
 #' @usage combineGenes(MAE, miR_data, mRNA_data)
 #' @examples
-#' library(clusterProfiler)
 #' library(org.Mm.eg.db)
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
@@ -29,8 +27,8 @@ combineGenes <- function(MAE, miR_data, mRNA_data){
     miR_data <- as.data.frame(miR_data)
     mRNA_data <- as.data.frame(mRNA_data)
     # Order them based on time point
-    miR_order <- gtools::mixedsort(names(miR_data))
-    mRNA_order <- gtools::mixedsort(names(mRNA_data))
+    miR_order <- mixedsort(names(miR_data))
+    mRNA_order <- mixedsort(names(mRNA_data))
 
     miR_data <- miR_data[miR_order]
     mRNA_data <- mRNA_data[mRNA_order]

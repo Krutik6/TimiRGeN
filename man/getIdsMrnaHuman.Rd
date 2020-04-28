@@ -24,8 +24,6 @@ getIDs_miR_human will produce ensembl and entrez data
 for human mRNAs.
 }
 \examples{
-library(biomaRt)
-library(MultiAssayExperiment)
 mRNA <- mm_mRNA
 mRNA <- mRNA[1:20,]
 MAE <- startObject(miR = NULL, mRNA = mRNA)

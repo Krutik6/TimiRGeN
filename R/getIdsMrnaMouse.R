@@ -11,8 +11,6 @@
 #' @export
 #' @usage getIdsMrnaMouse(MAE, mRNA, mirror)
 #' @examples
-#' library(biomaRt)
-#' library(MultiAssayExperiment)
 #' mRNA <- mm_mRNA
 #' mRNA <- mRNA[1:20,]
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)

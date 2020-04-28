@@ -81,14 +81,11 @@ BiocManager::install("TimiRGeN")
 ```
 
 
-#: Load Libraries
+###: Load Libraries
 
 ```{r Load libs, echo=TRUE, message=FALSE, results='hide'}
-libstoinst <- c("TimiRGeN", "gtools", "rWikiPathways", "tidyr","stringr",
-                 "tidyverse", "clusterProfiler", "biomaRt", "org.Hs.eg.db",
-                "org.Mm.eg.db", "RCy3", "ggplot2", "dplyr", "igraph",
-                "Mfuzz", "readxl", "MultiAssayExperiment")
-lapply(libstoinst, require, character.only = TRUE)
+library(TimiRGeN)
+library(org.Mm.eg.db)
 ```
 
 The following dependencies can be investigated further from these sources
@@ -213,6 +210,9 @@ in our data, per time point. The `enrichWiki` function wraps around
 enrichment functions from DOSE and clusterProfiler [2,3] but uses them for
 time series analysis with wikipathways.
 
+Note. Making multiple separate MAE objects make it easier to work with all the
+generated data files. 
+
 ```{r enrichwiki, warning=FALSE, message=FALSE}
 MAE2 <- enrichWiki(MAE = MAE2, method = 'c',
                   ID_list = metadata(MAE)[[4]],
@@ -233,7 +233,7 @@ possible genes in a microarray or all known genes found in a cell type.
 #### Plot GSEA
 
 ```{r Quickbardot, warning=FALSE, message=FALSE, eval=FALSE}
-SavePlots(largeList = metadata(MAE2)[[1]],
+savePlots(largeList = metadata(MAE2)[[1]],
           maxInt = 5,
           quickType = quickDot,
           fileType = "jpg")
@@ -307,9 +307,8 @@ MAE2 <- createClusters(MAE = MAE2, method = "c",
 ```{r createClusters_working, fig.align ="center",dpi=80, echo=FALSE}
 clusterdata <- clusterdata
 mfuzzdata <- mfuzzdata
-MAEx <- MultiAssayExperiment(list(
-         'ClusterData' = clusterdata,
-         'MuzzData' = mfuzzdata))
+MAEx <- MultiAssayExperiment(list('ClusterData' = clusterdata,
+                                  'MuzzData' = mfuzzdata))
 MAE2 <- c(MAE2, MAEx)
 clusters <- clusters
 metadata(MAE2)[['Clusters']] <- clusters
@@ -434,14 +433,14 @@ For human analysis use `"hsa"` and `org.Hs.eg.db`.
 ```{r Targetscans data, message=FALSE, warning=FALSE, eval=FALSE}
 MAE3 <- dloadTargetscan(MAE = MAE3)
 MAE3 <- targetscanData(MAE = MAE3,
-                         targetScan = assay(MAE3, 4),
+                         targetScan = assay(MAE3, 2),
                          species = "mmu")
 
 MAE3 <- dloadMirdb(MAE = MAE3)
 MAE3 <- mirdbData(MAE = MAE3,
-                   miRDB = assay(MAE3, 2),
+                   miRdb = assay(MAE3, 4),
                    species = "mmu",
-                   orgdb = org.Mm.eg.db)
+                   orgDB = org.Mm.eg.db)
 
 MAE3 <- dloadMirtarbase(MAE = MAE3, species = "mmu")
 ```
@@ -524,9 +523,9 @@ MAE3 <- makeMapp(MAE3,
 
 MAE3 <- makeDynamic(MAE = MAE3,
                     miR_expression = assay(MAE2, 10),
-                   mRNA_expression = assay(MAE2, 9),
-                   miR_IDs_adj = assay(MAE, 5),
-                   dataType = 'L')
+                    mRNA_expression = assay(MAE2, 9),
+                    miR_IDs_adj = assay(MAE, 5),
+                    dataType = 'L')
 ```
 
 ```{r MakeOutputforPathvisio_working, echo=FALSE}
@@ -574,7 +573,7 @@ miR-mRNA interactions to a handful in a short amount of time.
 ```{r cytoscape, message=FALSE, warning=FALSE, eval=FALSE}
 cytoscapePing()
 
-cytoMake(assay(MAE, 3),
+cytoMake(assay(MAE3, 8),
          titleString = 'Complement+Coagulation',
          collectionString = 'PathwaysforKidneyFibrosis')
 ```
@@ -601,6 +600,8 @@ To go through this we are using Breast Cancer Hypoxia data from
 ###Load Data
 
 ```{r loadhuman, message=FALSE, warning=FALSE}
+library(org.Hs.eg.db)
+
 miR <- hs_miR
 rownames(miR) <- gsub(rownames(miR), pattern = "\\.", replacement = "-")
 rownames(miR) <- sub("-$", "*", rownames(miR))
@@ -813,7 +814,7 @@ Data2 <- enrichWiki(MAE = Data2, method = 'c',
 ```
 
 ```{r eval=FALSE}
-quickBar(X = metadaya(Data2)[[1]][[1]], Y = metadaya(Data2)[[1]][1])
+quickBar(X = metadata(Data2)[[1]][[1]], Y = metadata(Data2)[[1]][1])
 ```
 
 ```{r fig.align="center",out.width="300px",out.height="300px",echo=FALSE,dpi=10}

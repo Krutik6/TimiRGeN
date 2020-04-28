@@ -1,10 +1,7 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(tidyverse)
 library(org.Mm.eg.db)
-library(clusterProfiler)
-library(MultiAssayExperiment)
 #load data
 MAE <- MultiAssayExperiment(list(
     TargetScans_res = as.data.frame(readRDS("TargetScans_results.rds")),

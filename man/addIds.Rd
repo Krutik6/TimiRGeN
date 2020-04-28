@@ -30,9 +30,7 @@ Adds entrez or ensembl IDs to the nested dataframes within
 the filtered_genelist.
 }
 \examples{
-library(clusterProfiler)
 library(org.Mm.eg.db)
-library(MultiAssayExperiment)
 
 miR <- mm_miR
 mRNA <- mm_mRNA

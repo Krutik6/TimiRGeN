@@ -13,8 +13,6 @@
 #' @importFrom Mfuzz overlap overlap.plot
 #' @usage clusterCheck(Clusters, W)
 #' @examples
-#' library(MultiAssayExperiment)
-#' library(Mfuzz)
 #' MAE <- MultiAssayExperiment()
 #' metadata(MAE)[["e_list"]] <- e_list
 #' metadata(MAE)[["w_list"]] <- w_list[1:10]

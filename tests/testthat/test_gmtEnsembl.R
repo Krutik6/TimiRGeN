@@ -2,8 +2,6 @@
 library(TimiRGeN)
 library(testthat)
 library(org.Mm.eg.db)
-library(clusterProfiler)
-library(MultiAssayExperiment)
 #load wpid2pathway data
 MAE <- readRDS("wpdata.rds")
 path_gene <- MAE[[1]]

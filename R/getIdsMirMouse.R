@@ -9,8 +9,6 @@
 #' @export
 #' @usage getIdsMirMouse(MAE, miR)
 #' @examples
-#' library(MultiAssayExperiment)
-#' library(clusterProfiler)
 #' library(org.Mm.eg.db)
 #' miR <- mm_miR
 #' miR <- miR[1:100,]

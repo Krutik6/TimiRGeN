@@ -1,6 +1,5 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
-library(MultiAssayExperiment)
 library(testthat)
 #load genetic_data
 genedata <- readRDS("genetic_data.rds")

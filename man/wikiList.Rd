@@ -25,7 +25,6 @@ install rWikiPathways.
 }
 \examples{
 \donttest{
-library(MultiAssayExperiment)
 MAE <- MultiAssayExperiment()
 MAE <- wikiList(MAE, stringSpecies = 'Homo sapiens', stringSymbol = 'En')
 }

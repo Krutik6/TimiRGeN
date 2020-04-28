@@ -32,7 +32,6 @@ Filter out genes in each nested dataframe which are not deemed
 significantly differentially expressed.
 }
 \examples{
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 Data <- startObject(miR = miR, mRNA = mRNA)

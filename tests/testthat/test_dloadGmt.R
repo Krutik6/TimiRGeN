@@ -1,8 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(clusterProfiler)
-library(MultiAssayExperiment)
 #download GMT mouse
 #test function
 MAE <- MultiAssayExperiment()

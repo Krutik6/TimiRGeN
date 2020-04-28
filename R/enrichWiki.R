@@ -27,8 +27,6 @@
 #'                   padjustmethod)
 #' @examples
 #' library(org.Mm.eg.db)
-#' library(clusterProfiler)
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #' MAE <- startObject(miR = miR, mRNA = mRNA)

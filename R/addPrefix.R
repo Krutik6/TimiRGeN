@@ -11,7 +11,6 @@
 #' @export
 #' @usage addPrefix(MAE, gene_df, prefixString = '')
 #' @examples
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #'
@@ -19,7 +18,6 @@
 #'
 #' MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
 #'                  prefixString = "miR")
-#'
 #' MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
 #'                  prefixString = "mRNA")
 addPrefix <- function(MAE, gene_df, prefixString){

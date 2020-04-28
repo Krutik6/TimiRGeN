@@ -24,7 +24,6 @@ downloadGMT.}
 Change entrez IDs in wpid2gene and wp_data into ensembl IDs
 }
 \examples{
-library(MultiAssayExperiment)
 library(org.Mm.eg.db)
 miR <- mm_miR
 mRNA <- mm_mRNA

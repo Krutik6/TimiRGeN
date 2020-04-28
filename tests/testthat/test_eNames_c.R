@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load gene_entrez
 ID_names <- readRDS("gene_entrez_c.rds")
 MAE <- MultiAssayExperiment()

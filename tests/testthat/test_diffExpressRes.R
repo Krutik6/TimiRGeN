@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load data
 #format miR and mRNA data
 #load ID data

@@ -10,7 +10,6 @@
 #' @export
 #' @usage gmtEnsembl(MAE, path_gene, path_data, orgDB)
 #' @examples
-#' library(MultiAssayExperiment)
 #' library(org.Mm.eg.db)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA

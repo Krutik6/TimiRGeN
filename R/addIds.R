@@ -14,12 +14,9 @@
 #' @return list of dataframes with entrezIDs and genenames additional
 #' as columns which can be stored in metadata section of an MAE.
 #' @export
-#' @import BiocManager
 #' @usage addIds(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs)
 #' @examples
-#'library(clusterProfiler)
 #'library(org.Mm.eg.db)
-#'library(MultiAssayExperiment)
 #'
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA

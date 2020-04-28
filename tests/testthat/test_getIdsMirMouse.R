@@ -1,8 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(clusterProfiler)
-library(MultiAssayExperiment)
 library(org.Mm.eg.db)
 # load data
 miR <- mm_miR

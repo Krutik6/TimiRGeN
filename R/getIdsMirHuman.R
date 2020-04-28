@@ -12,9 +12,7 @@
 #' @import org.Hs.eg.db
 #' @usage getIdsMirHuman(MAE, miR)
 #' @examples
-#' library(clusterProfiler)
 #' library(org.Hs.eg.db)
-#' library(MultiAssayExperiment)
 #' miR <- hs_miR
 #' rownames(miR) <- gsub(rownames(miR), pattern = "\\.", replacement = "-")
 #' rownames(miR) <- sub("-$", "*", rownames(miR))

@@ -11,7 +11,6 @@
 #' @usage wikiList(MAE, stringSpecies = '', stringSymbol = '')
 #' @examples
 #' \donttest{
-#' library(MultiAssayExperiment)
 #' MAE <- MultiAssayExperiment()
 #' MAE <- wikiList(MAE, stringSpecies = 'Homo sapiens', stringSymbol = 'En')
 #' }

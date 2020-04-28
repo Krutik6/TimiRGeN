@@ -24,7 +24,6 @@ also add any other prefix, if user has other datatypes to explore. Colnames
 should end up in the following naming type: 'genetype_timepoint.datatype'.
 }
 \examples{
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 
@@ -32,7 +31,6 @@ MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")
-
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
                  prefixString = "mRNA")
 }

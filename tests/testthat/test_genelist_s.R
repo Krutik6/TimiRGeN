@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(stringr)
 #load filtered_genelist
 MAE <- readRDS(file = "MAE_Prefix.rds")
 miR_p <- assay(MAE, 3)

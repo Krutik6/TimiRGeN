@@ -1,8 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(gtools)
-library(MultiAssayExperiment)
 #get data sorted
 MAE <- readRDS("MAE_mm.rds")
 miR <- assay(MAE, 1)[1:100,]

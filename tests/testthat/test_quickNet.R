@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(igraph)
 #load data
 net <- readRDS("net.rds")
 quickNet(metadata(net)[[1]])

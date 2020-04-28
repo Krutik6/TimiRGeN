@@ -17,7 +17,6 @@
 #' @export
 #' @usage significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 #' @examples
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #' Data <- startObject(miR = miR, mRNA = mRNA)

@@ -1,8 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
-library(Mfuzz)
 #load data
 Clusters <- readRDS("Clusters.rds")
 #check function

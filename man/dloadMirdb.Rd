@@ -19,7 +19,6 @@ targetscan database.
 }
 \examples{
 \dontrun{
-library(MultiAssayExperiment)
 MAE <- MultiAssayExperiment()
 MAE <-dloadMirdb(MAE)
 }

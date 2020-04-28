@@ -25,10 +25,7 @@ Produces a list of mRNA-miR predicted interactions from miRDB
 for the species of interest from miRDB. Requires the tidyverse package.
 }
 \examples{
-library(MultiAssayExperiment)
 library(org.Mm.eg.db)
-library(tidyverse)
-library(clusterProfiler)
 MAE <- MultiAssayExperiment(list(mirdbData = data.frame(
                          row.names = c("5151919", "5161682", "5151921",
                                        "5151922"),

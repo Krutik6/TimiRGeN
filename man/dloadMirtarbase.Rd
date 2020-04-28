@@ -20,7 +20,6 @@ Downloads most recent version (7.0) of functional targets from
 miRTarBase database.
 }
 \examples{
-library(MultiAssayExperiment)
-MAE <- MultiAssayExperiment
+MAE <- MultiAssayExperiment()
 MAE <- dloadMirtarbase(MAE, species = "hsa")
 }

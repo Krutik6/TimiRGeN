@@ -1,6 +1,5 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
-library(MultiAssayExperiment)
 library(testthat)
 #load filtered_genelist
 ensembl_genes <- readRDS("ensembl_genes_s.rds")

@@ -10,7 +10,6 @@
 #' @usage wikiMatrix(MAE, ID_list, wp_list)
 #'
 #' @examples
-#' library(MultiAssayExperiment)
 #' MAE <- MultiAssayExperiment()
 #' metadata(MAE)[["ID_list"]] <- e_list
 #' metadata(MAE)[["w_list"]] <- w_list[1:10]

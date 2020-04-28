@@ -12,8 +12,6 @@
 #' @usage makeDynamic(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
 #'                    dataType = '')
 #' @examples
-#' library(biomaRt)
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR[1:100,]
 #' mRNA <- mm_mRNA[1:200,]
 #' MAE <- startObject(miR = miR, mRNA = mRNA)

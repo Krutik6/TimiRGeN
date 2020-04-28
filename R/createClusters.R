@@ -13,6 +13,7 @@
 #' Variance means wikipathways that are undergoing a higher change in the
 #' data will be clustered.
 #' @importFrom Mfuzz filter.std standardise mestimate mfuzz
+#' @importFrom e1071 cmeans
 #' @return Clusters(metadata): A list to be used as the input in plot functions.
 #' Mfuzzdata: An input for QuickFuzz. Mfuzzdata(ExperimentList): An
 #' ExpressionSet objectto be input for Mfuzz clustering.
@@ -23,8 +24,6 @@
 #' createClusters(MAE, method, percentMatrix, noClusters, dataString = '',
 #'                variance)
 #' @examples
-#' library(MultiAssayExperiment)
-#' library(Mfuzz)
 #' MAE <- MultiAssayExperiment()
 #' metadata(MAE)[["e_list"]] <- e_list
 #' metadata(MAE)[["w_list"]] <- w_list[1:10]
@@ -59,6 +58,7 @@ createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
     df <- na.omit(df)
     # If == s then subset data by common string e.g mRNA, miR
     if (method == 's') {
+    df <- as.data.frame(df)
     df2 <- df[, grepl(dataString, names(df))]
     # If == c do nothing
     } else if (method == 'c') {

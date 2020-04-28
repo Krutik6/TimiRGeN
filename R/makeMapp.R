@@ -9,8 +9,6 @@
 #' @export
 #' @usage makeMapp(MAE, filt_df, miR_IDs_adj, dataType = '')
 #' @examples
-#' library(biomaRt)
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #' MAE <- startObject(miR = miR, mRNA = mRNA)

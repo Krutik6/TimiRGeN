@@ -23,8 +23,6 @@ to the same cluster. Read more about Mfuzz for a greater understanding
 https://bioconductor.org/packages/release/bioc/html/rWikiPathways.html.
 }
 \examples{
-library(MultiAssayExperiment)
-library(Mfuzz)
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["e_list"]] <- e_list
 metadata(MAE)[["w_list"]] <- w_list[1:10]

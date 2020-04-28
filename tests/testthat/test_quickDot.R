@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(ggplot2)
 #load data
 sigwiki <- readRDS("EnrichWiki.rds")
 MAE <- MultiAssayExperiment()

@@ -11,8 +11,6 @@
 #' @export
 #' @usage targetscanData(MAE, targetScan, species = '')
 #' @examples
-#'library(tidyverse)
-#'library(MultiAssayExperiment)
 #'MAE <- MultiAssayExperiment(list(TargetScans = data.frame(
 #'                          row.names = c("215", "216", "286", "287"),
 #'                         "Gene" = c("ENSG00000148584.10",

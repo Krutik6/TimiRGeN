@@ -20,7 +20,6 @@ A percentage matrix.
 Converts integers into percentages, within a matrix.
 }
 \examples{
-library(MultiAssayExperiment)
 MAE <- MultiAssayExperiment()
 metadata(MAE)["e_list"] <- e_list
 metadata(MAE)["w_list"] <- w_list[1:10]

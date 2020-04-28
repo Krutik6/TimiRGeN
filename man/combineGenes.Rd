@@ -23,9 +23,7 @@ should be written as follows:
 timepoint.DEresult e.g. D1.log2fc or H6.adjPval.
 }
 \examples{
-library(clusterProfiler)
 library(org.Mm.eg.db)
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 MAE <- startObject(miR = miR, mRNA = mRNA)

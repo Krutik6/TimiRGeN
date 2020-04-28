@@ -8,7 +8,6 @@
 #' @export
 #' @usage reduceWiki(MAE, path_data, stringWiki = '')
 #' @examples
-#' library(MultiAssayExperiment)
 #' MAE <- MultiAssayExperiment(list(path_data = data.frame(
 #'                         "wpid" = c(rep("WP571", 6)),
 #'                         "gene" = c(16175, 12370,26419, 19249, 19645, 18479),

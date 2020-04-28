@@ -17,7 +17,6 @@
 #' @usage matrixFilter(MAE, miningMatrix, negativeOnly, predictedOnly,
 #'                     threshold, maxCor)
 #' @examples
-#'library(MultiAssayExperiment)
 #'Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
 #'                                       "mmu-miR-27a-3p:Odc1"),
 #'                         avecor = c(-0.9191653, 0.7826041),

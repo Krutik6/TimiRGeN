@@ -1,8 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(biomaRt)
-library(MultiAssayExperiment)
 # load data
 mRNA <- mm_mRNA
 mRNA <- mRNA[1:20,]

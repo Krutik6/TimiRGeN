@@ -8,7 +8,6 @@
 #' @usage dloadTargetscan(MAE)
 #' @examples
 #' \dontrun{
-#' library(MultiAssayExperiment)
 #' MAE <- MultiAssayExperiment()
 #' MAE <-dloadTargetscan(MAE)
 #' }

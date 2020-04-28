@@ -25,8 +25,6 @@ Identify which mRNAs are in common with the genes found in the
 wikipathway of interest.
 }
 \examples{
-library(biomaRt)
-library(MultiAssayExperiment)
 miR <- mm_miR[1:100,]
 mRNA <- mm_mRNA[1:200,]
 MAE <- startObject(miR = miR, mRNA = mRNA)

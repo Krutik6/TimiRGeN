@@ -26,8 +26,6 @@ Will retrive information about which wikipathways fitted best
 with a specific cluster.
 }
 \examples{
-library(MultiAssayExperiment)
-library(Mfuzz)
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["e_list"]] <- e_list
 metadata(MAE)[["w_list"]] <- w_list[1:10]

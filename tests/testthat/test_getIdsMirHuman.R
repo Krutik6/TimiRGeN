@@ -1,10 +1,7 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(biomaRt)
 library(org.Hs.eg.db)
-library(clusterProfiler)
-library(MultiAssayExperiment)
 #load data
 miR <- hs_miR
 miR <- miR[1:20,]

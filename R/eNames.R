@@ -13,9 +13,7 @@
 #' @export
 #' @usage eNames(MAE, method = '', gene_IDs, ID_Column)
 #' @examples
-#'library(clusterProfiler)
 #'library(org.Mm.eg.db)
-#'library(MultiAssayExperiment)
 #'
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA

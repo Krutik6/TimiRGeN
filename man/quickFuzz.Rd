@@ -24,8 +24,6 @@ wikipathways that show variance throughout a signalling network can be
 taken for further miR-mRNA interaction analysis.
 }
 \examples{
-library(MultiAssayExperiment)
-library(Mfuzz)
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["e_list"]] <- e_list
 metadata(MAE)[["w_list"]] <- w_list[1:10]

@@ -1,7 +1,5 @@
-library(biomaRt)
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load data
 #negative test
 log2fc <- readRDS("log2fc.rds")

@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(igraph)
 #load data
 filt_df <- readRDS("filt_df.rds")
 MAE <- MultiAssayExperiment()

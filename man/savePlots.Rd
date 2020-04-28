@@ -25,11 +25,7 @@ Saves all possible plots in the current directory.
 }
 \examples{
 \donttest{
-library(biomaRt)
-library(ggplot2)
 library(org.Mm.eg.db)
-library(clusterProfiler)
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 MAE <- startObject(miR = miR, mRNA = mRNA) -> MAE

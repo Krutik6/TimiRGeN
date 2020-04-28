@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load data
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["w_list"]] <- w_list[1:5]

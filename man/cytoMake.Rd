@@ -24,8 +24,6 @@ is open first.
 }
 \examples{
 \donttest{
-#' library(biomaRt)
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 MAE <- startObject(miR = miR, mRNA = mRNA)

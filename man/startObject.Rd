@@ -19,7 +19,6 @@ Creates a MultiAssayObject from miR and mRNA dataframes. This
 will be the constant object used throughout TimiRGeN.
 }
 \examples{
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 MAE <- startObject(miR = miR, mRNA = mRNA)

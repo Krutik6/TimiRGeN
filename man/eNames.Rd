@@ -27,9 +27,7 @@ Extract the ID names from the nested dataframes within the
 metadata of the MAE object.
 }
 \examples{
-library(clusterProfiler)
 library(org.Mm.eg.db)
-library(MultiAssayExperiment)
 
 miR <- mm_miR
 mRNA <- mm_mRNA

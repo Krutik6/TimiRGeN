@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load geneslist
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["geneslist"]] <- readRDS("genelist_s.rds")

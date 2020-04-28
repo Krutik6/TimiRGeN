@@ -20,8 +20,6 @@ microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that
 are specific to multiple microRNAs.
 }
 \examples{
-library(MultiAssayExperiment)
-library(clusterProfiler)
 library(org.Mm.eg.db)
 miR <- mm_miR
 miR <- miR[1:100,]

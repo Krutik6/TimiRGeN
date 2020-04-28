@@ -36,8 +36,6 @@ gene abundance during your time course in different wikipathways.
 This function is to be used before ClusterCheck and Quickfuzz.
 }
 \examples{
-library(MultiAssayExperiment)
-library(Mfuzz)
 MAE <- MultiAssayExperiment()
 metadata(MAE)[["e_list"]] <- e_list
 metadata(MAE)[["w_list"]] <- w_list[1:10]

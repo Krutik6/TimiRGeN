@@ -20,10 +20,6 @@ Creates an igraph object from filtered miR-mRNA interactions
 from database mining.
 }
 \examples{
-library(igraph)
-library(biomaRt)
-library(MultiAssayExperiment)
-
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                      "mmu-miR-27a-3p:Odc1"),
                       avecor = c(-0.9191653, 0.7826041),

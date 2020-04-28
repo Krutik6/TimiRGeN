@@ -1,7 +1,6 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
-library(MultiAssayExperiment)
 #load data
 Log2FC <- readRDS("log2fc.rds")
 Ints <- readRDS("interactions.rds")

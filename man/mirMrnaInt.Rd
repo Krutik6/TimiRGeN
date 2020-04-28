@@ -28,7 +28,6 @@ interactions which could arise between the microRNA data and the genes found
 in the mRNA data and in the wikipathway of choice.
 }
 \examples{
-library(MultiAssayExperiment)
 G <- data.frame(row.names = c("Acaa1a", "Acadm", "Acss1", "Adh1"),
                 "D1.Log2FC" = c("-1.2944593","-2.0267432","-2.1934942",
                                 "-2.1095853"),

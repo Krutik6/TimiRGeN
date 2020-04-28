@@ -41,7 +41,6 @@ will have dataframes which have been made by separating by 'timepoint.'.
 Make sure to follow colname nomenclature carefully.
 }
 \examples{
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 

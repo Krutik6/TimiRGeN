@@ -11,7 +11,6 @@
 #'microRNA-mRNA interactions between databases and the given data.
 #' @export
 #' @importFrom stringr %>%
-#' @import dplyr
 #' @importFrom dplyr mutate
 #' @usage dataMiningMatrix(MAE, corrTable, targetscan , mirdb, mirtarbase)
 dataMiningMatrix <- function(MAE, corrTable, targetscan, mirdb,

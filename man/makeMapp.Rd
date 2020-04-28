@@ -23,8 +23,6 @@ pathvisio.
 Create input for the MAPP plugin in pathvisio.
 }
 \examples{
-library(biomaRt)
-library(MultiAssayExperiment)
 miR <- mm_miR
 mRNA <- mm_mRNA
 MAE <- startObject(miR = miR, mRNA = mRNA)

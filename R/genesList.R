@@ -26,7 +26,6 @@
 #' @importFrom stringr str_extract
 #' @usage genesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 #' @examples
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #'

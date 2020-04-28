@@ -4,13 +4,11 @@
 #' will be the constant object used throughout TimiRGeN.
 #' @param miR microRNA dataframe/ matrix
 #' @param mRNA mRNA dataframe/ matrix
-#'
 #' @return MultiAssayExperiment object
 #' @export
 #' @importFrom MultiAssayExperiment MultiAssayExperiment
 #' @usage startObject(miR, mRNA)
 #' @examples
-#' library(MultiAssayExperiment)
 #' miR <- mm_miR
 #' mRNA <- mm_mRNA
 #' MAE <- startObject(miR = miR, mRNA = mRNA)

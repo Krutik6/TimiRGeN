@@ -9,23 +9,28 @@ getIdsMirHuman(MAE, miR)
 \arguments{
 \item{MAE}{MultiAssayObject created by StartObject}
 
-\item{miR}{Dataframe. Rownames are genes and columns are
-results of DE.}
+\item{miR}{Dataframe. Rownames are genes and columns are results of DE.}
 }
 \value{
 MAE object with 4 more dataframes consisting of ID information.
 }
 \description{
-getIdsMirHuman will produce ensembl and entrez data for human
+getIdsMirHuman will get ensembl and entrez data for human
 microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that are
-specific to multiple microRNAs.
+specific to microRNAs which share the ID.
 }
 \examples{
 library(org.Hs.eg.db)
+
 miR <- hs_miR
+
 rownames(miR) <- gsub(rownames(miR), pattern = "\\\\.", replacement = "-")
+
 rownames(miR) <- sub("-$", "*", rownames(miR))
+
 miR <- miR[1:100,]
+
 MAE <- startObject(miR = miR, mRNA = NULL)
+
 MAE <- getIdsMirHuman(MAE, assay(MAE, 1))
 }

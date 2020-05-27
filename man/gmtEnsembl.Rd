@@ -10,10 +10,9 @@ gmtEnsembl(MAE, path_gene, path_data, orgDB)
 \item{MAE}{MultiAssayExperiment where the ensembl wikipathways data can
 be stored.}
 
-\item{path_gene}{wikipathway-gene data from downloadGMT.}
+\item{path_gene}{path_gene data from downloadGMT.}
 
-\item{path_data}{wikipathway-gene-wikipathway full name data from
-downloadGMT.}
+\item{path_data}{path_data from downloadGMT.}
 
 \item{orgDB}{organism Library e.g. org.Hs.eg.db}
 }
@@ -21,13 +20,17 @@ downloadGMT.}
 2 dataframes. Wikipathway data based on ensembl IDs.
 }
 \description{
-Change entrez IDs in wpid2gene and wp_data into ensembl IDs
+Change entrez IDs in path_gene and path_data into ensembl IDs.
 }
 \examples{
 library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
 MAE <- gmtEnsembl(MAE = MAE, assay(MAE, 3),

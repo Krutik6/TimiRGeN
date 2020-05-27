@@ -22,13 +22,16 @@ A dataframe of which pathways corresponded best with the chosen
 dynamics seen in the selected cluster.
 }
 \description{
-Will retrive information about which wikipathways fitted best
+Will retrieve information about which wikipathways fitted best
 with a specific cluster.
 }
 \examples{
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)[["e_list"]] <- e_list
+
 metadata(MAE)[["w_list"]] <- w_list[1:10]
+
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 
@@ -39,6 +42,7 @@ MAE <- turnPercent(MAE = MAE,
 MAE <- createClusters(MAE, method = "c",
                     percentMatrix = assay(MAE, 2),
                     noClusters = 2, variance = 0.99)
+
 MAE <- returnCluster(MAE, clusterData = assay(MAE, 3), whichCluster = 1,
                      fitCluster = 0.5)
 }

@@ -1,11 +1,11 @@
 #' @title mirMrnaInt
 #' @description Create a correlation matrix of all the potential miR-mRNA
 #' interactions which could arise between the microRNA data and the genes found
-#' in the mRNA data and in the wikipathway of choice.
+#' in common between the mRNA data and a wikipathway of interest
 #' @param MAE MultiAssayExperiment object.
-#' @param miR_express Results from the Expres function of microRNA data.
+#' @param miR_express Results from the diffExpressRes function of microRNA data.
 #' Rownamesshould be gene names.
-#' @param GenesofInterest Input results from WikimRNA. Rownames should be gene
+#' @param GenesofInterest Input results from wikimRNA. Rownames should be gene
 #' names.
 #' @param maxInt Integer. Should be equal to number of samples in both mRNA and
 #' miR data e.g. number of different timepoints. In our example it is 5 because
@@ -40,24 +40,30 @@
 #'                   "D14.Log2FC" = c("-0.39466968","-0.60122678",
 #'                                    "-0.39461099", "-0.41889698"),
 #'                   "ID" = c("387143","387143","100628572","723829"))
+#'
 #'MAE <- MultiAssayExperiment()
+#'
 #'MAE <- mirMrnaInt(MAE, miR_express = MIR, GenesofInterest = G,
 #'                      maxInt = 5)
 mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt){
 
 
-        if (missing(MAE)) stop('Add MAE object');
-        if (missing(miR_express)) stop("Use Express function of miR data.
-                                       Rownames should be gene names.");
+        if (missing(MAE)) stop('Add MAE object.')
+
+        if (missing(miR_express)) stop("Use diffExpressRes function of miR data.
+                                       Rownames should be gene names.")
+
         if (missing(GenesofInterest)) stop("Input results from WikimRNA.
-                                            Rownames should be gene names.");
-        if (missing(miR_express)) stop("Integer. Number of samples your;
-                                        time course goes along.")
+                                            Rownames should be gene names.")
+
+        if (missing(maxInt)) stop("Integer. Number of samples your
+                                  time course goes along.")
 
         #Make matrix of the names of miRs and mRNAs of interest
         allnames <- expand.grid(rownames(miR_express),
                                 rownames(GenesofInterest),
                                 stringsAsFactors = FALSE)
+
         # Apply CorrTable to this
         interactions_df <- do.call(rbind, apply(allnames, 1,
                                                 corrTable,

@@ -15,10 +15,6 @@ micrornaFull(miRdf, species)
 hsa-miR-140-5p would be changed to microRNA 140-1
 }
 \description{
-Changes miR names into microRNA names in one step.
-This has less flexibility that MicroRNA_partial.
-}
-\examples{
-miR <- mm_miR
-microRNA_genenames <- micrornaFull(rownames(miR), species = "mmu")
+Changes miR names into microRNA names in one step. Internal
+function for getIDsMir functions.
 }

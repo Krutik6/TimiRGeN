@@ -1,5 +1,5 @@
 #' @title nonUnique
-#' @description Internal function for getIDs_miR_mousetohuman. Helps data
+#' @description Internal function for getIDs functions. Helps data
 #' wrangling for -3p and -5p genes.
 #' @param Col Column of dataframe to modify.
 #' @param sep Seperator to insert.
@@ -7,17 +7,12 @@
 #' in numerical order for each repeated string in the column.
 #' @return Modified column of a dataframe. Each non-unique value will have
 #' numbers representing it's duplicate number behing it.
+#' @importFrom stats ave
 #' @usage nonUnique(Col, sep, suffix)
-#' @export
-#' @examples
-#'sample <- data.frame(name = c("mmu-miR-101a-3p", "mmu-miR-101a-5p",
-#'                              "mmu-miR-101c","mmu-miR-106a-5p",
-#'                              "mmu-miR-106b-3p"),
-#'           Hs_n = c("hsa-miR-101-1", "hsa-miR-101-1", "hsa-miR-101c",
-#'                    "hsa-miR-106a", "hsa-miR-106b"))
-#'sample$Hs_n <- nonUnique(Col = sample$Hs_n, sep = '-', suffix = 'p')
 nonUnique <- function(Col, sep, suffix){
-    Col <- ave(as.character(Col), Col,
+
+    # If string is seen more than once add a suffix to it
+    Col <- stats::ave(as.character(Col), Col,
                 FUN=function(x) if (length(x)>1) paste0(x[1],
                                                         sep,
                                                         seq_along(x),

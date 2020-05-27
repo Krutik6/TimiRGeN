@@ -13,15 +13,18 @@ dloadGmt(MAE, speciesInitials = "")
 sapiens or Mus musculus data.}
 }
 \value{
-3 dataframes. 1) genes-wikipathwayIDs 2) wikipathwayIDs-wikipathway
-fullnames 3) combination of 1 and 2. All of which can be sotred in an MAE.
+3 dataframes. 1) path_gene 2) path_namees 3) path_data.
+All of which can be stored in an MAE.
 }
 \description{
 Provides mouse or human wikipathway information.
 }
 \examples{
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 }

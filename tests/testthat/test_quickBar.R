@@ -1,13 +1,18 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
+
 #load data
 sigwiki <- readRDS("EnrichWiki.rds")
+
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)[["sigwiki"]] <- sigwiki
+
 #test Quickbar
 p1 <- quickBar(X = metadata(MAE)[[1]][[1]],
-               Y = metadata(MAE)[[1]][1])
+               Y = metadata(MAE)[[1]][[1]])
+
 #test plot
 p2 <- ggplot(head(sigwiki$D7_wikipathways[which(
                                  sigwiki$D7_wikipathways$p.adjust < 0.05),],
@@ -31,6 +36,7 @@ p2 <- ggplot(head(sigwiki$D7_wikipathways[which(
     theme(panel.background = element_rect(fill = 'white', colour = 'black'))+
 
     coord_flip()
+
 #visual check
 test_that("should be 4 wikipathways", {
     expect_equal(length(rownames(sigwiki$D7_wikipathways@result)),4)})

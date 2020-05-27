@@ -11,11 +11,18 @@
 #' @export
 #' @usage wikiMrna(MAE, mRNA_express, singleWiki, stringWiki='')
 #' @examples
+#' library(org.Mm.eg.db)
+#'
 #' miR <- mm_miR[1:100,]
+#'
 #' mRNA <- mm_mRNA[1:200,]
+#'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
+#'
 #' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+#'
 #' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+#'
 #' MAE <- dloadGmt(MAE = MAE, speciesInitials = "Mm")
 #'
 #' MAE <- reduceWiki(MAE, path_data = assay(MAE, 11),
@@ -31,18 +38,31 @@
 #'                 stringWiki = 'TGF Beta Signaling Pathway')
 wikiMrna <- function(MAE, mRNA_express, singleWiki, stringWiki){
 
-    if (missing(MAE)) stop("Insert MAE object.");
-    if (missing(mRNA_express)) stop("Use Express function of mRNA data.");
-    if (missing(singleWiki)) stop("Use ReduceWiki function on a Wikipathway
-                                   of interest.");
-    if (missing(stringWiki)) stop("Name of the wikipathway.");
+    if (missing(MAE)) stop("Insert MAE object.")
 
+    if (missing(mRNA_express)) stop("Use diffExpressRes function of mRNA data.")
+
+    if (missing(singleWiki)) stop("Output from reduceWiki function on a
+                                  Wikipathway of interest.")
+
+    if (missing(stringWiki)) stop("Name of the wikipathway.")
+
+    # Take dataframes out of MAE objects
     mRNAs <- mRNA_express
+
     pathway <- singleWiki
+
+    # Find which genes from data and from selected pathway are the same
     GenesofInterest <- mRNAs[which(mRNAs$ID %in% pathway[,2]),]
+
     MAE2 <- suppressMessages(MultiAssayExperiment(list(x = GenesofInterest)))
+
+    # unique name for each pathway
     a <- "GoI_"
+
     names(MAE2) <- paste0(a, stringWiki)
+
     MAE <- c(MAE, MAE2)
+
     return(MAE)
 }

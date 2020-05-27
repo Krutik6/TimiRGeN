@@ -1,12 +1,17 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
+
 #load data
 sigwiki <- readRDS("EnrichWiki.rds")
+
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)[["sigwiki"]] <- sigwiki
+
 #test quickdot
 p1 <- quickDot(X = metadata(MAE)[[1]][[1]], Y = metadata(MAE)[[1]][1])
+
 #test plot
 p2 <- ggplot()+
 geom_dotplot(mapping = aes(x= reorder(Description, -p.adjust), y=Count,
@@ -35,7 +40,7 @@ geom_dotplot(mapping = aes(x= reorder(Description, -p.adjust), y=Count,
     theme(panel.background = element_rect(fill = 'white', colour = 'black'))+
 
     coord_flip()
+
 #visual check
 test_that("should be 4 wikipathways", {
   expect_equal(length(rownames(sigwiki$D7_wikipathways@result)),4)})
-#outputs are the same

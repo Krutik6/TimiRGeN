@@ -2,7 +2,7 @@
 #' @description Filters out miR-mRNA interactions based on how many times an
 #'interaction has been predicted and or validated.
 #' @param MAE MultiAssayExperiment.
-#' @param miningMatrix Output from DataMiningMatrix.
+#' @param miningMatrix Output from dataMiningMatrix.
 #' @param negativeOnly TRUE or FALSE. Should only negatively correlating
 #' miR-mRNA interactions be given? Default is TRUE.
 #' @param predictedOnly TRUE or FALSE. Should only predicted interactions be
@@ -29,30 +29,40 @@
 #'                         Predicted_Interactions = c(1, 0),
 #'                         miRTarBase = c(0, 1),
 #'                         Pred_Fun = c(1, 1))
+#'
 #' MAE <- MultiAssayExperiment()
+#'
 #' MAE <- matrixFilter(MAE, miningMatrix = Int_matrix, negativeOnly = TRUE,
 #'                         threshold = 3, predictedOnly = FALSE)
 matrixFilter <- function(MAE, miningMatrix, negativeOnly = TRUE,
                          predictedOnly = TRUE, threshold = 1, maxCor = 1){
 
     if (missing(MAE)) stop('Add MAE object');
-    if (missing(miningMatrix)) stop('Input miningmatrix from
-                                     DataMiningMatrix function');
 
+    if (missing(miningMatrix)) stop('Input miningmatrix from
+                                     dataMiningMatrix function');
+
+    # miR-mRNA interactions with a - ave correlation
     if (negativeOnly == TRUE) {
+
         Filter1 <- miningMatrix[which(miningMatrix$avecor < 0),]
 
     } else Filter1 <- miningMatrix
 
+    # miR-mRNA interactions from miRDB and TargetScans
     if (predictedOnly == TRUE) {
+
             Filter2 <- Filter1[which(
                             Filter1$Predicted_Interactions >= threshold),]
 
     } else Filter2 <- Filter1[which(Filter1$Pred_Fun >= threshold),]
+
+    # Maximum average correlation
         Filter3 <- Filter2[which(Filter2$avecor <= maxCor),]
 
     MAE2 <- suppressMessages(MultiAssayExperiment(
                             list("Filtered_Int" = Filter3)))
+
     MAE <- c(MAE, MAE2)
 
 return(MAE)

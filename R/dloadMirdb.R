@@ -8,22 +8,37 @@
 #' @usage dloadMirdb(MAE)
 #' @examples
 #' \dontrun{
+#'
 #' MAE <- MultiAssayExperiment()
+#'
 #' MAE <-dloadMirdb(MAE)
+#'
 #' }
 dloadMirdb <- function(MAE){
-    if (missing(MAE)) stop('Add MultiAssayExperiment');
+
+    if (missing(MAE)) stop('Add MultiAssayExperiment.')
+
+    # download targetscans data
     download.file("http://mirdb.org/download/miRDB_v6.0_prediction_result.txt.gz",
                   'MIRDB.gz')
 
+    # read file from directory
     miRDB <- read.table(gzfile("MIRDB.gz"), header = FALSE, fill = TRUE)
+
+    # remove file
     file.remove("MIRDB.gz")
 
+    # add to MAE object
     MAE2 <- suppressMessages(MultiAssayExperiment(list('miRDB' = miRDB)))
+
     MAE <- c(MAE, MAE2)
 
+    # print information about what was downloaded and instructions if
+    # newer version of data is available.
     print("Downloaded Predicted Targets from miRDB version 6.0")
+
     print("Check if a newer version is available? http://mirdb.org/." )
+
     print("If so download that and run it through miRDB_data function.")
 
 return(MAE)

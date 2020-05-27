@@ -9,10 +9,10 @@ mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt)
 \arguments{
 \item{MAE}{MultiAssayExperiment object.}
 
-\item{miR_express}{Results from the Expres function of microRNA data.
+\item{miR_express}{Results from the diffExpressRes function of microRNA data.
 Rownamesshould be gene names.}
 
-\item{GenesofInterest}{Input results from WikimRNA. Rownames should be gene
+\item{GenesofInterest}{Input results from wikimRNA. Rownames should be gene
 names.}
 
 \item{maxInt}{Integer. Should be equal to number of samples in both mRNA and
@@ -25,7 +25,7 @@ A large correlation matrix.
 \description{
 Create a correlation matrix of all the potential miR-mRNA
 interactions which could arise between the microRNA data and the genes found
-in the mRNA data and in the wikipathway of choice.
+in common between the mRNA data and a wikipathway of interest
 }
 \examples{
 G <- data.frame(row.names = c("Acaa1a", "Acadm", "Acss1", "Adh1"),
@@ -54,7 +54,9 @@ MIR <- data.frame(row.names = c("mmu-miR-101a-3p", "mmu-miR-101a-5p",
                   "D14.Log2FC" = c("-0.39466968","-0.60122678",
                                    "-0.39461099", "-0.41889698"),
                   "ID" = c("387143","387143","100628572","723829"))
+
 MAE <- MultiAssayExperiment()
+
 MAE <- mirMrnaInt(MAE, miR_express = MIR, GenesofInterest = G,
                      maxInt = 5)
 }

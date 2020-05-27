@@ -1,20 +1,38 @@
 Package: TimiRGeN
 Type: Package
-Title: microRNA-mRNA integration, analysis and network generation tool
-Version: 0.99.4155
+Title: microRNA-mRNA Integration, Analysis and Network Generation Tool
+Version: 0.99.4156
 Authors@R: person(given = "Krutik", family = "Patel", role = c("aut", "cre"), email = "K.Patel5@newcastle.ac.uk")
-Description: Functionally analyses and integrated time course mRNA and miR data based on empirical evidences. Can be used to reduce the volume of data without loosing grasp of the biology.
+Description: Functionally analyses and integrated time course mRNA and miR data and can generate small networks within and outside of R for GRN construction and hypothesis generation.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
+Depends: R (>= 4.0),
+         Mfuzz,
+         MultiAssayExperiment
 Imports:
-      org.Hs.eg.db,
-      org.Mm.eg.db
+      biomaRt,
+      clusterProfiler,
+      dplyr (>= 0.8.4),
+      gtools (>= 3.8.1),
+      ggplot2,
+      graphics,
+      grDevices,
+      igraph (>= 1.2.4.2),
+      RCy3,
+      readxl,
+      rWikiPathways,
+      stats,
+      tidyr (>= 1.0.2),
+      tidyverse,
+      stringr (>= 1.4.0)
 Suggests:
       BiocManager,
       kableExtra,
       knitr (>= 1.27),
+      org.Hs.eg.db,
+      org.Mm.eg.db,
       testthat (>= 2.3.1)
 VignetteBuilder:
     knitr
@@ -26,23 +44,3 @@ biocViews:
     Software,
     TimeCourse,
     Visualization
-Depends: R (>= 4.0),
-         biomaRt,
-         clusterProfiler,
-         dplyr (>= 0.8.4),
-         e1071,
-         gtools (>= 3.8.1),
-         ggplot2,
-         igraph (>= 1.2.4.2),
-         Mfuzz,
-         MultiAssayExperiment,
-         RCy3,
-         graphics,
-         grDevices,
-         rWikiPathways,
-         stats,
-         tidyr (>= 1.0.2),
-         tidyverse,
-         stringr (>= 1.4.0)
-         
-         

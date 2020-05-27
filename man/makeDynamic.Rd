@@ -10,32 +10,42 @@ makeDynamic(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
 \arguments{
 \item{MAE}{MultiAssayObject.}
 
-\item{miR_expression}{microRNA data after going through Express function.}
+\item{miR_expression}{microRNA data after going through diffExpressRes.}
 
-\item{mRNA_expression}{mRNA data after going through Express function.}
+\item{mRNA_expression}{mRNA data after going through diffExpressRes.}
 
-\item{miR_IDs_adj}{Either miR_ensembl_adj or miR_entrez_adj}
+\item{miR_IDs_adj}{Either miR_adjusted_entrez or miR_adjusted_ensembl.}
 
-\item{dataType}{Either En (ensembl data) or L (entrez data)}
+\item{dataType}{Either En (ensembl data) or L (entrez data).}
 }
 \value{
 MicroRNA and mRNA dynamic data that can be used in pathvisio if
 exported.
 }
 \description{
-Make expression data input for pathvisio so changes over time
-can be visualised.
+Produces a data frame that can be imported into pathvisio
+to show changes in genes over time. Follow vignette instructions on how to
+save this file and further instructions found in the
+/inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
 }
 \examples{
+library(org.Mm.eg.db)
+
 miR <- mm_miR[1:100,]
+
 mRNA <- mm_mRNA[1:200,]
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+
 MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+
 MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
                genes_ID = assay(MAE, 3),
                idColumn = 'GENENAME',
                name = "miR_express")
+
 MAE <- diffExpressRes(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
                genes_ID = assay(MAE, 7),
                idColumn = 'GENENAME',

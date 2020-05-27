@@ -7,7 +7,7 @@
 corrTable(names, miR_exprs, mRNA_wiki, maxInt)
 }
 \arguments{
-\item{names}{Dataframe with combined list of mRNA(single wikipathway of
+\item{names}{Dataframe with combined list of mRNA (single wikipathway of
 interest) and miR names.}
 
 \item{miR_exprs}{miR averaged expression data.}
@@ -22,5 +22,5 @@ timepoints.}
 A matrix of each mRNA and miR interaction and a correlation.
 }
 \description{
-corrTable
+An internal function for the mirMranInt function.
 }

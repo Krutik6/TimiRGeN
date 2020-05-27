@@ -20,6 +20,8 @@ will be the constant object used throughout TimiRGeN.
 }
 \examples{
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
 }

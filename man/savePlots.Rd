@@ -10,27 +10,31 @@ savePlots(largeList, maxInt, quickType, fileType = '')
 \item{largeList}{A list of wikipathways associated to entrezIDs for each
 sample.}
 
-\item{maxInt}{Number of samples in dataset/ lists in sigwiki}
+\item{maxInt}{Number of samples in dataset.}
 
-\item{quickType}{Quickplot ot Quickbar}
+\item{quickType}{quickDot ot quickBar.}
 
 \item{fileType}{Type of file for images to be exported as: png, tiff,
-svg or jpg}
+svg or jpg.}
 }
 \value{
-saves tiff files of all plots in current dir
+saves files of all plots in current dir
 }
 \description{
-Saves all possible plots in the current directory.
+Saves all plots from enrichWiki in the current directory.
 }
 \examples{
 \donttest{
 library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 mRNA <- mm_mRNA
-MAE <- startObject(miR = miR, mRNA = mRNA) -> MAE
+
+MAE <- startObject(miR = miR, mRNA = mRNA)
 
 metadata(MAE)[["ID_list"]] <- e_list
+
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
 metadata(MAE)[["sigwiki"]] <- enrichWiki(MAE, method = "c",

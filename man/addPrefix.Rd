@@ -16,7 +16,7 @@ inside of a MAE.}
 }
 \value{
 mRNA or miR results now should have mRNA_ or miR_ at the start
-of each column name
+of each column name.
 }
 \description{
 Adds 'miR_' or 'mRNA_' prefix to colnames of dataframes. Can
@@ -25,12 +25,14 @@ should end up in the following naming type: 'genetype_timepoint.datatype'.
 }
 \examples{
 miR <- mm_miR
+
 mRNA <- mm_mRNA
 
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")
+
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
                  prefixString = "mRNA")
 }

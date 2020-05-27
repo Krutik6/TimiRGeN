@@ -7,9 +7,9 @@
 quickFuzz(Mfuzzdata, Clusters, W)
 }
 \arguments{
-\item{Mfuzzdata}{Output after CreateClusters. An Expressionset object.}
+\item{Mfuzzdata}{Output after createClusters. An Expressionset object.}
 
-\item{Clusters}{Output after CreateClusters. A list.}
+\item{Clusters}{Output after createClusters. A list of clusters.}
 
 \item{W}{Should the plot be shown in a new window? Default is TRUE.}
 }
@@ -19,14 +19,17 @@ across different wikipathways.
 }
 \description{
 Plots Clusters in reference to the ClusterData dataframe. To be
-used after CreateClusters and ClusterCheck. From here individual
+used after createClusters and clusterCheck. From here individual
 wikipathways that show variance throughout a signalling network can be
 taken for further miR-mRNA interaction analysis.
 }
 \examples{
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)[["e_list"]] <- e_list
+
 metadata(MAE)[["w_list"]] <- w_list[1:10]
+
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 

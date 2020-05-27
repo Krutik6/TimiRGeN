@@ -205,10 +205,22 @@ TimiRGeN v0.99.4154 (Date: 22/04/2020)
 
 TimiRGeN v0.99.4155 (Date: 27/04/2020)
 ===============================
-* Moved most packages TimiRGeN depends on to dependencies, and removed these 
+* Moved most packages TimiRGeN depends on to dependencies, and removed these
 packages in examples and from the vignette.
 * Fixed bugs in createClusters and dloadMirtarbase.
 * Removed library calls from the tests.
 
-
+TimiRGeN v0.99.4156 (Date: 27/05/2020)
+===============================
+* Only have MultiAssayExperiments() and Mfuzz() in depends on.
+* org.Hs.eg.db() and org.Mm.eg.db() have been moved to suggests as
+usually only one or the other will be needed.
+* Removed @exports from internal functions: nonUnique, micrornaFull and
+corrTable.
+packages in examples and from the vignette.
+* Re-instated dloadMirtarbase and mirtarbaseData as the miRTarBase server is back online, updated vignette to respect this.
+* Cleaed up R code, adding spaces between lines in examples and in function code, ordering @exports, @imports/importsFrom and @usage in a consistent order and removed blank spaces from @'s in R code.
+* Fixed many spelling errors/ artifacts in code descriptions and if (missing(x)) stop('y') calls.
+* Added a :: to most function calls within functions.
+* Editted inst/Pathvisio_GRN_guide.pdf.
 

@@ -3,39 +3,47 @@
 #' mouse mRNAs.
 #' @param MAE MultiAssayObject created by StartObject
 #' @param mRNA Dataframe. Rownames should be genenames and colnames should be
-#'results from DE.
+#'results from DE and time points.
 #' @param mirror tring to identify which biomaRt repo is best for the users
 #' locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.
 #' @return 2 new dataframes in the MAE object. One with entrez information and
 #' the other with ensembl information.
 #' @export
+#' @importFrom biomaRt useEnsembl getBM
 #' @usage getIdsMrnaMouse(MAE, mRNA, mirror)
 #' @examples
 #' mRNA <- mm_mRNA
+#'
 #' mRNA <- mRNA[1:20,]
+#'
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)
+#'
 #' MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 getIdsMrnaMouse <- function(MAE, mRNA, mirror = 'useast'){
 
-    if(missing(MAE)) stop('Use the StartObject function.');
-    if (missing(mRNA)) stop('Add microRNA as.data.frame. Rownames are genes and
-                            columns are results from differential
-                            expression analysis.');
+    if(missing(MAE)) stop('Use the startObject function.')
 
-    mouse <- biomaRt::useEnsembl("ensembl",dataset="mmusculus_gene_ensembl",
-                                 GRCh=37, host = paste0(mirror, ".ensembl.org"))
+    if (missing(mRNA)) stop('Add mRNA data fram.')
+
+    # Get a mouse mart
+    mouse <- biomaRt::useEnsembl("ensembl",dataset="mmusculus_gene_ensembl"
+                                 ,host = paste0(mirror, ".ensembl.org"))
 
     # Get IDs
-    glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
-                                  "entrezgene_id"),
-                                  filters = "external_gene_name",
-                                  values = rownames(mRNA),
-                                  mart = mouse, uniqueRows = TRUE)
+    glist <- biomaRt::getBM(attributes = c("external_gene_name",
+                                           "ensembl_gene_id",
+                                           "entrezgene_id"),
+                            filters = "external_gene_name",
+                            values = rownames(mRNA),
+                            mart = mouse, uniqueRows = TRUE)
 
+    # Remove duplicated data
     glist <- glist[! duplicated(glist$external_gene_name),]
 
     gene_data <- cbind(mRNA, rownames(mRNA))
 
+
+    # Merge retreived IDs to input data
     m_dat <- merge(x = gene_data, y = glist, by.x = 'rownames(mRNA)',
                    by.y = 'external_gene_name', all = TRUE)
 

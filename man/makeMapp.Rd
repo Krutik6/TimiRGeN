@@ -9,23 +9,30 @@ makeMapp(MAE, filt_df, miR_IDs_adj, dataType = '')
 \arguments{
 \item{MAE}{MultiAssayExperiment object.}
 
-\item{filt_df}{Dataframe of mined microRNA-mRNA interactions}
+\item{filt_df}{Dataframe of mined microRNA-mRNA interactions.}
 
-\item{miR_IDs_adj}{miR_enseml_adj or miR_entrez_adj}
+\item{miR_IDs_adj}{miR_adjusted_entrez or miR_adjusted_ensembl.}
 
-\item{dataType}{L for entrez or En for ensembl}
+\item{dataType}{L for entrez or En for ensembl.}
 }
 \value{
 A dataframe which should be saved as a text file for import into
 pathvisio.
 }
 \description{
-Create input for the MAPP plugin in pathvisio.
+Create input for the MAPP plugin in pathvisio. Follow vignette
+instructions on how to save this file and further instructions found in the
+/inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
 }
 \examples{
+library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",

@@ -21,8 +21,11 @@ Converts integers into percentages, within a matrix.
 }
 \examples{
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)["e_list"] <- e_list
+
 metadata(MAE)["w_list"] <- w_list[1:10]
+
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 

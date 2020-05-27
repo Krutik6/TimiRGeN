@@ -51,7 +51,7 @@ packages have been built upon for several functions in the TimiRGeN package:
 [igraph](https://igraph.org/redirect.html) [7].
 
 TimiRGeN is very selective and only get miR-mRNA interaction data from
-databases curated within the last 4 years. TimiRGeN also only uses databases
+databases curated within the last 4 years. TimiRGeN also only uses  predictive databases
 which use seed site specificity.
 
 [TargetScans](http://www.targetscan.org/vert_72/)[8].
@@ -68,7 +68,7 @@ TimiRGeN solely uses wikipathways for functional pathway analysis,
 and is the first tool to allow this for time series data. Wikipathways is a
 user curated pathway database that contains 1000s of mechanistic
 signalling pathways from multiple species [13]. 
-Furthermore, wikipathways worksvery well with Pathvisio which is our recommended tool for GRN design.
+Furthermore, wikipathways works very well with Pathvisio which is our recommended tool for GRN design.
 
 The TimiRGeN package gives the user several options for their analysis.
 Currently the package can analyse human or mouse data, perform analysis of miR and mRNA data combined or separately, and can use entrez or ensembl gene IDs. This tool can be best used after differential expression analysis.
@@ -112,6 +112,7 @@ and was downloaded from
 
 ```{r Load Fibrosis data}
 miR <- mm_miR
+
 mRNA <- mm_mRNA
 ```
 
@@ -139,6 +140,7 @@ and the lists will be stored in the `metadata`.
 
 ```{r retrieveID data for miR data, warning=FALSE, message=FALSE}
 MAE <- getIdsMirMouse(MAE = MAE, assay(MAE, 1))
+
 MAE <- getIdsMrnaMouse(MAE = MAE, assay(MAE, 2))
 ```
 
@@ -198,6 +200,7 @@ To do this TimiRGeN uses wikipathways [13].
 
 ```{r downloadGTM_show, message=FALSE, warning=FALSE, eval=FALSE}
 MAE2 <- MultiAssayExperiment()
+
 MAE2 <- dloadGmt(MAE = MAE2, speciesInitials = "Mm")
 ```
 
@@ -306,11 +309,15 @@ MAE2 <- createClusters(MAE = MAE2, method = "c",
 
 ```{r createClusters_working, fig.align ="center",dpi=80, echo=FALSE}
 clusterdata <- clusterdata
+
 mfuzzdata <- mfuzzdata
+
 MAEx <- MultiAssayExperiment(list('ClusterData' = clusterdata,
                                   'MuzzData' = mfuzzdata))
 MAE2 <- c(MAE2, MAEx)
+
 clusters <- clusters
+
 metadata(MAE2)[['Clusters']] <- clusters
 ```
 
@@ -404,6 +411,7 @@ pathway are in common with our input data.
 
 ```{r Correlation, warning=FALSE, message=FALSE}
 MAE3 <- MultiAssayExperiment()
+
 MAE3 <- mirMrnaInt(MAE = MAE3,
                        miR_express = assay(MAE2, 9),
                        GenesofInterest = assay(MAE2, 12),
@@ -432,17 +440,23 @@ For human analysis use `"hsa"` and `org.Hs.eg.db`.
 
 ```{r Targetscans data, message=FALSE, warning=FALSE, eval=FALSE}
 MAE3 <- dloadTargetscan(MAE = MAE3)
+
 MAE3 <- targetscanData(MAE = MAE3,
-                         targetScan = assay(MAE3, 2),
-                         species = "mmu")
+                       targetScan = assay(MAE3, 2),
+                       species = "mmu")
 
 MAE3 <- dloadMirdb(MAE = MAE3)
-MAE3 <- mirdbData(MAE = MAE3,
-                   miRdb = assay(MAE3, 4),
-                   species = "mmu",
-                   orgDB = org.Mm.eg.db)
 
-MAE3 <- dloadMirtarbase(MAE = MAE3, species = "mmu")
+MAE3 <- mirdbData(MAE = MAE3,
+                  mirdb = assay(MAE3, 4),
+                  species = "mmu",
+                  orgDB = org.Mm.eg.db)
+
+MAE3 <- dloadMirtarbase(MAE = MAE3)
+
+MAE3 <- mirtarbaseData(MAE = MAE3, 
+                       mirtarbase = assay(MAE3, 6), 
+                       species = "mmu")
 ```
 
 ### Mine Predicted or Funtionally Assessed miR-mRNA Interactions
@@ -451,12 +465,14 @@ MAE3 <- dloadMirtarbase(MAE = MAE3, species = "mmu")
 MAE3 <- dataMiningMatrix(MAE = MAE3, corrTable = assay(MAE3, 1),
                          targetscan = assay(MAE3, 3),
                          mirdb = assay(MAE3, 5),
-                         mirtarbase = assay(MAE3, 6))
+                         mirtarbase = assay(MAE3, 7))
 ```
 
 ```{r Datamining_working, echo=FALSE}
 Int_data <- Int_data
+
 X <- MultiAssayExperiment(list(MiningMatrix = Int_data))
+
 MAE3 <- c(MAE3, X)
 ```
 
@@ -467,7 +483,7 @@ display this as intergers.
 #### Filter Out miR-mRNA Interactions Based on Evidence
 
 ```{r matrixFilter_copy, warning=FALSE, message=FALSE, eval=FALSE}
-MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 7),
+MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 8),
                      negativeOnly = TRUE,
                      predictedOnly = FALSE,
                      threshold = 2,
@@ -494,7 +510,7 @@ where the interactions are identified.
 ### Create Internal R Networks
 
 ```{r CreateNetwork, message=FALSE, warning=FALSE, eval=FALSE}
-MAE3 <- makeNet(MAE = MAE3, filt_df = assay(MAE3, 8))
+MAE3 <- makeNet(MAE = MAE3, filt_df = assay(MAE3, 9))
 
 quickNet(net = metadata(MAE3)[[1]])
 ```
@@ -517,7 +533,7 @@ we recommend exporting to Cytoscape in these cases.
 
 ```{r MakeOutputforPathvisio_copy, eval=FALSE}
 MAE3 <- makeMapp(MAE3,
-                 filt_df = assay(MAE3, 8),
+                 filt_df = assay(MAE3, 9),
                  miR_IDs_adj = assay(MAE, 5),
                  dataType = 'L')
 
@@ -542,11 +558,11 @@ MAE3 <- makeDynamic(MAE = MAE3,
 
 
 ```{r writeout, eval=FALSE}
-write.table(assay(MAE3, 9), "MAPP.txt", quote = FALSE,
+write.table(assay(MAE3, 10), "MAPP.txt", quote = FALSE,
             row.names = FALSE, col.names = FALSE,
             sep = "\t")
 
-write.csv(assay(MAE3, 10), "Dynamics.csv", row.names = TRUE,
+write.csv(assay(MAE3, 11), "Dynamics.csv", row.names = TRUE,
           quote = FALSE)
 ```
 
@@ -573,7 +589,7 @@ miR-mRNA interactions to a handful in a short amount of time.
 ```{r cytoscape, message=FALSE, warning=FALSE, eval=FALSE}
 cytoscapePing()
 
-cytoMake(assay(MAE3, 8),
+cytoMake(assay(MAE3, 9),
          titleString = 'Complement+Coagulation',
          collectionString = 'PathwaysforKidneyFibrosis')
 ```
@@ -636,6 +652,7 @@ mRNA <- hs_mRNA
 MAE <- startObject(miR, mRNA)
 
 MAE <- getIdsMirHuman(MAE = MAE, assay(MAE, 1))
+
 MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2))
 ```
 
@@ -644,6 +661,7 @@ MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2))
 ```{r addPrefix, message=FALSE, warning=FALSE}
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")
+
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
                  prefixString = "mRNA")
 ```
@@ -675,7 +693,6 @@ MAE <- addIds(MAE = MAE, method = 's',
 MAE <- eNames(MAE = MAE, method = 's',
               gene_IDs = metadata(MAE)[[3]],
               ID_Column = 4)
-
 ```
 
 ### GSEA Method on Separated Data

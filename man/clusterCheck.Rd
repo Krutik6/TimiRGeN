@@ -7,7 +7,7 @@
 clusterCheck(Clusters, W)
 }
 \arguments{
-\item{Clusters}{Outout from CreateClusters function. A list of clusters,
+\item{Clusters}{Output from createClusters function. A list of clusters,
 statistics and phenodata.}
 
 \item{W}{Should the plot be shown in a new window? Default is TRUE.}
@@ -16,7 +16,7 @@ statistics and phenodata.}
 A PCAplot showing distance of clusters.
 }
 \description{
-Put data from CreateClusters through this funciton to check
+Put data from createClusters through this funciton to check
 if an appropriate number of clusters have been created. The closer the
 circles are to one another the more likely that they should belong
 to the same cluster. Read more about Mfuzz for a greater understanding
@@ -24,8 +24,11 @@ https://bioconductor.org/packages/release/bioc/html/rWikiPathways.html.
 }
 \examples{
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)[["e_list"]] <- e_list
+
 metadata(MAE)[["w_list"]] <- w_list[1:10]
+
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 

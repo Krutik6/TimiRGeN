@@ -10,10 +10,10 @@ makeNet(MAE, filt_df)
 \item{MAE}{MultiAssayExperiment Object.}
 
 \item{filt_df}{Filtered miR-mRNA interactions from the mining matrix
-produced by the DataMiningMatrix function.}
+produced by the dataMiningMatrix function.}
 }
 \value{
-A list which is the input for Quicknet
+A list which is the input for quicknet
 }
 \description{
 Creates an igraph object from filtered miR-mRNA interactions
@@ -32,6 +32,8 @@ Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                       Predicted_Interactions = c(1, 0),
                       miRTarBase = c(0, 1),
                       Pred_Fun = c(1, 1))
+
 MAE <- MultiAssayExperiment()
+
 MAE <- makeNet(MAE, Filt_df)
 }

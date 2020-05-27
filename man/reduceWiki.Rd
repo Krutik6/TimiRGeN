@@ -9,7 +9,8 @@ reduceWiki(MAE, path_data, stringWiki = '')
 \arguments{
 \item{MAE}{MultiAssayExperiment object.}
 
-\item{path_data}{File with wikipathway - gene data.}
+\item{path_data}{File with wikipathway and gene data from
+dloadGmt or gmtEnsembl..}
 
 \item{stringWiki}{Full name of the wikipathway of interest.}
 }
@@ -26,6 +27,7 @@ MAE <- MultiAssayExperiment(list(path_data = data.frame(
                         "gene" = c(16175, 12370,26419, 19249, 19645, 18479),
                         "name" = c(rep("Fas pathway and Stress induction of HSP regulation",
                         6)))))
+
 MAE <- reduceWiki(MAE, path_data = assay(MAE, 1),
                  stringWiki = 'Fas pathway and Stress induction of HSP regulation')
 }

@@ -1,17 +1,24 @@
 #' @title makeMapp
-#' @description Create input for the MAPP plugin in pathvisio.
+#' @description Create input for the MAPP plugin in pathvisio. Follow vignette
+#' instructions on how to save this file and further instructions found in the
+#' /inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
 #' @param MAE MultiAssayExperiment object.
-#' @param filt_df Dataframe of mined microRNA-mRNA interactions
-#' @param miR_IDs_adj miR_enseml_adj or miR_entrez_adj
-#' @param dataType L for entrez or En for ensembl
+#' @param filt_df Dataframe of mined microRNA-mRNA interactions.
+#' @param miR_IDs_adj miR_adjusted_entrez or miR_adjusted_ensembl.
+#' @param dataType L for entrez or En for ensembl.
 #' @return A dataframe which should be saved as a text file for import into
 #' pathvisio.
 #' @export
 #' @usage makeMapp(MAE, filt_df, miR_IDs_adj, dataType = '')
 #' @examples
+#' library(org.Mm.eg.db)
+#'
 #' miR <- mm_miR
+#'
 #' mRNA <- mm_mRNA
+#'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
+#'
 #' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 #'
 #' Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
@@ -31,29 +38,38 @@
 #'                 dataType = 'L')
 makeMapp <- function(MAE, filt_df, miR_IDs_adj, dataType){
 
-    if (missing(MAE)) stop('Add MAE object');
-    if (missing(filt_df)) stop('Input miR-mRNA interaction data mined from
-    MastrixFilter function.');
-    if (missing(miR_IDs_adj)) stop('Input miR ID data that is adjusted for
-    repeats. Ensembl or entrez.');
-    if (missing(dataType)) stop('En for ensembl or L for entrez.');
+    if (missing(MAE)) stop('Add MAE object')
 
+    if (missing(filt_df)) stop('Input miR-mRNA interaction data mined from
+                                MastrixFilter function.')
+
+    if (missing(miR_IDs_adj)) stop('Input miR ID data that is adjusted for
+                                    repeats. Ensembl or entrez.')
+
+    if (missing(dataType)) stop('En for ensembl or L for entrez.')
+
+    # Merge filtered data frame of interactions and adjusted miR IDs
     X <- merge(x = filt_df, y = miR_IDs_adj, by.x = "miR", by.y = "GENENAME")
+
     # For entrezgene IDs
     if (dataType == 'L') {
+
         MAPPdata <- data.frame("GENENAME" = X$miR, "ENTREZ" = X$ID,
                                "code" = 'L', ord = X$mRNA)
     # For ensmbl gene IDs
     } else if(dataType == 'En'){
+
         MAPPdata <- data.frame("GENENAME" = X$miR, "ENSEMBL" = X$ID,
                                "code" = 'En', ord = X$mRNA)
 
     } else {print('Enter L or En for data type of interest')}
 
     MAPPdata <- MAPPdata[order(MAPPdata$ord),]
+
     MAPPdata$ord <- NULL
 
     MAE2 <- suppressMessages(MultiAssayExperiment(list('MAPPdata' = MAPPdata)))
+
     MAE <- c(MAE, MAE2)
 
 return(MAE)

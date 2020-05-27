@@ -19,14 +19,18 @@ within the MAE object.
 }
 \description{
 Combines miR and mRNA data into one dataframe. Input columns
-should be written as follows:
-timepoint.DEresult e.g. D1.log2fc or H6.adjPval.
+should be written as :timepoint.Differentialexpressionresulttyle e.g.
+D1.log2fc or H6.adjPval.
 }
 \examples{
 library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- combineGenes(MAE = MAE, miR_data = assay(MAE, 1),
                     mRNA_data = assay(MAE, 2))
 }

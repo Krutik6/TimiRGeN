@@ -9,7 +9,7 @@ mirdbData(MAE, mirdb, species = '', orgDB)
 \arguments{
 \item{MAE}{MultiAssayExperiment.}
 
-\item{mirdb}{Most recent predicted targets data file. Download from here
+\item{mirdb}{Output from dloadMirdb. Downloaded from here
 http://mirdb.org/download.html.}
 
 \item{species}{Species of interest e.g. hsa or mmu.}
@@ -22,18 +22,20 @@ associated with these interactions.
 }
 \description{
 Produces a list of mRNA-miR predicted interactions from miRDB
-for the species of interest from miRDB. Requires the tidyverse package.
+for the species of interest from miRDB.
 }
 \examples{
 library(org.Mm.eg.db)
+
 MAE <- MultiAssayExperiment(list(mirdbData = data.frame(
                          row.names = c("5151919", "5161682", "5151921",
                                        "5151922"),
                          "V1" = c("mmu-let-7a-1-3p", "mmu-let-7c-2-3p",
-                          "mmu-let-7k","mmu-miR-100-3p"),
+                                   "mmu-let-7k","mmu-miR-100-3p"),
                          "V2" = c("NM_144958", "NM_178648", "NM_133355",
-                          "NM_172405"),
+                                  "NM_172405"),
                          "V3" = c(53.89190, 53.99680, 83.25980,64.69390))))
+
 MAE <- mirdbData(MAE, mirdb = assay(MAE, 1), species = 'mmu',
                         orgDB = org.Mm.eg.db)
 }

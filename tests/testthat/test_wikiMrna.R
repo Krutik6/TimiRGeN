@@ -1,5 +1,6 @@
 library(TimiRGeN)
 library(testthat)
+
 #load data
 #negative test
 log2fc <- readRDS("log2fc.rds")
@@ -19,7 +20,9 @@ MAE <- wikiMrna(MAE,
                 stringWiki = 'Fas pathway and Stress induction of HSP regulation')
 
 deres <- assay(log2fc, 3)
+
 singlewiki <- assay(MAE, 1)
+
 GenesofInterest <- deres[which(deres$ID %in% singlewiki$gene),]
 
 test_that("There will be no genes of interest",{
@@ -27,6 +30,7 @@ test_that("There will be no genes of interest",{
     expect_equal(length(names(GenesofInterest)),
     length(names(deres)))
 })
+
 #positive test
 test <- readRDS("interactions.rds")
 
@@ -37,4 +41,5 @@ test_that("There will be some genes of interest",{
     expect_equal(length(names(GenesofInterest2)),
     length(names(deres)))
 })
+
 saveRDS(GenesofInterest2, "GenesofInterest.rds", compress = "xz")

@@ -4,7 +4,8 @@
 \alias{diffExpressRes}
 \title{diffExpressRes}
 \usage{
-diffExpressRes(MAE, df, dataType = '', genes_ID, idColumn = '', name = '')
+diffExpressRes(MAE, df, dataType = '', genes_ID, idColumn = '',
+name = '')
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment Object.}
@@ -15,26 +16,34 @@ variables as columns.)}
 \item{dataType}{Column name to take an average from e.g. Log2FC, AveExp,
 pval.}
 
-\item{genes_ID}{Dataframe with that was created earlier e.g. mRNA_ensembl
-or miR_entrez.}
+\item{genes_ID}{Dataframe with that was created earlier from a getIds
+function e.g. mRNA_ensembl or miR_entrez.}
 
-\item{idColumn}{Name of column to use as the merge point.}
+\item{idColumn}{Name of column to use as the merge point. If Column names
+have not been changed, it should be 'GENENAME'.}
 
-\item{name}{= New name of the dataframe.}
+\item{name}{= New name of the dataframe. Should be a unique string.}
 }
 \value{
-Returns the average of whichever data the user was interested e.g.
-Average diffExpressResion or average log2fc.
+Returns only a single result type from DE e.g. Log2FC and an ID type
+e.g. entrezIDs.
 }
 \description{
-Get average data for one result type.
+Get data for only one result type, along with an ID of choice.
 }
 \examples{
+library(org.Mm.eg.db)
+
 miR <- mm_miR[1:100,]
+
 mRNA <- mm_mRNA[1:200,]
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+
 MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+
 MAE <- diffExpressRes(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
                genes_ID = assay(MAE, 7),
                idColumn = 'GENENAME',

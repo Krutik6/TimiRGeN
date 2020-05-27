@@ -1,7 +1,7 @@
 #' @title addIds
 #' @aliases addIds
-#' @description Adds entrez or ensembl IDs to the nested dataframes within
-#' the filtered_genelist.
+#' @description Adds entrez or ensembl IDs to the nested data frames within a
+#' list(c) or list of lists (s).
 #' @param MAE MultiAssayExperiment object.
 #' @param method Respectively either 'c' or 's' for combined or separated
 #' analysis.
@@ -11,7 +11,7 @@
 #' this.
 #' @param mRNA_IDs mRNA_ensembl or mRNA_entrez. Use getIDs function to acquire
 #' this.
-#' @return list of dataframes with entrezIDs and genenames additional
+#' @return list of dataframes with entrezIDs/ ensembl IDs and genenames
 #' as columns which can be stored in metadata section of an MAE.
 #' @export
 #' @usage addIds(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs)
@@ -19,7 +19,9 @@
 #'library(org.Mm.eg.db)
 #'
 #' miR <- mm_miR
+#'
 #' mRNA <- mm_mRNA
+#'
 #' Data <- startObject(miR = miR, mRNA = mRNA)
 #'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
@@ -37,41 +39,52 @@
 #'               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 3))
 addIds <- function(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs){
 
-    if (missing(MAE)) stop('Check if you are using the correct MAE object.');
+    if (missing(MAE)) stop('Check if you are using the correct MAE object.')
+
     if (missing(method)) stop('method should be s for separate analysis and
-                                c for combined analysis.');
-    if (missing(filtered_genelist)) stop('Input list of nested as.data.frames');
-    if (missing(miR_IDs)) stop('Input miR as.data.frame which contains a list
-                                of genenames and entrezids/ ensembl gene names.'
-                                );
-    if (missing(mRNA_IDs)) stop('Input miRNA as.data.frame which contains a
-                                list of genenames and entrezids/ ensembl gene
-                                names.');
+                                c for combined analysis.')
+
+    if (missing(filtered_genelist)) stop('Input output from significantVals,
+                                         should be in metadata.')
+
+    if (missing(miR_IDs)) stop('Input output from a getIdsMir function.')
+
+    if (missing(mRNA_IDs)) stop('Input output from a getIdsMrna function.')
 
     metadata <- `metadata<-` <- NULL
 
     # For combined analysis
     if (method == 'c') {
+
         # Extract the entrez/ ensembl data
         geneIDs <- rbind(miR_IDs, mRNA_IDs)
+
         genes_id <- geneIDs[! duplicated(geneIDs[[1]]),]
+
         # For each list add the entrez/ ensembl IDs
         X <- lapply(filtered_genelist,
                     function(x){cbind('GENENAME' = rownames(x),
                                       x)})
+
         data_IDs <- lapply(X, function(x){merge(x, genes_id)})
+
         # Add back to MAE object
         metadata(MAE)[["data_IDs"]] <- data_IDs
+
         return(MAE)
 
     # For separate analysis
     } else if (method == 's') {
+
         # For each list within the list add the entrez/ ensembl IDs
         data_IDs <- Map(function(x, y) lapply(
                               x, function(dat) {dat$GENENAME <- row.names(dat);
-        merge(dat, y)}), filtered_genelist, list(miR_IDs, mRNA_IDs))
+                              merge(dat, y)}), filtered_genelist, list(miR_IDs,
+                                                                       mRNA_IDs
+                                                                       ))
         # Add back to MAE object
         metadata(MAE)[["data_IDs"]] <- data_IDs
+
         return(MAE)
 
     } else {stop('Please insert method c for combined analysis or s

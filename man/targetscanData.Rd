@@ -11,7 +11,8 @@ targetscanData(MAE, targetScan, species = '')
 
 \item{targetScan}{File of non-conserved miR-mRNA predicted targets.
 Downloaded from here
-http://www.targetscan.org/cgi-bin/targetscan/data_download.vert72.cgi.}
+http://www.targetscan.org/cgi-bin/targetscan/data_download.vert72.cgi,
+using dloadTargetscans.}
 
 \item{species}{Species we are interested in e.g hsa or mmu.}
 }
@@ -19,9 +20,8 @@ http://www.targetscan.org/cgi-bin/targetscan/data_download.vert72.cgi.}
 List of predicted mRNA-miR interactions and associated information.
 }
 \description{
-Produces a list of mRNA-miR predicted interactions from miRDB
-for the species of interest from targetscans. Requires the tidyverse
-package.
+Produces a list of mRNA-miR predicted interactions from
+dloadTargetscans, for the species of interest.
 }
 \examples{
 MAE <- MultiAssayExperiment(list(TargetScans = data.frame(
@@ -38,6 +38,7 @@ MAE <- MultiAssayExperiment(list(TargetScans = data.frame(
                         "Symbol" = c("10090", "10090", "10090", "10090"),
                        "Transcript" = c("mmu-miR-429-3p", "mmu-miR-374c-5p",
                                     "mmu-miR-182-5p","mmu-miR-340-5p"))))
+
 TargetScans_df <- targetscanData(MAE, targetScan = assay(MAE, 1),
                                   species = 'mmu')
 }

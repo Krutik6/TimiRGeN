@@ -22,18 +22,20 @@ this.}
 this.}
 }
 \value{
-list of dataframes with entrezIDs and genenames additional
+list of dataframes with entrezIDs/ ensembl IDs and genenames
 as columns which can be stored in metadata section of an MAE.
 }
 \description{
-Adds entrez or ensembl IDs to the nested dataframes within
-the filtered_genelist.
+Adds entrez or ensembl IDs to the nested data frames within a
+list(c) or list of lists (s).
 }
 \examples{
 library(org.Mm.eg.db)
 
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 Data <- startObject(miR = miR, mRNA = mRNA)
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),

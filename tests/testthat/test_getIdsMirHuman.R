@@ -2,14 +2,20 @@
 library(TimiRGeN)
 library(testthat)
 library(org.Hs.eg.db)
+
 #load data
 miR <- hs_miR
+
 miR <- miR[1:20,]
+
 #keep in vignette to show that the user may have to alter their input files
 rownames(miR) <- gsub(rownames(miR), pattern = "\\.", replacement =  "-")
+
 MAE <- startObject(miR = miR, mRNA = NULL)
+
 #test function
 MAE <- getIdsMirHuman(MAE, MAE@ExperimentList$miR)
+
 #check 1
 test_that("output files should have two columns and the same number of
 rownames", {
@@ -21,10 +27,14 @@ rownames", {
     expect_equal(length(rownames(assay(MAE, 4))),
     length(rownames(assay(MAE, 6))))
 })
+
 #internal checks
 miR$Genes <- miR$MicroRNA <- rownames(miR)
-gsub(x = miR$MicroRNA, pattern = "-3p", replacement = "") -> miR$MicroRNA
-gsub(x = miR$MicroRNA, pattern = "-5p", replacement = "") -> miR$MicroRNA
+
+miR$MicroRNA <- gsub(x = miR$MicroRNA, pattern = "-3p", replacement = "")
+
+miR$MicroRNA <- gsub(x = miR$MicroRNA, pattern = "-5p", replacement = "")
+
 #check 2
 test_that("miR has 8 columns and the Genes and MicroRNA columns are different",
 {
@@ -48,13 +58,16 @@ miR_merged <- merge(x = miR_merged, y = miR_entrez_manual,
                     by.x = 'MicroRNA', by.y = 'GENENAME', all = TRUE)
 
 miR_merged <- miR_merged[!duplicated(miR_merged$Genes),]
+
 miR_merged <- miR_merged[order(miR_merged$Genes),]
+
 #check 3
 test_that("miR_merged has similiar entries to miR", {
     expect_equal(length(rownames(miR_merged)),
     length(rownames(miR)))
     expect_equal( miR_merged$Genes, rownames(miR))
 })
+
 #continue
 miR_merged$ENTREZID_adjusted <- nonUnique(Col = miR_merged$ENTREZID,
                                            sep = ".", suffix = "")
@@ -65,7 +78,9 @@ miR_merged$ENSEMBL_adjusted <- nonUnique(Col = miR_merged$ENSEMBL,
 miR_merged <- miR_merged[! duplicated(miR_merged$Genes),]
 
 miR_merged <- miR_merged[order(miR_merged$Genes),]
+
 rownames(miR_merged)  <- miR_merged$Genes
+
 #check 4
 test_that("miR_merged has adjusted information", {
     expect_equal(length(names(miR_merged)), 12)

@@ -10,10 +10,19 @@
 #' @usage startObject(miR, mRNA)
 #' @examples
 #' miR <- mm_miR
+#'
 #' mRNA <- mm_mRNA
+#'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 startObject <- function(miR, mRNA){
+
+    if (missing(miR)) stop('Add microRNA data frame.')
+
+    if (missing(mRNA)) stop('Add mRNA data frame.')
+
     Data <- list("miR" = as.data.frame(miR), "mRNA" = as.data.frame(mRNA))
+
     MAE <- suppressMessages(MultiAssayExperiment(experiments = Data))
+
     return(MAE)
 }

@@ -11,7 +11,7 @@ wikiList(MAE, stringSpecies = '', stringSymbol = '')
 
 \item{stringSpecies}{species wikipathways relate to e.g. 'Homo sapiens'}
 
-\item{stringSymbol}{Type of gene code e.g. 'H'}
+\item{stringSymbol}{Type of gene code e.g. 'H', 'En', 'L'.}
 }
 \value{
 List of wikipathways and associated genes as a list of strings.
@@ -20,12 +20,10 @@ List of wikipathways and associated genes as a list of strings.
 Provides a list of wikipathways and each gene found to be
 within that wikipathway as the value.
 }
-\details{
-install rWikiPathways.
-}
 \examples{
 \donttest{
 MAE <- MultiAssayExperiment()
+
 MAE <- wikiList(MAE, stringSpecies = 'Homo sapiens', stringSymbol = 'En')
 }
 }

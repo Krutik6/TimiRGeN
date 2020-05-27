@@ -23,9 +23,8 @@ dataframes which should be point of filtration e.g. pval, adjPval,
 qval. Make sure this matches the colnames.}
 }
 \value{
-A list in a similair structure but with only significantly
-differentially expressed genes which will also be stores in the
-metadata area of an MAE object.
+A list with only significantly differentially expressed genes
+which will also be stores in the metadata area of an MAE object.
 }
 \description{
 Filter out genes in each nested dataframe which are not deemed
@@ -33,7 +32,9 @@ significantly differentially expressed.
 }
 \examples{
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 Data <- startObject(miR = miR, mRNA = mRNA)
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),

@@ -1,8 +1,10 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
+
 #load filtered_genelist
 MAE <- readRDS("MAE_mm.rds")
+
 #check 1
 miR_p <- assay(MAE, 1)
 
@@ -19,7 +21,9 @@ ifelse(test = grepl("mRNA", names(mRNA_p)) == FALSE,
                 no = print('miR/mRNA info is fine'))
 
 MAE2 <- startObject(miR = miR_p, mRNA = mRNA_p)
+
 names(MAE2) <- c("miR_p", "mRNA_p")
+
 MAE <- c(MAE, MAE2)
 
 test_that("now colnames are not equal", {
@@ -30,9 +34,13 @@ test_that("now colnames are not equal", {
 })
 
 prefixString <- "mRNA"
-paste(prefixString, "p", sep = "_") -> x
+
+x <- paste(prefixString, "p", sep = "_")
+
 x[1]
 
 MAE3 <- MultiAssayExperiment(experiments = list(x = mRNA_p))
+
 names(MAE3) <- x
+
 saveRDS(MAE, file = "MAE_Prefix.rds", compress = "xz")

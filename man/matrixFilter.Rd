@@ -10,7 +10,7 @@ matrixFilter(MAE, miningMatrix, negativeOnly, predictedOnly,
 \arguments{
 \item{MAE}{MultiAssayExperiment.}
 
-\item{miningMatrix}{Output from DataMiningMatrix.}
+\item{miningMatrix}{Output from dataMiningMatrix.}
 
 \item{negativeOnly}{TRUE or FALSE. Should only negatively correlating
 miR-mRNA interactions be given? Default is TRUE.}
@@ -45,7 +45,9 @@ Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                         Predicted_Interactions = c(1, 0),
                         miRTarBase = c(0, 1),
                         Pred_Fun = c(1, 1))
+
 MAE <- MultiAssayExperiment()
+
 MAE <- matrixFilter(MAE, miningMatrix = Int_matrix, negativeOnly = TRUE,
                         threshold = 3, predictedOnly = FALSE)
 }

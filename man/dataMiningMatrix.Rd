@@ -10,7 +10,7 @@ dataMiningMatrix(MAE, corrTable, targetscan , mirdb, mirtarbase)
 \item{MAE}{MultiAssayExperiment.}
 
 \item{corrTable}{Correlation matrix between the mRNAs from the
-wikipathway of interest and miRNA data.}
+pathway of interest and miRNA data.}
 
 \item{targetscan}{Targetscans predicted interactions.}
 
@@ -19,7 +19,7 @@ wikipathway of interest and miRNA data.}
 \item{mirtarbase}{miRTarBase functional interactions.}
 }
 \value{
-A matrix of information which cross references the occurance of
+A matrix of information which cross references the occurances of
 microRNA-mRNA interactions between databases and the given data.
 }
 \description{

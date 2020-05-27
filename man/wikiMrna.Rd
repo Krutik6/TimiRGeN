@@ -25,11 +25,18 @@ Identify which mRNAs are in common with the genes found in the
 wikipathway of interest.
 }
 \examples{
+library(org.Mm.eg.db)
+
 miR <- mm_miR[1:100,]
+
 mRNA <- mm_mRNA[1:200,]
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+
 MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+
 MAE <- dloadGmt(MAE = MAE, speciesInitials = "Mm")
 
 MAE <- reduceWiki(MAE, path_data = assay(MAE, 11),

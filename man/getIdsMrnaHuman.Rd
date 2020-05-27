@@ -10,7 +10,7 @@ getIdsMrnaHuman(MAE, mRNA, mirror)
 \item{MAE}{MultiAssayObject created by StartObject}
 
 \item{mRNA}{Dataframe. Rownames should be genenames and colnames should
-be results from DE.}
+be results from DE and time points.}
 
 \item{mirror}{String to identify which biomaRt repo is best for the users
 locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
@@ -25,7 +25,10 @@ for human mRNAs.
 }
 \examples{
 mRNA <- mm_mRNA
+
 mRNA <- mRNA[1:20,]
+
 MAE <- startObject(miR = NULL, mRNA = mRNA)
+
 MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 }

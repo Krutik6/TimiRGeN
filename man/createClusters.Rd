@@ -4,41 +4,43 @@
 \alias{createClusters}
 \title{createClusters}
 \usage{
-createClusters(MAE, method, percentMatrix, noClusters, dataString = '',
-               variance)
+createClusters(MAE, method, percentMatrix, noClusters,
+dataString = '', variance)
 }
 \arguments{
 \item{MAE}{MultiAssayObject where the cluster information will be stored.}
 
-\item{method}{Either C or S for combined or separate analysis.}
+\item{method}{Either c or s for combined or separate analysis.}
 
-\item{percentMatrix}{Output after TurnPercent.}
+\item{percentMatrix}{Output from turnPercent.}
 
 \item{noClusters}{Number of clusters to create, the default is 5.}
 
-\item{dataString}{Only for use in S analysis. Insert the prefix string e.g.
+\item{dataString}{Only for use in s analysis. Insert the prefix string e.g.
 mRNA or miR.}
 
-\item{variance}{Numeric from 0-1 to control strictness of filtering. Higher
-Variance means wikipathways that are undergoing a higher change in the
-data will be clustered.}
+\item{variance}{Numeric value from 0-1 to control strictness of filtering.
+Higher Variance means more pathways will be excluded from the analysis.}
 }
 \value{
-Clusters(metadata): A list to be used as the input in plot functions.
-Mfuzzdata: An input for QuickFuzz. Mfuzzdata(ExperimentList): An
-ExpressionSet objectto be input for Mfuzz clustering.
+Clusters(metadata): A list to be used as the input in checkClusters.
+MfuzzData(ExperimentList): An ExpressionSet object to be input for
+quickFuzz.
 ClusterData(ExperimentList): A breakdown of how each pathway fitted with
-each cluster.
+each cluster and is the input for returnCluster.
 }
 \description{
-Create soft clusters to assess how your datasets change in
-gene abundance during your time course in different wikipathways.
-This function is to be used before ClusterCheck and Quickfuzz.
+Create soft clusters to assess change in gene abundance during
+your time course in different wikipathways.
+This function is to be used before clusterCheck and quickfuzz.
 }
 \examples{
 MAE <- MultiAssayExperiment()
+
 metadata(MAE)[["e_list"]] <- e_list
+
 metadata(MAE)[["w_list"]] <- w_list[1:10]
+
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 

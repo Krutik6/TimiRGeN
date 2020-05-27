@@ -9,11 +9,9 @@ eNames(MAE, method = '', gene_IDs, ID_Column)
 \arguments{
 \item{MAE}{MultiAssayExperiment Object.}
 
-\item{method}{Respectively either 'c' or 's' for combined or separated
-analysis.}
+\item{method}{Either 'c' or 's' for combined or separated analysis.}
 
-\item{gene_IDs}{A nested list of dataframes(c)/ list of lists of nested
-dataframes (s), and each dataframe has a column for entrez or ensembl ID.}
+\item{gene_IDs}{Output from addIDs function.}
 
 \item{ID_Column}{The entrez/ ensembl ID column in each dataframe.
 Should be the last column.}
@@ -30,7 +28,9 @@ metadata of the MAE object.
 library(org.Mm.eg.db)
 
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 Data <- startObject(miR = miR, mRNA = mRNA)
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),

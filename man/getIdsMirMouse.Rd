@@ -17,12 +17,16 @@ MAE object with 4 more dataframes consisting of ID information.
 \description{
 getIDs_miR_human will produce ensembl and entrez data for mouse
 microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that
-are specific to multiple microRNAs.
+are specific to microRNAs that share an ID.
 }
 \examples{
 library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 miR <- miR[1:100,]
+
 MAE <- startObject(miR = miR, mRNA = NULL)
+
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 }

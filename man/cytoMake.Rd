@@ -7,8 +7,7 @@
 cytoMake(interactionData, titleString = '', collectionString = '')
 }
 \arguments{
-\item{interactionData}{Output from MatrixFiler. Requires a dataframe with
-columns names MIR and mRNA}
+\item{interactionData}{Output from MatrixFiler.}
 
 \item{titleString}{Title of the network.}
 
@@ -19,18 +18,21 @@ A network visible in cytoscape.
 }
 \description{
 Creates a cytoscape network based on the output of MatrixFilter.
-Requires RCy3 package and cytoscapePing() to be used. Make sure Cytoscape
-is open first.
+Requires cytoscapePing() to be used. Make sure Cytoscape is open first. Must
+be version 3.7 or later.
 }
 \examples{
 \donttest{
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
 MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
 
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
-                                     "mmu-miR-27a-3p:Odc1"),
+                                    "mmu-miR-27a-3p:Odc1"),
                       avecor = c(-0.9191653, 0.7826041),
                       miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
                       mRNA = c("Acss1", "Acss1"),

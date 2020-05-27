@@ -11,14 +11,15 @@
 #' @param stringVal Character. Common resulttype in all nested
 #' dataframes which should be point of filtration e.g. pval, adjPval,
 #' qval. Make sure this matches the colnames.
-#' @return A list in a similair structure but with only significantly
-#' differentially expressed genes which will also be stores in the
-#' metadata area of an MAE object.
+#' @return A list with only significantly differentially expressed genes
+#' which will also be stores in the metadata area of an MAE object.
 #' @export
 #' @usage significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 #' @examples
 #' miR <- mm_miR
+#'
 #' mRNA <- mm_mRNA
+#'
 #' Data <- startObject(miR = miR, mRNA = mRNA)
 #'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
@@ -32,15 +33,19 @@
 #'                         maxVal = 0.05, stringVal = "adjPVal")
 significantVals <- function(MAE, method, geneList, maxVal, stringVal){
 
-    if (missing(method)) stop('Use MultiAssayExperiment.');
+    if (missing(method)) stop('Use MultiAssayExperiment.')
+
     if (missing(method)) stop('method should be s for separate analysis and
-                              c for combined analysis.');
-    if(missing(geneList)) stop('Input list of miR and mRNA data.');
-    if(missing(maxVal)) stop('Input integer as cutoff threshold e.g. 0.05.
-                                 ');
+                              c for combined analysis.')
+
+    if(missing(geneList)) stop('Input list of miR and mRNA data. This is
+                               the output from the genesList function.')
+
+    if(missing(maxVal)) stop('Input integer as cutoff threshold e.g. 0.05.')
+
     if(missing(stringVal)) stop('Input differential expression result type
-                                    to use as filtration point e.g. log2FC,
-                                    adjPval, qVal.');
+                                 to use as filtration point e.g. log2FC,
+                                 adjPval, qVal.')
 
     metadata <- `metadata<-` <- NULL
 
@@ -55,6 +60,7 @@ significantVals <- function(MAE, method, geneList, maxVal, stringVal){
         return(MAE)
 
     } else if (method == 's') {
+
         # Filter for maxVal within the stringVal in dataframes in a list of
         # lists
         filtered_genelist <- lapply(geneList, function(ls){
@@ -62,6 +68,7 @@ significantVals <- function(MAE, method, geneList, maxVal, stringVal){
                                                 value = TRUE)]] < maxVal,])})
 
         metadata(MAE)[["filtered_genelist"]] <- filtered_genelist
+
         return(MAE)
 
     } else {stop('Please insert method c for combined analysis or s for

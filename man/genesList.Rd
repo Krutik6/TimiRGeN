@@ -19,12 +19,11 @@ information together.}
 'timepoint' e.g. for H.1, H.10, H.20, timeString = 'H'.}
 
 \item{miR_data}{If 's', a dataframe of microRNA data. Rownames are genes
-and colnames are like so; genetype_timepoint.resulttype.
+and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.
 timepoint.resulttype should be the same in mRNA and miR data.}
 
 \item{mRNA_data}{If 's', a dataframe of mRNA data. Rownames are genes
-and colnames are like so; genetype_timepoint.resulttype.
-timepoint.resulttype should be the same in mRNA and miR data.}
+and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.}
 }
 \value{
 A list of dataframes separated by features in the column names which
@@ -33,15 +32,16 @@ can be stored in the metadata area of an MAE object.
 \description{
 Will produce a list of nested dataframes. For combined
 analysis method = c, and for separated analysis method = s. Combined
-analysis colnames should be as follows 'timepoint.resultstype'.
+analysis colnames should be 'timepoint.resulttype'.
 genesList will make new dataframes separated by 'timepoint.'.
-Separated colnames should be as follows 'genetype_timepoint.resulttype'.
+Separated analysis colnames should be 'genetype_timepoint.resulttype'.
 genesList will make separate lists for 'genetype_'. Each of these lists
 will have dataframes which have been made by separating by 'timepoint.'.
 Make sure to follow colname nomenclature carefully.
 }
 \examples{
 miR <- mm_miR
+
 mRNA <- mm_mRNA
 
 MAE <- startObject(miR = miR, mRNA = mRNA)

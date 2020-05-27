@@ -18,15 +18,19 @@ Dotplot
 Creates dotplot which compares the confidence level we have for
 each wikipathways association to the data, the number of genes associated
 to each wikipathway and this is all in a ranked fashion for each timepoint
-and genetype.
+(and genetype if s analyses was conducted).
 }
 \examples{
 library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
 metadata(MAE)[["e_list"]] <- e_list
+
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
 MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],

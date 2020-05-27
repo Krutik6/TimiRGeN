@@ -11,18 +11,15 @@ enrichWiki(MAE, method = '', ID_list, orgDB, path_gene, path_name,
 \arguments{
 \item{MAE}{MultiAssayExperiment object.}
 
-\item{method}{Respectively either 'c' or 's' for combined or separated
-analysis.}
+\item{method}{Either 'c' or 's' for combined or separated analysis.}
 
 \item{ID_list}{List of ensembl or entrez IDs for each sample.}
 
 \item{orgDB}{Library of species specific data.}
 
-\item{path_gene}{genes-wikipathwayIDs dataframe. From downladGMT or
-GMT_ensembl.}
+\item{path_gene}{path_gene dataframe. From downladGMT or gmtEnsembl.}
 
-\item{path_name}{wikipathwayIDs-wikipathway fullnames dataframe.
-From downladGMT.}
+\item{path_name}{path_name dataframe from downladGMT.}
 
 \item{ID}{Either ENTREZID or ENSEMBL.}
 
@@ -46,11 +43,15 @@ Finds which wikipathways are enriched within the data.
 }
 \examples{
 library(org.Mm.eg.db)
+
 miR <- mm_miR
+
 mRNA <- mm_mRNA
+
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
 metadata(MAE)[["e_list"]] <- e_list
+
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
 MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],

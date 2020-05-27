@@ -1,7 +1,9 @@
 #devtools::uses_testthat()
 library(TimiRGeN)
 library(testthat)
+
 miR <- hs_miR
+
 mRNA <- hs_mRNA
 
 test_that("hs_miR is a dataframe", {

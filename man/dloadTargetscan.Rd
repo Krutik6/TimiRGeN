@@ -19,7 +19,9 @@ targetscan database.
 }
 \examples{
 \dontrun{
+
 MAE <- MultiAssayExperiment()
+
 MAE <-dloadTargetscan(MAE)
 }
 }

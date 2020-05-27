@@ -4,12 +4,10 @@
 \alias{dloadMirtarbase}
 \title{dloadMirtarbase}
 \usage{
-dloadMirtarbase(MAE, species)
+dloadMirtarbase(MAE)
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment object.}
-
-\item{species}{mmu or hsa.}
 }
 \value{
 Dataframe of functionally tested miR-mRNA interactions in different
@@ -20,6 +18,11 @@ Downloads most recent version (7.0) of functional targets from
 miRTarBase database.
 }
 \examples{
+\dontrun{
+
 MAE <- MultiAssayExperiment()
-MAE <- dloadMirtarbase(MAE, species = "hsa")
+
+MAE <-dloadMirdb(MAE)
+
+}
 }

@@ -10,7 +10,7 @@ getIdsMrnaMouse(MAE, mRNA, mirror)
 \item{MAE}{MultiAssayObject created by StartObject}
 
 \item{mRNA}{Dataframe. Rownames should be genenames and colnames should be
-results from DE.}
+results from DE and time points.}
 
 \item{mirror}{tring to identify which biomaRt repo is best for the users
 locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
@@ -25,7 +25,10 @@ mouse mRNAs.
 }
 \examples{
 mRNA <- mm_mRNA
+
 mRNA <- mRNA[1:20,]
+
 MAE <- startObject(miR = NULL, mRNA = mRNA)
+
 MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 }

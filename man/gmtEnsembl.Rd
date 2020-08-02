@@ -8,19 +8,27 @@ gmtEnsembl(MAE, path_gene, path_data, orgDB)
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment where the ensembl wikipathways data can
-be stored.}
+be stored. It is recommended to use the same MAE object which contains
+output from dloadGmt.}
 
-\item{path_gene}{path_gene data from downloadGMT.}
+\item{path_gene}{Dataframe with wpid and entrezgene IDs.
+path_gene is from the dloadGmt function. It will be stored as an assay
+in the MAE used in the dloadGmt function.}
 
-\item{path_data}{path_data from downloadGMT.}
+\item{path_data}{Dataframe with wpid, wikipathway names and entrezgene IDs.
+path_data is from the dloadGmt function. It will be stored as an assay
+in the MAE used in the dloadGmt function.}
 
-\item{orgDB}{organism Library e.g. org.Hs.eg.db}
+\item{orgDB}{Load an appropriate org Library e.g. org.Hs.eg.db.}
 }
 \value{
-2 dataframes. Wikipathway data based on ensembl IDs.
+2 dataframes. Wikipathway data and associated gene names based on
+ensembl IDs.
 }
 \description{
 Change entrez IDs in path_gene and path_data into ensembl IDs.
+Will create two new dataframes with ensembl IDs and wikipathway information,
+and store these in as assays in a MAE object.
 }
 \examples{
 library(org.Mm.eg.db)

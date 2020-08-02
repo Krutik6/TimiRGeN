@@ -7,25 +7,32 @@
 mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment which will have the output of
+mirMrnaInt stored in it. It is recommended to begin a new MAE using
+MultiAssayExperiment() here so the MAE objects do not get too large.}
 
-\item{miR_express}{Results from the diffExpressRes function of microRNA data.
-Rownamesshould be gene names.}
+\item{miR_express}{Dataframe from diffExpressRes function of microRNA data.
+Rownames should be miR gene names and columns should include DE results
+displaying abundance e.g. log2fc or ave expression. These dataframes should
+also have gene IDs. This should be stored as an assay within the MAE used
+in the diffExpressRes function.}
 
-\item{GenesofInterest}{Input results from wikimRNA. Rownames should be gene
-names.}
+\item{GenesofInterest}{Input results from wikiMrna. This should be found
+as an assay within the MAE which was used in the wikiMrna function.}
 
 \item{maxInt}{Integer. Should be equal to number of samples in both mRNA and
-miR data e.g. number of different timepoints. In our example it is 5 because
+miR data e.g. number of different time points. In our example it is 5 because
 there are 5 time points.}
 }
 \value{
-A large correlation matrix.
+A large correlation matrix which contains averaged miR-mRNA
+time series information for every possible miR-mRNA interaction.
 }
 \description{
 Create a correlation matrix of all the potential miR-mRNA
-interactions which could arise between the microRNA data and the genes found
-in common between the mRNA data and a wikipathway of interest
+interactions which could arise between the input microRNA data and and
+the mRNAs found from the wikiMrna function. The time series DE data will
+be averaged from the dataframes created by diffExpressRes.
 }
 \examples{
 G <- data.frame(row.names = c("Acaa1a", "Acadm", "Acss1", "Adh1"),

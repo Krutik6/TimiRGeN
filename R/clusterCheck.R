@@ -1,11 +1,11 @@
 #' @title clusterCheck
-#' @description Put data from createClusters through this funciton to check
-#' if an appropriate number of clusters have been created. The closer the
-#' circles are to one another the more likely that they should belong
-#' to the same cluster. Read more about Mfuzz for a greater understanding
+#' @description This will create a PCA plot using Mfuzz functions. This
+#' will indicate if an appropriate number of clusters have been created.
+#' The closer the circles are to one another the more likely that they should
+#' belong to the same cluster. Read more about Mfuzz here
 #' https://bioconductor.org/packages/release/bioc/html/rWikiPathways.html.
-#' @param Clusters Output from createClusters function. A list of clusters,
-#' statistics and phenodata.
+#' @param Clusters A list of clusters,statistics and phenodata. This will be
+#' stored as metadata within the MAE used in the createClusters function.
 #' @param W Should the plot be shown in a new window? Default is TRUE.
 #' @return A PCAplot showing distance of clusters.
 #' @export
@@ -17,7 +17,7 @@
 #'
 #' metadata(MAE)[["e_list"]] <- e_list
 #'
-#' metadata(MAE)[["w_list"]] <- w_list[1:10]
+#' metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 #'
 #' MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
 #'                   wp_list = metadata(MAE)[[2]])
@@ -33,7 +33,10 @@
 #' clusterCheck(Clusters = metadata(MAE)[[3]], W = FALSE)
 clusterCheck <- function(Clusters, W = TRUE){
 
-    if (missing(Clusters)) stop('Add list of Clusters from createClusters.')
+    if (missing(Clusters)) stop('Please use the createClusters function first.
+                                The Clusters list created from this will be
+                                stored as metadata within the MAE used in the
+                                createClusters function.')
 
     dev.new <- NULL
 

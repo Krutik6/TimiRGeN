@@ -1,12 +1,21 @@
 #' @title combineGenes
 #' @description Combines miR and mRNA data into one dataframe. Input columns
-#' should be written as :timepoint.Differentialexpressionresulttyle e.g.
-#' D1.log2fc or H6.adjPval.
-#' @param MAE MultiAssayExperiment
-#' @param miR_data microRNA dataframe
-#' @param mRNA_data mRNA dataframe
-#' @return A dataframe with combines miR and mRNA data which can be stored
-#' within the MAE object.
+#' should be written as :timepoint.DifferentialExpressionResultType e.g.
+#' D1.log2fc or H6.adjPval. Column names should be the same for miR and mRNA
+#' data. A more detailed explanation of column nomenclature can be found in the
+#' vignette. Resulting information will be stored as an assay within a MAE
+#' object. combineGenes is essential for combined analysis of miR-mRNA data.
+#' If using separate analysis, there is no need to use combineGenes.
+#' @param MAE Input MAE object will have the results of combineGenes added to
+#' it as an assay. It is recommended to use the MAE object which stores output
+#' from startObject.
+#' @param miR_data microRNA dataframe stored as an assay in a MAE. Rows
+#' should be genes, columns are DE results and time point. This should be
+#' the stored within the MAE used in the startObject function.
+#' @param mRNA_data mRNA dataframe stored as an assay in a MAE. Rows
+#' should be genes, columns are DE results and time point. This should be
+#' the stored within the MAE used in the startObject function.
+#' @return A dataframe which combines miR and mRNA data.
 #' @export
 #' @importFrom gtools mixedsort
 #' @usage combineGenes(MAE, miR_data, mRNA_data)
@@ -23,11 +32,23 @@
 #'                     mRNA_data = assay(MAE, 2))
 combineGenes <- function(MAE, miR_data, mRNA_data){
 
-    if (missing(MAE)) stop('Add MultiAssayExperiment.')
+    if (missing(MAE)) stop('Add MultiAssayExperiment to have the output of
+                           combineGenes stored. Please use the
+                           startObject function first.')
 
-    if (missing(miR_data)) stop('miR data from startObject.')
+    if (missing(miR_data)) stop('Add dataframe of miR data. Rows should be
+                                genes, columns are DE results and time point.
+                                Please use the startObject function first.
+                                Output of the startObject function will be
+                                stored as assays within the MAE used in the
+                                startObject function.')
 
-    if (missing(mRNA_data)) stop('mRNA data from startObject.')
+    if (missing(mRNA_data)) stop('Add dataframe of mRNA data. Rows should be
+                                genes, columns are DE results and time point.
+                                Please use the startObject function first.
+                                Output of the startObject function will be
+                                stored as assays within the MAE used in the
+                                startObject function.')
 
     # Extract the miR and mRNA data
     miR_data <- as.data.frame(miR_data)

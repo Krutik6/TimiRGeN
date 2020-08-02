@@ -1,13 +1,15 @@
 #' @title getIdsMrnaHuman
-#' @description getIDs_miR_human will produce ensembl and entrez data
-#'for human mRNAs.
-#' @param MAE MultiAssayObject created by StartObject
-#' @param mRNA Dataframe. Rownames should be genenames and colnames should
-#'be results from DE and time points.
+#' @description getIdsMrnaHuman will produce ensembl and entrez data for
+#' human mRNAs.These will be stored as 2 individual assays within a MAE.
+#' @param MAE MultiAssayExperiment to store the output of getIdsMrnaHuman.
+#' It is recommended to use the MAE which contains output from startObject.
+#' @param mRNA A Dataframe. Rownames are genes and columns are results of DE.
+#' This should be found as an assay within the MAE used in the startObject
+#' function. Please read vignette for nomenclature guidance.
 #' @param mirror String to identify which biomaRt repo is best for the users
 #' locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.
 #' @return 2 new dataframes. One with entrez information and another with
-#'ensembl information.
+#' ensembl information.
 #' @export
 #' @importFrom biomaRt useEnsembl getBM
 #' @usage getIdsMrnaHuman(MAE, mRNA, mirror)
@@ -18,28 +20,36 @@
 #'
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)
 #'
-#' MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
+#' MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'www')
 getIdsMrnaHuman <- function(MAE, mRNA, mirror = "useast"){
 
-    if(missing(MAE)) stop('Use the startObject function.')
+    if(missing(MAE)) stop('MAE object to store output of getIdsMrnaHuman
+                          Please use startObject first.')
 
-    if(missing(mRNA)) stop('Add mRNA data frame.')
+    if(missing(mRNA)) stop('Add mRNA dataframe. Please use startObject first.
+                           The output of startObject will be stored as an
+                           assay within the MAE used in the startObject
+                           function.')
 
     mRNA$Genes <- rownames(mRNA)
 
     # download a human mart
-    human <- biomaRt::useEnsembl("ensembl", dataset="hsapiens_gene_ensembl",
-                                 host = paste0(mirror, ".ensembl.org"))
+    human <- suppressMessages(biomaRt::useEnsembl(
+                                         "ensembl",
+                                          dataset="hsapiens_gene_ensembl",
+                                          host = paste0(mirror,".ensembl.org")))
 
     # Get IDs
-    glist <- biomaRt::getBM(attributes = c("external_gene_name",
-                                           "ensembl_gene_id",
-                                            "entrezgene_id"),
-                            filters = "external_gene_name",
-                            values = mRNA$Genes,
-                            mart = human, uniqueRows = TRUE)
+    glist <- suppressMessages(biomaRt::getBM(
+                                      attributes = c("external_gene_name",
+                                                     "ensembl_gene_id",
+                                                      "entrezgene_id"),
+                                      filters = "external_gene_name",
+                                      values = mRNA$Genes,
+                                      mart = human,
+                                      uniqueRows = TRUE))
 
-    # merge aquired data to input data
+    # merge acquired data to input data
     m_dat <- merge(x = mRNA, y = glist, by.x = 'Genes',
                    by.y = 'external_gene_name', all = TRUE)
 

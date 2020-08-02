@@ -1,10 +1,15 @@
 #' @title makeNet
 #' @description Creates an igraph object from filtered miR-mRNA interactions
-#' from database mining.
-#' @param MAE MultiAssayExperiment Object.
+#' from database mining. Output from makeNet will be stored as metadata in a
+#' MAE.
+#' @param MAE MultiAssayExperiment Object to store output from makeNet. It is
+#' recommended to use the same MAE which stores output from matrixFilter.
 #' @param filt_df Filtered miR-mRNA interactions from the mining matrix
-#' produced by the dataMiningMatrix function.
-#' @return A list which is the input for quicknet
+#' produced by the matrixFilter function. This should be stored as an assay
+#' within the MAE used in the matrixFilter function.
+#' @return A list of igraph data which represent miR-mRNA interactions
+#' filtered from the input data, wikipathway of choice and mining matrix,
+#' This is input for quickNet.
 #' @export
 #' @importFrom igraph graph_from_data_frame
 #' @usage makeNet(MAE, filt_df)
@@ -27,10 +32,14 @@
 #'MAE <- makeNet(MAE, Filt_df)
 makeNet <- function(MAE, filt_df){
 
-    if (missing(MAE)) stop('Add MAE object.')
+    if (missing(MAE)) stop('Add MAE. This will store the output of
+                           makeNet Please use matrixFilter first.')
 
-    if (missing(filt_df)) stop('Add filtered miR-mRNA interaction data frame
-                               from matrixFiler function.')
+    if (missing(filt_df)) stop('Add filtered miR-mRNA interaction data frame.
+                               Please use the matrixFilter function first.
+                               The output of matrixFilter should be stored
+                               as an assay within the MAE used in the
+                               matrixFilter function.')
 
     metadata <- `metadata<-` <- NULL
 

@@ -1,20 +1,28 @@
 #' @title createClusters
-#' @aliases createClusters
 #' @description Create soft clusters to assess change in gene abundance during
-#' your time course in different wikipathways.
-#' This function is to be used before clusterCheck and quickfuzz.
-#' @param MAE MultiAssayObject where the cluster information will be stored.
-#' @param method Either c or s for combined or separate analysis.
-#' @param percentMatrix Output from turnPercent.
+#' the time course in different wikipathways. createClusters will create
+#' 3 data files. Clusters which will be stored in the metadata,
+#' MfuzzData which contains fuzzy clustering information will be stored
+#' as an experiment and ClusterData which gives cluster-pathway fit information
+#' which is stored as an assay. This function may take some time as it
+#' downloads pathway information.
+#' @param MAE MultiAssayExperiment where the results from createClusters will be
+#' stored. It is advised to use the MAE object which stores the output of
+#' by turnPercent.
+#' @param method Either "c" or "s" for combined or separate analysis.
+#' @param percentMatrix A matrix containing wikipathway-data information. It
+#' is output from the turnPercent function and will be stored as an assay
+#' within the MAE used in the turnPercent function.
 #' @param noClusters Number of clusters to create, the default is 5.
-#' @param dataString Only for use in s analysis. Insert the prefix string e.g.
-#' mRNA or miR.
+#' @param dataString Only for use in "s" analysis. Insert the prefix string e.g.
+#' mRNA or miR. The string added should be the same prefix added using the
+#' addPrefix function.
 #' @param variance Numeric value from 0-1 to control strictness of filtering.
-#' Higher Variance means more pathways will be excluded from the analysis.
+#' Higher variance means more pathways will be excluded from the analysis.
 #' @return Clusters(metadata): A list to be used as the input in checkClusters.
 #' MfuzzData(ExperimentList): An ExpressionSet object to be input for
 #' quickFuzz.
-#' ClusterData(ExperimentList): A breakdown of how each pathway fitted with
+#' ClusterData(assay): A breakdown of how each pathway fitted with
 #' each cluster and is the input for returnCluster.
 #' @export
 #' @importFrom Mfuzz filter.std standardise mestimate mfuzz
@@ -27,7 +35,7 @@
 #'
 #' metadata(MAE)[["e_list"]] <- e_list
 #'
-#' metadata(MAE)[["w_list"]] <- w_list[1:10]
+#' metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 #'
 #' MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
 #'                   wp_list = metadata(MAE)[[2]])
@@ -42,12 +50,17 @@
 createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
                            dataString, variance = 0){
 
-    if (missing(MAE)) stop('Add MultiAssayExperiment')
+    if (missing(MAE)) stop('Add MultiAssayExperiment. Data from createClusters
+                           will be stored in this MAE object. Please use
+                           turnPercent first.')
 
-    if (missing(method)) stop('Enter c for combined or s for separate')
+    if (missing(method)) stop('Enter "c" for combined or "s" for separate')
 
-    if (missing(percentMatrix)) stop('Dataframe which is the output from
-                                      turnPercent function.')
+    if (missing(percentMatrix)) stop('Dataframe which contains pathways-samples
+                                     information as percentages. Please use the
+                                     turnPercent function first. Results of this
+                                     will be stored as an assay within the MAE
+                                     used in the turnPercent function.')
 
     metadata <- `metadata<-` <- NULL
 
@@ -67,6 +80,9 @@ createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
 
     # If == s then subset data by common string e.g mRNA, miR
     if (method == 's') {
+
+      if (missing(dataString)) stop('Add prefix e.g. "mRNA" or "miR".')
+
       df <- as.data.frame(df)
 
       df2 <- df[, grepl(dataString, names(df))]
@@ -88,16 +104,16 @@ createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
 
     m <- Mfuzz::mestimate(Eset_st)
 
-    # Perfrom mfuzz
+    # Perform mfuzz
     Clusters <- Mfuzz::mfuzz(Eset_st, centers = noClusters, m=m)
 
     # Get cluster membership information
     X <- as.data.frame(Clusters$membership)
 
-    # retreive pathway names using rWikipathways using membership
+    # retrieve pathway names using rWikipathways using membership
     for (i in seq_along(rownames(X))) {
-        rWikiPathways::getPathwayInfo(rownames(X)[i])[[3]]
-        } ->  X$Description[i]
+      X$Description[i] <- rWikiPathways::getPathwayInfo(rownames(X)[i])[[3]]
+        }
 
     # Save data in MAE
     MAE2 <- suppressMessages(MultiAssayExperiment(list("ClusterData" = X,

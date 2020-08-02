@@ -1,10 +1,16 @@
 #' @title getIdsMirMouse
-#' @description getIDs_miR_human will produce ensembl and entrez data for mouse
-#'microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that
-#'are specific to microRNAs that share an ID.
-#' @param MAE MultiAssayObject created by StartObject
-#' @param miR Dataframe. Rownames are genes and columns are results of DE.
-#' @return MAE object with 4 more dataframes consisting of ID information.
+#' @description getIdsMirMouse will produce ensembl and entrez ID data for
+#' mouse microRNAs. It will also produce adjusted ensembl and entrez for IDs
+#' that are specific to microRNAs that share an ID. They will be stored as
+#' 4 individual assays in a MAE object.org.Mm.eg.db must be loaded prior
+#' to use of this function.
+#' @param MAE MultiAssayExperiment to store the output of getIdsMirMouse.
+#' It is recommended to use the MAE which contains output from startObject.
+#' @param miR A Dataframe. Rownames are genes and columns are results of DE.
+#' This should be found as an assay within the MAE used in the startObject
+#' function. Please read vignette for nomenclature guidance.
+#' @return MAE object with 4 additional dataframes consisting of ID
+#' information.
 #' @export
 #' @importFrom clusterProfiler bitr
 #' @usage getIdsMirMouse(MAE, miR)
@@ -13,6 +19,8 @@
 #'
 #' miR <- mm_miR
 #'
+#' # Make sure miRNA gene name nomenclature is correct for TimiRGeN analysis!
+#'
 #' miR <- miR[1:100,]
 #'
 #' MAE <- startObject(miR = miR, mRNA = NULL)
@@ -20,11 +28,13 @@
 #' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 getIdsMirMouse <- function(MAE, miR){
 
-    if(missing(MAE)) stop('Use the startObject function.')
+    if(missing(MAE)) stop('MAE object to store output of getIdsMirMouse.
+                          Please use startObject first.')
 
-    if (missing(miR)) stop('Add microRNA as.data.frame. Rownames are genes and
-                            columns are results from differential
-                            expression analysis.')
+    if (missing(miR)) stop('Add microRNA dataframe. Please use startObject
+                           first. The output of startObject will be stored as an
+                           assay within the MAE used in the startObject
+                           function.')
 
     miR$Genes <- miR$names <- rownames(miR)
 
@@ -37,19 +47,19 @@ getIdsMirMouse <- function(MAE, miR){
     miR$Genes <- micrornaFull(miRdf = miR$Genes, species = 'mmu')
 
     # Get entrez and ensembl IDs
-    miR_entrez <- suppressWarnings(clusterProfiler::bitr(
+    miR_entrez <- suppressMessages(suppressWarnings(clusterProfiler::bitr(
                                         geneID = miR$Genes,
                                         fromType = 'GENENAME',
                                         toType = 'ENTREZID',
-                                        OrgDb = org.Mm.eg.db))
+                                        OrgDb = org.Mm.eg.db)))
 
-    miR_ensembl <- suppressWarnings(clusterProfiler::bitr(
+    miR_ensembl <- suppressMessages(suppressWarnings(clusterProfiler::bitr(
                                          geneID = miR$Genes,
                                          fromType = 'GENENAME',
                                          toType = 'ENSEMBL',
-                                         OrgDb = org.Mm.eg.db))
+                                         OrgDb = org.Mm.eg.db)))
 
-    # merge retreived data
+    # merge retrieved data
     miR_merged <- merge(x = miR, y = miR_ensembl, by.x = 'Genes',
                         by.y = 'GENENAME', all = TRUE)
 

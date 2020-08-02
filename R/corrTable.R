@@ -1,5 +1,7 @@
 #' @title corrTable
-#' @description An internal function for the mirMranInt function.
+#' @description An internal function for the mirMranInt function. This will
+#' work out the correlations between the time series data from
+#' diffExpressRes functions.
 #' @param names Dataframe with combined list of mRNA (single wikipathway of
 #'  interest) and miR names.
 #' @param miR_exprs miR averaged expression data.
@@ -9,16 +11,18 @@
 #' timepoints.
 #' @return A matrix of each mRNA and miR interaction and a correlation.
 #' @importFrom stats cor
+#' @noRd
 corrTable <- function(names, miR_exprs, mRNA_wiki, maxInt){
 
     if (missing(names)) stop('Input dataframe of all combinations of miRs and
                               mRNAs.')
 
-    if (missing(miR_exprs)) stop('Input dataframe of miR data from the
-                                 diffExpressRes function.')
+    if (missing(miR_exprs)) stop('Please use the diffExpressRes function
+                                 on miR data. Will
+                                 be stored in a MAE object as an assay.')
 
-    if (missing(mRNA_wiki)) stop('Input dataframe of mRNA data found in
-                                  wikipathway of choice.')
+    if (missing(mRNA_wiki)) stop('Please use the wikiMrna function. Will
+                                 be stored in a MAE object as an assay.')
 
     if (missing(maxInt)) stop('Input interger. Number of samples in your data.'
                               )

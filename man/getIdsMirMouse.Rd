@@ -7,22 +7,30 @@
 getIdsMirMouse(MAE, miR)
 }
 \arguments{
-\item{MAE}{MultiAssayObject created by StartObject}
+\item{MAE}{MultiAssayExperiment to store the output of getIdsMirMouse.
+It is recommended to use the MAE which contains output from startObject.}
 
-\item{miR}{Dataframe. Rownames are genes and columns are results of DE.}
+\item{miR}{A Dataframe. Rownames are genes and columns are results of DE.
+This should be found as an assay within the MAE used in the startObject
+function. Please read vignette for nomenclature guidance.}
 }
 \value{
-MAE object with 4 more dataframes consisting of ID information.
+MAE object with 4 additional dataframes consisting of ID
+information.
 }
 \description{
-getIDs_miR_human will produce ensembl and entrez data for mouse
-microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that
-are specific to microRNAs that share an ID.
+getIdsMirMouse will produce ensembl and entrez ID data for
+mouse microRNAs. It will also produce adjusted ensembl and entrez for IDs
+that are specific to microRNAs that share an ID. They will be stored as
+4 individual assays in a MAE object.org.Mm.eg.db must be loaded prior
+to use of this function.
 }
 \examples{
 library(org.Mm.eg.db)
 
 miR <- mm_miR
+
+# Make sure miRNA gene name nomenclature is correct for TimiRGeN analysis!
 
 miR <- miR[1:100,]
 

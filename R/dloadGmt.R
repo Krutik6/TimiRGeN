@@ -1,29 +1,39 @@
 #' @title dloadGmt
-#' @description Provides mouse or human wikipathway information.
-#' @param MAE MultiAssayExperiment to store downlaoded GMT data in.
-#' @param speciesInitials Either Hs or Mm, respectively to retreive Homo
+#' @description Provides mouse or human wikipathway information. This data is
+#' downloaded from http://data.wikipathways.org/20200110/gmt/. This will be
+#' stored as three distinct data frames within a MAE object
+#' 1) path_gene 2) path_names 3) path_data. It is recommended that the
+#' user creates a new MAE object to avoid MAE objects getting too large.
+#' @param MAE MultiAssayExperiment to store downloaded GMT data in. It might
+#' be useful to start a new MAE for dloadGmt using MultiAssayExperiment(). This
+#' is so the MAE objects used in this analysis do not get too large.
+#' @param speciesInitials Either "Hs" or "Mm", respectively to retrieve Homo
 #'sapiens or Mus musculus data.
-#' @return 3 dataframes. 1) path_gene 2) path_namees 3) path_data.
-#' All of which can be stored in an MAE.
+#' @return 3 dataframes. 1) path_gene 2) path_names 3) path_data.
+#' All of which will be stored in the input MAE, in the assay section.
 #' @export
 #' @importFrom clusterProfiler read.gmt
 #' @importFrom tidyr separate
 #' @importFrom dplyr select
+#' @importFrom stringr %>%
 #' @usage dloadGmt(MAE, speciesInitials = "")
 #' @examples
 #' miR <- mm_miR
 #'
 #' mRNA <- mm_mRNA
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- MultiAssayExperiment()
 #'
 #' MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 dloadGmt <- function(MAE, speciesInitials){
 
-    if (missing(MAE)) stop('Add MultiAssayExperiment.')
+    if (missing(MAE)) stop('Add MultiAssayExperiment to store files downloaded
+                            by dloadGmt. The user may wish to create a new
+                            MAE object using the MultiAssayExperiment()
+                            function.')
 
-    if (missing(speciesInitials)) stop('speciesInitials should be either Mm
-                                       for mouse data or Hs for human data.')
+    if (missing(speciesInitials)) stop('speciesInitials should be either "Mm"
+                                       for mouse data or "Hs" for human data.')
 
     ont <- wpid <- gene <- name <- NULL
 

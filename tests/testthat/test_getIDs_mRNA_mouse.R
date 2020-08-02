@@ -9,7 +9,7 @@ mRNA <- mRNA[1:20,]
 
 MAE <- startObject(miR = NULL, mRNA = mRNA)
 
-MAE <- getIdsMrnaMouse(MAE = MAE, mRNA =  assay(MAE, 2))
+MAE <- getIdsMrnaMouse(MAE = MAE, mRNA =  assay(MAE, 2), mirror = 'www')
 
 #test outputs have expected number of columns
 test_that("mRNA_Id data have two columns", {
@@ -19,7 +19,7 @@ test_that("mRNA_Id data have two columns", {
 
 #internal checks
 mouse <- biomaRt::useEnsembl("ensembl", dataset="mmusculus_gene_ensembl",
-                             host = "useast.ensembl.org")
+                             host = "www.ensembl.org")
 
 glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
                               "entrezgene_id"),
@@ -45,7 +45,7 @@ test_that("Final row of gene_data should be == to rownames of gene_data", {
     as.character(rownames(gene_data)))
 })
 
-#contunue
+#continue
 #final two columns should be named 'ensembl_gene_id' and 'entrezgene_id'
 m_dat <- merge(x = gene_data, y = glist, by.x = 'rownames(mRNA)',
                by.y = 'external_gene_name', all = TRUE)

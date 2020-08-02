@@ -7,22 +7,29 @@
 eNames(MAE, method = '', gene_IDs, ID_Column)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment Object.}
+\item{MAE}{MultiAssayExperiment to store output of eNames.
+It is recommended to use the MAE object which contains addIds results.}
 
 \item{method}{Either 'c' or 's' for combined or separated analysis.}
 
-\item{gene_IDs}{Output from addIDs function.}
+\item{gene_IDs}{List of DE data and associated gene IDs.
+Output from addIds function, this should be found in the metadata of the MAE
+used in the addIds function.}
 
 \item{ID_Column}{The entrez/ ensembl ID column in each dataframe.
-Should be the last column.}
+Should be the last column. This should be 2+ the number of DE results per
+time point. e.g. if a user has log2f and adj.P.val results for each
+time point, then the fourth column will contain the gene ID information.}
 }
 \value{
 A single list of entrez/ ensembl IDs for each dataframe
 within the lists.
 }
 \description{
-Extract the ID names from the nested dataframes within the
-metadata of the MAE object.
+Extract the gene IDs from the nested dataframes within the
+metadata of the MAE object, which is the output of the addIds function.
+Results of eNames will be stored in the metadata of the resulting
+MAE object.
 }
 \examples{
 library(org.Mm.eg.db)
@@ -33,10 +40,14 @@ mRNA <- mm_mRNA
 
 Data <- startObject(miR = miR, mRNA = mRNA)
 
+Data <- getIdsMirMouse(Data, assay(Data, 1))
+
+Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'www')
+
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))
 
-Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 9),
                   timeString = 'D')
 
 Data <- significantVals(MAE = Data, method = 'c',
@@ -45,7 +56,7 @@ Data <- significantVals(MAE = Data, method = 'c',
 
 Data <- addIds(MAE = Data, method = "c",
               filtered_genelist = metadata(Data)[[2]],
-              miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 3))
+              miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 7))
 
 Data <- eNames(MAE = Data, method = "c", gene_IDs = metadata(Data)[[3]],
                ID_Column = 4)

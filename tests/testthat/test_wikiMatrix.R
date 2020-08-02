@@ -5,7 +5,7 @@ library(testthat)
 #load data
 MAE <- MultiAssayExperiment()
 
-metadata(MAE)[["w_list"]] <- w_list[1:5]
+metadata(MAE)[["w_list"]] <- w_list_mouse[1:5]
 
 metadata(MAE)[["e_list"]] <- e_list
 

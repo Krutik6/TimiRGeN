@@ -2,13 +2,15 @@
 #' @description Internal function for getIDs functions. Helps data
 #' wrangling for -3p and -5p genes.
 #' @param Col Column of dataframe to modify.
-#' @param sep Seperator to insert.
-#' @param suffix Suffix to add behind seperator, default is 1, and increases
+#' @param sep Seperator to insert. Will separate suffix from current string in
+#' column.
+#' @param suffix Suffix to add behind separator, default is 1, and increases
 #' in numerical order for each repeated string in the column.
 #' @return Modified column of a dataframe. Each non-unique value will have
-#' numbers representing it's duplicate number behing it.
+#' numbers representing it's duplicate number behind it.
 #' @importFrom stats ave
 #' @usage nonUnique(Col, sep, suffix)
+#' @noRd
 nonUnique <- function(Col, sep, suffix){
 
     # If string is seen more than once add a suffix to it

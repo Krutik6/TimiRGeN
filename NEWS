@@ -224,3 +224,38 @@ packages in examples and from the vignette.
 * Added a :: to most function calls within functions.
 * Editted inst/Pathvisio_GRN_guide.pdf.
 
+TimiRGeN v0.99.4157 (Date: 01/08/2020)
+===============================
+* Functions and tests now only use <- in code, and not ->.
+* Checked through entirety of functions, tests and the vigentte to correct
+spelling errors and grammar. Typos have been corrected for.
+* Corrected vignette heading/ subheading grammar and ordering. Now the
+vignette has clearer headings and subheadings and the order makes more logical
+sense.
+* TimiRGeN now exports 44 objects, this includes 38 functions and 6 datasets.
+This is down from 55 objects.
+* The 6 remaining datasets have more clearer and detailed explanations on why
+they exist in TimiRGeN.
+* 7 rda files can be found in /inst/extdata. These are helper files soley
+used for vignette building. They are not be to seen by users. They are:
+clusterdata.rda, clusters.rda, hs_gmt.rda, Int_data.rda, mfuzzdata.rda,
+mm_gmt.rda and w_list_human.rda.
+* getIds functions now do not contain information from any other getIds
+function.
+* All functions have more detailed param descriptions. This includes a very
+clear description of which MAE objects to use at every instance of this
+package.
+* Added a final hashed out line on the examples on quickBar and quickDot to tell users to use plot(q) to see the plots. These examples will not plot automatically because the following error occurs if quickBar or quickDot attempts to be plotted during cmd check:
+`Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  : font family '2' not found in PostScript font database
+Error in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  : invalid font type`
+* Changes if missing statements to be clearer and more direct to what is needed in every instance. Especially for inputs which require data from a MAE. Here, specifics such as previous function, which MAE and where in the MAE is included. This has been done for every function.
+* Functions: dloadTargetscan, dloadMirdb, dloadMirtarbase have been respectfully combined with former functions: targetscansData, mirdbData, mirtarbaseData to reduce the number of functions, exported symbols and to streamline the package as a whole.
+* Vignette has been corrected for these changes.
+* Function dataMiningMatrix has been changed to a) be more user friendly, b) more flexible as now the function will work no matter how many databases can be downloaded (in case of server issues), and c) only uses R base functions.
+* Tidyverse no longer needs to be loaded now, this has been removed from the package and from the vignette references.
+* RCy3 now also loads cytoscapeping(), now it avoids needing to call the package.
+* Language in the vignette has been editted to be clearer at points.
+* Descriptions of most functions have been editted to provide clearer details.
+* @noRd has been added to internal functions: corrTable, mirnaFull and nonUnique.
+* Examples have been checked to be able to be copied into a new R script and run, they all work this way. Even donttest/ functions.
+* useast server of biomart has been unreliable in this last week so have changed to use 'www' for getIdsMrna functions for the time being.

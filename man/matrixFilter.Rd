@@ -8,29 +8,40 @@ matrixFilter(MAE, miningMatrix, negativeOnly, predictedOnly,
                     threshold, maxCor)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment.}
+\item{MAE}{MultiAssayExperiment to store the output of matrixFilter. It is
+recommended to use the same MAE which stores the results from
+dataMiningMatrix.}
 
-\item{miningMatrix}{Output from dataMiningMatrix.}
+\item{miningMatrix}{A Large correlation matrix which has miR-mRNA
+validation information from targetscans, mirdb and mirtarbase.
+This is output from dataMiningMatrix, and should be stored as an assay within
+the MAE used in the dataMiningMatrix function.}
 
 \item{negativeOnly}{TRUE or FALSE. Should only negatively correlating
 miR-mRNA interactions be given? Default is TRUE.}
 
-\item{predictedOnly}{TRUE or FALSE. Should only predicted interactions be
-displayed or predicted and functionally tested? Default is TRUE.}
+\item{predictedOnly}{TRUE or FALSE. TRUE if only predicted interactions
+should be displayed or FALSE for predicted and functionally tested?
+Default is TRUE.}
 
 \item{threshold}{Integer from 0 to 3. If Predicted only max should be 2.}
 
 \item{maxCor}{What is the highest average correlation to be filtered for.
-Default is 1.}
+From -1 to 1. Default is 1. The lower the maxCor, the stricter the filtering.}
 }
 \value{
-A filtered amount of mRNA-miR interactions which are found in X
-number of databases. This will be specific for the input data and the
+A filtered amount of mRNA-miR interactions which are found in 3
+databases. This will be specific for the input data and the
 wikipathway of choice.
 }
 \description{
 Filters out miR-mRNA interactions based on how many times an
-interaction has been predicted and or validated.
+interaction has been predicted and or validated. miR-mRNA interactions can
+also be filtered by correlated DE values. Negatively correlating miR-mRNA
+interactions can be filtered for, and degree of correlation can also be
+a parameter. During the diffExpressRes function, it was recommended to use
+log2fc or average expression values for this reason. Output of matrixFilter
+is stored as an assay in a MAE.
 }
 \examples{
 Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
@@ -49,5 +60,5 @@ Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
 MAE <- MultiAssayExperiment()
 
 MAE <- matrixFilter(MAE, miningMatrix = Int_matrix, negativeOnly = TRUE,
-                        threshold = 3, predictedOnly = FALSE)
+                        threshold = 1, predictedOnly = FALSE)
 }

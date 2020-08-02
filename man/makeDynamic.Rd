@@ -8,24 +8,35 @@ makeDynamic(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
                    dataType = '')
 }
 \arguments{
-\item{MAE}{MultiAssayObject.}
+\item{MAE}{MultiAssayExpreriment to store the output of makeDynamic. It is
+recommended to use the same MAE which stores results from matrixFilter.}
 
-\item{miR_expression}{microRNA data after going through diffExpressRes.}
+\item{miR_expression}{Dataframe containing abundance values
+(e.g. log2fc or average expression) from miR specific DE, along with gene ID
+information. This is the output from diffExpressRes. Should be stored as an
+assay within the MAE used in diffExpressRes.}
 
-\item{mRNA_expression}{mRNA data after going through diffExpressRes.}
+\item{mRNA_expression}{Dataframe containing abundance values
+(log2fc or average expression) from mRNA specific DE, along with gene ID
+information. This is the output from diffExpressRes. Should be stored as an
+assay within the MAE used in diffExpressRes.}
 
-\item{miR_IDs_adj}{Either miR_adjusted_entrez or miR_adjusted_ensembl.}
+\item{miR_IDs_adj}{Dataframe which contain adjusted gene IDs from miR data.
+Either miR_adjusted_entrez or miR_adjusted_ensembl. Should be found
+as an assay in the MAE used a getIdsMir function.}
 
-\item{dataType}{Either En (ensembl data) or L (entrez data).}
+\item{dataType}{String which represents the gene ID used in this analysis.
+Either "En" (ensembl data) or "L" (entrez data).}
 }
 \value{
-MicroRNA and mRNA dynamic data that can be used in pathvisio if
-exported.
+MicroRNA and mRNA dynamic data that can be saved and be used in
+pathvisio to display dynamic behaviour of miRs and mRNAs of interest over
+the time series.
 }
 \description{
 Produces a data frame that can be imported into pathvisio
 to show changes in genes over time. Follow vignette instructions on how to
-save this file and further instructions found in the
+save this file and further instructions found in
 /inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
 }
 \examples{
@@ -39,7 +50,7 @@ MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "www")
 
 MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
                genes_ID = assay(MAE, 3),

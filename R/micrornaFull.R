@@ -1,9 +1,12 @@
 #' @title micrornaFull
-#' @description Changes miR names into microRNA names in one step. Internal
-#' function for getIDsMir functions.
-#' @param miRdf miR dataframe.
+#' @description Changes many potential miR naming systems into
+#' miR names which adhere to the TimiRGeN miR naming system in one step.
+#' Internal function for getIDsMir functions.
+#' @param miRdf miR dataframe. Will be the miR input for the getIdsMir function
+#' used.
 #' @param species Species e.g. hsa or mmu.
 #' @return hsa-miR-140-5p would be changed to microRNA 140-1
+#' @noRd
 micrornaFull <- function(miRdf, species){
 
     #  microRNA > miR

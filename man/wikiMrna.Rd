@@ -7,35 +7,42 @@
 wikiMrna(MAE, mRNA_express, singleWiki, stringWiki='')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment object which will have the results of
+wikiMrna added to it. It is recommended to use the same MAE which stores
+information from diffExpressRes and reduceWiki functions.}
 
-\item{mRNA_express}{Output from the Express function on mRNA data.}
+\item{mRNA_express}{Dataframe from the diffExpressRes function used on the
+input mRNA data. This should be found as an assay within the MAE used in
+diffExpressRes.}
 
-\item{singleWiki}{Output from ReduceWiki function on a Wikipathway
-of interest.}
+\item{singleWiki}{Output from reduceWiki function on a Wikipathway
+of interest. This information should be found as an assay within the MAE
+used in the reduceWiki function.}
 
-\item{stringWiki}{Name of the pathway of interest.}
+\item{stringWiki}{Name of the pathway of interest. Should be the same
+as the stringWiki from the reduceWiki function.}
 }
 \value{
-A dataframe of mRNA entries which are also found in the wikipathway
-of interest.
+A dataframe which only contains mRNAs from the input data and
+the wikipathway of interest.
 }
 \description{
-Identify which mRNAs are in common with the genes found in the
-wikipathway of interest.
+Identify which genes are in common with the genes found in the
+wikipathway of interest and the significantly differentially
+expressed input mRNAs. Store the results in a MAE as an assay.
 }
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR[1:100,]
+miR <- mm_miR[1:200,]
 
-mRNA <- mm_mRNA[1:200,]
+mRNA <- mm_mRNA[401:600,]
 
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "www")
 
 MAE <- dloadGmt(MAE = MAE, speciesInitials = "Mm")
 

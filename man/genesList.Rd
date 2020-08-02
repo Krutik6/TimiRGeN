@@ -7,37 +7,50 @@
 genesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 }
 \arguments{
-\item{MAE}{Multi Assay Experiment object.}
+\item{MAE}{MultiAssayExperiment. Results from genesList will
+be stored in the metadata of the given MAE. It is recommended that the
+MAE which stores output from combineGenes (combined analysis) or
+addPrefix (sepatate analysis).}
 
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
 \item{genetic_data}{If 'c', this should be a dataframe with miR and mRNA
-information together.}
+information together. This is the output from the combineGenes function
+and will be stored as an assay within the MAE.}
 
-\item{timeString}{If 'c', this should be a commmon string representing
+\item{timeString}{If 'c', this should be a common string representing
 'timepoint' e.g. for H.1, H.10, H.20, timeString = 'H'.}
 
 \item{miR_data}{If 's', a dataframe of microRNA data. Rownames are genes
 and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.
-timepoint.resulttype should be the same in mRNA and miR data.}
+timepoint.resulttype should be the same in mRNA and miR data. This should
+be the results of the addPrefix function, and will be stored as an assay
+within the MAE used in addPrefix.}
 
 \item{mRNA_data}{If 's', a dataframe of mRNA data. Rownames are genes
 and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.}
 }
 \value{
 A list of dataframes separated by features in the column names which
-can be stored in the metadata area of an MAE object.
+can be stored in the metadata area of an MAE object. This should
+be the results of the addPrefix function, and will be stored as an assay
+within the MAE used in addPrefix.
 }
 \description{
-Will produce a list of nested dataframes. For combined
-analysis method = c, and for separated analysis method = s. Combined
-analysis colnames should be 'timepoint.resulttype'.
+Will produce a list of nested dataframes and will be stored
+as metadata within a MAE object.
+For combined analysis method = "c", and for separated analysis method = "s".
+
+Combined analysis colnames should be 'timepoint.resulttype'.
 genesList will make new dataframes separated by 'timepoint.'.
+
 Separated analysis colnames should be 'genetype_timepoint.resulttype'.
-genesList will make separate lists for 'genetype_'. Each of these lists
+genesList will make separate lists for each 'genetype_', and these lists
 will have dataframes which have been made by separating by 'timepoint.'.
-Make sure to follow colname nomenclature carefully.
+
+Make sure to follow colname nomenclature carefully. Please refer to
+the vignette for more details on the nomenclature.
 }
 \examples{
 miR <- mm_miR
@@ -45,6 +58,8 @@ miR <- mm_miR
 mRNA <- mm_mRNA
 
 MAE <- startObject(miR = miR, mRNA = mRNA)
+
+# For separated analysis
 
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")
@@ -55,9 +70,11 @@ MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
 MAE <- genesList(MAE, method = "s", miR_data = assay(MAE, 3),
                  mRNA_data = assay(MAE, 4))
 
+# For combined analysis
+
 MAE <- combineGenes(MAE, miR_data = assay(MAE, 1),
                     mRNA_data = assay(MAE, 2))
 
-MAE <- genesList(MAE, method = 'c', genetic_data = assay(MAE, 5),
+MAE <- genesList(MAE, method = 'c', genetic_data = assay(MAE, 3),
                  timeString = 'D')
 }

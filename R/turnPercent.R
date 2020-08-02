@@ -1,17 +1,25 @@
 #' @title turnPercent
-#' @description Converts integers into percentages, within a matrix.
-#' @param MAE MultiAssayExperiment object.
-#' @param wikiMatrix Matrix of wikipathways and samples.
+#' @description Genes found in common between the input data and each
+#' pathway are normalised by percentages to normalise for pathway size. Stores
+#' output as an assay in a MAE object.
+#' @param MAE MultiAssayExperiment object which will have the output of
+#' turnPercent added as an assay. It is recommended to use the MAE produced by
+#' the wikiMatrix function.
+#' @param wikiMatrix Matrix of wikipathways and samples. This should be stored
+#' as an assay in the MAE used in the wikiMatrix function.
 #' @param rowInt Which row contains the total number of genes per wikipathway?
+#' This will be 1+ the number of samples in your input data. For example our
+#' combined miR-mRNA analysis in the example has rowInt = 6 because our example
+#' has 5 time points.
 #' @return A percentage matrix.
 #' @export
 #' @usage turnPercent(MAE, wikiMatrix, rowInt)
 #' @examples
 #' MAE <- MultiAssayExperiment()
 #'
-#' metadata(MAE)["e_list"] <- e_list
+#' metadata(MAE)[["e_list"]] <- e_list
 #'
-#' metadata(MAE)["w_list"] <- w_list[1:10]
+#' metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 #'
 #' MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
 #'                   wp_list = metadata(MAE)[[2]])
@@ -21,12 +29,18 @@
 #'                    rowInt = 6)
 turnPercent <- function(MAE, wikiMatrix, rowInt){
 
-    if (missing(MAE)) stop('Add MAE object')
+    if (missing(MAE)) stop('Add MAE. Output of turnPercent will be
+                           stored within this MAE. Please use wikiMatrix first.
+                           ')
 
     if (missing(wikiMatrix)) stop('Add matrix of wikipathways and samples.
-                                  This is output from wikiMatrix function.')
+                                  Please use the wikiMatrix function before
+                                  using turnPercent. Output of wikiMatrix
+                                  should be stored as an assay within the MAE
+                                  used in the wikiMatrix function.')
 
-    if (missing(rowInt)) stop('Add the total number of samples.')
+    if (missing(rowInt)) stop('Add an integer which represents the row that
+                              contains the total number of genes.')
 
     df1 <- as.matrix(wikiMatrix)
 

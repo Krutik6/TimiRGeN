@@ -5,7 +5,10 @@
 e_list
 }
 \description{
-List of entrezIDs to make examples run faster.
+List of entrezIDs from significant DE on the mouse fibrosis dataset. To make examples run faster this data is used, instead of re-running previous functions
+throughout the examples of TimiRGeN. e_list is the output of the eNames function
+when the combined analysis is performed on mm_miR and mm_RNA and when entrezIDs
+are used as the gene IDs.
 }
 \usage{data("e_list")}
 \format{
@@ -16,12 +19,15 @@ D2
 D3
 D7
 D14
+Each list contains significantly differentially expressed entrezgene IDs,
+specific for each time point.
 }
 \details{
-List of entrezgeneIDs per time point in data.
+List of entrezgeneIDs per time point (5) from combined analysis of mm_miR and
+mm_mRNA. Used to speed up examples for building and checks.
 }
 \source{
-From data.
+From using eNames during combined analysis of mm_miR and mm_mRNA..
 }
 \references{
 NA

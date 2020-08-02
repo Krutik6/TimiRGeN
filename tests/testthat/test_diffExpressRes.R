@@ -23,7 +23,7 @@ exp <- cbind(names = rownames(assay(MAE, 2)),
 
 #check 1
 #exp should be the same row length as mRNA
-test_that("aspects of exp should be similiar to mRNA", {
+test_that("aspects of exp should be similar to mRNA", {
     expect_equal(length(rownames(assay(MAE, 2))), length(rownames(exp)))
     expect_equal(rownames(assay(MAE, 2)), rownames(exp))
 })

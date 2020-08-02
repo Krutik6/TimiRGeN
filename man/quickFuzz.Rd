@@ -7,9 +7,14 @@
 quickFuzz(Mfuzzdata, Clusters, W)
 }
 \arguments{
-\item{Mfuzzdata}{Output after createClusters. An Expressionset object.}
+\item{Mfuzzdata}{A large ExpressionSet object which contain fuzzy clustering
+data. This is output from the createClusters function. The Expressionset
+object should be stored as an experiment in the MAE used in the
+createClusters function.}
 
-\item{Clusters}{Output after createClusters. A list of clusters.}
+\item{Clusters}{A large list containing fuzzy clustering data. This is
+output from the createClusters function. The list of should be stored as
+metadata in the MAE used in the createClusters function.}
 
 \item{W}{Should the plot be shown in a new window? Default is TRUE.}
 }
@@ -18,17 +23,25 @@ A plot of different clusters showing how the input data varies
 across different wikipathways.
 }
 \description{
-Plots Clusters in reference to the ClusterData dataframe. To be
-used after createClusters and clusterCheck. From here individual
-wikipathways that show variance throughout a signalling network can be
-taken for further miR-mRNA interaction analysis.
+Plots fuzzy clusters in reference to the ClusterData dataframe.
+Each different cluster created will represent a different temporal
+behaviour. Depending on the data, more or fewer cluster may be appropriate.
+Use clusterCheck to influence this decision before moving onto quickFuzz.
+Each line in a plot represents a pathway. Pathways are divided by colour,
+the more intense the colour, the higher the fit a pathway has to a particular
+cluster and temporal behaviour.
+Fuzzy clustering is a soft clustering approach where objects are not
+divided into fixed classes. Each pathway can exist in each cluster but
+each pathway will fit to different degrees to each cluster. Look into
+the clusterData dataframe created by createClusters to see this.
+If a cluster peaks interest, continue this analysis with returnCluster.
 }
 \examples{
 MAE <- MultiAssayExperiment()
 
 metadata(MAE)[["e_list"]] <- e_list
 
-metadata(MAE)[["w_list"]] <- w_list[1:10]
+metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])

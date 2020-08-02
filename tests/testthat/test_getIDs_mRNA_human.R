@@ -11,7 +11,7 @@ MAE <- startObject(miR = NULL, mRNA = mRNA)
 
 #test function
 MAE <- getIdsMrnaHuman(MAE, mRNA = assay(MAE, 2),
-                       mirror = 'useast')
+                       mirror = 'www')
 
 #check 1
 test_that("output have two columns", {
@@ -25,7 +25,7 @@ test_that("output have two columns", {
 mRNA$Genes <- rownames(mRNA)
 
 human <- biomaRt::useEnsembl("ensembl", dataset="hsapiens_gene_ensembl",
-                             GRCh=37, host = "useast.ensembl.org")
+                             GRCh=37, host = "www.ensembl.org")
 
 glist <- getBM(attributes = c("external_gene_name", "ensembl_gene_id",
                                "entrezgene_id"),

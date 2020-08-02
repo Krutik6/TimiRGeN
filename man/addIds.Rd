@@ -7,19 +7,24 @@
 addIds(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment object to store the output of addIds.
+It is recommended to use the MAE which stores results from
+significantVals.}
 
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
 \item{filtered_genelist}{A list of nested dataframes if 'c' or A list of
-lists with nested dataframes if 's'.}
+lists with nested dataframes if 's'. This will be found as metadata within
+the MAE object used in the significantVals function.}
 
-\item{miR_IDs}{miR_ensembl or miR_entrez. Use getIDs function to acquire
-this.}
+\item{miR_IDs}{miR_ensembl or miR_entrez. Use a getIDsMir function to
+acquire this. This will be stored as an assay in the MAE used in a getIdsMir
+function.}
 
-\item{mRNA_IDs}{mRNA_ensembl or mRNA_entrez. Use getIDs function to acquire
-this.}
+\item{mRNA_IDs}{mRNA_ensembl or mRNA_entrez. Use a getIDsMrna function to
+acquire this. This will be stored as an assay in the MAE used in a getIdsMrna
+function.}
 }
 \value{
 list of dataframes with entrezIDs/ ensembl IDs and genenames
@@ -27,7 +32,9 @@ as columns which can be stored in metadata section of an MAE.
 }
 \description{
 Adds entrez or ensembl IDs to the nested data frames within a
-list(c) or list of lists (s).
+list(c) or list of lists (s). The IDs are from getIdsMir and getIdsMrna
+functions, and both are needed for this function. They should be found
+as assays in MAE object.
 }
 \examples{
 library(org.Mm.eg.db)
@@ -38,10 +45,14 @@ mRNA <- mm_mRNA
 
 Data <- startObject(miR = miR, mRNA = mRNA)
 
+Data <- getIdsMirMouse(Data, assay(Data, 1))
+
+Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'www')
+
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))
 
-Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 9),
                   timeString = 'D')
 
 Data <- significantVals(MAE = Data, method = 'c',
@@ -50,5 +61,5 @@ Data <- significantVals(MAE = Data, method = 'c',
 
 Data <- addIds(MAE = Data, method = "c",
               filtered_genelist = metadata(Data)[[2]],
-              miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 3))
+              miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 7))
 }

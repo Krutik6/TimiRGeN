@@ -9,53 +9,66 @@ enrichWiki(MAE, method = '', ID_list, orgDB, path_gene, path_name,
                   padjustmethod)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment. Results of enrichWiki will be
+stored in the metadata. It is recommended to use the MAE object created
+by dloadGmt.}
 
 \item{method}{Either 'c' or 's' for combined or separated analysis.}
 
-\item{ID_list}{List of ensembl or entrez IDs for each sample.}
+\item{ID_list}{List of ensembl or entrez IDs for each sample.
+This is the output from eNames function. This will be found within the
+metadata of the MAE used in the eNames function.}
 
-\item{orgDB}{Library of species specific data.}
+\item{orgDB}{Library of species specific data. e.g. org.Mm.eg.db.}
 
-\item{path_gene}{path_gene dataframe. From downladGMT or gmtEnsembl.}
+\item{path_gene}{path_gene dataframe. From dloadGmt or gmtEnsembl
+function, and will be stored as assays within the MAE used in dloadGmt or
+gmtEnsembl.}
 
-\item{path_name}{path_name dataframe from downladGMT.}
+\item{path_name}{path_name dataframe from dloadGmt. Will be stored as an
+assay within the MAE used in dloadGmt.}
 
-\item{ID}{Either ENTREZID or ENSEMBL.}
+\item{ID}{Either "ENTREZID" or "ENSEMBL". This should be the same as the ID
+type used for ID_list. dloadGMT loads data as ENTREZID, so use gmtEnsembl
+function to get ENSEMBL data.}
 
 \item{universe}{A column of gene IDs to be used as the background for
-gene set enrichment. To find which pathways are most enriched use
-path_gene$gene}
+gene set enrichment. Recommended use is to use all genes found within the
+wikipathways of the species of interest as background i.e.
+path_gene$gene or universe = assay(MAE, i)[[2]]. To add unique universe,
+create a list of gene IDs (entrezID or ensembl) to contrast against.}
 
 \item{pvalcutoff}{Default is 0.05. P value cutuff point.}
 
 \item{qvaluecutoff}{Default is 0.2. q value cutoff point.}
 
-\item{padjustmethod}{Default is 'BH'. Which pvalue adjustment method should
-be used. Look into clusterProfiler function enricher for more options.}
+\item{padjustmethod}{Default is 'BH'. This sets the  pvalue adjustment
+method to be used. Look into clusterProfiler function enricher for more
+options.}
 }
 \value{
 A large list of data which identifies which wikipathways are
 most enriched in the input data which can be stored in an MAE object.
 }
 \description{
-Finds which wikipathways are enriched within the data.
+Finds which wikipathways are enriched within the data. This
+function uses gene set enrichment analysis from clusterProfiler to
+find enriched pathways from wikipathways. Each time point is analysed
+individually. In the case of TimiRGeN analysis using the 's' analysis,
+each gene type and time point is analysed individually. Data is stored as
+metadata of a MAE.
 }
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
-
-mRNA <- mm_mRNA
-
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- MultiAssayExperiment()
 
 metadata(MAE)[["e_list"]] <- e_list
 
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
 MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
-                  orgDB = org.Mm.eg.db, path_gene = assay(MAE, 3),
-                  path_name = assay(MAE, 4), ID = "ENTREZID",
-                  universe = assay(MAE, 3)[[2]])
+                  orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),
+                  path_name = assay(MAE, 2), ID = "ENTREZID",
+                  universe = assay(MAE, 1)[[2]])
 }

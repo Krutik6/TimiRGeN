@@ -1,5 +1,5 @@
 ---
-title: "TimiRGeN: Time series miR-mRNA integration and Generation of Networks"
+title: "TimiRGeN: Time Incorporated miR-mRNA Generation of Networks"
 author: "by Krutik Patel"
 output:
         rmarkdown::html_document: 
@@ -32,7 +32,8 @@ options(width = 800)
 
 
 #: Introduction
-Time incorporated microRNA Generation of Networks (TimiRGeN) is aimed at
+
+Time Incorporated miR-mRNA Generation of Networks (TimiRGeN) is aimed at
 researchers who wish to explore time series microRNA-mRNA expression data.
 This package integrates, functionally analyses and generates small networks
 for hypothesis generation.
@@ -42,25 +43,24 @@ package utilises several published packages and employs their functions
 in a synergistic fashion for time series multi-omic analysis. The following
 packages have been built upon for several functions in the TimiRGeN package:
 
-[rWikiPathways](rWikipathway_path) [1],
-[clusterProfiler](clusterProfiler_path) [2],
+[rWikiPathways](https://www.bioconductor.org/packages/release/bioc/html/rWikiPathways.html) [1],
+[clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html) [2],
 [DOSE](https://bioconductor.org/packages/release/bioc/html/DOSE.html) [3],
 [biomaRt](https://bioconductor.org/packages/release/bioc/html/biomaRt.html) [4],
 [RCy3](https://bioconductor.org/packages/release/bioc/html/RCy3.html) [5],
 [Mfuzz](https://www.bioconductor.org/packages/release/bioc/html/Mfuzz.html) [6],
 [igraph](https://igraph.org/redirect.html) [7].
 
-TimiRGeN is very selective and only get miR-mRNA interaction data from
-databases curated within the last 4 years. TimiRGeN also only uses  predictive databases
-which use seed site specificity.
+TimiRGeN is very selective and only uses miR-mRNA interaction data from
+databases curated within the last 4 years. TimiRGeN also only uses predictive databases which use seed site specificity as their main input.
 
 [TargetScans](http://www.targetscan.org/vert_72/)[8].
 [miRDB](http://www.mirdb.org/)[9].
 [miRTarBase](http://mirtarbase.mbc.nctu.edu.tw/php/index.php)[10].
 
-TimiRGeN does have some capability to generate networks in R, however
+TimiRGeN does have the capability to generate networks in R, however
 this package is uniquely open ended, as the output can be easily be
-exported to [Cytoscape](https://cytoscape.org/) [11] and
+exported to [Cytoscape](https://cytoscape.org/) [11] or
 [Pathvisio](https://pathvisio.github.io/) [12] for better visualisation
 options.
 
@@ -68,49 +68,56 @@ TimiRGeN solely uses wikipathways for functional pathway analysis,
 and is the first tool to allow this for time series data. Wikipathways is a
 user curated pathway database that contains 1000s of mechanistic
 signalling pathways from multiple species [13]. 
-Furthermore, wikipathways works very well with Pathvisio which is our recommended tool for GRN design.
+Furthermore, wikipathways works very well with Pathvisio which is our 
+recommended tool for GRN design. Please read the TimiRGen/inst/Pathvisio_GRN_guide.pdf for a step-by-step tutorial for our GRN creation process.
 
 The TimiRGeN package gives the user several options for their analysis.
-Currently the package can analyse human or mouse data, perform analysis of miR and mRNA data combined or separately, and can use entrez or ensembl gene IDs. This tool can be best used after differential expression analysis.
+Currently the package can analyse human or mouse data, perform analysis of 
+miR and mRNA data combined or separately, and can use entrez or ensembl gene
+IDs. This is because most wikipathways are annotated with either entrezgene IDs or ensembl gene IDs. This tool can be best used after differential expression (DE) analysis, and has potential to become a staple part of any miR-mRNA expression data study.
 
-#: Install TimiRGeN
-```{r Install, eval=FALSE, message=FALSE, warning=FALSE}
+##: Install TimiRGeN
+
+```{r InstallPackage, eval=FALSE, message=FALSE, warning=FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE))
 install.packages("BiocManager")
 BiocManager::install("TimiRGeN")
 ```
 
 
-###: Load Libraries
+##: Load Libraries
 
-```{r Load libs, echo=TRUE, message=FALSE, results='hide'}
+```{r Loadlibs(TimiRGeN Mm), echo=TRUE, message=FALSE, results='hide'}
 library(TimiRGeN)
 library(org.Mm.eg.db)
 ```
 
-The following dependencies can be investigated further from these sources
-[1-7, 14-23]
+TimiRGeN dependencies loaded with the package can be further investigated from these sources [1-7, 14-22].
 
-```{r, echo=FALSE, warning=FALSE, error=FALSE}
+Depending on the data to be analysed, please load either `org.Mm.eg.db` or `org.Hs.eg.db` before starting the analysis.
+
+```{r Load knitr kableExtra, echo=FALSE, warning=FALSE, error=FALSE}
 library(knitr)
 library(kableExtra)
 ```
 
 
-#: Time Series miR-mRNA Combined Analaysis on Mouse data using Entrez Gene IDs
-### Example Mouse Kidney Fribrosis Dataset
+#: Combined miR-mRNA analysis
+
+##: Example Mouse Kidney Fibrosis Dataset
+
 In this section the combined method will be used to analyse a mouse kidney
 fibrosis data set. The mRNA data from
 [Craciun et al (2016)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4884105/)
-[24] which was downloaded from
+[23] which was downloaded from
 [GSE65267](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE65267). The
 associated miR data was published in
 [Pellegrini et al (2016)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4912473/)
-[25]
+[24]
 and was downloaded from
 [GSE61328](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61328).
 
-```{r Load Fibrosis data}
+```{r Load mm data}
 miR <- mm_miR
 
 mRNA <- mm_mRNA
@@ -118,39 +125,46 @@ mRNA <- mm_mRNA
 
 Notice the standard nomenclature used in the column names. Do follow the this
 standard for your own input data. The time point should come
-first and is followed by a '.'. After the '.' the column name should continue
+first and is followed by a `.`. After the `.` the column name should continue
 to display the specific result types from differential expression analysis.
 
-Note. There should only be one '.'  in each column name and no '_' characters.
-Having more than one '.' any '_' characters will confuse some functions.
+Note. There should only be one `.`  in each column name and no `_` characters.
+Having more than one `.` any `_` characters will confuse some functions.
 
 Note. There should be no NAs in your miR and mRNA data files.
 
-### Create MultiAssayExperiment object
+##: Create MultiAssayExperiment object
 
-```{r MAE, message=FALSE}
+```{r Start MAE, message=FALSE}
 MAE <- startObject(miR, mRNA)
 ```
 
-TimiRGeN uses `MultiAssayExperiment` (MAE) to contain all the data.
-The data frames, matrices and other S4 objects are stored in `Experiments`,
-and the lists will be stored in the `metadata`.
+TimiRGeN uses `MultiAssayExperiment` (MAE) to contain information.
+The dataframes and matrices  are stored as `assays`, S4 objects will be stored
+as `Experiments` and the lists will be stored as `metadata`. 
 
-### Retreive Gene IDs
+If unfamiliar with MultiAssayExpriments please read through the vignette to understand how data can be accessed.
 
-```{r retrieveID data for miR data, warning=FALSE, message=FALSE}
+##: Retieve Gene IDs
+
+```{r retrieveID data for mm data, warning=FALSE, message=FALSE}
 MAE <- getIdsMirMouse(MAE = MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaMouse(MAE = MAE, assay(MAE, 2))
+MAE <- getIdsMrnaMouse(MAE = MAE, assay(MAE, 2), mirror = 'www')
 ```
 
-Using `getIds` functions the entrez gene and ensembl annotation data for genes can be retrieved for downstream analysis.
+Using `getIds` functions to produce dataframes containing entrez gene and ensembl ID annotations for genes. This is useful for downstream analysis.
 
-Many wikipathways use either entrezgene IDs or ensembl gene IDs for annotation. Having both formats available can be useful. Also, due to the nature of miRs, many NAs may be found in the output. Entrez gene IDs and ensemble gene IDs are insensitive to miRs with -3p and -5p strands. Therefore, adjusted entrez gene IDs and ensemble gene IDs are also created.
+Many wikipathways use either entrezgene IDs or ensembl gene IDs for annotation. Having both formats available can be useful.
 
-### Filter Out Non-significant Genes
+Due to the nature of miRs, many NAs may be found in the output of `getIdsMir` functions. Entrez gene IDs and ensemble gene IDs are insensitive to miRs with -3p and -5p strands. Therefore, adjusted entrez gene IDs and ensemble gene IDs are also created.
 
-```{r combineGenes, error=FALSE, warning=FALSE}
+Note. For `getIdsMrna` functions, if a connection time out error occurs, try to
+use other mirrors e.g. "www".
+
+##: Filter Out Non-significant Genes
+
+```{r combineGenes + filter, error=FALSE, warning=FALSE}
 MAE <- combineGenes(MAE = MAE, miR_data = assay(MAE, 1),
                     assay(MAE, 2))
 
@@ -166,16 +180,13 @@ MAE <- significantVals(MAE = MAE, method = 'c',
 mRNA and miR data can be combined using `combineGenes` function.
 
 The `genesList` function will transform the large data frame into multiple
-nested data frames within a list. The data will be separated by the `timeString` parameter.
-In this example by 'D' (days), because it was before the '.' in the column names.
+nested dataframes within a list. The data will be separated by the `timeString` parameter. In this example by `D` (days), because it was before the `.` in the column names.
 
-Significant genes can be retrieved from each nested data frame using the
-`significantVals` function. Here only genes which had an adjusted P value of
-less than 0.05 will remain in the list.
+Significantly differentially expressed genes can be retrieved from each nested dataframe using the `significantVals` function. Here only genes which had an adjusted P value of less than 0.05 will remain in the list.
 
-#### Find Significant Gene IDs
+###: Find Significant Gene IDs
 
-```{r addentrezIDs, warning=FALSE, error=FALSE}
+```{r add entrezIDs and extract, warning=FALSE, error=FALSE}
 MAE <- addIds(MAE = MAE, method = 'c',
               filtered_genelist = metadata(MAE)[[2]],
               miR_IDs = assay(MAE, 3),
@@ -193,18 +204,21 @@ gene IDs were be added.
 Lists of entrezIDs/ ensembl IDs can be extracted for further analysis using
 `eNames` function.
 
-### Time Dependent Pathway Enrichment Method
+##: Time Dependent Pathway Enrichment Method
 
-Once we have a list of significant genes per time point we can put this through gene set enrichment to find novel pathways which this data is associate with.
+Once we have a list of significant genes per time point we can put this through gene set enrichment to find novel pathways which each time point in the data is associate with.
+
 To do this TimiRGeN uses wikipathways [13].
 
-```{r downloadGTM_show, message=FALSE, warning=FALSE, eval=FALSE}
+```{r downloadGTM show, message=FALSE, warning=FALSE, eval=FALSE}
 MAE2 <- MultiAssayExperiment()
 
 MAE2 <- dloadGmt(MAE = MAE2, speciesInitials = "Mm")
 ```
 
-```{r downloadGTM_working, message=FALSE, warning=FALSE, echo=FALSE}
+```{r downloadGTM working, message=FALSE, warning=FALSE, echo=FALSE}
+# dloadGmt failed on bioconductor vignette build so mm_gmt is added instead
+load(file = "../inst/extdata/mm_gmt.rda")
 MAE2 <- mm_gmt
 ```
 
@@ -213,8 +227,7 @@ in our data, per time point. The `enrichWiki` function wraps around
 enrichment functions from DOSE and clusterProfiler [2,3] but uses them for
 time series analysis with wikipathways.
 
-Note. Making multiple separate MAE objects make it easier to work with all the
-generated data files. 
+Note. Making multiple separate MAE objects make it easier to work with all the generated data files. 
 
 ```{r enrichwiki, warning=FALSE, message=FALSE}
 MAE2 <- enrichWiki(MAE = MAE2, method = 'c',
@@ -233,7 +246,7 @@ For a more stringent check, a user can add their own `universe` data e.g. all
 possible genes in a microarray or all known genes found in a cell type.
 
 
-#### Plot GSEA
+###: Plot GSEA
 
 ```{r Quickbardot, warning=FALSE, message=FALSE, eval=FALSE}
 savePlots(largeList = metadata(MAE2)[[1]],
@@ -261,23 +274,25 @@ knitr::include_graphics("D14_wikipathways.jpg")
 
 From here a wikipathway can be selected for miR-mRNA interaction
 analysis. For example the Complement and Coagulation Cascades pathway.
+If a pathway of interest is found, the user can move onto part 2.7 of the vignette.
 
-### Temporal Pathway Clustering Method
+##: Temporal Pathway Clustering Method
 
-TimiRGeN also offers a supervised soft clustering method using Mfuzz[6]. This
-provides a global view of temporal patterns based on the common genes found
-between the data at each time point and each pathway.
+TimiRGeN also offers a supervised soft clustering method using Mfuzz[6, 25]. 
+This provides a global view of temporal patterns based on the common genes found between the data at each time point and each pathway.
 
-#### Create Percent Matrix
+###: Create Percent Matrix
 
-```{r wikilist_slow, eval=FALSE, message=FALSE, warning=FALSE}
+```{r wikilist show, eval=FALSE, message=FALSE, warning=FALSE}
 MAE2 <- wikiList(MAE2, stringSpecies = 'Mus musculus', stringSymbol = 'L')
 ```
 
-This method starts by importing all mouse wikipathways and associated gene IDs. The `L` symbol will give us entez gene IDs.
+This method starts by importing all mouse wikipathways and associated gene IDs. The `L` symbol will give us entezgene IDs. Use the `En` symbol for ensembl IDs.
 
-```{r wikilist_working, echo=FALSE, message=FALSE, warning=FALSE}
-metadata(MAE2)[["wp_list"]] <- w_list
+```{r wikilist working, echo=FALSE, message=FALSE, warning=FALSE}
+# wikiList takes a large amount of time to complete, so to speed vignette
+# building, w_list_mouse is used.
+metadata(MAE2)[["wp_list"]] <- w_list_mouse
 ```
 
 ```{r wikiMatrix, message=FALSE, warning=FALSE}
@@ -298,7 +313,7 @@ The final row is the total number of genes in each pathway. The `rowInt`
 parameter in the `turnPercent` function should point to the final row in
 `assay(MAE, 4)`. This will account for pathway of differing sizes.
 
-#### Temporal Pathway Clustering
+###: Temporal Pathway Clustering
 
 ```{r createClusters_slow, eval=FALSE}
 MAE2 <- createClusters(MAE = MAE2, method = "c",
@@ -307,16 +322,20 @@ MAE2 <- createClusters(MAE = MAE2, method = "c",
 ```
 
 
-```{r createClusters_working, fig.align ="center",dpi=80, echo=FALSE}
-clusterdata <- clusterdata
+```{r createClusters working, fig.align ="center",dpi=80, echo=FALSE}
+# The createClusters function downloads data from the internet so it cannot
+# pass bioconductor vignette building. For this reason clusterdata, mfuzzdata
+# and clusters is imported from extdata.
 
-mfuzzdata <- mfuzzdata
+load("../inst/extdata/clusterdata.rda")
+
+load("../inst/extdata/mfuzzdata.rda")
 
 MAEx <- MultiAssayExperiment(list('ClusterData' = clusterdata,
                                   'MuzzData' = mfuzzdata))
 MAE2 <- c(MAE2, MAEx)
 
-clusters <- clusters
+load("../inst/extdata/clusters.rda")
 
 metadata(MAE2)[['Clusters']] <- clusters
 ```
@@ -324,23 +343,23 @@ metadata(MAE2)[['Clusters']] <- clusters
 `createClusters` uses functions from Mfuzz [6] to separate the percent matrix
 into a number of clusters based on temporal changes. In our example we created
 12 clusters. Please refer to the Mfuzz source material for more information
-[26].
+[25].
 
 Note.The message "genes excluded" refers to pathways in TimiRGeN.
 
-A standard deviation plot is created to show the variance found in each pathway over the time course. A PCA plot is created also, this will show how close each of the clusters are. Both plots are from Mfuzz functions [6] which TimiRGeN has wrapped around.
+A standard deviation plot is created to show the variance found in each pathway over the time course. A PCA plot is created also, this will show how close each of the clusters are. Both plots are from Mfuzz functions [6].
 
 ```{r clusterCheck, message=FALSE, warning=FALSE, eval=FALSE}
 clusterCheck(Clusters = metadata(MAE2)[[3]], W = FALSE)
 ```
 
-#### Plot Clusters
+###: Plot Clusters
 
 Once we are happy about the number of clusters we can plot fuzzy clusters.
 The Y axis has the standarised number of genes and the X axis has the
 time points.
 
-```{r plotfuzz, message=FALSE, eval=FALSE}
+```{r plot fuzzy clusters, message=FALSE, eval=FALSE}
 quickFuzz(Mfuzzdata = experiments(MAE2)[[7]],
           Clusters = metadata(MAE2)[[3]],
           W = FALSE)
@@ -350,26 +369,22 @@ quickFuzz(Mfuzzdata = experiments(MAE2)[[7]],
 knitr::include_graphics("fuzz.jpeg")
 ```
 
-The red lines represent wikipathways that fit very well in a respective
-cluster.
-The orange lines represent wikipathways that fit fairly well in a respective
-cluster.
-The yellow lines represent wikipathways that somewhat fit in a respective
-cluster.
-The purple lines represent wikipathways that partially fit in a respective
-cluster.
+Each cluster is a different temporal behaviour, and each cluster will consist of lines which will fit to varying degrees to each temporal behaviour. Colours of the lines will represent how well a particular pathway
+fits into a temporal behviour.
+
+Red lines fit very well, orange lines fit fairly well, yellow lines  somewhat fit and purple lines do not fit well.
 
 Note. After using quickFuzz you may want to clear plots as there could be
-visual defects if one attempts to create new plots.
+visual defects in future plots.
 
-###Examine clusters of interest
+###: Examine clusters of interest
 
-```{r warning=FALSE, message=FALSE}
+```{r retrun cluster 1, warning=FALSE, message=FALSE}
 MAE2 <- returnCluster(MAE2, clusterData = assay(MAE2, 6),
                      whichCluster = 1, fitCluster = 0.4)
 ```
 
-### Take Selected Pathways Forward
+##: Take Selected Pathways Forward
 
 ```{r diffExpressRes, warning=FALSE, message=FALSE}
 MAE2 <- diffExpressRes(MAE = MAE2, df = assay(MAE, 1), dataType = "Log2FC",
@@ -387,15 +402,13 @@ from a `getIDs` function. It is recommend to use Log2FC or normalised
 expression values here as these values will be averaged.
 
 The `idColumn` refers to which column on the `miR/mRNA_entrez` or
-`miR/mRNA_ensembl` contains the gene names. If the user has not renamed the
-columns they should keep this as `GENENAME`. Add a `name` to differentiate
-the results from `diffExpressRes`. Objects within MAEs should not share the same name.
+`miR/mRNA_ensembl` containing the gene names. If the user has not renamed the columns they should keep this as `GENENAME`. Add a `name` to differentiate the results from `diffExpressRes`. Objects within MAEs should not share the same name.
 
 Note. There should be no NA values in any results from `diffExpressRes`.
 
-#### Find Genes in the Pathways of Interest and the Input mRNA Data
+###:Find Genes in the Pathways of Interest and the Input mRNA Data
 
-```{r wikiMrna, warning=FALSE, message=FALSE}
+```{r mRNAs of interest, warning=FALSE, message=FALSE}
 MAE2 <- reduceWiki(MAE = MAE2, path_data = assay(MAE2, 3),
                    stringWiki = 'Complement and Coagulation Cascades')
 
@@ -407,9 +420,9 @@ MAE2 <- wikiMrna(MAE2, mRNA_express = assay(MAE2, 10),
 Now we can identify which genes from the Complement and Coagulation Cascades
 pathway are in common with our input data.
 
-### Create Correlation Matrix
+##: Create Correlation Matrix
 
-```{r Correlation, warning=FALSE, message=FALSE}
+```{r Correlation matrix, warning=FALSE, message=FALSE}
 MAE3 <- MultiAssayExperiment()
 
 MAE3 <- mirMrnaInt(MAE = MAE3,
@@ -424,7 +437,7 @@ interaction between the GenesofInterest and all the input miRs.
 The `maxInt` parameter must be equal the number of time points your
 miR and mRNA data have.
 
-### Download miR-mRNA Interaction Database Data
+##: Download miR-mRNA Interaction Database Data
 
 TargetScans v7.2, miRDB v6.0 and miRtarBase v7.0 [8-10] can be used to
 determine which of the potential miR-mRNA interactions have been predicted/
@@ -433,64 +446,55 @@ functionally validated.
 The following code will download the latest versions of the data sets
 and format them for database mining.
 
-Note. Due to unforseen circumstances the servers for miRTarBase are down,
-instead the mouse or human interactions can directly be loaded from `TimiRGeN` using the code below.
-
 For human analysis use `"hsa"` and `org.Hs.eg.db`.
 
-```{r Targetscans data, message=FALSE, warning=FALSE, eval=FALSE}
-MAE3 <- dloadTargetscan(MAE = MAE3)
+```{r miR-mRNA interaction databases, message=FALSE, warning=FALSE, eval=FALSE}
+MAE3 <- dloadTargetscan(MAE = MAE3, species="mmu")
 
-MAE3 <- targetscanData(MAE = MAE3,
-                       targetScan = assay(MAE3, 2),
-                       species = "mmu")
 
-MAE3 <- dloadMirdb(MAE = MAE3)
+MAE3 <- dloadMirdb(MAE = MAE3, species="mmu", orgDB = org.Mm.eg.db)
 
-MAE3 <- mirdbData(MAE = MAE3,
-                  mirdb = assay(MAE3, 4),
-                  species = "mmu",
-                  orgDB = org.Mm.eg.db)
 
-MAE3 <- dloadMirtarbase(MAE = MAE3)
-
-MAE3 <- mirtarbaseData(MAE = MAE3, 
-                       mirtarbase = assay(MAE3, 6), 
-                       species = "mmu")
+MAE3 <- dloadMirtarbase(MAE = MAE3, species="mmu")
 ```
 
-### Mine Predicted or Funtionally Assessed miR-mRNA Interactions
+##: Mine Predicted or Funtionally Assessed miR-mRNA Interactions
 
-```{r Datamining_show, message=FALSE, warning=FALSE, eval=FALSE}
+```{r Data mining show, message=FALSE, warning=FALSE, eval=FALSE}
 MAE3 <- dataMiningMatrix(MAE = MAE3, corrTable = assay(MAE3, 1),
-                         targetscan = assay(MAE3, 3),
-                         mirdb = assay(MAE3, 5),
-                         mirtarbase = assay(MAE3, 7))
+                         targetscan = assay(MAE3, 2),
+                         mirdb = assay(MAE3, 3),
+                         mirtarbase = assay(MAE3, 4))
 ```
 
-```{r Datamining_working, echo=FALSE}
-Int_data <- Int_data
+```{r Datamining working, echo=FALSE}
+# Because the dload functions could not be performed in vignette building, 
+# Int_data is included.
+
+load("../inst/extdata/Int_data.rda")
 
 X <- MultiAssayExperiment(list(MiningMatrix = Int_data))
 
 MAE3 <- c(MAE3, X)
 ```
 
-The `dataMiningMatrix` will find identify if any of the potential
-interactions from the `Corr_matrix` are predicted/ functionally assessed, and
-display this as intergers.
+The `dataMiningMatrix` will identify if any of the potential
+interactions from the `Corr_matrix` are predicted/ functionally assessed, and display this as integers.
 
-#### Filter Out miR-mRNA Interactions Based on Evidence
+###: Filter Out miR-mRNA Interactions Based on Evidence
 
-```{r matrixFilter_copy, warning=FALSE, message=FALSE, eval=FALSE}
-MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 8),
+```{r matrixFilter show, warning=FALSE, message=FALSE, eval=FALSE}
+MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 5),
                      negativeOnly = TRUE,
                      predictedOnly = FALSE,
                      threshold = 2,
                      maxCor = 0.5)
 ```
 
-```{r matrixFilter_working, warning=FALSE, message=FALSE, echo=FALSE}
+```{r matrixFilter working, warning=FALSE, message=FALSE, echo=FALSE}
+# Because dload functions are not evaluated, assay(MAE3, 5) should be
+# assay(MAE3, 2).
+
 MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 2),
                      negativeOnly = TRUE,
                      predictedOnly = FALSE,
@@ -507,10 +511,10 @@ average correlation.
 where the interactions are identified.
 `PredictedOnly` being TRUE will ignore interactions found on miRTarBase.
 
-### Create Internal R Networks
+##: Create Internal R Networks
 
 ```{r CreateNetwork, message=FALSE, warning=FALSE, eval=FALSE}
-MAE3 <- makeNet(MAE = MAE3, filt_df = assay(MAE3, 9))
+MAE3 <- makeNet(MAE = MAE3, filt_df = assay(MAE3, 6))
 
 quickNet(net = metadata(MAE3)[[1]])
 ```
@@ -529,81 +533,78 @@ hand side.
 Note. Having many interactions will be very difficult to see in R and
 we recommend exporting to Cytoscape in these cases.
 
-### Output for Pathvisio
+Note. Filtered miR-mRNA interactions must consist of at least 2 miR-mRNA interactions of this plot will not work.
 
-```{r MakeOutputforPathvisio_copy, eval=FALSE}
+##: Output for Pathvisio
+
+```{r Make Output for Pathvisio show, eval=FALSE}
 MAE3 <- makeMapp(MAE3,
-                 filt_df = assay(MAE3, 9),
+                 filt_df = assay(MAE3, 6),
                  miR_IDs_adj = assay(MAE, 5),
                  dataType = 'L')
 
 MAE3 <- makeDynamic(MAE = MAE3,
-                    miR_expression = assay(MAE2, 10),
-                    mRNA_expression = assay(MAE2, 9),
+                    miR_expression = assay(MAE2, 9),
+                    mRNA_expression = assay(MAE2, 10),
                     miR_IDs_adj = assay(MAE, 5),
                     dataType = 'L')
 ```
 
-```{r MakeOutputforPathvisio_working, echo=FALSE}
+```{r Make Output for Pathvisio working, echo=FALSE}
+# Because dload functions will not work in bioconductor vignette building, 
+# assay(MAE3, 6) should actually be assay(MAE3, 3). 
+
 MAE3 <- makeMapp(MAE3, filt_df = assay(MAE3, 3),
                  miR_IDs_adj = assay(MAE, 5),
                  dataType = 'L')
 
 MAE3 <- makeDynamic(MAE = MAE3,
-                    miR_expression = assay(MAE2, 10),
-                   mRNA_expression = assay(MAE2, 9),
+                    miR_expression = assay(MAE2, 9),
+                   mRNA_expression = assay(MAE2, 10),
                    miR_IDs_adj = assay(MAE, 5),
                    dataType = 'L')
 ```
 
 
-```{r writeout, eval=FALSE}
-write.table(assay(MAE3, 10), "MAPP.txt", quote = FALSE,
+```{r write out, eval=FALSE}
+write.table(assay(MAE3, 7), "MAPP.txt", quote = FALSE,
             row.names = FALSE, col.names = FALSE,
             sep = "\t")
 
-write.csv(assay(MAE3, 11), "Dynamics.csv", row.names = TRUE,
+write.csv(assay(MAE3, 8), "Dynamics.csv", row.names = TRUE,
           quote = FALSE)
 ```
 
 
 TimiRGeN creates two types of files which can be imported by
-pathvisio [12]. Firstly, Dynamic data which can be imported as an expression data set to
-visualise the changes that occur to the pathway along the time course.
-Next MAPP data which contains miR information can be imported into pathvisio
-via the MAPPbuilder apps. This will allow all the miRs to be imported at once.
-From here some manual adjustments are necessary to create dynamic miR
-integrated signalling pathways.
+pathvisio [12]. Firstly, MAPP data which contains miR information can be imported into pathvisio via the [MAPPbuilder](https://pathvisio.github.io/plugins/plugins-repo) app. This will allow all the miRs to be imported at once. From here some manual adjustments are necessary to create dynamic miR integrated signalling pathways. Next is the Dynamic data which can be imported as an expression data set to visualise the changes that occur to the pathway along the time course.
 
 Please follow the instructions in the 'inst/Pathvisio_GRN_guide.pdf'
 for our method for GRN construction. If any ENTREZ/ ENSEMBL IDs are missing,
 it is recommended to annotate them manually in the MAPP and Dynamics
 files before importing them into Pathvisio. It is recommend going through
-Pathvisio tutorials for better usage of the network visualisation tool.
+Pathvisio [tutorials](https://pathvisio.github.io/tutorials) for better usage of the network visualisation tool.
 
 Ultimately, this allows a user can go from having potentially millions of
 miR-mRNA interactions to a handful in a short amount of time.
 
-### Output for Cytoscape
+##: Output for Cytoscape
 
 ```{r cytoscape, message=FALSE, warning=FALSE, eval=FALSE}
 cytoscapePing()
 
-cytoMake(assay(MAE3, 9),
+cytoMake(assay(MAE3, 6),
          titleString = 'Complement+Coagulation',
          collectionString = 'PathwaysforKidneyFibrosis')
 ```
 
 The internal R network can be exported to Cytoscape [11] by using functions
-from RCy3 [5]. TimiRGeN has wrapped around several of these functions to make
-this process quicker. This will be useful if too many miR-mRNA
-interactions have been found and the internal R graphics may not do well at
-handling this.
+from RCy3 [5]. TimiRGeN has wrapped around several of these functions to make this process quicker. This will be useful if many miR-mRNA
+interactions have been found and the igraph graphics cannot cope with this.
 
-Make sure Cytoscape version 3.7 or newer is opened,
-and check for connection using `cytoscapePing()`.
+Make sure Cytoscape version 3.7 or newer is opened, and check for connection using `cytoscapePing()`.
 
-#: Time Series miR-mRNA Separated Analaysis on Human data using Ensembl Gene IDs
+#: Separated miR-mRNA Analysis
 
 TimiRGeN also offers the option of analysing the miR and mRNA data separately.
 Many of the functions are similar but we use the `"s"` mode for some functions,
@@ -611,15 +612,17 @@ rather than the `"c"` mode.
 
 To go through this we are using Breast Cancer Hypoxia data from
 [Cramps et al (2014)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3928101/)
-[27].
+[26].
 
-###Load Data
+##: Load Data
 
 ```{r loadhuman, message=FALSE, warning=FALSE}
 library(org.Hs.eg.db)
 
 miR <- hs_miR
+
 rownames(miR) <- gsub(rownames(miR), pattern = "\\.", replacement = "-")
+
 rownames(miR) <- sub("-$", "*", rownames(miR))
 ```
 
@@ -628,23 +631,17 @@ conventions. As mentioned above the time point
 should be the first part of each column name and the result type from
 differential expression analysis e.g. Log2FC, adjPVal or AveEXP should be
 the second part of the column name. These two parts must be separated by a
-'.', which can be the only '.' in the column name string.
+`.`, which can be the only `.` in the column name string.
 
-Furthermore there should be no '_' characters in the column names.
+Furthermore there should be no `_` characters in the column names.
 Acceptable names: D1.log2fc, TNFA.ajdpval, TP8.zscore ect.
 Not Acceptable names: D.1.log2fc, TNFA_adjpval, TP8zscore.
 
 For microRNAs (because naming conventions vary quite a bit),
 TimiRGeN uses it's own naming convention which must be adhered to.
-'-' should separate parts of the microRNA name e.g.
-mmu-miR-140, mmu-miR-140-5p, hsa-let-7a.
-The miR data we just loaded from the breast cancer data set uses '.'
-instead of '-' in it's rownames. Depending on your own data, you may have to
-change the nomenclature to run it through TimiRGeN, like what is done above.
+A `-` should separate parts of the microRNA name e.g. mmu-miR-140, mmu-miR-140-5p, hsa-let-7a. The miR data we just loaded  is from a breast cancer data set uses `.` instead of `-` in it's rownames. Depending on your own data, you may have to change the nomenclature to run it through TimiRGeN, like what is done above.
 
-Some miR data will have a '.' at the end of the genenames because there are
-multiple transcripts with the same name. It is best to keep these extra genes.
-I prefer to replace the final '.' with a '*' symbol to make this more obvious.
+Some miR data will have a `.` at the end of the gene names because there can be multiple transcripts with the same name. It is best to keep these extra genes. I prefer to replace the final `.` with a `*` symbol to make this more obvious.
 
 ```{r loadmRNA, message=FALSE, warning=FALSE}
 mRNA <- hs_mRNA
@@ -653,10 +650,10 @@ MAE <- startObject(miR, mRNA)
 
 MAE <- getIdsMirHuman(MAE = MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2))
+MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2), mirror = 'www')
 ```
 
-###Differentiate Data
+##: Differentiate Data
 
 ```{r addPrefix, message=FALSE, warning=FALSE}
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
@@ -667,10 +664,9 @@ MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
 ```
 
 `addPrefix` function will allow the miR and mRNA data to be looked at
-separately. Add a unique distinct `prefixString` to each data type
-to do this. This must be used for `"s"` analysis.
+separately. Add a unique `prefixString` to each gene type to do this. This must be used for `"s"` analysis.
 
-###Find Significantly Differentially Expressed Genes per Timepoint
+##: Find Significantly Differentially Expressed Genes per Timepoint
 
 ```{r siggenes, warning=FALSE, message=FALSE}
 MAE <- genesList(MAE = MAE, method = 's',
@@ -682,7 +678,7 @@ MAE <- significantVals(MAE = MAE, method = 's',
                        maxVal = 0.05, stringVal = "adjPVal")
 ```
 
-###Get Significantly Differentially Expressed Gene IDs
+##: Get Significantly Differentially Expressed Gene IDs
 
 ```{r getensemblids, warning=FALSE, message=FALSE}
 MAE <- addIds(MAE = MAE, method = 's',
@@ -695,29 +691,38 @@ MAE <- eNames(MAE = MAE, method = 's',
               ID_Column = 4)
 ```
 
-### GSEA Method on Separated Data
-
-```{r hsdloadGmt_working, echo=FALSE}
-MAE2 <- hs_gmt
-```
+##: GSEA Method on Separated Data
 
 Here we use ensembl data instead of entrezgene ID. Use the `gmtEnsembl` function to get ensembl ID curated wikipathways data.
 
-```{r hsdloadGmt_show, eval=FALSE, message=FALSE, warning=FALSE}
+```{r hs dloadGmt show, eval=FALSE, message=FALSE, warning=FALSE}
 MAE2 <- MultiAssayExperiment()
 
 MAE2 <- dloadGmt(MAE = MAE2, speciesInitials = "Hs")
+```
 
+```{r convert to ensembl, eval=FALSE, message=FALSE, warning=FALSE}
 MAE2 <- gmtEnsembl(MAE = MAE2, path_gene = assay(MAE2, 1),
                     path_data = assay(MAE2, 3),
                     orgDB = org.Hs.eg.db)
 ```
 
+```{r hs dloadGmt working, echo=FALSE}
+# dloadGmt failed on bioconductor vignette build so hs_gmt is added instead
+# hs_gmt contains the MAE that would have been produced by gmtEnsembl.
+load(file = "../inst/extdata/hs_gmt.rda")
+MAE2 <- hs_gmt
+```
+
+
+
 ```{r message=FALSE, warning=FALSE}
 MAE2 <- enrichWiki(MAE = MAE2, method = 's',
                    ID_list = metadata(MAE)[[4]],
-                   orgDB = org.Hs.eg.db, path_gene = assay(MAE2, 4),
-                   path_name = assay(MAE2, 2), ID = 'ENSEMBL',
+                   orgDB = org.Hs.eg.db, 
+                   path_gene = assay(MAE2, 4),
+                   path_name = assay(MAE2, 2), 
+                   ID = 'ENSEMBL',
                    universe = assay(MAE2, 4)[[2]])
 
 ```
@@ -727,18 +732,22 @@ enrichment will fail. This occurs often with microRNA data since not
 many pathways have microRNAs within them. If this occurs, stick to `"c"` method
 for miR-mRNA GSEA analysis.
 
-###Temporal clustering Method on Separated Data
+##: Temporal clustering Method on Separated Data
 
-```{r echo=FALSE}
-metadata(MAE2)[['wikilist']] <- w_list_human
-```
-
-```{r eval=FALSE}
+```{r human wikiList show, eval=FALSE}
 MAE2 <- wikiList(MAE = MAE2, stringSpecies = "Homo sapiens",
                  stringSymbol = "En")
 ```
 
-```{r warning=FALSE, message=FALSE}
+```{r human wikiList working, echo=FALSE}
+# Loading w_list_human instead to speed up vignette building
+
+load("../inst/extdata/w_list_human.rda")
+
+metadata(MAE2)[['wikilist']] <- w_list_human
+```
+
+```{r create_percent_matrix, warning=FALSE, message=FALSE}
 MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
                    wp_list = metadata(MAE2)[[2]])
 
@@ -749,7 +758,7 @@ MAE2 <- turnPercent(MAE = MAE2, wikiMatrix = assay(MAE2, 6),
 Insert `miR` or `mRNA` as `Data_string` for createClusters. If another prefix
 was added with `addPrefix`, then add that.
 
-```{r warning=FALSE, message=FALSE, eval=FALSE}
+```{r ensembl human clusters show, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- createClusters(MAE = MAE2, method = "s",
                        dataString = "mRNA",
                        percentMatrix = assay(MAE2, 7),
@@ -769,7 +778,7 @@ MAE2 <- returnCluster(MAE2, clusterData = assay(MAE2, 8),
 ```
 
 
-#: Analysing Only mRNA or miR Data
+#: Only mRNA data
 
 If only mRNA or miR data is available, this can also be put through
 TimiRGeN for time course analysis.
@@ -779,18 +788,21 @@ miRs are annotated within signalling pathways.
 
 Note. Conditional data should work here, just as well as time series data sets.
 
-```{r message=FALSE, warning=FALSE}
+```{r mRNA only, message=FALSE, warning=FALSE}
 mRNA <- mm_mRNA
 
 
 Data <- startObject(miR = NULL, mRNA = mRNA)
 
 
-Data <- getIdsMrnaMouse(MAE = Data, mRNA = assay(Data, 2),
-                          mirror = 'useast')
+Data <- getIdsMrnaMouse(MAE = Data, 
+                        mRNA = assay(Data, 2),
+                        mirror = 'www')
 
 
-Data <- genesList(Data, method = 'c', genetic_data = assay(Data, 2),
+Data <- genesList(Data, 
+                  method = 'c',
+                  genetic_data = assay(Data, 2),
                   timeString = 'D')
 
 
@@ -806,17 +818,20 @@ Data <- addIds(MAE = Data, method = 'c',
                mRNA_IDs = assay(Data, 3))
 
 
-Data <- eNames(MAE = Data, method = 'c', gene_IDs = metadata(Data)[[3]],
+Data <- eNames(MAE = Data, method = 'c', 
+               gene_IDs = metadata(Data)[[3]],
                ID_Column = 4)
 ```
 
-```{r mRNAonlydloadGmt_show, eval=FALSE}
+```{r mRNA only dloadGmt show, eval=FALSE}
 Data2 <- MultiAssayExperiment()
 
 Data2 <- dloadGmt(MAE = Data2, speciesInitials = "Mm")
 ```
 
-```{r mRNAonlydloadGmt_working, message=FALSE, warning=FALSE, echo=FALSE}
+```{r mRNA only dloadGmt working, message=FALSE, warning=FALSE, echo=FALSE}
+# dloadGmt failed on bioconductor vignette build so mm_gmt is added instead
+load(file = "../inst/extdata/mm_gmt.rda")
 Data2 <- mm_gmt
 ```
 
@@ -879,29 +894,26 @@ programming tools”. In: R package version 3.1 (2014).
 ()andgather ()functions”. In: R package version 0.6 1 (2017).
 17. Hadley Wickham. “stringr: Make it easier to work with strings”. In: R
 package version 0.6 2 (2012), pp. 96–7.
-18. Hadley Wickham. “The tidyverse”. In: R package ver. 1.1 1 (2017).
-19. Hadley Wickham. ggplot2: elegant graphics for data analysis. Springer 2016.
-20. Carlson M (2019). org.Hs.eg.db: Genome wide annotation for Human. R package
+18. Hadley Wickham. ggplot2: elegant graphics for data analysis. Springer 2016.
+19. Carlson M (2019). org.Hs.eg.db: Genome wide annotation for Human. R package
 version 3.8.2.
-21. Carlson M (2019). org.Mmu.eg.db: Genome wide annotation for Rhesus. R
+20. Carlson M (2019). org.Mmu.eg.db: Genome wide annotation for Rhesus. R
 package version 3.8.2.
-22. Claus Thorn Ekstrom. R Primer. Chapman and Hall/CRC, 2019.
-23. Ramos M, Schiffer L, Re A, Azhar R, Basunia A, Cabrera CR, Chan T, Chapman
+21. Claus Thorn Ekstrom. R Primer. Chapman and Hall/CRC, 2019.
+22. Ramos M, Schiffer L, Re A, Azhar R, Basunia A, Cabrera CR, Chan T, Chapman
 P, Davis S, Gomez-Cabrero D, Culhane AC, Haibe-Kains B, Hansen K, Kodali H,
 Louis MS, Mer AS, Reister M, Morgan M, Carey V, Waldron L (2017). “
 Software For The Integration Of Multi-Omics Experiments In Bioconductor.”
 Cancer Research, 77(21); e39-42.
-24. Florin L Craciun et al. “RNA sequencing identifies novel translational
+23. Florin L Craciun et al. “RNA sequencing identifies novel translational
 biomarkers of kidney fibrosis”. In: Journal of the American Society of
 Nephrology 27.6 (2016), pp. 1702–1713.
-25. Kathryn L Pellegrini et al. “Application of small RNA sequencing to iden-
+24. Kathryn L Pellegrini et al. “Application of small RNA sequencing to iden-
 tify microRNAs in acute kidney injury and fibrosis”. In: Toxicology and
 applied pharmacology 312 (2016), pp. 42–52.
-26. Matthias E Futschik and Lokesh Kumar. “Introduction to Mfuzz package
+25. Matthias E Futschik and Lokesh Kumar. “Introduction to Mfuzz package
 and its graphical user interface”. In: (2013).
-27. Carme Camps et al. “Integrated analysis of microRNA and mRNA expres-
+26. Carme Camps et al. “Integrated analysis of microRNA and mRNA expres-
 sion and association with HIF binding reveals the complexity of microRNA
 expression regulation under hypoxia”. In: Molecular cancer 13.1 (2014),
 p. 28.
-28. Maria Warnefors et al. “Conserved microRNA editing in mammalian evo-
-lution, development and disease”. In: Genome biology 15.6 (2014), R83.

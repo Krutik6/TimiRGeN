@@ -53,7 +53,7 @@ L2 <- lapply(L1, function(DF) {rownames(DF) <- rownames(assay(MAE, 1)); DF})
 #check 4
 #nested DFs in L2 have the same rownames as genetic_data
 test_that("Dfs in L2 have the same rownames as in genetic_data", {
-    lapply(L2, function(x) { rownames(x)}) -> a
+    a <- lapply(L2, function(x) { rownames(x)})
     for (i in 1:5) {
         expect_equal(as.character(unlist(a[i])), as.character(rownames(G)))
     }

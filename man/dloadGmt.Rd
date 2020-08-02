@@ -7,24 +7,30 @@
 dloadGmt(MAE, speciesInitials = "")
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment to store downlaoded GMT data in.}
+\item{MAE}{MultiAssayExperiment to store downloaded GMT data in. It might
+be useful to start a new MAE for dloadGmt using MultiAssayExperiment(). This
+is so the MAE objects used in this analysis do not get too large.}
 
-\item{speciesInitials}{Either Hs or Mm, respectively to retreive Homo
+\item{speciesInitials}{Either "Hs" or "Mm", respectively to retrieve Homo
 sapiens or Mus musculus data.}
 }
 \value{
-3 dataframes. 1) path_gene 2) path_namees 3) path_data.
-All of which can be stored in an MAE.
+3 dataframes. 1) path_gene 2) path_names 3) path_data.
+All of which will be stored in the input MAE, in the assay section.
 }
 \description{
-Provides mouse or human wikipathway information.
+Provides mouse or human wikipathway information. This data is
+downloaded from http://data.wikipathways.org/20200110/gmt/. This will be
+stored as three distinct data frames within a MAE object
+1) path_gene 2) path_names 3) path_data. It is recommended that the
+user creates a new MAE object to avoid MAE objects getting too large.
 }
 \examples{
 miR <- mm_miR
 
 mRNA <- mm_mRNA
 
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- MultiAssayExperiment()
 
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 }

@@ -27,45 +27,28 @@ test_that("last 5 columns are numerics", {
 }
 })
 #internal checks
-df2 <- assay(MAE, 4) %>% mutate(TargetScan = as.integer(
-                        rownames(assay(MAE, 4)) %in% assay(MAE, 1)[[1]]))
+X <- assay(MAE, 4)
 
-rownames(df2) <- rownames(assay(MAE, 4))
+X$Pred_Fun <- X$miRTarBase <- X$Pred_only <- X$miRDB <-
+             X$TargetScan <-numeric(nrow(X))
 
-df3 <-df2 %>% mutate(miRDB = as.integer(rownames(df2) %in% assay(MAE, 2)[[1]]))
+X$TargetScan <- as.integer(rownames(X) %in% assay(MAE, 1)[1])
 
-rownames(df3) <- rownames(assay(MAE, 4))
 
-df4 <- df3 %>% mutate(Predicted_Interactions = TargetScan + miRDB)
+X$miRDB <- as.integer(rownames(X) %in% assay(MAE, 2)[1])
 
-rownames(df4) <- rownames(assay(MAE, 4))
+X$Pred_only <- X$TargetScan + X$miRDB
 
-df5 <- df4 %>% mutate(miRTarBase = as.integer(
-               rownames(df4) %in% assay(MAE, 3)[[1]]))
+X$miRTarBase <- as.integer(rownames(X) %in% assay(MAE, 3)[1])
 
-rownames(df5) <- rownames(assay(MAE, 4))
-
-df6 <- df5 %>% mutate(Pred_Fun = Predicted_Interactions + miRTarBase)
-
-rownames(df6) <- rownames(assay(MAE, 4))
+X$Pred_Fun <- X$Pred_only + X$miRTarBase
 
 #check 2
-#dfs should have increasing numbers of columns
-test_that("there are increasing numbers of columns", {
-    expect_gt(length(names(df2)), length(names(assay(MAE, 4))))
-    expect_gt(length(names(df3)), length(names(df2)))
-    expect_gt(length(names(df4)), length(names(df3)))
-    expect_gt(length(names(df5)), length(names(df4)))
-    expect_gt(length(names(df6)), length(names(df5)))
-    expect_equal(length(names(df6)),10)
-})
-
-#check 3
 #outcomes should be the same
 test_that("functional and manual output is the same", {
-    expect_equal(rownames(df6), rownames(assay(MAE, 5)))
-    expect_equal(colnames(df6), colnames(assay(MAE, 5)))
+    expect_equal(rownames(X), rownames(assay(MAE, 5)))
+    expect_equal(colnames(X), colnames(assay(MAE, 5)))
 })
 
 #save data
-saveRDS(df6, "MiningMatrix.rds", compress = "xz")
+saveRDS(X, "MiningMatrix.rds", compress = "xz")

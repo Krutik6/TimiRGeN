@@ -7,22 +7,38 @@
 dataMiningMatrix(MAE, corrTable, targetscan , mirdb, mirtarbase)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment.}
+\item{MAE}{MultiAssayExperiment which will have the output of
+dataMiningMatrix stored within it. It is recommended to use the MAE object
+which stores output from mirMrnaInt.}
 
 \item{corrTable}{Correlation matrix between the mRNAs from the
-pathway of interest and miRNA data.}
+pathway of interest and miRNA data. This is created by the mirMrnaInt
+function and should be stored within the MAE used in the mirMrnaInt function.}
 
-\item{targetscan}{Targetscans predicted interactions.}
+\item{targetscan}{Species specific targetscan predicted miR-mRNA
+interactions. This is the output from the dloadTargetscan function.
+It should be stored as an assay within the MAE used in the dloadTargetscan
+function. If this data cannot be downloaded, dataMiningMatrix can be run
+without it.}
 
-\item{mirdb}{miRDB predcited interactions.}
+\item{mirdb}{Species specific miRDB predicted miR-mRNA interactions.
+This is the output from the dloadMirdb function. It should
+stored as an assay within the MAE used in the dloadMirdb function. If
+this data cannot be downloaded, dataMiningMatrix can be run without it.}
 
-\item{mirtarbase}{miRTarBase functional interactions.}
+\item{mirtarbase}{Species specific miRTarBase functional miR-mRNA
+interactions. This is the output from the dloadMirtarbase function, it should
+be stored as an assay within the MAE used in the dloadMirtarbase function.
+If this data cannot be downloaded, dataMiningMatrix can be run without it.}
 }
 \value{
-A matrix of information which cross references the occurances of
+A matrix which cross references the occurrences of
 microRNA-mRNA interactions between databases and the given data.
 }
 \description{
 Mines out predicted/ functional interactions which correspond
 between Targetscans, miRDB, miRTarBase and the interactions data frame.
+Resulting dataframe will be stored as an assay in a MAE object. If a
+database cannot be downloaded, dataMiningMatrix can be used regardless, but
+it is recommended to download all three databases.
 }

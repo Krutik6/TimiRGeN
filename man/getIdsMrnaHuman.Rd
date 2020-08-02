@@ -7,10 +7,12 @@
 getIdsMrnaHuman(MAE, mRNA, mirror)
 }
 \arguments{
-\item{MAE}{MultiAssayObject created by StartObject}
+\item{MAE}{MultiAssayExperiment to store the output of getIdsMrnaHuman.
+It is recommended to use the MAE which contains output from startObject.}
 
-\item{mRNA}{Dataframe. Rownames should be genenames and colnames should
-be results from DE and time points.}
+\item{mRNA}{A Dataframe. Rownames are genes and columns are results of DE.
+This should be found as an assay within the MAE used in the startObject
+function. Please read vignette for nomenclature guidance.}
 
 \item{mirror}{String to identify which biomaRt repo is best for the users
 locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
@@ -20,8 +22,8 @@ locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
 ensembl information.
 }
 \description{
-getIDs_miR_human will produce ensembl and entrez data
-for human mRNAs.
+getIdsMrnaHuman will produce ensembl and entrez data for
+human mRNAs.These will be stored as 2 individual assays within a MAE.
 }
 \examples{
 mRNA <- mm_mRNA
@@ -30,5 +32,5 @@ mRNA <- mRNA[1:20,]
 
 MAE <- startObject(miR = NULL, mRNA = mRNA)
 
-MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
+MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'www')
 }

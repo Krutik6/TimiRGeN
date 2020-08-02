@@ -5,18 +5,23 @@
 \description{
 Differential expression from Human breast cancer cells (MCF-7).
 Normoxic conditions contrasted against 16H, 32H and 48H under hypoxia
-mRNA data. Only 2000 genes have been kept in this file for speed and size.
+mRNA data. Data was put though limma for DE. hs_mRNA only has DE results from 2000 mRNA genes for speed and size optimisation.
+
+Column names are in the following format:timepoint(hours).DEresult (logFC or adjPVal).
 }
 \usage{data("hs_mRNA")}
 \format{
-A data frame with 2000 observations on the following 6 variables.
+A data frame of mRNAs put through differential expression with 2000 observations on the following 6 variables.
 \describe{
-\item{\code{H16.logFC}}{a numeric vector}
-\item{\code{H16.adjPVal}}{a numeric vector}
-\item{\code{H32.logFC}}{a numeric vector}
-\item{\code{H32.adjPVal}}{a numeric vector}
-\item{\code{H48.logFC}}{a numeric vector}
-\item{\code{H48.adjPVal}}{a numeric vector}
+\item{\code{H16.logFC}}{a numeric vector containing log2FC values of
+Hypoxia_16_hours/ Normoxic conditions.}
+\item{\code{H16.adjPVal}}{a numeric vector containing adjusted P values values of Hypoxia_16_hours/ Normoxic conditions.}
+\item{\code{H32.logFC}}{a numeric vector containing log2FC values of
+Hypoxia_32_hours/ Normoxic conditions.}
+\item{\code{H32.adjPVal}}{a numeric vector containing adjusted P values values of Hypoxia_32_hours/ Normoxic conditions}
+\item{\code{H48.logFC}}{a numeric vector containing log2FC values of
+Hypoxia_48_hours/ Normoxic conditions.}
+\item{\code{H48.adjPVal}}{a numeric vector containing adjusted P values values of Hypoxia_48_hours/ Normoxic conditions}
 }
 }
 \source{

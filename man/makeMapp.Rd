@@ -7,22 +7,32 @@
 makeMapp(MAE, filt_df, miR_IDs_adj, dataType = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment object to store the output of makeMapp. It
+is recommended to use the same MAE object which stores the results from
+matrixFilter.}
 
-\item{filt_df}{Dataframe of mined microRNA-mRNA interactions.}
+\item{filt_df}{Dataframe of mined microRNA-mRNA interactions. This is output
+of matrixFilter. It should be stored as an assay in the MAE used in the
+matrixFilter function.}
 
-\item{miR_IDs_adj}{miR_adjusted_entrez or miR_adjusted_ensembl.}
+\item{miR_IDs_adj}{Dataframes with adjusted gene IDs to account for -5p and
+-3p specific miRs. miR_adjusted_entrez or miR_adjusted_ensembl. Should be
+found as an assay in the MAE used a getIdsMir function.}
 
-\item{dataType}{L for entrez or En for ensembl.}
+\item{dataType}{String which represents the gene ID used in this analysis.
+Either "En" (ensembl data) or "L" (entrez data).}
 }
 \value{
-A dataframe which should be saved as a text file for import into
-pathvisio.
+A dataframe containing microRNA and adjusted gene ID information
+which should be saved as a text file for import into pathvisio via the MAPP
+app.
 }
 \description{
-Create input for the MAPP plugin in pathvisio. Follow vignette
-instructions on how to save this file and further instructions found in the
-/inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
+Creates input for the MAPP plugin in pathvisio. This will
+help to add the filtered miRNAs to the wikipathway of interest.
+Follow vignette instructions on how to save this file and further
+instructions found in /inst/Pathvisio_GRN_guide.pdf to see how
+this can help in GRN construction.
 }
 \examples{
 library(org.Mm.eg.db)

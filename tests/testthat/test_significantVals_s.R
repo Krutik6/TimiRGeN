@@ -14,8 +14,8 @@ MAE <- significantVals(MAE, method = 's',
 
 #check 1
 test_that("filtered is less than original", {
-    metadata(MAE)[[1]] -> a
-    metadata(MAE)[[2]] -> b
+    a <- metadata(MAE)[[1]]
+    b <- metadata(MAE)[[2]]
     expect_gt(length(a[[1]][[1]][[1]]),
               length(b[[1]][[1]][[1]]))
 })

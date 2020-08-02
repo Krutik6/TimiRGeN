@@ -7,25 +7,32 @@
 wikiMatrix(MAE, ID_list, wp_list)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment which will have the results of
+wikiMatrix stored  within it as an assay. It is recommended that the
+MAE object which stores output from the wikiList to be used here.}
 
-\item{ID_list}{list of gene names as strings.}
+\item{ID_list}{List of entrez gene IDs or ensembl gene IDs stored as strings.
+This is the output of the eNames function and is stored as metadata in the
+MAE used in the eNames function.}
 
-\item{wp_list}{list of list of wikipathways with gene names as strings.}
+\item{wp_list}{List of list containing wikipathways with entrez gene IDs or
+ensembl IDs as strings. This is the output of the wikiList function and can
+be found as metadata in the MAE used in the wikiList function.}
 }
 \value{
-A matrix of timepoints and wikipathways.
+A matrix of gene found in each time points for each wikipathways.
 }
 \description{
-Creates a matrix which shows how many genes from the data are
-found in each wikipathway for a specific species.
+Creates a matrix which shows how many genes from the input mRNA
+and miRNA data are found in each wikipathway for a specific species. The
+matrix is stored as an assay in a MAE.
 }
 \examples{
 MAE <- MultiAssayExperiment()
 
 metadata(MAE)[["ID_list"]] <- e_list
 
-metadata(MAE)[["w_list"]] <- w_list[1:10]
+metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])

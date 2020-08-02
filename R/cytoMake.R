@@ -1,13 +1,19 @@
 #' @title cytoMake
-#' @description Creates a cytoscape network based on the output of MatrixFilter.
+#' @description Creates a cytoscape network based on the output of matrixFilter.
 #'Requires cytoscapePing() to be used. Make sure Cytoscape is open first. Must
 #'be version 3.7 or later.
-#' @param interactionData Output from MatrixFiler.
-#' @param titleString Title of the network.
-#' @param collectionString Title of the collection fo networks.
-#' @return A network visible in cytoscape.
+#' @param interactionData Dataframe which contains filtered miR-mRNA
+#' interactions. This is output from matrixFilter and should be found as an
+#' assay within the MAE used in the matrixFilter function.
+#' @param titleString Title of the network. Enter a string which cytoscape
+#' will see as the graph name.
+#' @param collectionString Title of the collection of networks. Enter string
+#' which cytoscape will see as the collection name. Many differently titled
+#' graphs can be added to a single collection.
+#' @return A network visible in cytoscape version 3.7 or later.
 #' @export
 #' @importFrom RCy3 createNetworkFromDataFrames setVisualStyle layoutNetwork
+#' @importFrom RCy3 cytoscapePing
 #' @usage cytoMake(interactionData, titleString = '', collectionString = '')
 #' @examples
 #' \donttest{
@@ -39,8 +45,11 @@
 #' }
 cytoMake <- function(interactionData, titleString, collectionString){
 
-    if (missing(interactionData)) stop('Add filtered miR-mRNA dataframe from
-                                       matrixFilter function.')
+    if (missing(interactionData)) stop('Add filtered miR-mRNA dataframe. Please
+                                       use the matrixFilter function. Output
+                                       of the matrixFilter function should be
+                                       stored as an assay within the MAE used
+                                       in the matrixFilter function.')
 
     if (missing(titleString)) stop('Add title of network.')
 

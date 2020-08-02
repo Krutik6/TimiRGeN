@@ -4,19 +4,28 @@
 \title{Human microRNA data set}
 \description{
 Differential expression from Human breast cancer cells (MCF-7).
-Normoxic conditions contrasted against 16H, 32H and 48H under hypoxia.
-MicroRNA data.
+Normoxic conditions contrasted against 16H, 32H and 48H under hypoxia. Data was put though limma for DE. hs_miR consists DE results from 189 microRNAs.
+
+Column names are in the following format: timepoint(hours).DEresult (logFC or adjPVal).
+
+The miR names are not using in TimiRGeN friendly nomenclature. Gene names must be changed before use in TimiRGeN analysis. This must be changed before using TimiRGeN. miR gene name changing is explained in section 3.1 of the vignette.
 }
 \usage{data("hs_miR")}
 \format{
-A data frame with 189 observations on the following 6 variables.
+A data frame of miRNAs put through differential expression with 189 observations on the following 6 variables.
 \describe{
-\item{\code{H16.logFC}}{a numeric vector}
-\item{\code{H16.adjPVal}}{a numeric vector}
-\item{\code{H32.logFC}}{a numeric vector}
-\item{\code{H32.adjPVal}}{a numeric vector}
-\item{\code{H48.logFC}}{a numeric vector}
-\item{\code{H48.adjPVal}}{a numeric vector}
+\item{\code{H16.logFC}}{a numeric vector containing log2FC values of
+Hypoxia_16_hours/ Normoxic conditions.}
+\item{\code{H16.adjPVal}}{a numeric vector containing adjusted P values values
+of Hypoxia_16_hours/ Normoxic conditions.}
+\item{\code{H32.logFC}}{a numeric vector containing log2FC values of
+Hypoxia_32_hours/ Normoxic conditions.}
+\item{\code{H32.adjPVal}}{a numeric vector containing adjusted P values values
+of Hypoxia_32_hours/ Normoxic conditions}
+\item{\code{H48.logFC}}{a numeric vector containing log2FC values of
+Hypoxia_48_hours/ Normoxic conditions.}
+\item{\code{H48.adjPVal}}{a numeric vector containing adjusted P values values
+of Hypoxia_48_hours/ Normoxic conditions}
 }
 }
 \source{

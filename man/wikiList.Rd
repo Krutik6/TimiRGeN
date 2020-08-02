@@ -7,18 +7,25 @@
 wikiList(MAE, stringSpecies = '', stringSymbol = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment object which the results of wikiList is
+to be added. It is recommended to use the same MAE which stores data from
+dloadGmt.}
 
-\item{stringSpecies}{species wikipathways relate to e.g. 'Homo sapiens'}
+\item{stringSpecies}{Species name to decide which wikipathways to download.
+'Homo sapiens' to download human pathways or 'Mus musculus' to download
+mouse pathways.}
 
-\item{stringSymbol}{Type of gene code e.g. 'H', 'En', 'L'.}
+\item{stringSymbol}{Type of gene code e.g. 'H' for human gene names
+, 'En' for ensemble gene IDs , 'L' for entrezgene IDs.}
 }
 \value{
 List of wikipathways and associated genes as a list of strings.
 }
 \description{
 Provides a list of wikipathways and each gene found to be
-within that wikipathway as the value.
+within that wikipathway. This will be stored as metadata of a MAE. wikiList
+will download a large amount of data from the wikipathways website so this
+may take some time.
 }
 \examples{
 \donttest{

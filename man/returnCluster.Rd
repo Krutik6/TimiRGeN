@@ -7,14 +7,16 @@
 returnCluster(MAE, clusterData, whichCluster, fitCluster)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment. Results from returnCluster will
+be stored within this MAE. It is recommended to use the same MAE which
+stores output from createClusters.}
 
-\item{clusterData}{Output after CreateClusters. A list.}
+\item{clusterData}{A dataframe which contains cluster-pathway fit scores
+and is stored as an assay within the MAE used in the createClusters function.}
 
-\item{whichCluster}{Integer should correspond to the order of clusters
-displayed.}
+\item{whichCluster}{Integer should corresponds to the cluster of interest.}
 
-\item{fitCluster}{How well should the wikipathways fit into the this
+\item{fitCluster}{How well should the pathways fit into the this
 cluster? Integer from 0-1. Default is 0.99.}
 }
 \value{
@@ -23,14 +25,14 @@ dynamics seen in the selected cluster.
 }
 \description{
 Will retrieve information about which wikipathways fitted best
-with a specific cluster.
+with a specific cluster and store this as an assay within a MAE.
 }
 \examples{
 MAE <- MultiAssayExperiment()
 
 metadata(MAE)[["e_list"]] <- e_list
 
-metadata(MAE)[["w_list"]] <- w_list[1:10]
+metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])

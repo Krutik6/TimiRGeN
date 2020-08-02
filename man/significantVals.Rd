@@ -7,28 +7,33 @@
 significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment object. The output of significantVals will
+be added to this MAE object. It is recommended to use the MAE object
+created from genesList here.}
 
 \item{method}{Respectively either 'c' or 's' for combined or separated
 analysis.}
 
 \item{geneList}{A list of nested dataframes if 'c' or a list of lists
-with nested dataframes if 's'.}
+with nested dataframes if 's'. This will be the output from the
+genesList function. The resulting list will be found as metadata of
+the MAE used in the genesList function.}
 
-\item{maxVal}{Integer. Rows will be kept only if they are
-lower than this value.}
+\item{maxVal}{Numeric value which represents the maximum cut off value
+for significance e.g. 0.05.}
 
-\item{stringVal}{Character. Common resulttype in all nested
-dataframes which should be point of filtration e.g. pval, adjPval,
+\item{stringVal}{Character. Common DE result type in all nested
+dataframes which should be used for filtration e.g. pval, adjPval,
 qval. Make sure this matches the colnames.}
 }
 \value{
 A list with only significantly differentially expressed genes
-which will also be stores in the metadata area of an MAE object.
+which will also be stores as metadata of a MAE.
 }
 \description{
-Filter out genes in each nested dataframe which are not deemed
-significantly differentially expressed.
+Filters out genes in each nested dataframe which are not deemed
+significantly differentially expressed. The results will be stored in
+the metadata of an MAE object.
 }
 \examples{
 miR <- mm_miR

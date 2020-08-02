@@ -7,17 +7,22 @@
 makeNet(MAE, filt_df)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment Object.}
+\item{MAE}{MultiAssayExperiment Object to store output from makeNet. It is
+recommended to use the same MAE which stores output from matrixFilter.}
 
 \item{filt_df}{Filtered miR-mRNA interactions from the mining matrix
-produced by the dataMiningMatrix function.}
+produced by the matrixFilter function. This should be stored as an assay
+within the MAE used in the matrixFilter function.}
 }
 \value{
-A list which is the input for quicknet
+A list of igraph data which represent miR-mRNA interactions
+filtered from the input data, wikipathway of choice and mining matrix,
+This is input for quickNet.
 }
 \description{
 Creates an igraph object from filtered miR-mRNA interactions
-from database mining.
+from database mining. Output from makeNet will be stored as metadata in a
+MAE.
 }
 \examples{
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",

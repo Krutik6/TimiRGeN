@@ -7,20 +7,29 @@
 combineGenes(MAE, miR_data, mRNA_data)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment}
+\item{MAE}{Input MAE object will have the results of combineGenes added to
+it as an assay. It is recommended to use the MAE object which stores output
+from startObject.}
 
-\item{miR_data}{microRNA dataframe}
+\item{miR_data}{microRNA dataframe stored as an assay in a MAE. Rows
+should be genes, columns are DE results and time point. This should be
+the stored within the MAE used in the startObject function.}
 
-\item{mRNA_data}{mRNA dataframe}
+\item{mRNA_data}{mRNA dataframe stored as an assay in a MAE. Rows
+should be genes, columns are DE results and time point. This should be
+the stored within the MAE used in the startObject function.}
 }
 \value{
-A dataframe with combines miR and mRNA data which can be stored
-within the MAE object.
+A dataframe which combines miR and mRNA data.
 }
 \description{
 Combines miR and mRNA data into one dataframe. Input columns
-should be written as :timepoint.Differentialexpressionresulttyle e.g.
-D1.log2fc or H6.adjPval.
+should be written as :timepoint.DifferentialExpressionResultType e.g.
+D1.log2fc or H6.adjPval. Column names should be the same for miR and mRNA
+data. A more detailed explanation of column nomenclature can be found in the
+vignette. Resulting information will be stored as an assay within a MAE
+object. combineGenes is essential for combined analysis of miR-mRNA data.
+If using separate analysis, there is no need to use combineGenes.
 }
 \examples{
 library(org.Mm.eg.db)

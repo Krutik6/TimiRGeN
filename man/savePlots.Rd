@@ -7,45 +7,38 @@
 savePlots(largeList, maxInt, quickType, fileType = '')
 }
 \arguments{
-\item{largeList}{A list of wikipathways associated to entrezIDs for each
-sample.}
+\item{largeList}{A large list containing GSEA results. This should be
+contained as metadata within the MAE used in the enrichWiki function.}
 
-\item{maxInt}{Number of samples in dataset.}
+\item{maxInt}{Integer, number of samples in data set.}
 
-\item{quickType}{quickDot ot quickBar.}
+\item{quickType}{quickDot or quickBar. This will be the plot type.}
 
-\item{fileType}{Type of file for images to be exported as: png, tiff,
-svg or jpg.}
+\item{fileType}{Type of file for images to be exported as: "png", "tiff",
+"svg" or "jpg."}
 }
 \value{
-saves files of all plots in current dir
+saves plots in current directory.
 }
 \description{
-Saves all plots from enrichWiki in the current directory.
+Saves all plots from enrichWiki into the current directory.
 }
 \examples{
 \donttest{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
+MAE <- MultiAssayExperiment()
 
-mRNA <- mm_mRNA
-
-MAE <- startObject(miR = miR, mRNA = mRNA)
-
-metadata(MAE)[["ID_list"]] <- e_list
+metadata(MAE)[["e_list"]] <- e_list
 
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
-metadata(MAE)[["sigwiki"]] <- enrichWiki(MAE, method = "c",
-                                         ID_list = metadata(MAE)[[1]],
-                                         orgDB = org.Mm.eg.db,
-                                         path_gene = assay(MAE, 3),
-                                         path_name = assay(MAE, 4),
-                                         ID = "ENTREZID",
-                                         universe = assay(MAE, 3)[2])
+MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
+                 orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),
+                 path_name = assay(MAE, 2), ID = "ENTREZID",
+                 universe = assay(MAE, 1)[[2]])
 
-savePlots(largeList = metadat(MAE)[[2]], maxInt = 5,
+savePlots(largeList = metadata(MAE)[[2]], maxInt = 5,
          quickType = quickDot, fileType = "jpg")
 }
 }

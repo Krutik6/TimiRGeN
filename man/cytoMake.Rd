@@ -7,17 +7,22 @@
 cytoMake(interactionData, titleString = '', collectionString = '')
 }
 \arguments{
-\item{interactionData}{Output from MatrixFiler.}
+\item{interactionData}{Dataframe which contains filtered miR-mRNA
+interactions. This is output from matrixFilter and should be found as an
+assay within the MAE used in the matrixFilter function.}
 
-\item{titleString}{Title of the network.}
+\item{titleString}{Title of the network. Enter a string which cytoscape
+will see as the graph name.}
 
-\item{collectionString}{Title of the collection fo networks.}
+\item{collectionString}{Title of the collection of networks. Enter string
+which cytoscape will see as the collection name. Many differently titled
+graphs can be added to a single collection.}
 }
 \value{
-A network visible in cytoscape.
+A network visible in cytoscape version 3.7 or later.
 }
 \description{
-Creates a cytoscape network based on the output of MatrixFilter.
+Creates a cytoscape network based on the output of matrixFilter.
 Requires cytoscapePing() to be used. Make sure Cytoscape is open first. Must
 be version 3.7 or later.
 }

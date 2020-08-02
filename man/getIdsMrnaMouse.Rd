@@ -7,21 +7,23 @@
 getIdsMrnaMouse(MAE, mRNA, mirror)
 }
 \arguments{
-\item{MAE}{MultiAssayObject created by StartObject}
+\item{MAE}{MultiAssayExperiment to store the output of getIdsMrnaMouse.
+It is recommended to use the MAE which contains output from startObject.}
 
-\item{mRNA}{Dataframe. Rownames should be genenames and colnames should be
-results from DE and time points.}
+\item{mRNA}{Dataframe. Rownames are genes and columns are results of DE.
+This should be found as an assay within the MAE used in the startObject
+function. Please read vignette for nomenclature guidance.}
 
-\item{mirror}{tring to identify which biomaRt repo is best for the users
+\item{mirror}{String to identify which biomaRt repo is best for the users
 locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
 }
 \value{
 2 new dataframes in the MAE object. One with entrez information and
-the other with ensembl information.
+the other with ensembl gene ID information.
 }
 \description{
-getIDs_miR_mouse will produce ensembl and entrez data for
-mouse mRNAs.
+getIdsMrnaMouse will produce ensembl and entrez data for
+mouse mRNAs.These will be stored as 2 individual assays within a MAE.
 }
 \examples{
 mRNA <- mm_mRNA
@@ -30,5 +32,5 @@ mRNA <- mRNA[1:20,]
 
 MAE <- startObject(miR = NULL, mRNA = mRNA)
 
-MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
+MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'www')
 }

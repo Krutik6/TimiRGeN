@@ -1,16 +1,22 @@
 #' @title addIds
-#' @aliases addIds
 #' @description Adds entrez or ensembl IDs to the nested data frames within a
-#' list(c) or list of lists (s).
-#' @param MAE MultiAssayExperiment object.
+#' list(c) or list of lists (s). The IDs are from getIdsMir and getIdsMrna
+#' functions, and both are needed for this function. They should be found
+#' as assays in MAE object.
+#' @param MAE MultiAssayExperiment object to store the output of addIds.
+#' It is recommended to use the MAE which stores results from
+#' significantVals.
 #' @param method Respectively either 'c' or 's' for combined or separated
 #' analysis.
 #' @param filtered_genelist A list of nested dataframes if 'c' or A list of
-#' lists with nested dataframes if 's'.
-#' @param miR_IDs miR_ensembl or miR_entrez. Use getIDs function to acquire
-#' this.
-#' @param mRNA_IDs mRNA_ensembl or mRNA_entrez. Use getIDs function to acquire
-#' this.
+#' lists with nested dataframes if 's'. This will be found as metadata within
+#' the MAE object used in the significantVals function.
+#' @param miR_IDs miR_ensembl or miR_entrez. Use a getIDsMir function to
+#' acquire this. This will be stored as an assay in the MAE used in a getIdsMir
+#' function.
+#' @param mRNA_IDs mRNA_ensembl or mRNA_entrez. Use a getIDsMrna function to
+#' acquire this. This will be stored as an assay in the MAE used in a getIdsMrna
+#' function.
 #' @return list of dataframes with entrezIDs/ ensembl IDs and genenames
 #' as columns which can be stored in metadata section of an MAE.
 #' @export
@@ -24,10 +30,14 @@
 #'
 #' Data <- startObject(miR = miR, mRNA = mRNA)
 #'
+#' Data <- getIdsMirMouse(Data, assay(Data, 1))
+#'
+#' Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'www')
+#'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
 #'                      mRNA_data = assay(Data, 2))
 #'
-#' Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 3),
+#' Data <- genesList(MAE = Data, method = 'c', genetic_data = assay(Data, 9),
 #'                   timeString = 'D')
 #'
 #' Data <- significantVals(MAE = Data, method = 'c',
@@ -36,20 +46,34 @@
 #'
 #' Data <- addIds(MAE = Data, method = "c",
 #'               filtered_genelist = metadata(Data)[[2]],
-#'               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 3))
+#'               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 7))
 addIds <- function(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs){
 
-    if (missing(MAE)) stop('Check if you are using the correct MAE object.')
+    if (missing(MAE)) stop('Add MAE object to store output of addIds. Please
+                           use significantVals and getIds functions first.')
 
-    if (missing(method)) stop('method should be s for separate analysis and
-                                c for combined analysis.')
+    if (missing(method)) stop('method should be "s" for separate analysis or
+                               "c" for combined analysis.')
 
-    if (missing(filtered_genelist)) stop('Input output from significantVals,
-                                         should be in metadata.')
+    if (missing(filtered_genelist)) stop('Input filtered list of genes which
+                                         is listed by genetype and time (s) or
+                                         just by time (c). Please use
+                                         significantVals first. Output of
+                                         significantVals should be stored as
+                                         metadata within the MAE used in the
+                                         significantVals function.')
 
-    if (missing(miR_IDs)) stop('Input output from a getIdsMir function.')
+    if (missing(miR_IDs)) stop('Input dataframe of miR gene IDs. Please use
+                               getIdsMirHuman or getIdsMirMouse first.
+                               Output of a getIdsMir function should be stored
+                               as assays within the MAE used in the getIdsMir
+                               function.')
 
-    if (missing(mRNA_IDs)) stop('Input output from a getIdsMrna function.')
+    if (missing(mRNA_IDs)) stop('Input dataframe of mRNA gene IDs. Please use
+                               getIdsMrnaHuman or getIdsMrnaMouse first.
+                               Output of getIds function should be stored as
+                               an assay within the MAE used in the
+                               getIdsMrna function.')
 
     metadata <- `metadata<-` <- NULL
 
@@ -88,5 +112,5 @@ addIds <- function(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs){
         return(MAE)
 
     } else {stop('Please insert method c for combined analysis or s
-    for seperate analysis')}
+    for separate analysis')}
 }

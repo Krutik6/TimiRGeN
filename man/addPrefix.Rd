@@ -7,21 +7,24 @@
 addPrefix(MAE, gene_df, prefixString = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment}
+\item{MAE}{MultiAssayExperiment to store output of addPrefix.
+It is recommended to use the MAE object which stores output from startObject.}
 
 \item{gene_df}{mRNA or miR results from differential expression analysis
-inside of a MAE.}
+inside of a MAE. Would be stored as an assay within the MAE used in the
+startObject function.}
 
-\item{prefixString}{miR_ or mRNA_}
+\item{prefixString}{prefix to be added e.g. "miR" or "mRNA".}
 }
 \value{
-mRNA or miR results now should have mRNA_ or miR_ at the start
-of each column name.
+Dataframe which has a specific prefix infront of each column name.
 }
 \description{
 Adds 'miR_' or 'mRNA_' prefix to colnames of dataframes. Can
-also add any other prefix, if user has other datatypes to explore. Colnames
-should end up in the following naming type: 'genetype_timepoint.datatype'.
+also add any other prefix, if user has other data types to explore. Colnames
+should end up in the following naming system: 'genetype_timepoint.datatype'.
+This function is essential for separate analysis of miR-mRNA DE data. If
+using the combined analysis, there is no need to use addPrefix.
 }
 \examples{
 miR <- mm_miR

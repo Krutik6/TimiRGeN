@@ -1,9 +1,14 @@
 #' @title getIdsMirHuman
-#' @description getIdsMirHuman will get ensembl and entrez data for human
-#' microRNAs. It will aslo produce adjusted ensembl and entrez for IDs that are
-#'specific to microRNAs which share the ID.
-#' @param MAE MultiAssayObject created by StartObject
+#' @description getIdsMirHuman will produce ensembl and entrez ID data for
+#' human microRNAs. It will also produce adjusted ensembl and entrez for IDs
+#' that are specific to microRNAs that share an ID. They will be stored as
+#' 4 individual assays in a MAE. org.Hs.eg.db must be loaded prior to use of
+#' this function.
+#' @param MAE MultiAssayExperiment to store the output of getIdsMirHuman.
+#' It is recommended to use the MAE which contains output from startObject.
 #' @param miR Dataframe. Rownames are genes and columns are results of DE.
+#' This should be found as an assay within the MAE used in the
+#' startObject function. Please read vignette for nomenclature guidance.
 #' @return MAE object with 4 more dataframes consisting of ID information.
 #' @export
 #' @importFrom clusterProfiler bitr
@@ -12,6 +17,8 @@
 #' library(org.Hs.eg.db)
 #'
 #' miR <- hs_miR
+#'
+#' # Make sure miRNA gene name nomenclature is correct for TimiRGeN analysis!
 #'
 #' rownames(miR) <- gsub(rownames(miR), pattern = "\\.", replacement = "-")
 #'
@@ -24,9 +31,13 @@
 #' MAE <- getIdsMirHuman(MAE, assay(MAE, 1))
 getIdsMirHuman <- function(MAE, miR){
 
-    if(missing(MAE)) stop('Use the startObject function.')
+    if(missing(MAE)) stop('MAE object to store output of getIdsMirHuman.
+                          Please use startObject first.')
 
-    if(missing(miR)) stop('Add microRNA dataframe.')
+    if(missing(miR)) stop('Add microRNA dataframe. Please use startObject
+                           first. The output of startObject will be stored as an
+                           assay within the MAE used in the startObject
+                           function.')
 
     miR$Genes <- miR$MicroRNA <- rownames(miR)
 
@@ -39,17 +50,17 @@ getIdsMirHuman <- function(MAE, miR){
     miR$MicroRNA <- micrornaFull(miRdf = miR$MicroRNA, species = 'hsa')
 
     # Get entrez and ensembl IDs
-    miR_entrez <- suppressWarnings(clusterProfiler::bitr(
-                                        geneID = miR$MicroRNA,
-                                        fromType = 'GENENAME',
-                                        toType = 'ENTREZID',
-                                        OrgDb = org.Hs.eg.db))
+    miR_entrez <- suppressMessages(suppressWarnings(clusterProfiler::bitr(
+                                                        geneID = miR$MicroRNA,
+                                                        fromType = 'GENENAME',
+                                                        toType = 'ENTREZID',
+                                                        OrgDb = org.Hs.eg.db)))
 
-    miR_ensembl <- suppressWarnings(clusterProfiler::bitr(
-                                         geneID = miR$MicroRNA,
-                                         fromType = 'GENENAME',
-                                         toType = 'ENSEMBL',
-                                         OrgDb = org.Hs.eg.db))
+    miR_ensembl <- suppressMessages(suppressWarnings(clusterProfiler::bitr(
+                                                         geneID = miR$MicroRNA,
+                                                         fromType = 'GENENAME',
+                                                         toType = 'ENSEMBL',
+                                                         OrgDb = org.Hs.eg.db)))
 
     # Merge ensembl and entrez data
     miR_merged <- merge(x = miR, y = miR_ensembl, by.x = 'MicroRNA',

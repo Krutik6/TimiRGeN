@@ -56,7 +56,7 @@ test_that("miR_entrez and miR_ensembl are different but similiar", {
     expect_equal(length(names(miR_entrez2)), 2)
 })
 
-#conitnue
+#continue
 miR_merged <- merge(x = miR, y = miR_ensembl2, by.x = 'Genes',
                     by.y = 'GENENAME', all = TRUE)
 

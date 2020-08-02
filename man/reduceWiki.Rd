@@ -7,19 +7,25 @@
 reduceWiki(MAE, path_data, stringWiki = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object.}
+\item{MAE}{MultiAssayExperiment object which will have the results of
+reduceWiki stored within as an assay. It is recommended to use the
+same MAE object which stores the data from dloadGmt/ gmtEnsembl. Each
+wikipathway can only be added once to the same MAE object.}
 
-\item{path_data}{File with wikipathway and gene data from
-dloadGmt or gmtEnsembl..}
+\item{path_data}{Dataframe with wikipathway IDs, gene IDs and pathway names
+from dloadGmt or gmtEnsembl. This will be found as an assay in the MAE
+used in the dloadGmt or gmtEnsembl functions.}
 
-\item{stringWiki}{Full name of the wikipathway of interest.}
+\item{stringWiki}{Full name of the wikipathway of interest. Make sure to
+spell it correctly.}
 }
 \value{
 A dataframe which only contains information about the wikipathway of
 interest.
 }
 \description{
-Return gene names for a single wikipathway of interest.
+Return gene names for a single wikipathway of interest and
+store this as an assay within a MAE.
 }
 \examples{
 MAE <- MultiAssayExperiment(list(path_data = data.frame(

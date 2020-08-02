@@ -7,36 +7,44 @@
 quickDot(X, Y)
 }
 \arguments{
-\item{X}{Dataframe including count information and wikipathways}
+\item{X}{Dataframe within a list including count information,confidence
+scores and wikipathway information. This is the output from the enrichWiki
+function. It will be stored as metadata within the MAE used in the enrichWiki
+function. Data can be retrieved using [[i]][[j]] on the output of enrichWiki.}
 
-\item{Y}{Point to the associated name within a list of nested dataframes.}
+\item{Y}{String which is associated to the name of a nested
+dataframes. This is the output from the enrichWiki function. It will be
+stored as metadata within the MAE used in the enrichWiki function. Data can
+be retrieved using [[i]][j] on the output of enrichWiki.}
 }
 \value{
-Dotplot
+Dot plot showing which pathways are most enriched for genes found
+in a time point found in all gene types or in a time point within a gene
+type.
 }
 \description{
-Creates dotplot which compares the confidence level we have for
-each wikipathways association to the data, the number of genes associated
-to each wikipathway and this is all in a ranked fashion for each timepoint
-(and genetype if s analyses was conducted).
+Creates a dot plot which compares the confidence levels for
+each wikipathway association to the data. The number of genes in common
+between a pathway and the input data are taken into account to generate
+confidence scores. This function is to be used specifically for a single
+time point at a time, or if s analysis has been done, then a single time
+point within a single gene type (mir or mRNA).
 }
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
-
-mRNA <- mm_mRNA
-
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- MultiAssayExperiment()
 
 metadata(MAE)[["e_list"]] <- e_list
 
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 
 MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
-                   orgDB = org.Mm.eg.db, path_gene = assay(MAE, 3),
-                   path_name = assay(MAE, 4), ID = "ENTREZID",
-                   universe = assay(MAE, 3)[[2]])
+                   orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),
+                   path_name = assay(MAE, 2), ID = "ENTREZID",
+                   universe = assay(MAE, 1)[[2]])
 
-Q <- quickDot(X = metadata(MAE)[[2]][[1]], Y = metadata(MAE)[[2]][1])
+q <- quickDot(X = metadata(MAE)[[2]][[1]], Y = metadata(MAE)[[2]][1])
+
+# to view dot plot enter plot(q)
 }

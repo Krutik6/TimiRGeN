@@ -35,7 +35,7 @@ library(org.Mm.eg.db)
 
 MAE <- MultiAssayExperiment()
 
-metadata(MAE)[["e_list"]] <- e_list
+metadata(MAE)[["e_list"]] <- e_list_mouse
 
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")
 

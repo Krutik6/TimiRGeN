@@ -1,16 +1,16 @@
-\name{e_list}
-\alias{e_list}
+\name{e_list_mouse}
+\alias{e_list_mouse}
 \docType{data}
 \title{
-e_list
+e_list_mouse
 }
 \description{
 List of entrezIDs from significant DE on the mouse fibrosis dataset. To make examples run faster this data is used, instead of re-running previous functions
-throughout the examples of TimiRGeN. e_list is the output of the eNames function
+throughout the examples of TimiRGeN. e_list_mouse is the output of the eNames function
 when the combined analysis is performed on mm_miR and mm_RNA and when entrezIDs
 are used as the gene IDs.
 }
-\usage{data("e_list")}
+\usage{data("e_list_mouse")}
 \format{
 The format is:
 List of 5:
@@ -33,6 +33,6 @@ From using eNames during combined analysis of mm_miR and mm_mRNA..
 NA
 }
 \examples{
-data(e_list)
+data(e_list_mouse)
 }
 \keyword{datasets}

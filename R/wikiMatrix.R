@@ -17,7 +17,7 @@
 #' @examples
 #' MAE <- MultiAssayExperiment()
 #'
-#' metadata(MAE)[["ID_list"]] <- e_list
+#' metadata(MAE)[["ID_list"]] <- e_list_mouse
 #'
 #' metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 #'

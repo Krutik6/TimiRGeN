@@ -25,7 +25,7 @@ https://bioconductor.org/packages/release/bioc/html/rWikiPathways.html.
 \examples{
 MAE <- MultiAssayExperiment()
 
-metadata(MAE)[["e_list"]] <- e_list
+metadata(MAE)[["e_list"]] <- e_list_mouse
 
 metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 

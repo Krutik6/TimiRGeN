@@ -21,7 +21,7 @@ y <- lapply(e, function(x){ x[complete.cases(x)]})
 #check 1
 #manual output is the same as functional output
 test_that("Output is as expects", {
-    expect_equal(length(e_list), 5)
+    expect_equal(length(e_list_mouse), 5)
     expect_equal(length(y), 5)
 })
 

@@ -1,31 +1,20 @@
 #' @title corrTable
-#' @description An internal function for the mirMranInt function. This will
-#' work out the correlations between the time series data from
-#' diffExpressRes functions.
+#' @description An internal function for the mirMrnaInt function. This will
+#' work out the average correlations between the miR and mRNA DE results data
+#' over the time series.
 #' @param names Dataframe with combined list of mRNA (single wikipathway of
-#'  interest) and miR names.
-#' @param miR_exprs miR averaged expression data.
-#' @param mRNA_wiki Single wikipathway of interest's mRNA averaged expression
-#' data.
+#'  interest) and miR names. Produced by mirMrnaInt.
+#' @param miR_exprs miR dataframe with a single DE result type (e.g. log2fc) and
+#' an ID type.
+#' @param mRNA_wiki mRNA dataframe containing mRNAs found in the pathway
+#' of interest. Will also contain a single DE result type (e.g. log2fc) and
+#' an ID type.
 #' @param maxInt Maximum number of data samples in your datasets e.g. how many
-#' timepoints.
-#' @return A matrix of each mRNA and miR interaction and a correlation.
+#' time points.
+#' @return A matrix of each mRNA and miR interaction and averaged correlations.
 #' @importFrom stats cor
 #' @noRd
 corrTable <- function(names, miR_exprs, mRNA_wiki, maxInt){
-
-    if (missing(names)) stop('Input dataframe of all combinations of miRs and
-                              mRNAs.')
-
-    if (missing(miR_exprs)) stop('Please use the diffExpressRes function
-                                 on miR data. Will
-                                 be stored in a MAE object as an assay.')
-
-    if (missing(mRNA_wiki)) stop('Please use the wikiMrna function. Will
-                                 be stored in a MAE object as an assay.')
-
-    if (missing(maxInt)) stop('Input interger. Number of samples in your data.'
-                              )
 
     # Each miR and mRNA could interact so extract their names
     n1 <- as.character(names[1])

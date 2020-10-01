@@ -1,11 +1,9 @@
 #' @title matrixFilter
 #' @description Filters out miR-mRNA interactions based on how many times an
-#' interaction has been predicted and or validated. miR-mRNA interactions can
-#' also be filtered by correlated DE values. Negatively correlating miR-mRNA
-#' interactions can be filtered for, and degree of correlation can also be
-#' a parameter. During the diffExpressRes function, it was recommended to use
-#' log2fc or average expression values for this reason. Output of matrixFilter
-#' is stored as an assay in a MAE.
+#' interaction has been predicted and/ or validated. miR-mRNA interactions can
+#' also be filtered by averaged correlations of DE values (log2fc or ave exp).
+#' Negatively correlating miR-mRNA interactions can be filtered for, and degree
+#' of correlation is also a filterable parameter.
 #' @param MAE MultiAssayExperiment to store the output of matrixFilter. It is
 #' recommended to use the same MAE which stores the results from
 #' dataMiningMatrix.
@@ -14,16 +12,18 @@
 #' This is output from dataMiningMatrix, and should be stored as an assay within
 #' the MAE used in the dataMiningMatrix function.
 #' @param negativeOnly TRUE or FALSE. Should only negatively correlating
-#' miR-mRNA interactions be given? Default is TRUE.
-#' @param predictedOnly TRUE or FALSE. TRUE if only predicted interactions
-#' should be displayed or FALSE for predicted and functionally tested?
-#' Default is TRUE.
-#' @param threshold Integer from 0 to 3. If Predicted only max should be 2.
-#' @param maxCor What is the highest average correlation to be filtered for.
-#' From -1 to 1. Default is 1. The lower the maxCor, the stricter the filtering.
-#' @return A filtered amount of mRNA-miR interactions which are found in 3
-#' databases. This will be specific for the input data and the
-#' wikipathway of choice.
+#' miR-mRNA interactions be retrieved? Default is TRUE.
+#' @param predictedOnly TRUE or FALSE. Should only predicted interactions
+#' should be retrieved? Default is TRUE.
+#' @param threshold Integer from 0 to 3. How many databases should a miR-mRNA
+#' interaction be found in? If predictedOnly = TRUE, then maximum threshold is
+#' 2.
+#' @param maxCor Number from -1 to 1. What is the highest average correlation
+#' that is allowed? Default is 1. The lower the maxCor, the stricter the
+#' filtering.
+#' @return Filtered miR-mRNA interactions that are specific for a signalling
+#' pathway of interest and the input data. Output will be stored as an assay
+#' in the input MAE.
 #' @export
 #' @usage matrixFilter(MAE, miningMatrix, negativeOnly, predictedOnly,
 #'                     threshold, maxCor)
@@ -48,14 +48,18 @@
 matrixFilter <- function(MAE, miningMatrix, negativeOnly = TRUE,
                          predictedOnly = TRUE, threshold = 1, maxCor = 1){
 
-    if (missing(MAE)) stop('Add MAE object. This will store the output of
-                           matrixFilter. Please use dataMiningMatrix first.');
+    if (missing(MAE)) stop('
+                           MAE is missing.
+                           Add MAE. This will store the output of matrixFilter.
+                           Please use dataMiningMatrix first.')
 
-    if (missing(miningMatrix)) stop('Input large correlation matrix. Please
+    if (missing(miningMatrix)) stop('
+                                    miningMatrix is missing.
+                                    Add large correlation matrix. Please
                                     use the dataMiningMatrix function first.
                                     The output of dataMiningMatrix should be
                                     found as an assay within the MAE used in
-                                    the dataMiningMatrix function.');
+                                    the dataMiningMatrix function.')
 
     # miR-mRNA interactions with a - ave correlation
     if (negativeOnly == TRUE) {

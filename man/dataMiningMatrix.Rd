@@ -7,38 +7,41 @@
 dataMiningMatrix(MAE, corrTable, targetscan , mirdb, mirtarbase)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment which will have the output of
-dataMiningMatrix stored within it. It is recommended to use the MAE object
-which stores output from mirMrnaInt.}
+\item{MAE}{MultiAssayExperiment which will store the output of
+dataMiningMatrix. It is recommended to use the MAE object which stores output
+from the mirMrnaInt function.}
 
-\item{corrTable}{Correlation matrix between the mRNAs from the
-pathway of interest and miRNA data. This is created by the mirMrnaInt
-function and should be stored within the MAE used in the mirMrnaInt function.}
+\item{corrTable}{Correlation matrix of interactions between the mRNAs from
+a pathway of interest and miRNA data. This is created by the mirMrnaInt
+function and should be stored as an assay within the MAE used in the
+mirMrnaInt function.}
 
-\item{targetscan}{Species specific targetscan predicted miR-mRNA
-interactions. This is the output from the dloadTargetscan function.
+\item{targetscan}{Species specific miR-mRNA interactions predicted by
+targetscans. This is the output from the dloadTargetscan function.
 It should be stored as an assay within the MAE used in the dloadTargetscan
 function. If this data cannot be downloaded, dataMiningMatrix can be run
 without it.}
 
-\item{mirdb}{Species specific miRDB predicted miR-mRNA interactions.
+\item{mirdb}{Species specific miR-mRNA interactions predicted by miRDB.
 This is the output from the dloadMirdb function. It should
 stored as an assay within the MAE used in the dloadMirdb function. If
 this data cannot be downloaded, dataMiningMatrix can be run without it.}
 
-\item{mirtarbase}{Species specific miRTarBase functional miR-mRNA
-interactions. This is the output from the dloadMirtarbase function, it should
-be stored as an assay within the MAE used in the dloadMirtarbase function.
-If this data cannot be downloaded, dataMiningMatrix can be run without it.}
+\item{mirtarbase}{Species specific miR-mRNA interactions which are
+functionally curated by mirtarbase. This is the output from the
+dloadMirtarbase function. It should be stored as an assay within the MAE used
+in the dloadMirtarbase function. If this data cannot be downloaded,
+dataMiningMatrix can be run without it.}
 }
 \value{
-A matrix which cross references the occurrences of
-microRNA-mRNA interactions between databases and the given data.
+A matrix which cross references the occurrences of miR-mRNA
+interactions between databases and the given data. Output will be stored as
+an assay in the input MAE.
 }
 \description{
 Mines out predicted/ functional interactions which correspond
-between Targetscans, miRDB, miRTarBase and the interactions data frame.
-Resulting dataframe will be stored as an assay in a MAE object. If a
-database cannot be downloaded, dataMiningMatrix can be used regardless, but
-it is recommended to download all three databases.
+between miR-mRNA interactions found in Targetscans, miRDB, miRTarBase and
+the interactions from the miR-mRNA correlation matrix.
+If a database cannot be downloaded, dataMiningMatrix can be used regardless,
+but it is recommended to download all three databases.
 }

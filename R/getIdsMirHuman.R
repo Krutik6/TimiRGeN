@@ -2,14 +2,16 @@
 #' @description getIdsMirHuman will produce ensembl and entrez ID data for
 #' human microRNAs. It will also produce adjusted ensembl and entrez for IDs
 #' that are specific to microRNAs that share an ID. They will be stored as
-#' 4 individual assays in a MAE. org.Hs.eg.db must be loaded prior to use of
+#' 4 individual assays in a MAE. org.Hs.eg.db must be loaded prior to using
 #' this function.
 #' @param MAE MultiAssayExperiment to store the output of getIdsMirHuman.
 #' It is recommended to use the MAE which contains output from startObject.
 #' @param miR Dataframe. Rownames are genes and columns are results of DE.
 #' This should be found as an assay within the MAE used in the
 #' startObject function. Please read vignette for nomenclature guidance.
-#' @return MAE object with 4 more dataframes consisting of ID information.
+#' @return 4 dataframes consisting of either entrez or ensembl ID information.
+#' 2 of these will be adjusted for shared IDs. Output will be stored as assays
+#' in the input MAE.
 #' @export
 #' @importFrom clusterProfiler bitr
 #' @usage getIdsMirHuman(MAE, miR)
@@ -31,13 +33,17 @@
 #' MAE <- getIdsMirHuman(MAE, assay(MAE, 1))
 getIdsMirHuman <- function(MAE, miR){
 
-    if(missing(MAE)) stop('MAE object to store output of getIdsMirHuman.
+    if(missing(MAE)) stop('
+                          MAE is missing.
+                          Add MAE to store output of getIdsMirHuman.
                           Please use startObject first.')
 
-    if(missing(miR)) stop('Add microRNA dataframe. Please use startObject
+    if(missing(miR)) stop('
+                           miR is missing.
+                           Add microRNA dataframe. Please use startObject
                            first. The output of startObject will be stored as an
-                           assay within the MAE used in the startObject
-                           function.')
+                           assay within the MAE used in the startObject function
+                          .')
 
     miR$Genes <- miR$MicroRNA <- rownames(miR)
 

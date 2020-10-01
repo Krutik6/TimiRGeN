@@ -1,14 +1,15 @@
 #' @title dloadMirtarbase
-#' @description Downloads most recent version (7.0) of functional targets from
-#' miRTarBase database http://mirtarbase.mbc.nctu.edu.tw/cache/download/7.0/.
-#' Species specific miR-mRNA interactions which do not have 'weak' evidence
-#' are stored in a MAE as an assay.
-#' @param MAE MultiAssayExperiment which will have the downloaded mirtarbase
-#' data added to it. It is recommended to use the same MAE object which was
-#' created by mirMrnaInt.
-#' @param species Initials of the species of interest e.g. "hsa" or "mmu".
+#' @description Downloads most recent version (8.0) of functional targets from
+#' the miRTarBase database http://mirtarbase.cuhk.edu.cn/php/download.php
+#' . Species specific miR-mRNA interactions which do not have 'weak' evidence
+#' are used.
+#' @param MAE MultiAssayExperiment which will store the downloaded mirtarbase
+#' data. It is recommended to use the MAE which was used in
+#' the mirMrnaInt function.
+#' @param species Species of interest e.g. "hsa" or "mmu".
 #' @return Dataframe of species specific miR-mRNA interactions with
-#' strong functional evidence.
+#' strong functional evidence. Output will be stored as an assay in the input
+#' MAE.
 #' @export
 #' @usage dloadMirtarbase(MAE, species)
 #' @importFrom readxl read_excel
@@ -17,21 +18,25 @@
 #'
 #' MAE <- MultiAssayExperiment()
 #'
-#' MAE <-dloadMirdb(MAE, "mmu")
+#' MAE <- dloadMirtarbase(MAE, "mmu")
 #'
 #' }
 dloadMirtarbase <- function(MAE, species){
 
-  if (missing(MAE)) stop('Add MultiAssayExperiment so data from dloadMirtarbase
+  if (missing(MAE)) stop('
+                         MAE is missing.
+                         Add MultiAssayExperiment so data from dloadMirtarbase
                          can be stored. Please use the mirMrnaInt function
                          first.')
 
-  if (missing(species)) stop('Initials of a species of interest
+  if (missing(species)) stop('
+                             species is missing.
+                             Add initials of the species of interest
                              e.g "hsa" or "mmu."')
 
   # download miRTarBase data
   download.file(
-    'http://mirtarbase.mbc.nctu.edu.tw/cache/download/7.0/miRTarBase_MTI.xlsx',
+    'http://mirtarbase.cuhk.edu.cn/cache/download/8.0/miRTarBase_MTI.xlsx',
     'miRTarBase.xlsx')
 
   # read using readxl

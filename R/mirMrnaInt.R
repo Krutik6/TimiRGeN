@@ -1,23 +1,30 @@
 #' @title mirMrnaInt
 #' @description Create a correlation matrix of all the potential miR-mRNA
-#' interactions which could arise between the input microRNA data and and
-#' the mRNAs found from the wikiMrna function. The time series DE data will
-#' be averaged from the dataframes created by diffExpressRes.
-#' @param MAE MultiAssayExperiment which will have the output of
-#' mirMrnaInt stored in it. It is recommended to begin a new MAE using
-#' MultiAssayExperiment() here so the MAE objects do not get too large.
-#' @param miR_express Dataframe from diffExpressRes function of microRNA data.
-#' Rownames should be miR gene names and columns should include DE results
-#' displaying abundance e.g. log2fc or ave expression. These dataframes should
-#' also have gene IDs. This should be stored as an assay within the MAE used
-#' in the diffExpressRes function.
-#' @param GenesofInterest Input results from wikiMrna. This should be found
-#' as an assay within the MAE which was used in the wikiMrna function.
+#' interactions which could arise between the input miR data and the mRNAs
+#' found from the wikiMrna function. The time series DE data will be averaged
+#' from the dataframe created by diffExpressRes of miR data and the dataframe
+#' created by wikiMrna. This will show miR-mRNA correlations over the time
+#' course.
+#' @param MAE MultiAssayExperiment which will store the output of mirMrnaInt.
+#' It is recommended to begin a new MAE using MultiAssayExperiment() here so
+#' the MAE objects do not get too large.
+#' @param miR_express Dataframe from using the diffExpressRes function on miR
+#' data. Rownames should be miR gene names and columns should include DE results
+#' displaying abundance e.g. log2fc or average expression. These dataframes
+#' should also have gene IDs. This should be stored as an assay within the
+#' MAE used in the diffExpressRes function.
+#' @param GenesofInterest Dataframe including mRNAs found in both the input data
+#' and the pathway of interest, as well as gene IDs. This is the output from
+#' wikiMrna. This should be found as an assay within the MAE which was used in
+#' the wikiMrna function. Make sure the same ID type is used in the inputs
+#' for miR_express and GenesofInterest.
 #' @param maxInt Integer. Should be equal to number of samples in both mRNA and
-#' miR data e.g. number of different time points. In our example it is 5 because
+#' miR data e.g. number of different time points. In the example it is 5 because
 #' there are 5 time points.
 #' @return A large correlation matrix which contains averaged miR-mRNA
-#' time series information for every possible miR-mRNA interaction.
+#' time series information for every possible miR-mRNA interaction between the
+#' genes of interest and all the miRs. Output will be stored as an assay in
+#' the input MAE.
 #' @export
 #' @usage mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt)
 #' @examples
@@ -55,18 +62,24 @@
 mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt){
 
 
-        if (missing(MAE)) stop('Add MAE object. Output from mirMrnaInt will
-                               be added to this MAE as an assay. Please used
-                               the diffExpressRes and wikiMrna functions first.')
+        if (missing(MAE)) stop('
+                               MAE is missing.
+                               Add MAE. Output from mirMrnaInt will be stored in
+                               the MAE. Please used the diffExpressRes and
+                               wikiMrna functions first.')
 
-        if (missing(miR_express)) stop("Add a dataframe with miRNA abundance
+        if (missing(miR_express)) stop("
+                                       miR_express is missing.
+                                       Add a dataframe with miR abundance
                                        values and gene IDs. Please use the
-                                       diffExpressRes function on miRNA data.
-                                       Output of diffExpressRes will be stored
-                                       as an assay within the MAE used in the
-                                       diffExpressRes function.")
+                                       diffExpressRes function on miR data
+                                       first. Output of diffExpressRes will be
+                                       stored as an assay within the MAE used
+                                       in the diffExpressRes function.")
 
-        if (missing(GenesofInterest)) stop("Add a dataframe containing mRNAs
+        if (missing(GenesofInterest)) stop("
+                                           GenesofInterest is missing.
+                                           Add a dataframe containing mRNAs
                                            found in the wikipathway of interest
                                            and in the input mRNA data. Please
                                            use the wikiMrna function. Results
@@ -74,8 +87,10 @@ mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt){
                                            an assay the MAE used in the
                                            wikiMrna function.")
 
-        if (missing(maxInt)) stop("Integer. Number of time points your
-                                  time course goes along.")
+        if (missing(maxInt)) stop("
+                                   maxInt is missing.
+                                   Add an integer which represents the number
+                                   of time points / samples in your data set.")
 
         #Make matrix of the names of miRs and mRNAs of interest
         allnames <- expand.grid(rownames(miR_express),

@@ -7,28 +7,27 @@
 quickBar(X, Y)
 }
 \arguments{
-\item{X}{Dataframe within a list including count information,confidence
+\item{X}{Dataframes within a list including count information, confidence
 scores and wikipathway information. This is the output from the enrichWiki
 function. It will be stored as metadata within the MAE used in the enrichWiki
 function. Data can be retrieved using [[i]][[j]] on the output of enrichWiki.}
 
-\item{Y}{String which is associated to the name of a nested
-dataframes. This is the output from the enrichWiki function. It will be
-stored as metadata within the MAE used in the enrichWiki function. Data can
+\item{Y}{String which is associated to the nested dataframe selected for X.
+This is the output from the enrichWiki function. It will be stored as
+metadata within the MAE used in the enrichWiki function. Data can
 be retrieved using [[i]][j] on the output of enrichWiki.}
 }
 \value{
-bar plot showing which pathways are most enriched for genes found
-in a time point found in all gene types or in a time point within a gene
-type.
+Bar plot showing which pathways are most enriched for genes found
+at each time point ("c") or at each time point within a gentype ("s").
 }
 \description{
 Creates a bar plot which compares the confidence levels for
-each wikipathway association to the data. The number of genes in common
-between a pathway and the input data are taken into account to generate
-confidence scores. This function is to be used specifically for a single
-time point at a time, or if s analysis has been done, then a single time
-point within a single gene type (mir or mRNA).
+each wikipathway association to the filtered input data. The number of genes
+in common between a pathway and the input data are taken into account to
+generate confidence scores. This function is used specifically for a single
+time point at a time, or if using "s" analysis, the function is used for a
+single time point within a single gene type (miR or mRNA).
 }
 \examples{
 library(org.Mm.eg.db)

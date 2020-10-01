@@ -15,15 +15,16 @@ This should be found as an assay within the MAE used in the startObject
 function. Please read vignette for nomenclature guidance.}
 }
 \value{
-MAE object with 4 additional dataframes consisting of ID
-information.
+4 dataframes consisting of either entrez or ensembl ID information.
+2 of these will be adjusted for shared IDs. Output will be stored as assays
+in the input MAE.
 }
 \description{
 getIdsMirMouse will produce ensembl and entrez ID data for
 mouse microRNAs. It will also produce adjusted ensembl and entrez for IDs
 that are specific to microRNAs that share an ID. They will be stored as
-4 individual assays in a MAE object.org.Mm.eg.db must be loaded prior
-to use of this function.
+4 individual assays in a MAE. org.Mm.eg.db must be loaded prior to using
+this function.
 }
 \examples{
 library(org.Mm.eg.db)

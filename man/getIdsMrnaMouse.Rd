@@ -14,16 +14,16 @@ It is recommended to use the MAE which contains output from startObject.}
 This should be found as an assay within the MAE used in the startObject
 function. Please read vignette for nomenclature guidance.}
 
-\item{mirror}{String to identify which biomaRt repo is best for the users
-locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.}
+\item{mirror}{String to identify which biomaRt server is best. This is based
+on location. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'www'.}
 }
 \value{
-2 new dataframes in the MAE object. One with entrez information and
+2 new dataframes in the MAE. One with entrez information and
 the other with ensembl gene ID information.
 }
 \description{
-getIdsMrnaMouse will produce ensembl and entrez data for
-mouse mRNAs.These will be stored as 2 individual assays within a MAE.
+getIdsMrnaMouse will produce ensembl and entrez ID dataframes
+for mouse mRNAs. These will be stored as 2 individual assays within a MAE.
 }
 \examples{
 mRNA <- mm_mRNA

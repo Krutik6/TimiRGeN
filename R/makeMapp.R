@@ -1,23 +1,23 @@
 #' @title makeMapp
-#' @description Creates input for the MAPP plugin in pathvisio. This will
-#' help to add the filtered miRNAs to the wikipathway of interest.
-#' Follow vignette instructions on how to save this file and further
-#' instructions found in /inst/Pathvisio_GRN_guide.pdf to see how
-#' this can help in GRN construction.
-#' @param MAE MultiAssayExperiment object to store the output of makeMapp. It
-#' is recommended to use the same MAE object which stores the results from
+#' @description Creates a dataframe which can be imported into pathvisio by use
+#' of the the MAPP plugin. This will add the filtered miRs to the wikipathway of
+#' interest on pathvisio. Follow instructions found in the vignette which show
+#' how to save this file and further instructions found in
+#' /inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
+#' @param MAE MultiAssayExperiment to store the output of makeMapp. It
+#' is recommended to use the same MAE which stores the output from
 #' matrixFilter.
-#' @param filt_df Dataframe of mined microRNA-mRNA interactions. This is output
+#' @param filt_df Dataframe of mined miR-mRNA interactions. This is output
 #' of matrixFilter. It should be stored as an assay in the MAE used in the
 #' matrixFilter function.
 #' @param miR_IDs_adj Dataframes with adjusted gene IDs to account for -5p and
 #' -3p specific miRs. miR_adjusted_entrez or miR_adjusted_ensembl. Should be
-#' found as an assay in the MAE used a getIdsMir function.
+#' found as assays within the MAE used a getIdsMir function.
 #' @param dataType String which represents the gene ID used in this analysis.
 #' Either "En" (ensembl data) or "L" (entrez data).
-#' @return A dataframe containing microRNA and adjusted gene ID information
-#' which should be saved as a text file for import into pathvisio via the MAPP
-#' app.
+#' @return A dataframe containing microRNAs and adjusted gene IDs which can be
+#' saved as a text file to be imported into pathvisio via the MAPPapp. Output
+#' will be saved as an assay in the input MAE.
 #' @export
 #' @usage makeMapp(MAE, filt_df, miR_IDs_adj, dataType = '')
 #' @examples
@@ -48,23 +48,30 @@
 #'                 dataType = 'L')
 makeMapp <- function(MAE, filt_df, miR_IDs_adj, dataType){
 
-    if (missing(MAE)) stop('Add MAE object. This will store the output of
-                           makeMapp Please use matrixFilter first.')
+    if (missing(MAE)) stop('
+                           MAE is missing.
+                           Add MAE. This will store the output of
+                           makeMapp. Please use matrixFilter first.')
 
-    if (missing(filt_df)) stop('Add dataframe of filtered miR-mRNA
-                               interactions. Please use the matrixFilter
-                               function first. Output of matrixFilter should
-                               be stored as an assay within the MAE used in the
-                               matrixFilter function.')
+    if (missing(filt_df)) stop('
+                               filt_df is missing.
+                               Add dataframe of filtered miR-mRNA interactions.
+                               Please use the matrixFilter function first.
+                               Output of matrixFilter should be stored as an
+                               assay within the MAE used in the matrixFilter
+                               function.')
 
-    if (missing(miR_IDs_adj)) stop('Add adjusted miR gene ID data.
-                                   Please use the getIdsMirHuman or
-                                   getIdsMirMouse function first. Output of
-                                   a getIdsMir function should be stored as an
-                                   assay within the MAE used in the
-                                   getIdsMir function.')
+    if (missing(miR_IDs_adj)) stop('
+                                   miR_IDs_adj is missing.
+                                   Add adjusted miR gene ID data. Please use the
+                                   getIdsMirHuman or getIdsMirMouse function
+                                   first. Output of a getIdsMir function should
+                                   be stored as an assay within the MAE used in
+                                   the getIdsMir function.')
 
-    if (missing(dataType)) stop('Add a string. "En" for ensembl or "L"
+    if (missing(dataType)) stop('
+                                dataType is missing.
+                                Add a string. "En" for ensembl or "L"
                                 for entrez.')
 
     # Merge filtered data frame of interactions and adjusted miR IDs

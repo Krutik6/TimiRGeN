@@ -1,13 +1,14 @@
 Package: TimiRGeN
 Type: Package
-Title: microRNA-mRNA Integration, Analysis and Network Generation Tool
-Version: 0.99.4158
+Title: Time sensitive microRNA-mRNA integration, analysis and network generation tool
+Version: 0.99.5
 Authors@R: person(given = "Krutik", family = "Patel", role = c("aut", "cre"), email = "K.Patel5@newcastle.ac.uk")
-Description: Functionally analyses and integrated time course mRNA and miR data and can generate small networks within and outside of R for GRN construction and hypothesis generation.
+Description:  TimiRGeN (Time Incorporated miR-mRNA Generation of Networks) is a novel R package which functionally analyses and integrates time course miRNA-mRNA differential expression data. This tool can generate small networks within R or export results into cytoscape or pathvisio for more detailed network construction and hypothesis generation. 
+              This tool is created for researchers that wish to dive deep into time series multi-omic datasets. TimiRGeN goes further than many other tools in terms of data reduction. Here, potentially hundreds of thousands of potential miRNA-mRNA interactions can be whittled down into a handful of high confidence  miRNA-mRNA interactions effecting a signalling pathway, across a time course.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Depends: R (>= 4.0),
          Mfuzz,
          MultiAssayExperiment

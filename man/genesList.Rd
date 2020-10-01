@@ -7,47 +7,46 @@
 genesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment. Results from genesList will
-be stored in the metadata of the given MAE. It is recommended that the
-MAE which stores output from combineGenes (combined analysis) or
-addPrefix (sepatate analysis).}
+\item{MAE}{MultiAssayExperiment which will store the output from genesList.
+It is recommended to use the MAE which stores output from combineGenes
+(combined analysis) or addPrefix (separated analysis).}
 
-\item{method}{Respectively either 'c' or 's' for combined or separated
+\item{method}{Either "c" or "s", respectively for combined or separated
 analysis.}
 
-\item{genetic_data}{If 'c', this should be a dataframe with miR and mRNA
+\item{genetic_data}{If "c", this should be a dataframe with miR and mRNA
 information together. This is the output from the combineGenes function
-and will be stored as an assay within the MAE.}
+and will be stored as an assay within the MAE used in the combineGenes
+function.}
 
-\item{timeString}{If 'c', this should be a common string representing
-'timepoint' e.g. for H.1, H.10, H.20, timeString = 'H'.}
+\item{timeString}{If "c", this should be a common string representing
+'timepoints' e.g. for H.1, H.10, H.20, timeString = 'H'.}
 
-\item{miR_data}{If 's', a dataframe of microRNA data. Rownames are genes
-and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.
-timepoint.resulttype should be the same in mRNA and miR data. This should
-be the results of the addPrefix function, and will be stored as an assay
-within the MAE used in addPrefix.}
+\item{miR_data}{If "s", a dataframe of microRNA data. Rownames are genes
+and colnames are: genetype_timepoint.resulttype. Column names should be
+the same in mRNA and miR data. miR_data is from the addPrefix function,
+and will be stored as an assay within the MAE used in addPrefix.}
 
-\item{mRNA_data}{If 's', a dataframe of mRNA data. Rownames are genes
-and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.}
+\item{mRNA_data}{If "s", a dataframe of mRNA data. Rownames are genes
+and colnames are: genetype_timepoint.resulttype. Column names should be the
+same in mRNA and miR data. mRNA_data is from the addPrefix function,
+and will be stored as an assay within the MAE used in addPrefix.}
 }
 \value{
-A list of dataframes separated by features in the column names which
-can be stored in the metadata area of an MAE object. This should
-be the results of the addPrefix function, and will be stored as an assay
-within the MAE used in addPrefix.
+A list of dataframes separated by features in the column names.
+Output will be stored as metadata in the input MAE.
 }
 \description{
-Will produce a list of nested dataframes and will be stored
-as metadata within a MAE object.
+Produces a list of nested dataframes. The list will depend on
+the type of analysis that is to be conducted.
 For combined analysis method = "c", and for separated analysis method = "s".
 
-Combined analysis colnames should be 'timepoint.resulttype'.
-genesList will make new dataframes separated by 'timepoint.'.
+In combined analysis colnames should be 'timepoint.resulttype'.
+genesList will make new dataframes separated at 'timepoint.'.
 
-Separated analysis colnames should be 'genetype_timepoint.resulttype'.
+In separated analysis colnames should be 'genetype_timepoint.resulttype'.
 genesList will make separate lists for each 'genetype_', and these lists
-will have dataframes which have been made by separating by 'timepoint.'.
+will have dataframes which have been made by separating at 'timepoint.'.
 
 Make sure to follow colname nomenclature carefully. Please refer to
 the vignette for more details on the nomenclature.

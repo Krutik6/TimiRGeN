@@ -7,17 +7,19 @@
 clusterCheck(Clusters, W)
 }
 \arguments{
-\item{Clusters}{A list of clusters,statistics and phenodata. This will be
-stored as metadata within the MAE used in the createClusters function.}
+\item{Clusters}{A large list of clusters, statistics and phenodata. This
+will be stored as metadata within the MAE used in the createClusters
+function.}
 
-\item{W}{Should the plot be shown in a new window? Default is TRUE.}
+\item{W}{TRUE or FALSE. Should the plot be shown in a new window? Default is
+FALSE.}
 }
 \value{
 A PCAplot showing distance of clusters.
 }
 \description{
-This will create a PCA plot using Mfuzz functions. This
-will indicate if an appropriate number of clusters have been created.
+clusterCheck creates a PCA plot using functions from Mfuzz. This
+will help to indicate if an appropriate number of clusters have been created.
 The closer the circles are to one another the more likely that they should
 belong to the same cluster. Read more about Mfuzz here
 https://bioconductor.org/packages/release/bioc/html/rWikiPathways.html.

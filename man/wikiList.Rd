@@ -7,30 +7,24 @@
 wikiList(MAE, stringSpecies = '', stringSymbol = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object which the results of wikiList is
-to be added. It is recommended to use the same MAE which stores data from
-dloadGmt.}
+\item{MAE}{MultiAssayExperiment which will store the results from
+wikiList. It is recommended to use the same MAE which stores output from the
+dloadGmt function.}
 
-\item{stringSpecies}{Species name to decide which wikipathways to download.
-'Homo sapiens' to download human pathways or 'Mus musculus' to download
-mouse pathways.}
+\item{stringSpecies}{Full species name to decide which wikipathways to
+download. 'Homo sapiens' to download human pathways or 'Mus musculus'
+to download mouse pathways.}
 
-\item{stringSymbol}{Type of gene code e.g. 'H' for human gene names
-, 'En' for ensemble gene IDs , 'L' for entrezgene IDs.}
+\item{stringSymbol}{Type of gene ID to retrieve e.g. 'En' for ensemble gene
+IDs or 'L' for entrezgene IDs.}
 }
 \value{
-List of wikipathways and associated genes as a list of strings.
+List of wikipathways and associated genes saved as as strings. Output
+will be stored as metadata in the input MAE.
 }
 \description{
-Provides a list of wikipathways and each gene found to be
-within that wikipathway. This will be stored as metadata of a MAE. wikiList
-will download a large amount of data from the wikipathways website so this
-may take some time.
-}
-\examples{
-\donttest{
-MAE <- MultiAssayExperiment()
-
-MAE <- wikiList(MAE, stringSpecies = 'Homo sapiens', stringSymbol = 'En')
-}
+Provides a list of wikipathways specific for a species, and each
+gene found to be within each pathway. wikiList will download and process a
+large amount of data from the wikipathways website so this may take some
+time to complete.
 }

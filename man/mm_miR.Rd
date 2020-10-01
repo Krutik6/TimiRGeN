@@ -3,18 +3,23 @@
 \docType{data}
 \title{Mouse microRNA data}
 \description{
-Mouse Fibrosis microRNA data from differential expression.
+Mouse Fibrosis microRNA data from differential expression analysis.
 Folic Acid was injected into mouse kidneys to induce fibrosis and
-nephropathy, and measurements were taken prior to (0 days) and 1, 2, 3, 7, 14
-and 28 days after injection. The 0 time point was contrasted over other time points. Data was put through limma for analysis. mm_miR consists of DE results from 278 mouse miRs.
+nephropathy. Measurements were taken prior to (0 days) and 1, 2, 3, 7 and 14
+after injection. The 0 time point was contrasted over other time
+points. Data was put through limma for analysis. mm_miR consists of DE results
+from 278 mouse miRs.
 
-The miR names are using in TimiRGeN friendly nomenclature. This data is an example of how miR names should be named before input into TimiRGeN.
+The miR names are using TimiRGeN friendly nomenclature. This data is an example
+of how miR names should be named before input into TimiRGeN.
 
-Column names are in the following format: timepoint(days).DEresult (Log2FC or adjPVal).
+Column names are in the following format: timepoint(days).DEresult (Log2FC or
+adjPVal).
 }
 \usage{data("mm_miR")}
 \format{
-A data frame of miRNAs put through differential expression with 278 observations on the following 10 variables.
+A data frame of miRNAs put through differential expression with 278 observations
+in the following 10 variables.
 \describe{
 \item{\code{D1.Log2FC}}{a numeric vector containing log2FC values of
 D1_fibrosis/ D0_fibrosis.}

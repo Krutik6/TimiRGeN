@@ -7,14 +7,14 @@
 addIds(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object to store the output of addIds.
+\item{MAE}{MultiAssayExperiment to store the output of addIds.
 It is recommended to use the MAE which stores results from
 significantVals.}
 
-\item{method}{Respectively either 'c' or 's' for combined or separated
+\item{method}{Either "c" or "s", respectively for combined or separated
 analysis.}
 
-\item{filtered_genelist}{A list of nested dataframes if 'c' or A list of
+\item{filtered_genelist}{A list of nested dataframes if 'c' or a list of
 lists with nested dataframes if 's'. This will be found as metadata within
 the MAE object used in the significantVals function.}
 
@@ -27,14 +27,13 @@ acquire this. This will be stored as an assay in the MAE used in a getIdsMrna
 function.}
 }
 \value{
-list of dataframes with entrezIDs/ ensembl IDs and genenames
-as columns which can be stored in metadata section of an MAE.
+List of dataframes with entrezIDs/ ensembl IDs and gene names
+as columns which will be stored as metadata in the input MAE.
 }
 \description{
-Adds entrez or ensembl IDs to the nested data frames within a
-list(c) or list of lists (s). The IDs are from getIdsMir and getIdsMrna
-functions, and both are needed for this function. They should be found
-as assays in MAE object.
+Adds entrez or ensembl IDs to the nested dataframes within a
+list(c) or list of lists (s). The IDs are created by the getIdsMir and
+getIdsMrna functions, both are needed for addIds.
 }
 \examples{
 library(org.Mm.eg.db)

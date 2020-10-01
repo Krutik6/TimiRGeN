@@ -1,16 +1,18 @@
 #' @title returnCluster
-#' @description Will retrieve information about which wikipathways fitted best
-#' with a specific cluster and store this as an assay within a MAE.
-#' @param MAE MultiAssayExperiment. Results from returnCluster will
-#' be stored within this MAE. It is recommended to use the same MAE which
-#' stores output from createClusters.
+#' @description Retrieves information about which wikipathways fitted best
+#' to a specific cluster. This function is to be used after quickFuzz.
+#' @param MAE MultiAssayExperiment which will store the output from
+#' returnCluster. It is recommended to use the same MAE which stores output from
+#' the createClusters function.
 #' @param clusterData A dataframe which contains cluster-pathway fit scores
 #' and is stored as an assay within the MAE used in the createClusters function.
-#' @param whichCluster Integer should corresponds to the cluster of interest.
-#' @param fitCluster How well should the pathways fit into the this
-#' cluster? Integer from 0-1. Default is 0.99.
-#' @return A dataframe of which pathways corresponded best with the chosen
-#' dynamics seen in the selected cluster.
+#' @param whichCluster Integer which should corresponds to the cluster of
+#' interest.
+#' @param fitCluster Integer from 0-1. How well should the pathways fit into the this
+#' cluster? Default is 0.99.
+#' @return A dataframe that contains information about the pathways that
+#' corresponded best with the chosen cluster. Output will be stored as an assay
+#' in the input MAE.
 #' @export
 #' @usage returnCluster(MAE, clusterData, whichCluster, fitCluster)
 #' @examples
@@ -35,18 +37,24 @@
 #'                      fitCluster = 0.5)
 returnCluster <-function(MAE, clusterData, whichCluster, fitCluster = 0.99){
 
-    if (missing(MAE)) stop('Add MAE object. Results from returnCluster
-                           will be stored within given MAE. Please
+    if (missing(MAE)) stop('
+                           MAE is missing.
+                           Add MAE object. Results from returnCluster
+                           will be stored within this MAE. Please
                            use createClusters first.')
 
-    if (missing(clusterData)) stop('Add dataframe which has cluster-pathway
+    if (missing(clusterData)) stop('
+                                   clusterData is missing.
+                                   Add dataframe which has cluster-pathway
                                    fit scores. Please use the createClusters
-                                   function. clusterData should be
+                                   function first. clusterData should be
                                    stored as an assay within the MAE used in
                                    the createClusters function.')
 
-    if (missing(whichCluster)) stop('Add interger which represents which
-                                    cluster is of interest.')
+    if (missing(whichCluster)) stop('
+                                    whichCluster is missing.
+                                    Add integer which represents the
+                                    cluster that is of interest.')
 
     X <- as.data.frame(clusterData)
 

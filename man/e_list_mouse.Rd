@@ -5,7 +5,7 @@
 e_list_mouse
 }
 \description{
-List of entrezIDs from significant DE on the mouse fibrosis dataset. To make examples run faster this data is used, instead of re-running previous functions
+List of entrezIDs of the significantly DE genes from the mouse fibrosis dataset. To make examples run faster this data is used, instead of re-running previous functions
 throughout the examples of TimiRGeN. e_list_mouse is the output of the eNames function
 when the combined analysis is performed on mm_miR and mm_RNA and when entrezIDs
 are used as the gene IDs.

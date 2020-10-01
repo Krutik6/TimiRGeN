@@ -1,10 +1,10 @@
 #' @title micrornaFull
-#' @description Changes many potential miR naming systems into
-#' miR names which adhere to the TimiRGeN miR naming system in one step.
-#' Internal function for getIDsMir functions.
-#' @param miRdf miR dataframe. Will be the miR input for the getIdsMir function
-#' used.
-#' @param species Species e.g. hsa or mmu.
+#' @description Changes many potential miR naming systems into miR names which
+#' adhere to the TimiRGeN friendly miR naming system in one step.
+#' This is an internal function for getIDsMir functions.
+#' @param miRdf miR dataframe with genes as rownames and results from DE as
+#' column names. Will be the miR input for the getIdsMir function used.
+#' @param species Species e.g. "hsa" or "mmu".
 #' @return hsa-miR-140-5p would be changed to microRNA 140-1
 #' @noRd
 micrornaFull <- function(miRdf, species){

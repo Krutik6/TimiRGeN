@@ -7,23 +7,21 @@
 dloadTargetscan(MAE, species)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment which will have the downloaded targetscans
-data stored here. It is recommended to use the same MAE object created from
+\item{MAE}{MultiAssayExperiment which will store the downloaded targetscan
+data. It is recommended to use the MAE which was used in
 the mirMrnaInt function.}
 
 \item{species}{Species of interest e.g "hsa" or "mmu."}
 }
 \value{
-Dataframe of species specific predicted mRNA-miR interactions.
-
-A dataframe of predicted miR-mRNA interactions in different
-species.
+Dataframe of species specific predicted mRNA-miR interactions. Output
+will be stored as an assay in the input MAE.
 }
 \description{
 Downloads most recent version (7.2) of predicted targets from
-targetscan database
+the targetscan database
 http://www.targetscan.org/cgi-bin/targetscan/data_download.vert72.cgi.
-Resulting dataframe will be stored as an assay in a MAE object.
+miR-mRNA interactions from the species of interest will be extracted.
 }
 \examples{
 \dontrun{

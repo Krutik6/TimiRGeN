@@ -1,15 +1,14 @@
 #' @title dloadTargetscan
 #' @description Downloads most recent version (7.2) of predicted targets from
-#' targetscan database
+#' the targetscan database
 #' http://www.targetscan.org/cgi-bin/targetscan/data_download.vert72.cgi.
-#' Resulting dataframe will be stored as an assay in a MAE object.
-#' @param MAE MultiAssayExperiment which will have the downloaded targetscans
-#' data stored here. It is recommended to use the same MAE object created from
+#' miR-mRNA interactions from the species of interest will be extracted.
+#' @param MAE MultiAssayExperiment which will store the downloaded targetscan
+#' data. It is recommended to use the MAE which was used in
 #' the mirMrnaInt function.
 #' @param species Species of interest e.g "hsa" or "mmu."
-#' @return Dataframe of species specific predicted mRNA-miR interactions.
-#' @return A dataframe of predicted miR-mRNA interactions in different
-#' species.
+#' @return Dataframe of species specific predicted mRNA-miR interactions. Output
+#' will be stored as an assay in the input MAE.
 #' @export
 #' @usage dloadTargetscan(MAE, species)
 #' @examples
@@ -21,12 +20,16 @@
 #' }
 dloadTargetscan <- function(MAE, species){
 
-  if (missing(MAE)) stop('Add MultiAssayExperiment which will have downloaded
+  if (missing(MAE)) stop('
+                         MAE is missing.
+                         Add MultiAssayExperiment which will have downloaded
                          data stored in it. Please use the mirMrnaInt
                          function first.')
 
-  if (missing(species)) stop('Add species initials of interest e.g "hsa"
-                               or "mmu".')
+  if (missing(species)) stop('
+                              MAE is missing.
+                              Add initials of the species of interest e.g "hsa"
+                              or "mmu".')
 
   # download file
   download.file(paste("http://www.targetscan.org/vert_72/vert_72_data_download/",
@@ -53,7 +56,7 @@ dloadTargetscan <- function(MAE, species){
 
   # Only keep selected species microRNAs
   TargetScans_s <- TargetScans %>% dplyr::filter(stringr::str_detect(
-    Transcript, species))
+                                                  Transcript, species))
 
 
   if (species == 'hsa') {

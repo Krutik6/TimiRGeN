@@ -8,37 +8,20 @@ savePlots(largeList, maxInt, quickType, fileType = '')
 }
 \arguments{
 \item{largeList}{A large list containing GSEA results. This should be
-contained as metadata within the MAE used in the enrichWiki function.}
+stored as metadata within the MAE used in the enrichWiki function.}
 
 \item{maxInt}{Integer, number of samples in data set.}
 
 \item{quickType}{quickDot or quickBar. This will be the plot type.}
 
 \item{fileType}{Type of file for images to be exported as: "png", "tiff",
-"svg" or "jpg."}
+"svg" or "jpg".}
 }
 \value{
-saves plots in current directory.
+Saves plots in working directory. Each sample (e.g. time point) will
+have a separate plot.
 }
 \description{
-Saves all plots from enrichWiki into the current directory.
-}
-\examples{
-\donttest{
-library(org.Mm.eg.db)
-
-MAE <- MultiAssayExperiment()
-
-metadata(MAE)[["e_list"]] <- e_list
-
-MAE <- dloadGmt(MAE, speciesInitial = "Mm")
-
-MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
-                 orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),
-                 path_name = assay(MAE, 2), ID = "ENTREZID",
-                 universe = assay(MAE, 1)[[2]])
-
-savePlots(largeList = metadata(MAE)[[2]], maxInt = 5,
-         quickType = quickDot, fileType = "jpg")
-}
+Saves all plots from enrichWiki into the current working
+directory.
 }

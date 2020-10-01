@@ -7,29 +7,29 @@
 eNames(MAE, method = '', gene_IDs, ID_Column)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment to store output of eNames.
-It is recommended to use the MAE object which contains addIds results.}
+\item{MAE}{MultiAssayExperiment which will store output of eNames.
+It is recommended to use the MAE which stores the output of addIds.}
 
-\item{method}{Either 'c' or 's' for combined or separated analysis.}
+\item{method}{Either 'c' or 's', respectively for combined or separated
+analysis.}
 
-\item{gene_IDs}{List of DE data and associated gene IDs.
-Output from addIds function, this should be found in the metadata of the MAE
-used in the addIds function.}
+\item{gene_IDs}{List of DE data and associated gene IDs. This is the
+output from the addIds function, this should be found as metadata in
+the MAE used in the addIds function.}
 
-\item{ID_Column}{The entrez/ ensembl ID column in each dataframe.
-Should be the last column. This should be 2+ the number of DE results per
-time point. e.g. if a user has log2f and adj.P.val results for each
-time point, then the fourth column will contain the gene ID information.}
+\item{ID_Column}{Integer representing the gene ID column in each dataframe.
+This will be the last column in each dataframe, but will vary based on the
+input data. This should be 2+ the number of DE results per
+time point. e.g. if each time point has log2fc's and adjPvalue's, then the
+fourth column will contain the gene ID information.}
 }
 \value{
-A single list of entrez/ ensembl IDs for each dataframe
-within the lists.
+A single list of entrez/ ensembl IDs for each time point. Output
+will be stored as metadata in the input MAE.
 }
 \description{
-Extract the gene IDs from the nested dataframes within the
-metadata of the MAE object, which is the output of the addIds function.
-Results of eNames will be stored in the metadata of the resulting
-MAE object.
+Extracts the gene IDs from nested dataframes created from the
+addIds function.
 }
 \examples{
 library(org.Mm.eg.db)

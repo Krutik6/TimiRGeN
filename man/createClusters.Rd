@@ -8,11 +8,12 @@ createClusters(MAE, method, percentMatrix, noClusters,
 dataString = '', variance)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment where the results from createClusters will be
-stored. It is advised to use the MAE object which stores the output of
-by turnPercent.}
+\item{MAE}{MultiAssayExperiment which will store the results from
+createClusters. It is recommended to use the MAE object which stores the
+output of by turnPercent.}
 
-\item{method}{Either "c" or "s" for combined or separate analysis.}
+\item{method}{Either "c" or "s", respectively for combined or separated
+analysis.}
 
 \item{percentMatrix}{A matrix containing wikipathway-data information. It
 is output from the turnPercent function and will be stored as an assay
@@ -21,27 +22,28 @@ within the MAE used in the turnPercent function.}
 \item{noClusters}{Number of clusters to create, the default is 5.}
 
 \item{dataString}{Only for use in "s" analysis. Insert the prefix string e.g.
-mRNA or miR. The string added should be the same prefix added using the
-addPrefix function.}
+"mRNA" or "miR". The string added should be the same as the prefixString
+added during the addPrefix function.}
 
 \item{variance}{Numeric value from 0-1 to control strictness of filtering.
 Higher variance means more pathways will be excluded from the analysis.}
 }
 \value{
-Clusters(metadata): A list to be used as the input in checkClusters.
-MfuzzData(ExperimentList): An ExpressionSet object to be input for
+3 new objects in the input MAE.
+Clusters(metadata): A list to be used as the input in checkClusters
+and quickFuzz.
+MfuzzData(ExperimentList): An ExpressionSet object to be used as input for
 quickFuzz.
-ClusterData(assay): A breakdown of how each pathway fitted with
-each cluster and is the input for returnCluster.
+ClusterData(assay): An assay to be used as input for returnCluster.
 }
 \description{
-Create soft clusters to assess change in gene abundance during
-the time course in different wikipathways. createClusters will create
-3 data files. Clusters which will be stored in the metadata,
-MfuzzData which contains fuzzy clustering information will be stored
-as an experiment and ClusterData which gives cluster-pathway fit information
-which is stored as an assay. This function may take some time as it
-downloads pathway information.
+Creates soft clusters to assess changes in gene abundance during
+the time course in many pathways. createClusters will create 3 data files.
+1) Clusters will contain cluster logistics information and will be stored as
+metadata, 2) MfuzzData will contain fuzzy clustering information and will be
+stored as an experiment, 3) ClusterData will contain cluster-pathway fit
+information and will be stored as an assay. This function may take some time
+as it downloads pathway information.
 }
 \examples{
 MAE <- MultiAssayExperiment()

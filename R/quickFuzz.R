@@ -1,26 +1,30 @@
 #' @title quickFuzz
-#' @description Plots fuzzy clusters in reference to the ClusterData dataframe.
-#' Each different cluster created will represent a different temporal
-#' behaviour. Depending on the data, more or fewer cluster may be appropriate.
+#' @description Plots fuzzy clusters. Each different cluster created will
+#' represent a different temporal behaviour. Depending on the data, more or
+#' fewer cluster may be appropriate.
 #' Use clusterCheck to influence this decision before moving onto quickFuzz.
-#' Each line in a plot represents a pathway. Pathways are divided by colour,
-#' the more intense the colour, the higher the fit a pathway has to a particular
-#' cluster and temporal behaviour.
+#' Each line in a cluster represents a pathway. Pathways are divided by colour.
+#' The more intense the colour of a line, the stronger they fit a particular
+#' cluster / temporal behaviour.
 #' Fuzzy clustering is a soft clustering approach where objects are not
-#' divided into fixed classes. Each pathway can exist in each cluster but
-#' each pathway will fit to different degrees to each cluster. Look into
-#' the clusterData dataframe created by createClusters to see this.
-#' If a cluster peaks interest, continue this analysis with returnCluster.
+#' divided into fixed clusters. Each pathway can exist in each cluster but
+#' each pathway will differ on the degree to which they fit to each cluster.
+#' Look into the clusterData dataframe created by createClusters to see this.
+#' If a cluster peaks interest, continue to analysis of that cluster with the
+#' returnCluster function.
 #' @param Mfuzzdata A large ExpressionSet object which contain fuzzy clustering
 #' data. This is output from the createClusters function. The Expressionset
 #' object should be stored as an experiment in the MAE used in the
 #' createClusters function.
-#' @param Clusters A large list containing fuzzy clustering data. This is
-#' output from the createClusters function. The list of should be stored as
-#' metadata in the MAE used in the createClusters function.
-#' @param W Should the plot be shown in a new window? Default is TRUE.
-#' @return A plot of different clusters showing how the input data varies
-#' across different wikipathways.
+#' @param Clusters A large list containing information about clusters,
+#' statistics and phenodata. This is output from the createClusters function.
+#' The list should be stored as metadata in the MAE used in the
+#' createClusters function.
+#' @param W TRUE or FALSE? Should the plot be shown in a new window? Default is
+#' TRUE.
+#' @return A plot of different clusters showing how the number of genes found
+#' to be significant varies between the input data and wikipathways. These
+#' variations are captured as temporal behaviours and are clustered.
 #' @export
 #' @importFrom Mfuzz mfuzz.plot2
 #' @usage quickFuzz(Mfuzzdata, Clusters, W)
@@ -46,14 +50,19 @@
 #'           Clusters = metadata(MAE)[[3]], W = FALSE)
 quickFuzz <- function(Mfuzzdata, Clusters, W = TRUE){
 
-    if (missing(Mfuzzdata)) stop('Add the ExpressionSet created by
-                                  createClusters. Please use the createClusters
+    if (missing(Mfuzzdata)) stop('
+                                  Mfuzzdata is missing.
+                                  Add the ExpressionSet object created by
+                                  createClusters. Please use createClusters
                                   first. Mfuzzdata should be stored as an
-                                  expreriment within the MAE used in the
+                                  experiment within the MAE used in the
                                   createClusters function.')
 
-    if (missing(Clusters)) stop('Add the list created by createClusters.
-                                 Please use the createClusters first. Clusters
+    if (missing(Clusters)) stop('
+                                 Clusters is missing.
+                                 Add the list created by createClusters.
+                                 Please use createClusters first. Please
+                                 use the createClusters function first. Clusters
                                  should be stored as metadata within the MAE
                                  used in the createClusters function.')
 

@@ -1,14 +1,14 @@
 #' @title getIdsMrnaMouse
-#' @description  getIdsMrnaMouse will produce ensembl and entrez data for
-#' mouse mRNAs.These will be stored as 2 individual assays within a MAE.
+#' @description  getIdsMrnaMouse will produce ensembl and entrez ID dataframes
+#' for mouse mRNAs. These will be stored as 2 individual assays within a MAE.
 #' @param MAE MultiAssayExperiment to store the output of getIdsMrnaMouse.
 #' It is recommended to use the MAE which contains output from startObject.
 #' @param mRNA Dataframe. Rownames are genes and columns are results of DE.
 #' This should be found as an assay within the MAE used in the startObject
 #' function. Please read vignette for nomenclature guidance.
-#' @param mirror String to identify which biomaRt repo is best for the users
-#' locations. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'useast'.
-#' @return 2 new dataframes in the MAE object. One with entrez information and
+#' @param mirror String to identify which biomaRt server is best. This is based
+#' on location. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'www'.
+#' @return 2 new dataframes in the MAE. One with entrez information and
 #' the other with ensembl gene ID information.
 #' @export
 #' @importFrom biomaRt useEnsembl getBM
@@ -21,12 +21,16 @@
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)
 #'
 #' MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'www')
-getIdsMrnaMouse <- function(MAE, mRNA, mirror = 'useast'){
+getIdsMrnaMouse <- function(MAE, mRNA, mirror = 'www'){
 
-    if(missing(MAE)) stop('MAE object to store output of getIdsMrnaMouse.
+    if(missing(MAE)) stop('
+                          MAE is missing.
+                          Add MAE to store output of getIdsMrnaMouse.
                           Please use startObject first.')
 
-    if (missing(mRNA)) stop('Add mRNA dataframe. Please use startObject first.
+    if (missing(mRNA)) stop('
+                           mRNA is missing.
+                           Add mRNA dataframe. Please use startObject first.
                            The output of startObject will be stored as an
                            assay within the MAE used in the startObject
                            function.')

@@ -9,54 +9,57 @@ enrichWiki(MAE, method = '', ID_list, orgDB, path_gene, path_name,
                   padjustmethod)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment. Results of enrichWiki will be
-stored in the metadata. It is recommended to use the MAE object created
-by dloadGmt.}
+\item{MAE}{MultiAssayExperiment which will store the output from enrichWiki.
+It is recommended to use the MAE object which stores the output from the
+dloadGmt function.}
 
-\item{method}{Either 'c' or 's' for combined or separated analysis.}
+\item{method}{Either 'c' or 's', respectively for combined or separated
+analysis.}
 
 \item{ID_list}{List of ensembl or entrez IDs for each sample.
-This is the output from eNames function. This will be found within the
-metadata of the MAE used in the eNames function.}
+This is the output from eNames function. This will be found as
+metadata within the MAE used in the eNames function.}
 
-\item{orgDB}{Library of species specific data. e.g. org.Mm.eg.db.}
+\item{orgDB}{DB package of the species being analysed. e.g. org.Mm.eg.db
+if mouse miR-mRNA data is being looked into.}
 
-\item{path_gene}{path_gene dataframe. From dloadGmt or gmtEnsembl
-function, and will be stored as assays within the MAE used in dloadGmt or
-gmtEnsembl.}
+\item{path_gene}{Dataframe containing pathway ID - gene ID information. This
+is output from either dloadGmt or gmtEnsembl. It will be stored as an assay
+within the MAE used in dloadGmt or gmtEnsembl.}
 
-\item{path_name}{path_name dataframe from dloadGmt. Will be stored as an
-assay within the MAE used in dloadGmt.}
+\item{path_name}{Dataframe containing pathway ID - pathway names information.
+This is output from dloadGmt. It will be stored as an assay within the MAE
+used in dloadGmt.}
 
 \item{ID}{Either "ENTREZID" or "ENSEMBL". This should be the same as the ID
-type used for ID_list. dloadGMT loads data as ENTREZID, so use gmtEnsembl
-function to get ENSEMBL data.}
+type used for ID_list. dloadGmt loads data as entrez gene IDs and gmtEnsembl
+converts this to ensembl gene IDs.}
 
 \item{universe}{A column of gene IDs to be used as the background for
-gene set enrichment. Recommended use is to use all genes found within the
-wikipathways of the species of interest as background i.e.
-path_gene$gene or universe = assay(MAE, i)[[2]]. To add unique universe,
-create a list of gene IDs (entrezID or ensembl) to contrast against.}
+gene set enrichment. IDs should be stored as characters. It is recommended to
+use all genes found within the wikipathways of the species being analysed as
+background i.e. path_gene$gene or universe = assay(MAE, i)[[2]]/ MAE[[i]][2].
+To add a unique universe, create a list of gene IDs (entrezID or ensembl)
+which are classed as characters.}
 
-\item{pvalcutoff}{Default is 0.05. P value cutuff point.}
+\item{pvalcutoff}{Default is 0.05. P value cut-off point.}
 
-\item{qvaluecutoff}{Default is 0.2. q value cutoff point.}
+\item{qvaluecutoff}{Default is 0.2. q value cut-off point.}
 
-\item{padjustmethod}{Default is 'BH'. This sets the  pvalue adjustment
-method to be used. Look into clusterProfiler function enricher for more
-options.}
+\item{padjustmethod}{Default is 'BH'. This sets the pvalue adjustment
+method. Look into the enricher function from clusterProfiler for more info.}
 }
 \value{
-A large list of data which identifies which wikipathways are
-most enriched in the input data which can be stored in an MAE object.
+A large list which identifies which wikipathways are most enriched
+at each time point of the input data. Output will be stored as metadata in
+the input MAE.
 }
 \description{
 Finds which wikipathways are enriched within the data. This
 function uses gene set enrichment analysis from clusterProfiler to
-find enriched pathways from wikipathways. Each time point is analysed
-individually. In the case of TimiRGeN analysis using the 's' analysis,
-each gene type and time point is analysed individually. Data is stored as
-metadata of a MAE.
+find enriched signalling pathways. Each time point is analysed
+individually. In the case of separated TimiRGeN analysis, each gene type and
+time point are analysed individually.
 }
 \examples{
 library(org.Mm.eg.db)

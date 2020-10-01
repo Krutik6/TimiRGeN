@@ -1,13 +1,14 @@
 #' @title nonUnique
-#' @description Internal function for getIDs functions. Helps data
-#' wrangling for -3p and -5p genes.
-#' @param Col Column of dataframe to modify.
-#' @param sep Seperator to insert. Will separate suffix from current string in
-#' column.
-#' @param suffix Suffix to add behind separator, default is 1, and increases
-#' in numerical order for each repeated string in the column.
-#' @return Modified column of a dataframe. Each non-unique value will have
-#' numbers representing it's duplicate number behind it.
+#' @description Helps to create the adjusted miR ID dataframes during the
+#' getIDsMir functions. This is an internal function.
+#' @param Col Column of dataframe to modify. sep and suffix will be added behind
+#' repeated strings within this column..
+#' @param sep Separator to insert. Will separate suffix from current string in
+#' selected column.
+#' @param suffix Suffix to be added behind the sep parameter, default is 1,
+#' and it increases in numerical order for each repeated string in the column.
+#' @return Modifies a column of a dataframe. Each non-unique value will have
+#' a unique number added behind it.
 #' @importFrom stats ave
 #' @usage nonUnique(Col, sep, suffix)
 #' @noRd

@@ -9,10 +9,10 @@ MAE <- MultiAssayExperiment()
 MAE <- dloadGmt(MAE, speciesInitials = 'Mm')
 
 #internal tests
-download.file("http://data.wikipathways.org/20200110/gmt/wikipathways-20200110-gmt-Mus_musculus.gmt",
-"mus.gmt")
+x <- rWikiPathways::downloadPathwayArchive(organism="Mus musculus",
+                                           format = "gmt")
 
-musgmt <- read.gmt("mus.gmt")
+musgmt <- clusterProfiler::read.gmt(x)
 
 musgmt <- as.data.frame(musgmt)
 
@@ -73,5 +73,5 @@ MAE2 <- MultiAssayExperiment(list("path_gene" = assay(MAE, 1)[1:2000,],
 saveRDS(MAE2, "wpdata.rds", compress = "xz")
 
 #same for human data
-file.remove("mus.gmt")
+file.remove(x)
 

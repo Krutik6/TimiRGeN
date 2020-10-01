@@ -259,3 +259,26 @@ Error in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  : inva
 * @noRd has been added to internal functions: corrTable, mirnaFull and nonUnique.
 * Examples have been checked to be able to be copied into a new R script and run, they all work this way. Even donttest/ functions.
 * useast server of biomart has been unreliable in this last week so have changed to use 'www' for getIdsMrna functions for the time being.
+
+TimiRGeN v0.99.4158 (Date: 01/08/2020)
+===============================
+* Changed e_list.rda to e_list_mouse.rda to match naming style of other datasets.
+
+TimiRGeN v0.99.4159 (Date: 12/09/2020)
+===============================
+* donttest /dontrun examples now work correctly.
+* Major spelling/ grammar edits done on functions and vignette.
+* Updated to the latest version of miRTarBase.
+* Updated references in the vignette.
+
+TimiRGeN v0.99.5 (Date: 18/09/2020)
+===============================
+* dloatGmt will now download the most current wikipathways gmt files.
+* miRTarBase v 8.0 now used. Reference has been updated.
+* Vignette now showcasing Lung Fibrosis as example. Complement and Coagulation pathway was removed from the mouse wikipathways database.
+* Package is now on bioconductor devel.
+* Updated package description.
+* Updated Pathvisio_GRN_guide.pdf file in the Inst directory.
+* Fixed wikiList function.
+
+

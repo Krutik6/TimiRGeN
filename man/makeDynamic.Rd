@@ -9,17 +9,18 @@ makeDynamic(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
 }
 \arguments{
 \item{MAE}{MultiAssayExpreriment to store the output of makeDynamic. It is
-recommended to use the same MAE which stores results from matrixFilter.}
+recommended to use the same MAE which stores output from matrixFilter.}
 
 \item{miR_expression}{Dataframe containing abundance values
-(e.g. log2fc or average expression) from miR specific DE, along with gene ID
-information. This is the output from diffExpressRes. Should be stored as an
-assay within the MAE used in diffExpressRes.}
+(e.g. log2fc or average expression) from miR specific differential expression
+, along with gene IDs. This is the output from diffExpressRes. Output of
+diffExpressRes should be stored as an assay within the MAE used in
+diffExpressRes.}
 
-\item{mRNA_expression}{Dataframe containing abundance values
-(log2fc or average expression) from mRNA specific DE, along with gene ID
-information. This is the output from diffExpressRes. Should be stored as an
-assay within the MAE used in diffExpressRes.}
+\item{mRNA_expression}{Dataframe containing abundance values (log2fc or
+average expression) from mRNA specific differential expression, along with
+gene IDs. This is the output from diffExpressRes. Output of diffExpressRes
+should be stored as an assay within the MAE used in diffExpressRes.}
 
 \item{miR_IDs_adj}{Dataframe which contain adjusted gene IDs from miR data.
 Either miR_adjusted_entrez or miR_adjusted_ensembl. Should be found
@@ -29,15 +30,17 @@ as an assay in the MAE used a getIdsMir function.}
 Either "En" (ensembl data) or "L" (entrez data).}
 }
 \value{
-MicroRNA and mRNA dynamic data that can be saved and be used in
+miR and mRNA dynamic data that can be saved and be used in
 pathvisio to display dynamic behaviour of miRs and mRNAs of interest over
-the time series.
+the time series in a signalling pathway of interest. Output will be stored
+as an assay in the input MAE.
 }
 \description{
-Produces a data frame that can be imported into pathvisio
-to show changes in genes over time. Follow vignette instructions on how to
-save this file and further instructions found in
-/inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
+Produces a dataframe that can be imported into pathvisio
+to show how changes in genes expression levels over the time course. Follow
+instructions found in the vignette which show on how to save this file and
+further instructions found in /inst/Pathvisio_GRN_guide.pdf to see how
+this can help in GRN construction.
 }
 \examples{
 library(org.Mm.eg.db)

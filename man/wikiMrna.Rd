@@ -7,29 +7,29 @@
 wikiMrna(MAE, mRNA_express, singleWiki, stringWiki='')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object which will have the results of
-wikiMrna added to it. It is recommended to use the same MAE which stores
-information from diffExpressRes and reduceWiki functions.}
+\item{MAE}{MultiAssayExperiment which will store the results of wikiMrna.
+It is recommended to use the same MAE which stores output from the
+diffExpressRes and reduceWiki functions.}
 
 \item{mRNA_express}{Dataframe from the diffExpressRes function used on the
-input mRNA data. This should be found as an assay within the MAE used in
-diffExpressRes.}
+input mRNA data. This should be found as an assay within the MAE used in the
+diffExpressRes function.}
 
-\item{singleWiki}{Output from reduceWiki function on a Wikipathway
-of interest. This information should be found as an assay within the MAE
-used in the reduceWiki function.}
+\item{singleWiki}{Dataframe containing information about only one pathway.
+This is output from the reduceWiki function. This should be found as an
+assay within the MAE used in the reduceWiki function.}
 
 \item{stringWiki}{Name of the pathway of interest. Should be the same
-as the stringWiki from the reduceWiki function.}
+as the stringWiki parameter from the reduceWiki function.}
 }
 \value{
-A dataframe which only contains mRNAs from the input data and
-the wikipathway of interest.
+A dataframe which only contains mRNAs which are found in both the
+input data and the wikipathway of interest. Output will be stored as an assay
+in the input MAE.
 }
 \description{
-Identify which genes are in common with the genes found in the
-wikipathway of interest and the significantly differentially
-expressed input mRNAs. Store the results in a MAE as an assay.
+Identify genes that are in common in both the wikipathway of
+interest and the significantly differentially expressed input mRNAs.
 }
 \examples{
 library(org.Mm.eg.db)

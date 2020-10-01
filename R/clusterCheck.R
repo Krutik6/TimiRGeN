@@ -1,12 +1,14 @@
 #' @title clusterCheck
-#' @description This will create a PCA plot using Mfuzz functions. This
-#' will indicate if an appropriate number of clusters have been created.
+#' @description clusterCheck creates a PCA plot using functions from Mfuzz. This
+#' will help to indicate if an appropriate number of clusters have been created.
 #' The closer the circles are to one another the more likely that they should
 #' belong to the same cluster. Read more about Mfuzz here
 #' https://bioconductor.org/packages/release/bioc/html/rWikiPathways.html.
-#' @param Clusters A list of clusters,statistics and phenodata. This will be
-#' stored as metadata within the MAE used in the createClusters function.
-#' @param W Should the plot be shown in a new window? Default is TRUE.
+#' @param Clusters A large list of clusters, statistics and phenodata. This
+#' will be stored as metadata within the MAE used in the createClusters
+#' function.
+#' @param W TRUE or FALSE. Should the plot be shown in a new window? Default is
+#' FALSE.
 #' @return A PCAplot showing distance of clusters.
 #' @export
 #' @importFrom grDevices dev.new
@@ -31,9 +33,11 @@
 #'                     noClusters = 2, variance = 0.99)
 #'
 #' clusterCheck(Clusters = metadata(MAE)[[3]], W = FALSE)
-clusterCheck <- function(Clusters, W = TRUE){
+clusterCheck <- function(Clusters, W = FALSE){
 
-    if (missing(Clusters)) stop('Please use the createClusters function first.
+    if (missing(Clusters)) stop('
+                                Clusters is missing.
+                                Please use the createClusters function first.
                                 The Clusters list created from this will be
                                 stored as metadata within the MAE used in the
                                 createClusters function.')

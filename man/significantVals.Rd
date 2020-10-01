@@ -7,33 +7,32 @@
 significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment object. The output of significantVals will
-be added to this MAE object. It is recommended to use the MAE object
-created from genesList here.}
+\item{MAE}{MultiAssayExperiment to store the output of significantVals. It is
+recommended to use the MAE used in the genesList.}
 
-\item{method}{Respectively either 'c' or 's' for combined or separated
+\item{method}{Either "c" or "s", respectively for combined or separated
 analysis.}
 
-\item{geneList}{A list of nested dataframes if 'c' or a list of lists
-with nested dataframes if 's'. This will be the output from the
-genesList function. The resulting list will be found as metadata of
+\item{geneList}{A list of nested dataframes if "c" analysis is used or a list
+of lists of nested dataframes if "s" is used. This will be the output from
+them genesList function. The resulting list will be found as metadata, in
 the MAE used in the genesList function.}
 
 \item{maxVal}{Numeric value which represents the maximum cut off value
 for significance e.g. 0.05.}
 
-\item{stringVal}{Character. Common DE result type in all nested
-dataframes which should be used for filtration e.g. pval, adjPval,
-qval. Make sure this matches the colnames.}
+\item{stringVal}{Character. Common DE result type which is found in all
+nested dataframes. This will be used for filtration e.g. pval, adjPval or
+qval. Make sure the spelling matches the colnames for each sample.}
 }
 \value{
-A list with only significantly differentially expressed genes
-which will also be stores as metadata of a MAE.
+A list of dataframes with only significantly differentially
+expressed genes. Output will be stored as metadata within the input MAE.
 }
 \description{
 Filters out genes in each nested dataframe which are not deemed
-significantly differentially expressed. The results will be stored in
-the metadata of an MAE object.
+significantly differentially expressed. Each sample will be filtered
+independently.
 }
 \examples{
 miR <- mm_miR

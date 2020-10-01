@@ -12,30 +12,24 @@ interactions. This is output from matrixFilter and should be found as an
 assay within the MAE used in the matrixFilter function.}
 
 \item{titleString}{Title of the network. Enter a string which cytoscape
-will see as the graph name.}
+will see as the graph name. Default is "Network".}
 
 \item{collectionString}{Title of the collection of networks. Enter string
 which cytoscape will see as the collection name. Many differently titled
-graphs can be added to a single collection.}
+graphs can be added to a single collection. Default is
+"miR-mRNA interactions".}
 }
 \value{
-A network visible in cytoscape version 3.7 or later.
+A network of filtered miR-mRNA interactions specific for a pathway
+of interest. It will be visible in cytoscape version 3.7 or later.
 }
 \description{
 Creates a cytoscape network based on the output of matrixFilter.
 Requires cytoscapePing() to be used. Make sure Cytoscape is open first. Must
-be version 3.7 or later.
+use Cytoscape version 3.7 or later.
 }
 \examples{
-\donttest{
-miR <- mm_miR
-
-mRNA <- mm_mRNA
-
-MAE <- startObject(miR = miR, mRNA = mRNA)
-
-MAE <- getIDs_miR_mouse(MAE, assay(MAE, 1))
-
+\dontrun{
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                     "mmu-miR-27a-3p:Odc1"),
                       avecor = c(-0.9191653, 0.7826041),
@@ -49,7 +43,7 @@ Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                       miRTarBase = c(0, 1),
                       Pred_Fun = c(1, 1))
 
-cytoscapePing()
+RCy3::cytoscapePing()
 
 cytoMake(interactionData = Filt_df, titleString = 'test' ,
          collectionString = 'collectiontest')

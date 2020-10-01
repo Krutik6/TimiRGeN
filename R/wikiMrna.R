@@ -1,20 +1,20 @@
 #' @title wikiMrna
-#' @description Identify which genes are in common with the genes found in the
-#' wikipathway of interest and the significantly differentially
-#' expressed input mRNAs. Store the results in a MAE as an assay.
-#' @param MAE MultiAssayExperiment object which will have the results of
-#' wikiMrna added to it. It is recommended to use the same MAE which stores
-#' information from diffExpressRes and reduceWiki functions.
+#' @description Identify genes that are in common in both the wikipathway of
+#' interest and the significantly differentially expressed input mRNAs.
+#' @param MAE MultiAssayExperiment which will store the results of wikiMrna.
+#' It is recommended to use the same MAE which stores output from the
+#' diffExpressRes and reduceWiki functions.
 #' @param mRNA_express Dataframe from the diffExpressRes function used on the
-#' input mRNA data. This should be found as an assay within the MAE used in
-#' diffExpressRes.
-#' @param singleWiki Output from reduceWiki function on a Wikipathway
-#' of interest. This information should be found as an assay within the MAE
-#' used in the reduceWiki function.
+#' input mRNA data. This should be found as an assay within the MAE used in the
+#' diffExpressRes function.
+#' @param singleWiki Dataframe containing information about only one pathway.
+#' This is output from the reduceWiki function. This should be found as an
+#' assay within the MAE used in the reduceWiki function.
 #' @param stringWiki Name of the pathway of interest. Should be the same
-#' as the stringWiki from the reduceWiki function.
-#' @return A dataframe which only contains mRNAs from the input data and
-#' the wikipathway of interest.
+#' as the stringWiki parameter from the reduceWiki function.
+#' @return A dataframe which only contains mRNAs which are found in both the
+#' input data and the wikipathway of interest. Output will be stored as an assay
+#' in the input MAE.
 #' @export
 #' @usage wikiMrna(MAE, mRNA_express, singleWiki, stringWiki='')
 #' @examples
@@ -45,26 +45,33 @@
 #'                 stringWiki = 'TGF Beta Signaling Pathway')
 wikiMrna <- function(MAE, mRNA_express, singleWiki, stringWiki){
 
-    if (missing(MAE)) stop("Add MAE. This will store the results
-                           from wikiMrna in it. Please use the
-                           diffExpressRes and reduceWiki first.")
+    if (missing(MAE)) stop("
+                           MAE is missing.
+                           Add MAE. This will store the results from wikiMrna.
+                           Please use diffExpressRes and reduceWiki first.")
 
-    if (missing(mRNA_express)) stop("Add dataframe which contains mRNAs,
-                                    results from DE e.g. log2fc, aveExpression,
+    if (missing(mRNA_express)) stop("
+                                    mRNA_express is missing.
+                                    Add dataframe which contains mRNA
+                                    results from DE (e.g. log2fc, aveExpression)
                                     and gene IDs. Please use the diffExpressRes
                                     function on input mRNA data first.
                                     Output of diffExpressRes should be stored
-                                    as an assay in the MAE used in the
+                                    as an assay within the MAE used in the
                                     diffExpressRes function.")
 
-    if (missing(singleWiki)) stop("Add Dataframe which has data about which
+    if (missing(singleWiki)) stop("
+                                  singleWiki is missing.
+                                  Add Dataframe which has data on which
                                   mRNAs are found within a single wikipathway.
                                   Please use the reduceWiki function first.
-                                  Output of singeWiki should be stored as an
-                                  assay in the MAE used in the singleWiki
+                                  Output of reduceWiki should be stored as an
+                                  assay in the MAE used in the reduceWiki
                                   function.")
 
-    if (missing(stringWiki)) stop("Add Name of the wikipathway. Should be same
+    if (missing(stringWiki)) stop("
+                                  stringWiki is missing.
+                                  Add Name of the wikipathway. Should be same
                                   as the stringWiki used in reduceWiki.")
 
     # Take dataframes out of MAE objects

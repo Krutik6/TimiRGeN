@@ -8,22 +8,25 @@ startObject(miR, mRNA)
 }
 \arguments{
 \item{miR}{microRNA dataframe/ matrix. Rows should be miR gene names which
-should use TimiRGeN standard nomenclature. Columns should be results of
+use the TimiRGeN friendly naming system. Columns should be results of
 DE and time points.}
 
 \item{mRNA}{mRNA dataframe/ matrix. Rows should be mRNA gene names.
 Columns should be results of DE and time points.}
 }
 \value{
-MultiAssayExperiment object
+MultiAssayExperiment containing miR and mRNA data stored as assays.
+Use assays(MAE, i) or MAE[[i]] to access assays. Use metadata(MAE)[[i]] to
+access metadata. Use experiments(MAE)[[i]] to access experiments.
 }
 \description{
-Creates a MultiAssayObject from miR and mRNA dataframes. This
-will be the constant object used throughout TimiRGeN. The dataframes should
-contain rows as genes, and results from differential expression (DE) as
-columns. The column names should be gene names must adhere to
-TimiRGeN standards for processing and analysis, please read the vignette
-for a full description of the required nomenclature.
+Creates a MultiAssayExperiment (MAE) from miR and mRNA
+dataframes. MAE's will be the constant object used throughout TimiRGeN. The
+input dataframes should contain rows as genes, and results from differential
+expression (DE) as columns. Columns should also indicate the time point
+related to each sample. Row names and column names must adhere to TimiRGeN
+friendly nomenclature. Please do read the vignette for a full description of
+the required nomenclature.
 }
 \examples{
 miR <- mm_miR

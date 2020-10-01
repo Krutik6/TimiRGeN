@@ -11,25 +11,19 @@ dloadGmt(MAE, speciesInitials = "")
 be useful to start a new MAE for dloadGmt using MultiAssayExperiment(). This
 is so the MAE objects used in this analysis do not get too large.}
 
-\item{speciesInitials}{Either "Hs" or "Mm", respectively to retrieve Homo
+\item{speciesInitials}{Either "Hs" or "Mm", to retrieve Homo
 sapiens or Mus musculus data.}
 }
 \value{
-3 dataframes. 1) path_gene 2) path_names 3) path_data.
-All of which will be stored in the input MAE, in the assay section.
+3 dataframes. 1) path_gene, 2) path_names, 3) path_data.
+All of which will be stored as assays in the input MAE.
 }
 \description{
-Provides mouse or human wikipathway information. This data is
-downloaded from http://data.wikipathways.org/20200110/gmt/. This will be
-stored as three distinct data frames within a MAE object
-1) path_gene 2) path_names 3) path_data. It is recommended that the
-user creates a new MAE object to avoid MAE objects getting too large.
+Downloads the most up-to-date versions of the mouse or human
+wikipathway information databases. Output will be stored as three distinct
+dataframes within the input MAE 1) path_gene, 2) path_names, 3) path_data.
 }
 \examples{
-miR <- mm_miR
-
-mRNA <- mm_mRNA
-
 MAE <- MultiAssayExperiment()
 
 MAE <- dloadGmt(MAE, speciesInitial = "Mm")

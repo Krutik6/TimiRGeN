@@ -1,21 +1,20 @@
 #' @title quickDot
 #' @description Creates a dot plot which compares the confidence levels for
-#' each wikipathway association to the data. The number of genes in common
-#' between a pathway and the input data are taken into account to generate
-#' confidence scores. This function is to be used specifically for a single
-#' time point at a time, or if s analysis has been done, then a single time
-#' point within a single gene type (mir or mRNA).
-#' @param X Dataframe within a list including count information,confidence
+#' each wikipathway association to the filtered input data. The number of genes
+#' in common between a pathway and the input data are taken into account to
+#' generate confidence scores. This function is to be used specifically for a
+#' single time point at a time, or if using "s" analysis, the function is
+#' used for a single time point within a single gene type (miR or mRNA).
+#' @param X Dataframes within a list including count information, confidence
 #' scores and wikipathway information. This is the output from the enrichWiki
 #' function. It will be stored as metadata within the MAE used in the enrichWiki
 #' function. Data can be retrieved using [[i]][[j]] on the output of enrichWiki.
-#' @param Y String which is associated to the name of a nested
-#' dataframes. This is the output from the enrichWiki function. It will be
-#' stored as metadata within the MAE used in the enrichWiki function. Data can
-#' be retrieved using [[i]][j] on the output of enrichWiki.
+#' @param Y String which is associated to the nested dataframe selected for X.
+#' This is the output from the enrichWiki function. It will be stored as
+#' metadata within the MAE used in the enrichWiki function. Data can be
+#' retrieved using [[i]][j] on the output of enrichWiki.
 #' @return Dot plot showing which pathways are most enriched for genes found
-#' in a time point found in all gene types or in a time point within a gene
-#' type.
+#' at each time point ("c") or at each time point within a gentype ("s").
 #' @export
 #' @importFrom ggplot2 unit element_rect geom_dotplot
 #' @importFrom ggplot2 ggplot scale_fill_continuous labs theme
@@ -41,15 +40,21 @@
 #' # to view dot plot enter plot(q)
 quickDot <- function(X, Y){
 
-    if (missing(X)) stop('Input nested dataframe which is output from
-                           enrichWiki. Should be in the metadata of the MAE used
-                           in the enrichWiki function, and can
-                           be retrieved using [[i]][[j]].')
+  if (missing(X)) stop('
+                         X is missing.
+                         Input nested dataframe which is output from
+                         enrichWiki. Should be in the metadata of the MAE used
+                         in the enrichWiki function, and can be retrieved using
+                         metadata(MAE)[[i]][[j]].')
 
-    if (missing(Y)) stop('Input name of the  nested dataframe which is output
-                           from enrichWiki. Should be in the metadata of the MAE
-                           used in the enrichWiki function, and can be retrieved
-                           using [[i]][j].')
+  if (missing(Y)) stop('
+                         Y is missing.
+                         Input name of the nested dataframe associated with X.
+                         This is output from enrichWiki. Should be in the
+                         metadata of the MAE used in the enrichWiki function,
+                         and this can be retrieved using metadata(MAE)[[i]][j].
+                        ')
+
 
     Description <- Count <- NULL
 
@@ -72,7 +77,7 @@ quickDot <- function(X, Y){
          x = "wikipathways",
          fill = "p.adjust") +
 
-    theme(axis.text=element_text(size=16)) +
+    theme(axis.text=element_text(size=20)) +
 
     ggtitle(names(Y)) +
 

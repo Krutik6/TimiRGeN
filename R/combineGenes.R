@@ -2,20 +2,19 @@
 #' @description Combines miR and mRNA data into one dataframe. Input columns
 #' should be written as :timepoint.DifferentialExpressionResultType e.g.
 #' D1.log2fc or H6.adjPval. Column names should be the same for miR and mRNA
-#' data. A more detailed explanation of column nomenclature can be found in the
-#' vignette. Resulting information will be stored as an assay within a MAE
-#' object. combineGenes is essential for combined analysis of miR-mRNA data.
-#' If using separate analysis, there is no need to use combineGenes.
-#' @param MAE Input MAE object will have the results of combineGenes added to
-#' it as an assay. It is recommended to use the MAE object which stores output
-#' from startObject.
-#' @param miR_data microRNA dataframe stored as an assay in a MAE. Rows
-#' should be genes, columns are DE results and time point. This should be
-#' the stored within the MAE used in the startObject function.
-#' @param mRNA_data mRNA dataframe stored as an assay in a MAE. Rows
-#' should be genes, columns are DE results and time point. This should be
-#' the stored within the MAE used in the startObject function.
-#' @return A dataframe which combines miR and mRNA data.
+#' data. If a more detailed explanation of column nomenclature is needed please
+#' read the vignette.combineGenes is essential for combined analysis of miR-mRNA
+#' data. If using separate analysis, there is no need to use combineGenes.
+#' @param MAE Input MAE which stores results from combineGenes. It is
+#' recommended to use the MAE which was used in startObject.
+#' @param miR_data microRNA dataframe. Rows should be genes, columns are DE
+#' results and time point. This should be the stored as an assay within the
+#' MAE used in the startObject function.
+#' @param mRNA_data mRNA dataframe. Rows should be genes, columns are DE results
+#' and time point. This should be the stored as an assay within the MAE used in
+#' the startObject function.
+#' @return A dataframe with combined miR and mRNA data. Will be stored as an
+#' assay in the input MAE.
 #' @export
 #' @importFrom gtools mixedsort
 #' @usage combineGenes(MAE, miR_data, mRNA_data)
@@ -32,18 +31,24 @@
 #'                     mRNA_data = assay(MAE, 2))
 combineGenes <- function(MAE, miR_data, mRNA_data){
 
-    if (missing(MAE)) stop('Add MultiAssayExperiment to have the output of
-                           combineGenes stored. Please use the
-                           startObject function first.')
+    if (missing(MAE)) stop('
+                           MAE is missing.
+                           Add MultiAssayExperiment to store the output of
+                           combineGenes. Please use the startObject
+                           function first.')
 
-    if (missing(miR_data)) stop('Add dataframe of miR data. Rows should be
+    if (missing(miR_data)) stop('
+                                miR_data is missing.
+                                Add dataframe of miR data. Rows should be
                                 genes, columns are DE results and time point.
                                 Please use the startObject function first.
                                 Output of the startObject function will be
                                 stored as assays within the MAE used in the
                                 startObject function.')
 
-    if (missing(mRNA_data)) stop('Add dataframe of mRNA data. Rows should be
+    if (missing(mRNA_data)) stop('
+                                mRNA_data is missing.
+                                Add dataframe of mRNA data. Rows should be
                                 genes, columns are DE results and time point.
                                 Please use the startObject function first.
                                 Output of the startObject function will be

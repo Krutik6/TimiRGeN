@@ -1,23 +1,22 @@
 #' @title significantVals
 #' @description Filters out genes in each nested dataframe which are not deemed
-#' significantly differentially expressed. The results will be stored in
-#' the metadata of an MAE object.
-#' @param MAE MultiAssayExperiment object. The output of significantVals will
-#' be added to this MAE object. It is recommended to use the MAE object
-#' created from genesList here.
-#' @param method Respectively either 'c' or 's' for combined or separated
+#' significantly differentially expressed. Each sample will be filtered
+#' independently.
+#' @param MAE MultiAssayExperiment to store the output of significantVals. It is
+#' recommended to use the MAE used in the genesList.
+#' @param method Either "c" or "s", respectively for combined or separated
 #' analysis.
-#' @param geneList A list of nested dataframes if 'c' or a list of lists
-#' with nested dataframes if 's'. This will be the output from the
-#' genesList function. The resulting list will be found as metadata of
+#' @param geneList A list of nested dataframes if "c" analysis is used or a list
+#' of lists of nested dataframes if "s" is used. This will be the output from
+#' them genesList function. The resulting list will be found as metadata, in
 #' the MAE used in the genesList function.
 #' @param maxVal Numeric value which represents the maximum cut off value
 #' for significance e.g. 0.05.
-#' @param stringVal Character. Common DE result type in all nested
-#' dataframes which should be used for filtration e.g. pval, adjPval,
-#' qval. Make sure this matches the colnames.
-#' @return A list with only significantly differentially expressed genes
-#' which will also be stores as metadata of a MAE.
+#' @param stringVal Character. Common DE result type which is found in all
+#' nested dataframes. This will be used for filtration e.g. pval, adjPval or
+#' qval. Make sure the spelling matches the colnames for each sample.
+#' @return A list of dataframes with only significantly differentially
+#' expressed genes. Output will be stored as metadata within the input MAE.
 #' @export
 #' @usage significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 #' @examples
@@ -38,23 +37,33 @@
 #'                         maxVal = 0.05, stringVal = "adjPVal")
 significantVals <- function(MAE, method, geneList, maxVal, stringVal){
 
-    if (missing(method)) stop('Add a MultiAssayExperiment. Results will
-                              be added to the MAE object. Please use the
-                              genesList function before significantVals.')
+    if (missing(MAE)) stop('
+                              MAE is missing.
+                              Add a MultiAssayExperiment. Output of
+                              significantVals will be stored in the MAE.
+                              Please use the genesList function first')
 
-    if (missing(method)) stop('method should be "s" for separate analysis and
-                              "c" for combined analysis.')
+    if (missing(method)) stop('
+                              method is missing.
+                              Please add method "c" for combined analysis or
+                              "s" for separated analysis')
 
-    if(missing(geneList)) stop('Input list of miR and mRNA data. Please use
+    if(missing(geneList)) stop('
+                               geneList is missing.
+                               Add list of nested dataframes. Please use
                                the genesList function first. Results of
                                genesList should be stored in the metadata of
                                the MAE used in the genesList function.')
 
-    if(missing(maxVal)) stop('Add number as cutoff threshold e.g. 0.05.')
+    if(missing(maxVal)) stop('
+                              maxVal is missing.
+                              Add number as cutoff threshold e.g. 0.05.')
 
-    if(missing(stringVal)) stop('Add differential expression result type
-                                 to use as filtration point e.g. "log2FC",
-                                 "adjPval", "qVal".')
+    if(missing(stringVal)) stop('
+                                 stringVal is missing.
+                                 Add differential expression result type
+                                 to use for filtration e.g. "pval", "adjPval",
+                                "qVal".')
 
     metadata <- `metadata<-` <- NULL
 
@@ -80,6 +89,5 @@ significantVals <- function(MAE, method, geneList, maxVal, stringVal){
 
         return(MAE)
 
-    } else {stop('Please insert method c for combined analysis or s for
-                 separate analysis')}
+    } else print('Enter c or s as method.')
 }

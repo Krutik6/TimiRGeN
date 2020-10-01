@@ -3,16 +3,20 @@
 \docType{data}
 \title{Mouse microRNA data}
 \description{
-Mouse Fibrosis mRNA data from differential expression.
+Mouse Fibrosis mRNA data from differential expression analysis.
 Folic Acid was injected into mouse kidneys to induce fibrosis and
-nephropathy, and measurements were taken prior to and 1, 2, 3, 7 and 14
-days after injection. The 0 time point was contrasted over other time points. Data was put through limma for analysis. mm_mRNA only has DE results from 2000 mRNA genes for speed and size optimisation.
+nephropathy. Measurements were taken prior to and 1, 2, 3, 7 and 14
+days after injection. The 0 time point was contrasted over other time points.
+Data was put through limma for analysis. mm_mRNA only has DE results from 2000
+mRNA genes for speed and size optimisation.
 
-Column names are in the following format: timepoint(days).DEresult (Log2FC or adjPVal).
+Column names are in the following format: timepoint(days).DEresult (Log2FC or
+adjPVal).
 }
 \usage{data("mm_mRNA")}
 \format{
-A data frame of mRNAs put through differential expression with 2000 observations on the following 10 variables.
+A data frame of mRNAs put through differential expression with 2000 observations
+in the following 10 variables.
 \describe{
 \item{\code{D1.Log2FC}}{a numeric vector containing log2FC values of
 D1_fibrosis/ D0_fibrosis.}

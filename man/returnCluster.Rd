@@ -7,25 +7,27 @@
 returnCluster(MAE, clusterData, whichCluster, fitCluster)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment. Results from returnCluster will
-be stored within this MAE. It is recommended to use the same MAE which
-stores output from createClusters.}
+\item{MAE}{MultiAssayExperiment which will store the output from
+returnCluster. It is recommended to use the same MAE which stores output from
+the createClusters function.}
 
 \item{clusterData}{A dataframe which contains cluster-pathway fit scores
 and is stored as an assay within the MAE used in the createClusters function.}
 
-\item{whichCluster}{Integer should corresponds to the cluster of interest.}
+\item{whichCluster}{Integer which should corresponds to the cluster of
+interest.}
 
-\item{fitCluster}{How well should the pathways fit into the this
-cluster? Integer from 0-1. Default is 0.99.}
+\item{fitCluster}{Integer from 0-1. How well should the pathways fit into the this
+cluster? Default is 0.99.}
 }
 \value{
-A dataframe of which pathways corresponded best with the chosen
-dynamics seen in the selected cluster.
+A dataframe that contains information about the pathways that
+corresponded best with the chosen cluster. Output will be stored as an assay
+in the input MAE.
 }
 \description{
-Will retrieve information about which wikipathways fitted best
-with a specific cluster and store this as an assay within a MAE.
+Retrieves information about which wikipathways fitted best
+to a specific cluster. This function is to be used after quickFuzz.
 }
 \examples{
 MAE <- MultiAssayExperiment()

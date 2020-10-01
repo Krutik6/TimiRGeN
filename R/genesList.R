@@ -1,39 +1,38 @@
 #' @title genesList
-#' @description Will produce a list of nested dataframes and will be stored
-#' as metadata within a MAE object.
+#' @description Produces a list of nested dataframes. The list will depend on
+#' the type of analysis that is to be conducted.
 #' For combined analysis method = "c", and for separated analysis method = "s".
 #'
-#' Combined analysis colnames should be 'timepoint.resulttype'.
-#' genesList will make new dataframes separated by 'timepoint.'.
+#' In combined analysis colnames should be 'timepoint.resulttype'.
+#' genesList will make new dataframes separated at 'timepoint.'.
 #'
-#' Separated analysis colnames should be 'genetype_timepoint.resulttype'.
+#' In separated analysis colnames should be 'genetype_timepoint.resulttype'.
 #' genesList will make separate lists for each 'genetype_', and these lists
-#' will have dataframes which have been made by separating by 'timepoint.'.
+#' will have dataframes which have been made by separating at 'timepoint.'.
 #'
 #' Make sure to follow colname nomenclature carefully. Please refer to
 #' the vignette for more details on the nomenclature.
-#' @param MAE MultiAssayExperiment. Results from genesList will
-#' be stored in the metadata of the given MAE. It is recommended that the
-#' MAE which stores output from combineGenes (combined analysis) or
-#' addPrefix (sepatate analysis).
-#' @param method Respectively either 'c' or 's' for combined or separated
+#' @param MAE MultiAssayExperiment which will store the output from genesList.
+#' It is recommended to use the MAE which stores output from combineGenes
+#' (combined analysis) or addPrefix (separated analysis).
+#' @param method Either "c" or "s", respectively for combined or separated
 #' analysis.
-#' @param genetic_data If 'c', this should be a dataframe with miR and mRNA
+#' @param genetic_data If "c", this should be a dataframe with miR and mRNA
 #' information together. This is the output from the combineGenes function
-#' and will be stored as an assay within the MAE.
-#' @param timeString If 'c', this should be a common string representing
-#' 'timepoint' e.g. for H.1, H.10, H.20, timeString = 'H'.
-#' @param miR_data If 's', a dataframe of microRNA data. Rownames are genes
-#' and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.
-#' timepoint.resulttype should be the same in mRNA and miR data. This should
-#' be the results of the addPrefix function, and will be stored as an assay
-#' within the MAE used in addPrefix.
-#' @param mRNA_data If 's', a dataframe of mRNA data. Rownames are genes
-#' and colnames are: genetype_timepoint.resulttype or timepoint.resulttype.
-#' @return A list of dataframes separated by features in the column names which
-#' can be stored in the metadata area of an MAE object. This should
-#' be the results of the addPrefix function, and will be stored as an assay
-#' within the MAE used in addPrefix.
+#' and will be stored as an assay within the MAE used in the combineGenes
+#' function.
+#' @param timeString If "c", this should be a common string representing
+#' 'timepoints' e.g. for H.1, H.10, H.20, timeString = 'H'.
+#' @param miR_data If "s", a dataframe of microRNA data. Rownames are genes
+#' and colnames are: genetype_timepoint.resulttype. Column names should be
+#' the same in mRNA and miR data. miR_data is from the addPrefix function,
+#' and will be stored as an assay within the MAE used in addPrefix.
+#' @param mRNA_data If "s", a dataframe of mRNA data. Rownames are genes
+#' and colnames are: genetype_timepoint.resulttype. Column names should be the
+#' same in mRNA and miR data. mRNA_data is from the addPrefix function,
+#' and will be stored as an assay within the MAE used in addPrefix.
+#' @return A list of dataframes separated by features in the column names.
+#' Output will be stored as metadata in the input MAE.
 #' @export
 #' @importFrom stringr str_extract
 #' @usage genesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
@@ -65,23 +64,29 @@
 genesList <- function(MAE, method, genetic_data, timeString, miR_data,
                       mRNA_data){
 
-    if (missing(MAE)) stop('Add MAE a object. Please use combineGenes or
-                           addPrefix first.')
+    if (missing(MAE)) stop('
+                           MAE is missing.
+                           Add MAE. Please use combineGenes or addPrefix first.
+                           ')
 
     if (method == 'c') {
 
 
-        if (missing(genetic_data)) stop('Input combined miR and mRNA data.
+        if (missing(genetic_data)) stop('
+                                        genetic_data is missing.
+                                        Input combined miR and mRNA data.
                                         Colnames structure should be
                                         timepoint.resulttype. Please use
-                                        the combineGenes function. Output of
-                                        combineGenes should be stored as an
+                                        the combineGenes function first. Output
+                                        of combineGenes should be stored as an
                                         assay within the MAE used in the
                                         combineGenes function.')
 
-        if (missing(timeString)) stop('Input timepoint. E.g. if colnames were
+        if (missing(timeString)) stop('
+                                      timeString is missing.
+                                      Input unit of time. E.g. if colnames were
                                       D1.log2fc, D2.log2fc, D3.log2fc;
-                                      then timeString = D.')
+                                      then timeString = "D".')
 
         metadata <- `metadata<-` <- NULL
 
@@ -118,20 +123,24 @@ genesList <- function(MAE, method, genetic_data, timeString, miR_data,
         return(MAE)
 
     } else if (method == 's') {
-        if (missing(miR_data)) stop('Input miR data with prefixes.
+        if (missing(miR_data)) stop('
+                                    miR_data is missing.
+                                    Input miR data with prefixes.
                                     Colnames structure should be
                                     genetype_timepoint.resulttype.
                                     Please use the addPrefix function first.
                                     Output of the addPrefix function should be
-                                    stored as assays within the MAE used in
+                                    stored as an assay within the MAE used in
                                     the addPrefix function.')
 
-        if (missing(mRNA_data)) stop('Input mRNA data with prefixes.
+        if (missing(mRNA_data)) stop('
+                                    mRNA_data is missing.
+                                    Input mRNA data with prefixes.
                                     Colnames structure should be
                                     genetype_timepoint.resulttype.
                                     Please use the addPrefix function first.
                                     Output of the addPrefix function should be
-                                    stored as assays within the MAE used in
+                                    stored as an assay within the MAE used in
                                     the addPrefix function.')
 
 
@@ -162,6 +171,5 @@ genesList <- function(MAE, method, genetic_data, timeString, miR_data,
 
         return(MAE)
 
-    } else{ stop('Please insert method c for combined analysis or s for
-                 separate analysis')}
+    } else print('Enter c or s as method.')
 }

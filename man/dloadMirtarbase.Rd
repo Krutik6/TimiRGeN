@@ -7,28 +7,29 @@
 dloadMirtarbase(MAE, species)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment which will have the downloaded mirtarbase
-data added to it. It is recommended to use the same MAE object which was
-created by mirMrnaInt.}
+\item{MAE}{MultiAssayExperiment which will store the downloaded mirtarbase
+data. It is recommended to use the MAE which was used in
+the mirMrnaInt function.}
 
-\item{species}{Initials of the species of interest e.g. "hsa" or "mmu".}
+\item{species}{Species of interest e.g. "hsa" or "mmu".}
 }
 \value{
 Dataframe of species specific miR-mRNA interactions with
-strong functional evidence.
+strong functional evidence. Output will be stored as an assay in the input
+MAE.
 }
 \description{
-Downloads most recent version (7.0) of functional targets from
-miRTarBase database http://mirtarbase.mbc.nctu.edu.tw/cache/download/7.0/.
-Species specific miR-mRNA interactions which do not have 'weak' evidence
-are stored in a MAE as an assay.
+Downloads most recent version (8.0) of functional targets from
+the miRTarBase database http://mirtarbase.cuhk.edu.cn/php/download.php
+. Species specific miR-mRNA interactions which do not have 'weak' evidence
+are used.
 }
 \examples{
 \dontrun{
 
 MAE <- MultiAssayExperiment()
 
-MAE <-dloadMirdb(MAE, "mmu")
+MAE <- dloadMirtarbase(MAE, "mmu")
 
 }
 }

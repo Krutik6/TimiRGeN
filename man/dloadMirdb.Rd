@@ -7,25 +7,22 @@
 dloadMirdb(MAE, species, orgDB)
 }
 \arguments{
-\item{MAE}{MultiAssayExperiment which will have downloaded mirDB data stored
-within it. It is recommended to use the MAE which was created using the
-mirMrnaInt function.}
+\item{MAE}{MultiAssayExperiment which will store downloaded mirDB data.
+It is recommended to use the MAE which was used in the mirMrnaInt function.}
 
 \item{species}{Species of interest e.g. "hsa" or "mmu".}
 
-\item{orgDB}{organism db specific for species being looked into. Specific
-db must be loaded before use.}
+\item{orgDB}{Organism db package specific for species of interest.}
 }
 \value{
-A dataframe of species specific mRNA-miR interactions, and other
-information associated with these interactions.
+A dataframe of predicted, species specific mRNA-miR interactions.
+Will be stored as an assay in the input MAE.
 }
 \description{
 Downloads most recent version (6.0) of predicted targets from
-mirdb database http://mirdb.org/download.html. This will take some time.
-miR-mRNA interactions from the species of interest will be extracted and
-stored in a MAE object as an assay. Species associated org.db package must
-be loaded.
+the mirdb database http://mirdb.org/download.html. This will take some time.
+miR-mRNA interactions from the species of interest will be extracted.
+Species of interests associated org.db package must be loaded beforehand.
 }
 \examples{
 \dontrun{

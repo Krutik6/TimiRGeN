@@ -286,7 +286,7 @@ TimiRGeN also offers a supervised soft clustering method using Mfuzz [6, 25].
 This provides a global view of temporal patterns based on the common genes found
 between the each time point of the data and each pathway.
 
-###: Create Percent Matrix
+### Create Percent Matrix
 
 ```{r wikilist show, eval=FALSE, message=FALSE, warning=FALSE}
 MAE2 <- wikiList(MAE2, stringSpecies = 'Mus musculus', stringSymbol = 'L')
@@ -388,7 +388,7 @@ MAE2 <- returnCluster(MAE2, clusterData = assay(MAE2, 6),
                      whichCluster = 1, fitCluster = 0.4)
 ```
 
-##: Take Selected Pathways Forward
+## Take Selected Pathways Forward
 
 ```{r diffExpressRes, warning=FALSE, message=FALSE}
 MAE2 <- diffExpressRes(MAE = MAE2, df = assay(MAE, 1), dataType = "Log2FC",

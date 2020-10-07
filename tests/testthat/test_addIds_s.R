@@ -23,6 +23,7 @@ test_that("ensembl_genes has qualities which are expected", {
     expect_equal(length(metadata(MAE)[[1]]), length(metadata(MAE)[[2]]))
 })
 
+
 #continue
 metadata(MAE)[["data_IDs2"]] <- Map(function(x, y) lapply(x, function(dat) {
                                      dat$GENENAME <- row.names(dat);

@@ -281,4 +281,6 @@ TimiRGeN v0.99.5 (Date: 18/09/2020)
 * Updated Pathvisio_GRN_guide.pdf file in the Inst directory.
 * Fixed wikiList function.
 
-
+TimiRGeN v0.99.51 (Date: 07/10/2020)
+===============================
+* Removed unit tests which took more than 1 second to complete.

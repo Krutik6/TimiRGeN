@@ -31,4 +31,4 @@ test_that("check expected and observed output", {
 })
 
 #save data
-saveRDS(as.data.frame(X), "Pmat.rds", compress = "xz")
+#saveRDS(as.data.frame(X), "Pmat.rds", compress = "xz")

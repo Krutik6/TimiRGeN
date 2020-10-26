@@ -270,9 +270,6 @@ TimiRGeN v0.99.4159 (Date: 12/09/2020)
 * Major spelling/ grammar edits done on functions and vignette.
 * Updated to the latest version of miRTarBase.
 * Updated references in the vignette.
-
-TimiRGeN v0.99.5 (Date: 18/09/2020)
-===============================
 * dloatGmt will now download the most current wikipathways gmt files.
 * miRTarBase v 8.0 now used. Reference has been updated.
 * Vignette now showcasing Lung Fibrosis as example. Complement and Coagulation pathway was removed from the mouse wikipathways database.
@@ -280,7 +277,14 @@ TimiRGeN v0.99.5 (Date: 18/09/2020)
 * Updated package description.
 * Updated Pathvisio_GRN_guide.pdf file in the Inst directory.
 * Fixed wikiList function.
-
-TimiRGeN v0.99.51 (Date: 07/10/2020)
-===============================
 * Removed unit tests which took more than 1 second to complete.
+* Removed unit tests which took more than 1 second to complete.
+
+TimiRGeN v0.99.4160 (Date: 24/10/2020)
+===============================
+* Fixed bug in dataMiningMatrix. Now it will work even if a database is not
+downloaded.
+* Fixed NEWS file so unsuccessful builds are no longer in the report.
+* Added URL and Bug reports sections in DESCRIPTION file.
+
+

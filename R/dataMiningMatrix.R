@@ -48,29 +48,6 @@ dataMiningMatrix <- function(MAE, corrTable, targetscan , mirdb,
                                should be found as an assay within the MAE used
                                in the mirMrnaInt function.')
 
-  if (missing(targetscan)) stop('
-                                targetscan is missing.
-                                Add filtered targetscan miR-mRNA interactions.
-                                Please use the dloadTargetscan function
-                                first. The output of dloadTargetscan should be
-                                found as an assay within the MAE used in the
-                                dloadTargetscan function.')
-
-  if (missing(mirdb)) stop('
-                           mirdb is missing.
-                           Add filtered mirdb miR-mRNA interactions.
-                           Please use the dloadMirdb function first. The output
-                           of dloadMirdb should be found as an assay within the
-                           MAE used in the dloadMirdb function.')
-
-  if (missing(mirtarbase)) stop('
-                                mirtarbase is missing.
-                                Add filtered mirtarbase miR-mRNA interactions.
-                                Please use the dloadMirtarbase function
-                                first. The output of dloadMirtarbase should be
-                                found as an assay within the MAE used in the
-                                dloadMirtarbase function.')
-
   TargetScan <- miRDB <- Predicted_Interactions <- miRTarBase <- NULL
 
   X <- corrTable

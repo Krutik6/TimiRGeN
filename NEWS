@@ -289,7 +289,7 @@ downloaded.
 
 #####Released###################################################################
 
-TimiRGeN v1.1.1 (Date: 12/11/2020)
+TimiRGeN v1.0.1 (Date: 12/11/2020)
 ===============================
 * Fixed bug in dloadGmt function.
 * Changed 'www' to 'useast' when using getIdsMrna function because 'www' calls

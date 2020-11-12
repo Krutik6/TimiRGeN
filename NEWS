@@ -287,4 +287,10 @@ downloaded.
 * Fixed NEWS file so unsuccessful builds are no longer in the report.
 * Added URL and Bug reports sections in DESCRIPTION file.
 
+#####Released###################################################################
 
+TimiRGeN v1.1.1 (Date: 12/11/2020)
+===============================
+* Fixed bug in dloadGmt function.
+* Changed 'www' to 'useast' when using getIdsMrna function because 'www' calls
+are not always found.

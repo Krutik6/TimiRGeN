@@ -37,7 +37,8 @@ dloadGmt <- function(MAE, speciesInitials){
 
     # If mouse is selected, download mouse gmt data to file
     if (speciesInitials == "Mm") {
-        x <- rWikiPathways::downloadPathwayArchive(organism="Mus musculus",
+        x <- rWikiPathways::downloadPathwayArchive(date = "20201010",
+                                                   organism="Mus musculus",
                                                    format = "gmt")
 
         # load file
@@ -48,8 +49,9 @@ dloadGmt <- function(MAE, speciesInitials){
 
     # If human is selected, download human gmt data from file
     } else if (speciesInitials == "Hs") {
-        x <- rWikiPathways::downloadPathwayArchive(organism="Homo sapiens",
-                                                 format = "gmt")
+        x <- rWikiPathways::downloadPathwayArchive(date = "20201010",
+                                                   organism="Homo sapiens",
+                                                   format = "gmt")
 
         # load file
         gmt <- clusterProfiler::read.gmt(x)

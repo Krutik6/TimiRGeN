@@ -43,7 +43,7 @@
 #'
 #' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 #'
-#' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "www")
+#' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 7),

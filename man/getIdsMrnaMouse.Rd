@@ -32,5 +32,5 @@ mRNA <- mRNA[1:20,]
 
 MAE <- startObject(miR = NULL, mRNA = mRNA)
 
-MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'www')
+MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 }

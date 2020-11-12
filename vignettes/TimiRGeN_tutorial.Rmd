@@ -153,7 +153,7 @@ found on the MultiAssayExperiment [bioconductor page](https://bioconductor.org/p
 ```{r retrieveID data for mm data, warning=FALSE, message=FALSE}
 MAE <- getIdsMirMouse(MAE = MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaMouse(MAE = MAE, assay(MAE, 2), mirror = 'www')
+MAE <- getIdsMrnaMouse(MAE = MAE, assay(MAE, 2), mirror = 'useast')
 ```
 
 Using `getIds` functions to produce dataframes containing entrezgene and ensembl ID annotations for genes. This is useful for downstream analysis.
@@ -662,7 +662,7 @@ MAE <- startObject(miR, mRNA)
 
 MAE <- getIdsMirHuman(MAE = MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2), mirror = 'www')
+MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2), mirror = 'useast')
 ```
 
 ## Differentiate Data
@@ -810,7 +810,7 @@ Data <- startObject(miR = NULL, mRNA = mRNA)
 
 Data <- getIdsMrnaMouse(MAE = Data, 
                         mRNA = assay(Data, 2),
-                        mirror = 'www')
+                        mirror = 'useast')
 
 
 Data <- genesList(Data, 

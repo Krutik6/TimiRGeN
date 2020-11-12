@@ -29,7 +29,7 @@
 #'
 #' Data <- getIdsMirMouse(Data, assay(Data, 1))
 #'
-#' Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'www')
+#' Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'useast')
 #'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
 #'                      mRNA_data = assay(Data, 2))

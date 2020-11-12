@@ -20,7 +20,7 @@
 #'
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)
 #'
-#' MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'www')
+#' MAE <- getIdsMrnaHuman(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
 getIdsMrnaHuman <- function(MAE, mRNA, mirror = "www"){
 
     if(missing(MAE)) stop('

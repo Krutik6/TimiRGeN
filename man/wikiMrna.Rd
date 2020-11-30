@@ -42,7 +42,7 @@ MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
 
-MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "www")
+MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
 
 MAE <- dloadGmt(MAE = MAE, speciesInitials = "Mm")
 

@@ -6,13 +6,16 @@
 #' @param maxInt Integer, number of samples in data set.
 #' @param quickType quickDot or quickBar. This will be the plot type.
 #' @param fileType Type of file for images to be exported as: "png", "tiff",
-#' "svg" or "jpg".
+#' "svg" or "jpeg".
+#' @param width = Width of plots in inches. Default is 22 inches.
+#' @param height = Heightof plots in inches. Default is 10 inches.
 #' @return Saves plots in working directory. Each sample (e.g. time point) will
 #' have a separate plot.
 #' @export
 #' @importFrom grDevices colorRampPalette dev.off jpeg png svg tiff x11
-#' @usage savePlots(largeList, maxInt, quickType, fileType = '')
-savePlots <- function(largeList, maxInt, quickType, fileType){
+#' @usage savePlots(largeList, maxInt, quickType, fileType = '', width, height)
+savePlots <- function(largeList, maxInt, quickType, fileType, width=22,
+                      height=13){
 
     if (missing(largeList)) stop('
                                  largeList is missing.
@@ -34,44 +37,44 @@ savePlots <- function(largeList, maxInt, quickType, fileType){
     if (missing(fileType)) stop('
                                  fileType is missing.
                                  Input the type of file to be saved either
-                                 "png", "tiff", "svg" or "jpg".')
+                                 "png", "tiff", "svg" or "jpeg".')
 
-    # create empty list
-    plot_list <- list()
+  # create empty list
+  plot_list <- list()
 
-    # create plot object
-    for (i in seq_len(maxInt)) {
-        p <- quickType(X = largeList[[i]]@result, Y = largeList[i])
-        plot_list[[i]] = p
+  # create plot object
+  for (i in seq_len(maxInt)) {
+    p <- quickType(X = largeList[[i]]@result, Y = largeList[i])
+    plot_list[[i]] = p
 
-    }
+  }
 
-    # create file names
-    for (i in seq_len(maxInt)) {
-        file_name <- paste(names(largeList[i]), ".", fileType, sep="")
+  # create file names
+  for (i in seq_len(maxInt)) {
+    file_name <- paste(names(largeList[i]), ".", fileType, sep="")
 
     # options for plotting
 
     if (fileType == "tiff") {
-        tiff(file_name, width = 985, height = 847)
-        print(plot_list[[i]])
-        dev.off()
+      tiff(file_name, width = width, height = height, units = 'in', res = 100)
+      print(plot_list[[i]])
+      dev.off()
 
     } else if (fileType == "png") {
-        png(file_name, width = 985, height = 847)
-        print(plot_list[[i]])
-        dev.off()
+      png(file_name, width = width, height = height, units = 'in', res = 100)
+      print(plot_list[[i]])
+      dev.off()
 
     } else if (fileType == "svg") {
-        svg(file_name)
-        print(plot_list[[i]])
-        dev.off()
+      svg(file_name, width = width, height = height)
+      print(plot_list[[i]])
+      dev.off()
 
-    } else if (fileType == "jpg") {
-        jpeg(file_name, width = 985, height = 847)
-        print(plot_list[[i]])
-        dev.off()
+    } else if (fileType == "jpeg") {
+      jpeg(file_name, width = width, height = height, units = 'in', res = 100)
+      print(plot_list[[i]])
+      dev.off()
 
-    } else ("Input relevant file type for export: tiff, png, svg or jpg")
-}
+    } else ("Input relevant file type for export: tiff, png, svg or jpeg")
+  }
 }

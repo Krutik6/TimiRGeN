@@ -263,17 +263,17 @@ using either `quickbar` or `quickDot`, and the plots can be saved to file in
 a variety of formats.
 
 ```{r echo=FALSE, out.width = "400px",out.height= "350px", dpi=10}
-knitr::include_graphics("D1_wikipathways.png")
-knitr::include_graphics("D2_wikipathways.png")
+knitr::include_graphics("D1_wikipathways.jpg")
+knitr::include_graphics("D2_wikipathways.jpg")
 ```
 
 ```{r echo=FALSE, out.width = "400px", out.height="350px", dpi=10}
-knitr::include_graphics("D3_wikipathways.png")
-knitr::include_graphics("D7_wikipathways.png")
+knitr::include_graphics("D3_wikipathways.jpg")
+knitr::include_graphics("D7_wikipathways.jpg")
 ```
 
 ```{r echo=FALSE, out.width = "400px", out.height="350px", dpi=10}
-knitr::include_graphics("D14_wikipathways.png")
+knitr::include_graphics("D14_wikipathways.jpg")
 ```
 
 From here a wikipathway can be selected for miR-mRNA interaction
@@ -450,12 +450,13 @@ and format them for species specific miR-mRNA interaction mining.
 
 For human analysis use `"hsa"` and `org.Hs.eg.db`.
 
+Note. If timeout error occurs during downloads, increase it.
+
 ```{r miR-mRNA interaction databases, message=FALSE, warning=FALSE, eval=FALSE}
+options(timeout=180) 
 MAE3 <- dloadTargetscan(MAE = MAE3, species="mmu")
 
-
 MAE3 <- dloadMirdb(MAE = MAE3, species="mmu", orgDB = org.Mm.eg.db)
-
 
 MAE3 <- dloadMirtarbase(MAE = MAE3, species="mmu")
 ```

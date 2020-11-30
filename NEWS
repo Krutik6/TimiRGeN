@@ -289,8 +289,17 @@ downloaded.
 
 #####Released###################################################################
 
-TimiRGeN v1.1.1 (Date: 12/11/2020)
+TimiRGeN v1.0.1 (Date: 12/11/2020)
 ===============================
 * Fixed bug in dloadGmt function.
 * Changed 'www' to 'useast' when using getIdsMrna function because 'www' calls
 are not always found.
+
+TimiRGeN v1.0.2 (Date: 29/11/2020)
+===============================
+* Increased text size and general aresthetics of quickBar and quickDot.
+* Included otions(timout =180) in vignette, before database information is
+downloaded. Also informed users that timeouts may occur, and if it does,
+increase timout.
+* Updated savePlots. Now plots are larger, have better resultion and users can
+adjust height and width to suit their analysis.

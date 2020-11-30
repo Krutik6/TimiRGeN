@@ -39,8 +39,6 @@
 #' # to view bar plot enter plot(q)
 quickBar <- function(X, Y){
 
-    Description <- Count <- NULL
-
     if (missing(X)) stop('
                          X is missing.
                          Input nested dataframe which is output from
@@ -56,29 +54,32 @@ quickBar <- function(X, Y){
                          and this can be retrieved using metadata(MAE)[[i]][j].
                          ')
 
+  Description <- Count <- NULL
+
     ggplot2::ggplot(head(X[which(X$p.adjust < 0.05),],n = 15),
                     aes(x=reorder(Description, -p.adjust),
-                    y=Count,
-                    fill=-p.adjust)) +
+                        y=Count,
+                        fill=-p.adjust)) +
 
-    geom_bar(stat = "identity",
-             width = 0.5) +
+      geom_bar(stat = "identity",
+               width = 0.5) +
 
-    scale_fill_continuous(type = "gradient") +
+      scale_fill_continuous(type = "gradient") +
 
-    labs(y = "Associated genes",
-         x = "wikipathways",
-         fill = "p.adjust") +
+      labs(y = "Associated genes",
+           x = "Wikipathways",
+           fill = "p.adjust") +
 
-    theme(axis.text=element_text(size=20)) +
+      ggtitle(names(Y)) +
 
-    ggtitle(names(Y)) +
+      theme(plot.title = element_text(size=30, face = "bold", hjust = 0.5),
+            legend.key.size = unit(5, "line"),
+            legend.text=element_text(size=15),
+            legend.title =element_text(size=20),
+            axis.text=element_text(size=30),
+            axis.title = element_text(size = 20)) +
 
-    theme(plot.title = element_text(2, face = "bold", hjust = 0.5),
-          legend.key.size = unit(2, "line")) +
-
-    theme(panel.background = element_rect(fill = 'white',
-                                          colour = 'black'))+
-
-    coord_flip()
+      theme(panel.background = element_rect(fill = 'white',
+                                            colour = 'black'))+
+      coord_flip()
 }

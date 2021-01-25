@@ -52,25 +52,11 @@
 createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
                            dataString, variance = 0){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MultiAssayExperiment. Data from createClusters
-                           will be stored in this MAE object. Please use
-                           turnPercent first.')
+    if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment. Data from createClusters will be stored in this MAE object. Please use turnPercent first.')
 
-    if (missing(method)) stop('
-                              method is missing.
-                              Please add method "c" for combined analysis or
-                              "s" for separated analysis')
+    if (missing(method)) stop('method is missing. Please add method "c" for combined analysis or "s" for separated analysis')
 
-    if (missing(percentMatrix)) stop('
-                                     percentMatrix is missing.
-                                     Add dataframe which contains
-                                     pathways-sample information as percentages.
-                                     Please use the turnPercent function first.
-                                     Results from turnPercent will be stored as
-                                     an assay within the MAE used in the
-                                     turnPercent function.')
+    if (missing(percentMatrix)) stop('percentMatrix is missing. Add dataframe which contains pathways-sample information as percentages. Please use the turnPercent function first. Results from turnPercent will be stored as an assay within the MAE used in the turnPercent function.')
 
     metadata <- `metadata<-` <- NULL
 

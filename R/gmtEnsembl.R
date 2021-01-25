@@ -27,37 +27,19 @@
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
-#' MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+#' MAE <- dloadGmt(MAE, species = "Mus musculus")
 #'
 #' MAE <- gmtEnsembl(MAE = MAE, assay(MAE, 3),
 #'                    assay(MAE, 5), org.Mm.eg.db)
 gmtEnsembl <- function(MAE, path_gene, path_data, orgDB){
 
-    if(missing(MAE)) stop('
-                          MAE is missing.
-                          Add a MAE to store output from gmtEnsembl.
-                          Please use dloadGmt first.')
+    if(missing(MAE)) stop('MAE is missing. Add a MAE to store output from gmtEnsembl. Please use dloadGmt first.')
 
-    if(missing(path_gene)) stop('
-                                path_gene is missing.
-                                Add dataframe with entrezgene IDs and
-                                wikipathways IDs. Please use the dloadGmt
-                                function first. The output of dloadGmt should
-                                be stored as an assay within the MAE used in
-                                the dloadGmt function.')
+    if(missing(path_gene)) stop('path_gene is missing. Add dataframe with entrezgene IDs and wikipathways IDs. Please use the dloadGmt function first. The output of dloadGmt should be stored as an assay within the MAE used in the dloadGmt function.')
 
-    if(missing(path_data)) stop('
-                                path_data is missing.
-                                Add dataframe with entrezgene IDs,
-                                wikipathway IDs and wikipathways names.
-                                Please use the dloadGmt function first.
-                                The output of dloadGmt should be stored as an
-                                assay within the MAE used in the dloadGmt
-                                function.')
+    if(missing(path_data)) stop('path_data is missing. Add dataframe with entrezgene IDs, wikipathway IDs and wikipathways names. Please use the dloadGmt function first. The output of dloadGmt should be stored as an assay within the MAE used in the dloadGmt function.')
 
-    if(missing(orgDB)) stop('
-                             orgDB is missing.
-                             Please load either org.Hs.eg.db or org.Mm.eg.db.')
+    if(missing(orgDB)) stop('orgDB is missing. Please load either org.Hs.eg.db or org.Mm.eg.db.')
 
     path_gene <- as.data.frame(path_gene)
 

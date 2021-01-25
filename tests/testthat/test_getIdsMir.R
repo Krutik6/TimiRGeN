@@ -2,6 +2,7 @@
 library(TimiRGeN)
 library(testthat)
 library(org.Hs.eg.db)
+library(org.Mm.eg.db)
 
 #load data
 miR <- hs_miR
@@ -14,7 +15,7 @@ rownames(miR) <- gsub(rownames(miR), pattern = "\\.", replacement =  "-")
 MAE <- startObject(miR = miR, mRNA = NULL)
 
 #test function
-MAE <- getIdsMirHuman(MAE, MAE@ExperimentList$miR)
+MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Hs.eg.db, miRPrefix = 'hsa')
 
 #check 1
 test_that("output files should have two columns and the same number of

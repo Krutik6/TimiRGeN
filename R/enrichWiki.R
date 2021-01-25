@@ -48,7 +48,7 @@
 #'
 #' metadata(MAE)[["e_list"]] <- e_list_mouse
 #'
-#' MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+#' MAE <- dloadGmt(MAE, species = "Mus musculus")
 #'
 #' MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
 #'                   orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),
@@ -58,52 +58,19 @@ enrichWiki <- function(MAE, method, ID_list, orgDB, path_gene, path_name, ID,
                        universe = universe, pvalcutoff = 0.05,
                        qvaluecutoff = 0.2, padjustmethod = "BH"){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. Results from enrichWiki will be
-                           stored in this MAE. Please use eNames, dloadGmt /
-                           gmtEnsembl first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. Results from enrichWiki will be stored in this MAE. Please use eNames, dloadGmt/ gmtEnsembl first.')
 
-    if (missing(ID_list)) stop('
-                               ID_list is missing.
-                               Add list of entrezIDs. Please use the eNames
-                               function fist. The output of this should be in
-                               the metadata the MAE used in the eNames function.
-                               ')
+    if (missing(ID_list)) stop('ID_list is missing. Add list of entrezIDs. Please use the eNames function fist. The output of this should be in the metadata the MAE used in the eNames function.')
 
-    if (missing(orgDB)) stop('
-                             orgDB is missing.
-                             Please load org.Mm.eg.db or org.Hs.eg.db before
-                             running this function.')
+    if (missing(orgDB)) stop('orgDB is missing. Please load org.Mm.eg.db or org.Hs.eg.db before running this function.')
 
-    if (missing(path_gene)) stop ('
-                                  path_gene is missing.
-                                  Please use dloadGmt/ gmtEnsembl first to get a
-                                  wikipathway ID - gene ID dataframe. Output of
-                                  these functions are stored as assays within
-                                  the MAE used in dloadGmt/ gmtEnsembl functions
-                                  .')
+    if (missing(path_gene)) stop ('path_gene is missing. Please use dloadGmt/ gmtEnsembl first to get a wikipathway ID - gene ID dataframe. Output of these functions are stored as assays within the MAE used in dloadGmt/ gmtEnsembl functions.')
 
-    if (missing(path_name)) stop ('
-                                  path_name is missing.
-                                  Please use dloadGmt first to get wikipathway
-                                  ID - pathway names dataframe. Will be stored
-                                  as an assay in the MAE object used in the
-                                  dloadGmt function.')
+    if (missing(path_name)) stop ('path_name is missing. Please use dloadGmt first to get wikipathway ID - pathway names dataframe. Will be stored as an assay in the MAE object used in the dloadGmt function.')
 
-    if (missing(ID)) stop ('
-                           ID is missing.
-                           Add either "ENTREZID" or "ENSEMBL". Should match ID
-                           types found in ID_list and path_gene parameters.')
+    if (missing(ID)) stop ('ID is missing. Add either "ENTREZID" or "ENSEMBL". Should match ID types found in ID_list and path_gene parameters.')
 
-    if (missing(universe)) stop ('
-                                  universe is missing.
-                                  Add a list of gene IDs to be used as the
-                                  background for gene set enrichment.
-                                  The recommended method is to use
-                                  path_gene$gene / assay(MAE, i)[[2]].
-                                  For alternative analysis, add own list of gene
-                                  IDs.')
+    if (missing(universe)) stop ('universe is missing. Add a list of gene IDs to be used as the background for gene set enrichment. The recommended method is to use path_gene$gene / assay(MAE, i)[[2]]. For alternative analysis, add own list of gene IDs.')
 
     metadata <- `metadata<-` <- NULL
 

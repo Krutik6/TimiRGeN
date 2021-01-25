@@ -29,9 +29,9 @@
 #'
 #' Data <- startObject(miR = miR, mRNA = mRNA)
 #'
-#' Data <- getIdsMirMouse(Data, assay(Data, 1))
+#' Data <- getIdsMir(Data, assay(Data, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'useast')
+#' Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast', 'mmusculus')
 #'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
 #'                      mRNA_data = assay(Data, 2))
@@ -48,41 +48,15 @@
 #'               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 7))
 addIds <- function(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE to store output of addIds. Please
-                           use significantVals and getIds functions first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE to store output of addIds. Please use significantVals and getIds functions first.')
 
-    if (missing(method)) stop('
-                               method is missing.
-                               Please add method "c" for combined analysis or
-                               "s" for separated analysis')
+    if (missing(method)) stop('method is missing. Please add method "c" for combined analysis or "s" for separated analysis')
 
-    if (missing(filtered_genelist)) stop('
-                                         filtered_genelist is missing.
-                                         Add filtered list of genes which
-                                         is listed by genetype and time (s) or
-                                         just by time (c). Please use
-                                         significantVals first. Output of
-                                         significantVals should be stored as
-                                         metadata within the MAE used in the
-                                         significantVals function.')
+    if (missing(filtered_genelist)) stop('filtered_genelist is missing. Add filtered list of genes which is listed by genetype and time (s) or just by time (c). Please use significantVals first. Output of significantVals should be stored as metadata within the MAE used in the significantVals function.')
 
-    if (missing(miR_IDs)) stop('
-                               miR_IDs is missing.
-                               Add dataframe of miR gene IDs. Please use
-                               getIdsMirHuman or getIdsMirMouse first.
-                               Output of a getIdsMir function should be stored
-                               as assays within the MAE used in the getIdsMir
-                               function.')
+    if (missing(miR_IDs)) stop('miR_IDs is missing. Add dataframe of miR gene IDs. Please use getIdsMirHuman or getIdsMirMouse first. Output of a getIdsMir function should be stored as assays within the MAE used in the getIdsMir function.')
 
-    if (missing(mRNA_IDs)) stop('
-                               mRNA_IDs is missing.
-                               Add dataframe of mRNA gene IDs. Please use
-                               getIdsMrnaHuman or getIdsMrnaMouse first.
-                               Output of getIds function should be stored as
-                               an assay within the MAE used in the
-                               getIdsMrna function.')
+    if (missing(mRNA_IDs)) stop('mRNA_IDs is missing. Add dataframe of mRNA gene IDs. Please use getIdsMrnaHuman or getIdsMrnaMouse first. Output of getIds function should be stored as an assay within the MAE used in the getIdsMrna function.')
 
     metadata <- `metadata<-` <- NULL
 

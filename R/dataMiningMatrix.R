@@ -33,20 +33,9 @@
 dataMiningMatrix <- function(MAE, corrTable, targetscan , mirdb,
                              mirtarbase){
 
-  if (missing(MAE)) stop('
-                         MAE is missing.
-                         Add MAE. This will store the output of
-                         dataMiningMatrix. Please use the mirMrnaInt,
-                         dloadTargetscan, dloadMirdb and dloadMirtarbase
-                         functions first.')
+  if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of dataMiningMatrix. Please use the mirMrnaInt, dloadTargetscan, dloadMirdb and dloadMirtarbase functions first.')
 
-  if (missing(corrTable)) stop('
-                               corrTable is missing.
-                               Add matrix of miR-mRNA interactions and
-                               correlations. Please use the mirMrnaInt
-                               function first. The output of mirMrnaInt
-                               should be found as an assay within the MAE used
-                               in the mirMrnaInt function.')
+  if (missing(corrTable)) stop('corrTable is missing. Add matrix of miR-mRNA interactions and correlations. Please use the mirMrnaInt function first. The output of mirMrnaInt should be found as an assay within the MAE used in the mirMrnaInt function.')
 
   TargetScan <- miRDB <- Predicted_Interactions <- miRTarBase <- NULL
 
@@ -74,4 +63,3 @@ dataMiningMatrix <- function(MAE, corrTable, targetscan , mirdb,
 
   return(MAE)
 }
-

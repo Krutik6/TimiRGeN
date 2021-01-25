@@ -52,7 +52,7 @@ packages have been built upon for several functions in the TimiRGeN package:
 [igraph](https://igraph.org/redirect.html) [7].
 
 TimiRGeN is very selective and only uses miR-mRNA interaction data from
-databases curated within the last 2 years. To reduce the number of false-positives, TimiRGeN also only uses predictive databases which use seed site specificity as their main input.
+databases curated within the last 3 years. To reduce the number of false-positives, TimiRGeN also only uses predictive databases which use seed site specificity as their main input.
 
 [TargetScans](http://www.targetscan.org/vert_72/)[8],
 [miRDB](http://www.mirdb.org/)[9],
@@ -72,8 +72,7 @@ Furthermore, wikipathways works very well with pathvisio which is our
 recommended tool for GRN (gene regulatory network) design. Please read the TimiRGeN/inst/Pathvisio_GRN_guide.pdf for a step-by-step tutorial for our GRN creation process.
 
 The TimiRGeN package has several options for miR-mRNA analysis.
-Currently the package can analyse human or mouse data, perform analysis of 
-miR and mRNA data combined or separately, and can use entrez or ensembl gene
+Currently the package can analyse most vertebrate model organisms e.g. human, mouse, rat, and zebrafish. It can also perform analysis of miR and mRNA data combined or separately, and can use entrez or ensembl gene
 IDs. This is because most wikipathways are annotated with either entrez IDs or ensembl gene IDs. This tool can be best used after differential expression (DE) analysis, and has potential to become a staple part of any miR-mRNA expression data study.
 
 ## Install TimiRGeN
@@ -151,9 +150,9 @@ found on the MultiAssayExperiment [bioconductor page](https://bioconductor.org/p
 ## Retrieve Gene IDs
 
 ```{r retrieveID data for mm data, warning=FALSE, message=FALSE}
-MAE <- getIdsMirMouse(MAE = MAE, assay(MAE, 1))
+MAE <- getIdsMir(MAE = MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, miRPrefix = 'mmu')
 
-MAE <- getIdsMrnaMouse(MAE = MAE, assay(MAE, 2), mirror = 'useast')
+MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'mmusculus')
 ```
 
 Using `getIds` functions to produce dataframes containing entrezgene and ensembl ID annotations for genes. This is useful for downstream analysis.
@@ -216,7 +215,7 @@ Once we have a list of significant genes per time point we can put this through 
 ```{r downloadGTM show, message=FALSE, warning=FALSE, eval=FALSE}
 MAE2 <- MultiAssayExperiment()
 
-MAE2 <- dloadGmt(MAE = MAE2, speciesInitials = "Mm")
+MAE2 <- dloadGmt(MAE = MAE2, species = "Mus musculus")
 ```
 
 ```{r downloadGTM working, message=FALSE, warning=FALSE, echo=FALSE}
@@ -661,9 +660,9 @@ mRNA <- hs_mRNA
 
 MAE <- startObject(miR, mRNA)
 
-MAE <- getIdsMirHuman(MAE = MAE, assay(MAE, 1))
+MAE <- getIdsMir(MAE = MAE, assay(MAE, 1), orgDB = org.Hs.eg.db, miRPrefix = 'hsa')
 
-MAE <- getIdsMrnaHuman(MAE = MAE, assay(MAE, 2), mirror = 'useast')
+MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'hsapiens')
 ```
 
 ## Differentiate Data
@@ -712,7 +711,7 @@ to get wikipathways data which is curated with ensembl IDs.
 ```{r hs dloadGmt show, eval=FALSE, message=FALSE, warning=FALSE}
 MAE2 <- MultiAssayExperiment()
 
-MAE2 <- dloadGmt(MAE = MAE2, speciesInitials = "Hs")
+MAE2 <- dloadGmt(MAE = MAE2, species = "Homo sapiens")
 ```
 
 ```{r convert to ensembl, eval=FALSE, message=FALSE, warning=FALSE}
@@ -805,32 +804,24 @@ Note. Conditional data should work here as well.
 ```{r mRNA only, message=FALSE, warning=FALSE}
 mRNA <- mm_mRNA
 
-
 Data <- startObject(miR = NULL, mRNA = mRNA)
 
-
-Data <- getIdsMrnaMouse(MAE = Data, 
-                        mRNA = assay(Data, 2),
-                        mirror = 'useast')
-
+Data <- getIdsMrna(MAE = Data, mRNA = assay(Data, 2), mirror = 'useast',                          species = 'mmusculus')
 
 Data <- genesList(Data, 
                   method = 'c',
                   genetic_data = assay(Data, 2),
                   timeString = 'D')
 
-
 Data <- significantVals(Data, method = 'c',
                         geneList = metadata(Data)[[1]],
                         maxVal = 0.05,
                         stringVal = 'adjPVal')
 
-
 Data <- addIds(MAE = Data, method = 'c',
                filtered_genelist = metadata(Data)[[2]],
                miR_IDs = assay(Data, 3),
                mRNA_IDs = assay(Data, 3))
-
 
 Data <- eNames(MAE = Data, method = 'c', 
                gene_IDs = metadata(Data)[[3]],
@@ -840,7 +831,7 @@ Data <- eNames(MAE = Data, method = 'c',
 ```{r mRNA only dloadGmt show, eval=FALSE}
 Data2 <- MultiAssayExperiment()
 
-Data2 <- dloadGmt(MAE = Data2, speciesInitials = "Mm")
+Data2 <- dloadGmt(MAE = Data2, species = "Mus musculus")
 ```
 
 ```{r mRNA only dloadGmt working, message=FALSE, warning=FALSE, echo=FALSE}

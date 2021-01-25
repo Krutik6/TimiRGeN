@@ -1,18 +1,19 @@
-#' @title getIdsMrnaMouse
-#' @description  getIdsMrnaMouse will produce ensembl and entrez ID dataframes
-#' for mouse mRNAs. These will be stored as 2 individual assays within a MAE.
-#' @param MAE MultiAssayExperiment to store the output of getIdsMrnaMouse.
+#' @title getIdsMrna
+#' @description  getIdsMrna will produce ensembl and entrez ID dataframes
+#' for mRNAs. These will be stored as 2 individual assays within a MAE.
+#' @param MAE MultiAssayExperiment to store the output of getIdsMrna.
 #' It is recommended to use the MAE which contains output from startObject.
 #' @param mRNA Dataframe. Rownames are genes and columns are results of DE.
 #' This should be found as an assay within the MAE used in the startObject
 #' function. Please read vignette for nomenclature guidance.
 #' @param mirror String to identify which biomaRt server is best. This is based
 #' on location. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'www'.
+#' @param species Species of interest which includes
 #' @return 2 new dataframes in the MAE. One with entrez information and
 #' the other with ensembl gene ID information.
 #' @export
 #' @importFrom biomaRt useEnsembl getBM
-#' @usage getIdsMrnaMouse(MAE, mRNA, mirror)
+#' @usage getIdsMrna(MAE, mRNA, mirror, species)
 #' @examples
 #' mRNA <- mm_mRNA
 #'
@@ -20,12 +21,13 @@
 #'
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)
 #'
-#' MAE <- getIdsMrnaMouse(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast')
-getIdsMrnaMouse <- function(MAE, mRNA, mirror = 'www'){
+#' MAE <- getIdsMrna(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast',
+#'                       species = 'mmusculus')
+getIdsMrna <- function(MAE, mRNA, mirror = 'www', species){
 
     if(missing(MAE)) stop('
                           MAE is missing.
-                          Add MAE to store output of getIdsMrnaMouse.
+                          Add MAE to store output of getIdsMrna.
                           Please use startObject first.')
 
     if (missing(mRNA)) stop('
@@ -35,19 +37,21 @@ getIdsMrnaMouse <- function(MAE, mRNA, mirror = 'www'){
                            assay within the MAE used in the startObject
                            function.')
 
-    # Get a mouse mart
-    mouse <- suppressMessages(biomaRt::useEnsembl("ensembl",
-                                        dataset="mmusculus_gene_ensembl",
-                                        host = paste0(mirror, ".ensembl.org")))
+    # Get a  mart
+    mart <- suppressMessages(biomaRt::useEnsembl("ensembl",
+                                                dataset=paste0(species,
+                                                               '_gene_ensembl'),
+                                                host = paste0(mirror,
+                                                              ".ensembl.org")))
 
     # Get IDs
     glist <- suppressMessages(biomaRt::getBM(attributes = c(
-                                                      "external_gene_name",
-                                                      "ensembl_gene_id",
-                                                      "entrezgene_id"),
-                                            filters = "external_gene_name",
-                                            values = rownames(mRNA),
-                                            mart = mouse, uniqueRows = TRUE))
+                                                "external_gene_name",
+                                                "ensembl_gene_id",
+                                                "entrezgene_id"),
+                                              filters = "external_gene_name",
+                                              values = rownames(mRNA),
+                                              mart = mart, uniqueRows = TRUE))
 
     # Remove duplicated data
     glist <- glist[! duplicated(glist$external_gene_name),]

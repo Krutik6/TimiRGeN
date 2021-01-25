@@ -22,12 +22,18 @@
 #' createClusters function.
 #' @param W TRUE or FALSE? Should the plot be shown in a new window? Default is
 #' TRUE.
+#' @param background Plot background colour. Default is black.
+#' @param labelcol Plot labels colour. Default is yellow.
+#' @param axiscol Plot axis labels colour. Default is white.
+#' @param axisline Plot axis line colour. Default is white.
+#' @param subcol Plot sub title colour. Default is yellow.
 #' @return A plot of different clusters showing how the number of genes found
 #' to be significant varies between the input data and wikipathways. These
 #' variations are captured as temporal behaviours and are clustered.
 #' @export
 #' @importFrom Mfuzz mfuzz.plot2
-#' @usage quickFuzz(Mfuzzdata, Clusters, W)
+#' @usage quickFuzz(Mfuzzdata, Clusters, W, background, labelcol, axiscol,
+#' axisline, subcol)
 #' @examples
 #' MAE <- MultiAssayExperiment()
 #'
@@ -48,7 +54,9 @@
 #'
 #' quickFuzz(Mfuzzdata = experiments(MAE)[[4]],
 #'           Clusters = metadata(MAE)[[3]], W = FALSE)
-quickFuzz <- function(Mfuzzdata, Clusters, W = TRUE){
+quickFuzz <- function(Mfuzzdata, Clusters, W = TRUE, background = "black",
+                      labelcol = "yellow", axiscol = "white", axisline = "white",
+                      subcol = 'yellow'){
 
     if (missing(Mfuzzdata)) stop('
                                   Mfuzzdata is missing.
@@ -78,12 +86,13 @@ quickFuzz <- function(Mfuzzdata, Clusters, W = TRUE){
                        cl = Clusters,
                        mfrow = c(a, b),
                        time.labels = lab,
-                       xlab = "Data points",
-                       ylab = "Normalised Common Genes between data and wikipathways",
-                       ax.col = "white",
-                       bg = "black",
-                       col.lab = "yellow",
-                       col.axis = "white",
+                       xlab = "Time points",
+                       ylab = "Genes found in data and pathway",
+                       ax.col = axisline,
+                       bg = background,
+                       col.lab = labelcol,
+                       col.axis = axiscol,
                        colo = "fancy",
+                       col.main = subcol,
                        x11 = W)
 }

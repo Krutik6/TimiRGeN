@@ -4,7 +4,8 @@
 \alias{quickFuzz}
 \title{quickFuzz}
 \usage{
-quickFuzz(Mfuzzdata, Clusters, W)
+quickFuzz(Mfuzzdata, Clusters, W, background, labelcol, axiscol,
+axisline, subcol)
 }
 \arguments{
 \item{Mfuzzdata}{A large ExpressionSet object which contain fuzzy clustering
@@ -19,6 +20,16 @@ createClusters function.}
 
 \item{W}{TRUE or FALSE? Should the plot be shown in a new window? Default is
 TRUE.}
+
+\item{background}{Plot background colour. Default is black.}
+
+\item{labelcol}{Plot labels colour. Default is yellow.}
+
+\item{axiscol}{Plot axis labels colour. Default is white.}
+
+\item{axisline}{Plot axis line colour. Default is white.}
+
+\item{subcol}{Plot sub title colour. Default is yellow.}
 }
 \value{
 A plot of different clusters showing how the number of genes found

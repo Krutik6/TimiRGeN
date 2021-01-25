@@ -40,11 +40,11 @@ mRNA <- mm_mRNA[401:600,]
 
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
-MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 
-MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 
-MAE <- dloadGmt(MAE = MAE, speciesInitials = "Mm")
+MAE <- dloadGmt(MAE = MAE, species = "Mus musculus")
 
 MAE <- reduceWiki(MAE, path_data = assay(MAE, 11),
                   stringWiki = 'TGF Beta Signaling Pathway')

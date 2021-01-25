@@ -36,7 +36,7 @@ MAE <- MultiAssayExperiment()
 
 metadata(MAE)[["e_list"]] <- e_list_mouse
 
-MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+MAE <- dloadGmt(MAE, species = "Mus musculus")
 
 MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
                    orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),

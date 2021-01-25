@@ -40,13 +40,7 @@
 cytoMake <- function(interactionData, titleString = "Network",
                      collectionString = "miR-mRNA interactions"){
 
-    if (missing(interactionData)) stop('
-                                       interactionData is missing.
-                                       Add filtered miR-mRNA dataframe. Please
-                                       use the matrixFilter function first.
-                                       Output of the matrixFilter function
-                                       should be stored as an assay within the
-                                       MAE used in the matrixFilter function.')
+    if (missing(interactionData)) stop('interactionData is missing. Add filtered miR-mRNA dataframe. Please use the matrixFilter function first. Output of the matrixFilter function should be stored as an assay within the MAE used in the matrixFilter function.')
 
     interaction_data <- interactionData
 

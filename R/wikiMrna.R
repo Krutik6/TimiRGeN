@@ -26,11 +26,11 @@
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
-#' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+#' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 #'
-#' MAE <- dloadGmt(MAE = MAE, speciesInitials = "Mm")
+#' MAE <- dloadGmt(MAE = MAE, species = "Mus musculus")
 #'
 #' MAE <- reduceWiki(MAE, path_data = assay(MAE, 11),
 #'                   stringWiki = 'TGF Beta Signaling Pathway')
@@ -45,34 +45,13 @@
 #'                 stringWiki = 'TGF Beta Signaling Pathway')
 wikiMrna <- function(MAE, mRNA_express, singleWiki, stringWiki){
 
-    if (missing(MAE)) stop("
-                           MAE is missing.
-                           Add MAE. This will store the results from wikiMrna.
-                           Please use diffExpressRes and reduceWiki first.")
+    if (missing(MAE)) stop("MAE is missing. Add MAE. This will store the results from wikiMrna. Please use diffExpressRes and reduceWiki first.")
 
-    if (missing(mRNA_express)) stop("
-                                    mRNA_express is missing.
-                                    Add dataframe which contains mRNA
-                                    results from DE (e.g. log2fc, aveExpression)
-                                    and gene IDs. Please use the diffExpressRes
-                                    function on input mRNA data first.
-                                    Output of diffExpressRes should be stored
-                                    as an assay within the MAE used in the
-                                    diffExpressRes function.")
+    if (missing(mRNA_express)) stop("mRNA_express is missing. Add dataframe which contains mRNA results from DE (e.g. log2fc, aveExpression) and gene IDs. Please use the diffExpressRes function on input mRNA data first. Output of diffExpressRes should be stored as an assay within the MAE used in the diffExpressRes function.")
 
-    if (missing(singleWiki)) stop("
-                                  singleWiki is missing.
-                                  Add Dataframe which has data on which
-                                  mRNAs are found within a single wikipathway.
-                                  Please use the reduceWiki function first.
-                                  Output of reduceWiki should be stored as an
-                                  assay in the MAE used in the reduceWiki
-                                  function.")
+    if (missing(singleWiki)) stop("singleWiki is missing. Add Dataframe which has data on which mRNAs are found within a single wikipathway. Please use the reduceWiki function first. Output of reduceWiki should be stored as an assay in the MAE used in the reduceWiki function.")
 
-    if (missing(stringWiki)) stop("
-                                  stringWiki is missing.
-                                  Add Name of the wikipathway. Should be same
-                                  as the stringWiki used in reduceWiki.")
+    if (missing(stringWiki)) stop("stringWiki is missing. Add Name of the wikipathway. Should be same as the stringWiki used in reduceWiki.")
 
     # Take dataframes out of MAE objects
     mRNAs <- mRNA_express

@@ -4,15 +4,14 @@
 \alias{dloadGmt}
 \title{dloadGmt}
 \usage{
-dloadGmt(MAE, speciesInitials = "")
+dloadGmt(MAE, species = "")
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment to store downloaded GMT data in. It might
 be useful to start a new MAE for dloadGmt using MultiAssayExperiment(). This
 is so the MAE objects used in this analysis do not get too large.}
 
-\item{speciesInitials}{Either "Hs" or "Mm", to retrieve Homo
-sapiens or Mus musculus data.}
+\item{species}{Full species names e.g. retrieve "Homo sapiens" or "Mus musculus" data.}
 }
 \value{
 3 dataframes. 1) path_gene, 2) path_names, 3) path_data.
@@ -26,5 +25,5 @@ dataframes within the input MAE 1) path_gene, 2) path_names, 3) path_data.
 \examples{
 MAE <- MultiAssayExperiment()
 
-MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+MAE <- dloadGmt(MAE, species = "Homo sapiens")
 }

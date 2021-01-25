@@ -35,12 +35,7 @@
 #' clusterCheck(Clusters = metadata(MAE)[[3]], W = FALSE)
 clusterCheck <- function(Clusters, W = FALSE){
 
-    if (missing(Clusters)) stop('
-                                Clusters is missing.
-                                Please use the createClusters function first.
-                                The Clusters list created from this will be
-                                stored as metadata within the MAE used in the
-                                createClusters function.')
+    if (missing(Clusters)) stop('Clusters is missing. Please use the createClusters function first. The Clusters list created from this will be stored as metadata within the MAE used in the createClusters function.')
 
     dev.new <- NULL
 

@@ -40,7 +40,7 @@ mRNA <- mm_mRNA
 
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
-MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+MAE <- dloadGmt(MAE, species = "Mus musculus")
 
 MAE <- gmtEnsembl(MAE = MAE, assay(MAE, 3),
                    assay(MAE, 5), org.Mm.eg.db)

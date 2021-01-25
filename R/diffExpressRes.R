@@ -41,9 +41,9 @@
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
-#' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+#' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 7),

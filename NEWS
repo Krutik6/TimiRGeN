@@ -303,3 +303,12 @@ downloaded. Also informed users that timeouts may occur, and if it does,
 increase timout.
 * Updated savePlots. Now plots are larger, have better resultion and users can
 adjust height and width to suit their analysis.
+
+TimiRGeN v1.1.3 (Date: 25/01/2021)
+===============================
+* Added back-up download for dloadGmt incase current version of wikipathways Gmt is unavailable.
+* Changed the following functions : getIdsMiR, getIdsMrna, dloadGmt so more species can be analysed. Rat and zebrafish has been tested.
+* Fixed print message in savePlots.
+* Editted vignette to correpsond to changes.
+* Fixed bug in test_significantVals_c.
+* Added more image option parameters for to quickFuzz.

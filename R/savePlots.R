@@ -34,11 +34,6 @@ savePlots <- function(largeList, maxInt, quickType, fileType, width=22,
                                  Add type of plot. quickBar for a bar plot
                                  or quickDot for a dot plot.')
 
-    if (missing(fileType)) stop('
-                                 fileType is missing.
-                                 Input the type of file to be saved either
-                                 "png", "tiff", "svg" or "jpeg".')
-
   # create empty list
   plot_list <- list()
 
@@ -75,6 +70,6 @@ savePlots <- function(largeList, maxInt, quickType, fileType, width=22,
       print(plot_list[[i]])
       dev.off()
 
-    } else ("Input relevant file type for export: tiff, png, svg or jpeg")
+    } else {print("Input relevant file type for export: tiff, png, svg or jpeg")}
   }
 }

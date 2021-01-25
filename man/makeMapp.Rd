@@ -41,9 +41,11 @@ miR <- mm_miR
 
 mRNA <- mm_mRNA
 
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- startObject(miR, mRNA)
 
-MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
+
+MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                      "mmu-miR-27a-3p:Odc1"),

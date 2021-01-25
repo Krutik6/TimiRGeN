@@ -27,21 +27,11 @@
 #' MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 2),
 #'                  prefixString = "mRNA")
 addPrefix <- function(MAE, gene_df, prefixString){
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE to store output of addPrefix. Please
-                           use startObject first. ')
+    if (missing(MAE)) stop('MAE is missing. Add MAE to store output of addPrefix. Please use startObject first. ')
 
-    if (missing(gene_df)) stop('
-                               gene_df is missing.
-                               Add dataframe containing miR or mRNA DE
-                               data. Please use startObject first. Output of
-                               startObject should be stored as metadata within
-                               the MAE used in startObject.')
+    if (missing(gene_df)) stop('gene_df is missing. Add dataframe containing miR or mRNA DE data. Please use startObject first. Output of startObject should be stored as metadata within the MAE used in startObject.')
 
-    if (missing(prefixString)) stop('
-                                    prefixString is missing.
-                                    Add a prefix string e.g. "miR" or "mRNA."')
+    if (missing(prefixString)) stop('prefixString is missing. Add a prefix string e.g. "miR" or "mRNA."')
 
     gene_df <- as.data.frame(gene_df)
 

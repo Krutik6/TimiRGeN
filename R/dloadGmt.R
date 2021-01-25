@@ -5,8 +5,7 @@
 #' @param MAE MultiAssayExperiment to store downloaded GMT data in. It might
 #' be useful to start a new MAE for dloadGmt using MultiAssayExperiment(). This
 #' is so the MAE objects used in this analysis do not get too large.
-#' @param speciesInitials Either "Hs" or "Mm", to retrieve Homo
-#' sapiens or Mus musculus data.
+#' @param species Full species names e.g. retrieve "Homo sapiens" or "Mus musculus" data.
 #' @return 3 dataframes. 1) path_gene, 2) path_names, 3) path_data.
 #' All of which will be stored as assays in the input MAE.
 #' @export
@@ -14,74 +13,56 @@
 #' @importFrom tidyr separate
 #' @importFrom dplyr select
 #' @importFrom stringr %>%
-#' @usage dloadGmt(MAE, speciesInitials = "")
+#' @usage dloadGmt(MAE, species = "")
 #' @examples
 #' MAE <- MultiAssayExperiment()
 #'
-#' MAE <- dloadGmt(MAE, speciesInitial = "Mm")
-dloadGmt <- function(MAE, speciesInitials){
+#' MAE <- dloadGmt(MAE, species = "Homo sapiens")
+dloadGmt <- function(MAE, species){
 
-    if (missing(MAE)) stop('
-                            MAE is missing.
-                            Add MultiAssayExperiment to store files downloaded
-                            by dloadGmt. The user may wish to create a new
-                            MAE object using the MultiAssayExperiment()
-                            function.')
+  if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment to store files downloaded by dloadGmt. The user may wish to create a new MAE object using the MultiAssayExperiment() function.')
 
-    if (missing(speciesInitials)) stop('
-                                       speciesInitials is missing.
-                                       Add either "Mm" for mouse data or "Hs"
-                                       for human data.')
+  if (missing(species)) stop('species is missing. E.g. "Rattus norvegicus" for rat data and "Homo sapiens" for human data.')
 
-    ont <- wpid <- gene <- name <- NULL
+  ont <- wpid <- gene <- name <- NULL
 
-    # If mouse is selected, download mouse gmt data to file
-    if (speciesInitials == "Mm") {
-        x <- rWikiPathways::downloadPathwayArchive(date = "20201010",
-                                                   organism="Mus musculus",
-                                                   format = "gmt")
+  # Download data
+  t <- try(x <- rWikiPathways::downloadPathwayArchive(organism=species,
+                                                      format = "gmt"))
 
-        # load file
-        gmt <- clusterProfiler::read.gmt(x)
+  #back-up download if current gmt files not yet ready
+  if("try-error" %in% class(t)){x <- rWikiPathways::downloadPathwayArchive(
+                                                      date = "20210110",
+                                                      organism=species,
+                                                      format = "gmt")}
+  # load file
+  gmt <- clusterProfiler::read.gmt(x)
 
-        # delete file
-        file.remove(x)
+  # delete file
+  file.remove(x)
 
-    # If human is selected, download human gmt data from file
-    } else if (speciesInitials == "Hs") {
-        x <- rWikiPathways::downloadPathwayArchive(date = "20201010",
-                                                   organism="Homo sapiens",
-                                                   format = "gmt")
+  gmt <- as.data.frame(gmt)
 
-        # load file
-        gmt <- clusterProfiler::read.gmt(x)
+  colnames(gmt) <- c("ont", "gene")
 
-        # delete file
-        file.remove(x)
-    }
+  # separate by % into organised data frame
+  pathways <- gmt %>% tidyr::separate(ont, c(
+                                  "name","version","wpid","org"),
+                                    "%")
 
-    gmt <- as.data.frame(gmt)
+  # create genes, names and data files from gmt file
+  path_gene <- as.data.frame(pathways%>%dplyr::select(wpid, gene))
 
-    colnames(gmt) <- c("ont", "gene")
+  path_name <- as.data.frame(pathways%>%dplyr::select(wpid, name))
 
-    # separate by % into organised data frame
-    pathways <- gmt %>% tidyr::separate(ont, c(
-                                        "name","version","wpid","org"),
-                                        "%")
+  path_data <- as.data.frame(pathways%>%dplyr::select(wpid,gene,name))
 
-    # create genes, names and data files from gmt file
-    path_gene <- as.data.frame(pathways%>%dplyr::select(wpid, gene))
+  MAE2 <- suppressMessages(MultiAssayExperiment(list("path_gene" = path_gene,
+                                                     "path_name" = path_name,
+                                                     "path_data" = path_data)
+  ))
 
-    path_name <- as.data.frame(pathways%>%dplyr::select(wpid, name))
+  MAE <- c(MAE, MAE2)
 
-    path_data <- as.data.frame(pathways%>%dplyr::select(wpid,gene,name))
-
-    MAE2 <- suppressMessages(MultiAssayExperiment(list("path_gene" = path_gene,
-                                                       "path_name" = path_name,
-                                                       "path_data" = path_data)
-                                                  ))
-
-    MAE <- c(MAE, MAE2)
-
-    return(MAE)
+  return(MAE)
 }

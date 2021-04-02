@@ -5,7 +5,7 @@
 \title{quickFuzz}
 \usage{
 quickFuzz(Mfuzzdata, Clusters, W, background, labelcol, axiscol,
-axisline, subcol)
+axisline, subcol, ylab)
 }
 \arguments{
 \item{Mfuzzdata}{A large ExpressionSet object which contain fuzzy clustering
@@ -30,6 +30,8 @@ TRUE.}
 \item{axisline}{Plot axis line colour. Default is white.}
 
 \item{subcol}{Plot sub title colour. Default is yellow.}
+
+\item{ylab}{y axis label. Default is "Genes found in data and pathway".}
 }
 \value{
 A plot of different clusters showing how the number of genes found
@@ -62,8 +64,7 @@ MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 
 MAE <- turnPercent(MAE = MAE,
-                   wikiMatrix = assay(MAE, 1),
-                   rowInt = 6)
+                   wikiMatrix = assay(MAE, 1))
 
 MAE <- createClusters(MAE, method = "c",
                       percentMatrix = assay(MAE, 2),

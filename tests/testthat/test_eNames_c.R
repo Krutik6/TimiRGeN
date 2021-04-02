@@ -10,8 +10,7 @@ MAE <- MultiAssayExperiment()
 metadata(MAE)[["ID_names"]] <- ID_names
 
 #perform function
-MAE <- eNames(MAE, method = 'c', gene_IDs = metadata(MAE)[[1]],
-              ID_Column = 4)
+MAE <- eNames(MAE, method = 'c', gene_IDs = metadata(MAE)[[1]])
 
 #internal checks
 e <- lapply(ID_names, function(x){x[[4]]})

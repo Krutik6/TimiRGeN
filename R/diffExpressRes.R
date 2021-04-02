@@ -3,8 +3,7 @@
 #' for only one result type, along with an ID of choice. It is recommended to
 #' use this function on a DE results which represents abundance such as log2fc
 #' or average expression, as this data will be averaged and correlated later in
-#' the analysis.
-#' This is to be used for miR and mRNA data individually.
+#' the analysis. This is to be used for miR and mRNA data individually.
 #' @param MAE MultiAssayExperiment to store the output of diffExpressRes
 #' within it. This function is to be used after pathways of interest have been
 #' identified by enrichWiki or returnCluster. It is recommended to
@@ -24,7 +23,7 @@
 #' @param idColumn Name of column to use as the merge point. If Column names in
 #' getIds results have not been changed, it should be "GENENAME". Default has
 #' been left as "GENENAME".
-#' @param name = New name of the assay. Should be a unique string. Remember
+#' @param name New name of the assay. Should be a unique string. Remember
 #' each assay in a MAE must have a unique name.
 #' @return Dataframe with only a single result type from DE (e.g. Log2FC) and
 #' an ID type e.g. entrezIDs. Output will be stored as an assay in the input
@@ -52,38 +51,15 @@
 diffExpressRes <- function(MAE, df, dataType, genes_ID, idColumn = 'GENENAME',
                            name){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add a MAE. This will store output from diffExpressRes
-                           . Please use the startObject and getIds functions
-                           first.')
+    if (missing(MAE)) stop('MAE is missing. Add a MAE. This will store output from diffExpressRes. Please use the startObject and getIds functions first.')
 
-    if (missing(df)) stop('
-                          df is missing.
-                          Add miR or mRNA dataframe which contains genes
-                          and results from DE. Please use the startObject
-                          function before diffExpressRes. Results of
-                          startObject will be found as assays in the MAE used
-                          in the startObject function.')
+    if (missing(df)) stop('df is missing. Add miR or mRNA dataframe which contains genes and results from DE. Please use the startObject function before diffExpressRes. Results of startObject will be found as assays in the MAE used in the startObject function.')
 
-    if (missing(dataType)) stop('
-                                 dataType is missing.
-                                 Add string to represent a common result from
-                                 DE e.g "AveExp", "Log2fc".')
+    if (missing(dataType)) stop('dataType is missing. Add string to represent a common result from DE e.g "AveExp", "Log2fc".')
 
-    if (missing(genes_ID)) stop('
-                                genes_ID is missing.
-                                Add dataframe from getIDs functions.
-                                One column name is named "GENENAME", the other
-                                contain entrez or ensembl IDs. Please use
-                                getIdsMir and getIdsMrna functions first.
-                                Output of getIds functions will be stored as
-                                assays in the MAE used in the getIds function.')
+    if (missing(genes_ID)) stop('genes_ID is missing. Add dataframe from getIDs functions. One column name is named "GENENAME", the other contain entrez or ensembl IDs. Please use getIdsMir and getIdsMrna functions first. Output of getIds functions will be stored as assays in the MAE used in the getIds function.')
 
-    if (missing(name)) stop('
-                            name is missing.
-                            Add name of new data frame. This should be a unique
-                            string.')
+    if (missing(name)) stop('name is missing. Add name of new data frame. This should be a unique string.')
 
     df <- as.data.frame(df)
 

@@ -17,8 +17,8 @@ and is stored as an assay within the MAE used in the createClusters function.}
 \item{whichCluster}{Integer which should corresponds to the cluster of
 interest.}
 
-\item{fitCluster}{Integer from 0-1. How well should the pathways fit into the this
-cluster? Default is 0.99.}
+\item{fitCluster}{Integer from 0-1. How well should the pathways fit into the
+selected cluster? Default is 0.99.}
 }
 \value{
 A dataframe that contains information about the pathways that
@@ -40,8 +40,7 @@ MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 
 MAE <- turnPercent(MAE = MAE,
-                   wikiMatrix = assay(MAE, 1),
-                   rowInt = 6)
+                   wikiMatrix = assay(MAE, 1))
 
 MAE <- createClusters(MAE, method = "c",
                     percentMatrix = assay(MAE, 2),

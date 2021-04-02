@@ -8,8 +8,8 @@
 #' and is stored as an assay within the MAE used in the createClusters function.
 #' @param whichCluster Integer which should corresponds to the cluster of
 #' interest.
-#' @param fitCluster Integer from 0-1. How well should the pathways fit into the this
-#' cluster? Default is 0.99.
+#' @param fitCluster Integer from 0-1. How well should the pathways fit into the
+#' selected cluster? Default is 0.99.
 #' @return A dataframe that contains information about the pathways that
 #' corresponded best with the chosen cluster. Output will be stored as an assay
 #' in the input MAE.
@@ -26,8 +26,7 @@
 #'                   wp_list = metadata(MAE)[[2]])
 #'
 #' MAE <- turnPercent(MAE = MAE,
-#'                    wikiMatrix = assay(MAE, 1),
-#'                    rowInt = 6)
+#'                    wikiMatrix = assay(MAE, 1))
 #'
 #' MAE <- createClusters(MAE, method = "c",
 #'                     percentMatrix = assay(MAE, 2),
@@ -37,24 +36,11 @@
 #'                      fitCluster = 0.5)
 returnCluster <-function(MAE, clusterData, whichCluster, fitCluster = 0.99){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE object. Results from returnCluster
-                           will be stored within this MAE. Please
-                           use createClusters first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE object. Results from returnCluster will be stored within this MAE. Please use createClusters first.')
 
-    if (missing(clusterData)) stop('
-                                   clusterData is missing.
-                                   Add dataframe which has cluster-pathway
-                                   fit scores. Please use the createClusters
-                                   function first. clusterData should be
-                                   stored as an assay within the MAE used in
-                                   the createClusters function.')
+    if (missing(clusterData)) stop('clusterData is missing. Add dataframe which has cluster-pathway fit scores. Please use the createClusters function first. clusterData should be stored as an assay within the MAE used in the createClusters function.')
 
-    if (missing(whichCluster)) stop('
-                                    whichCluster is missing.
-                                    Add integer which represents the
-                                    cluster that is of interest.')
+    if (missing(whichCluster)) stop('whichCluster is missing. Add integer which represents the cluster that is of interest.')
 
     X <- as.data.frame(clusterData)
 

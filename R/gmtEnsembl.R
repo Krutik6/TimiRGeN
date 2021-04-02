@@ -21,11 +21,11 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' MAE <- dloadGmt(MAE, species = "Mus musculus")
 #'

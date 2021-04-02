@@ -31,17 +31,17 @@ will be saved as an assay in the input MAE.
 Creates a dataframe which can be imported into pathvisio by use
 of the the MAPP plugin. This will add the filtered miRs to the wikipathway of
 interest on pathvisio. Follow instructions found in the vignette which show
-how to save this file and further instructions found in
-/inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
+how to save this file and further instructions found in the issues section
+of the TimiRGeN gihub https://github.com/Krutik6/TimiRGeN/issues/2.
 }
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-MAE <- startObject(miR, mRNA)
+MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 
@@ -51,7 +51,7 @@ Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                      "mmu-miR-27a-3p:Odc1"),
                       avecor = c(-0.9191653, 0.7826041),
                       miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
-                      mRNA = c("Acss1", "Acss1"),
+                      mRNA = c("Acss1", "Odc1"),
                       miR_Entrez = c(NA, NA),
                       mRNA_Entrez = c(68738, 18263),
                       TargetScan = c(1, 0),

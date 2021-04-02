@@ -29,9 +29,9 @@ friendly nomenclature. Please do read the vignette for a full description of
 the required nomenclature.
 }
 \examples{
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-MAE <- startObject(miR = miR, mRNA = mRNA)
+Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 }

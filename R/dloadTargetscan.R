@@ -13,23 +13,15 @@
 #' @usage dloadTargetscan(MAE, species)
 #' @examples
 #' \dontrun{
-#'
 #' MAE <- MultiAssayExperiment()
 #'
 #' MAE <-dloadTargetscan(MAE, "mmu")
 #' }
 dloadTargetscan <- function(MAE, species){
 
-  if (missing(MAE)) stop('
-                         MAE is missing.
-                         Add MultiAssayExperiment which will have downloaded
-                         data stored in it. Please use the mirMrnaInt
-                         function first.')
+  if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment which will have downloaded data stored in it. Please use the mirMrnaInt function first.')
 
-  if (missing(species)) stop('
-                              MAE is missing.
-                              Add initials of the species of interest e.g "hsa"
-                              or "mmu".')
+  if (missing(species)) stop('species is missing. Add initials of the species of interest e.g "hsa" or "mmu".')
 
   # download file
   download.file(paste("http://www.targetscan.org/vert_72/vert_72_data_download/",

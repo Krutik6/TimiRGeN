@@ -1,7 +1,7 @@
 #' @title addPrefix
-#' @description Adds 'miR_' or 'mRNA_' prefix to colnames of dataframes. Can
-#' also add any other prefix, if there are other gene types to explore. Colnames
-#' should be in the following naming system: 'genetype_timepoint.resulttype'.
+#' @description Adds 'miR_' or 'mRNA_' genetypes to colnames of dataframes.
+#' Resulting colnames should be in the following naming system:
+#' 'genetype_timepoint.resulttype'.
 #' This function is essential for separate analysis of miR-mRNA DE data. If
 #' using the combined analysis, there is no need to use addPrefix.
 #' @param MAE MultiAssayExperiment to store output of addPrefix.
@@ -15,11 +15,11 @@
 #' @export
 #' @usage addPrefix(MAE, gene_df, prefixString = '')
 #' @examples
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
 #'                  prefixString = "miR")
@@ -29,7 +29,7 @@
 addPrefix <- function(MAE, gene_df, prefixString){
     if (missing(MAE)) stop('MAE is missing. Add MAE to store output of addPrefix. Please use startObject first. ')
 
-    if (missing(gene_df)) stop('gene_df is missing. Add dataframe containing miR or mRNA DE data. Please use startObject first. Output of startObject should be stored as metadata within the MAE used in startObject.')
+    if (missing(gene_df)) stop('gene_df is missing. Add dataframe containing miR or mRNA DE data. Please use startObject first. Output of startObject should be stored as assays within the MAE used in startObject.')
 
     if (missing(prefixString)) stop('prefixString is missing. Add a prefix string e.g. "miR" or "mRNA."')
 

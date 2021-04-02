@@ -27,13 +27,14 @@
 #' @param axiscol Plot axis labels colour. Default is white.
 #' @param axisline Plot axis line colour. Default is white.
 #' @param subcol Plot sub title colour. Default is yellow.
+#' @param ylab y axis label. Default is "Genes found in data and pathway".
 #' @return A plot of different clusters showing how the number of genes found
 #' to be significant varies between the input data and wikipathways. These
 #' variations are captured as temporal behaviours and are clustered.
 #' @export
 #' @importFrom Mfuzz mfuzz.plot2
 #' @usage quickFuzz(Mfuzzdata, Clusters, W, background, labelcol, axiscol,
-#' axisline, subcol)
+#' axisline, subcol, ylab)
 #' @examples
 #' MAE <- MultiAssayExperiment()
 #'
@@ -45,8 +46,7 @@
 #'                   wp_list = metadata(MAE)[[2]])
 #'
 #' MAE <- turnPercent(MAE = MAE,
-#'                    wikiMatrix = assay(MAE, 1),
-#'                    rowInt = 6)
+#'                    wikiMatrix = assay(MAE, 1))
 #'
 #' MAE <- createClusters(MAE, method = "c",
 #'                       percentMatrix = assay(MAE, 2),
@@ -56,23 +56,11 @@
 #'           Clusters = metadata(MAE)[[3]], W = FALSE)
 quickFuzz <- function(Mfuzzdata, Clusters, W = TRUE, background = "black",
                       labelcol = "yellow", axiscol = "white", axisline = "white",
-                      subcol = 'yellow'){
+                      subcol = 'yellow', ylab = "Genes found in data and pathway"){
 
-    if (missing(Mfuzzdata)) stop('
-                                  Mfuzzdata is missing.
-                                  Add the ExpressionSet object created by
-                                  createClusters. Please use createClusters
-                                  first. Mfuzzdata should be stored as an
-                                  experiment within the MAE used in the
-                                  createClusters function.')
+    if (missing(Mfuzzdata)) stop('Mfuzzdata is missing. Add the ExpressionSet object created by createClusters. Please use createClusters first. Mfuzzdata should be stored as an experiment within the MAE used in the createClusters function.')
 
-    if (missing(Clusters)) stop('
-                                 Clusters is missing.
-                                 Add the list created by createClusters.
-                                 Please use createClusters first. Please
-                                 use the createClusters function first. Clusters
-                                 should be stored as metadata within the MAE
-                                 used in the createClusters function.')
+    if (missing(Clusters)) stop('Clusters is missing. Add the list created by createClusters. Please use createClusters first. Please use the createClusters function first. Clusters should be stored as metadata within the MAE used in the createClusters function.')
 
     lab <- colnames(Clusters$centers)
 
@@ -87,7 +75,7 @@ quickFuzz <- function(Mfuzzdata, Clusters, W = TRUE, background = "black",
                        mfrow = c(a, b),
                        time.labels = lab,
                        xlab = "Time points",
-                       ylab = "Genes found in data and pathway",
+                       ylab = ylab,
                        ax.col = axisline,
                        bg = background,
                        col.lab = labelcol,

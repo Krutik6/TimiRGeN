@@ -35,11 +35,11 @@ this function.
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
+data(mm_miR)
 
 # Make sure miRNA gene name nomenclature is correct for TimiRGeN analysis!
 
-miR <- miR[1:100,]
+miR <- mm_miR[1:100,]
 
 MAE <- startObject(miR = miR, mRNA = NULL)
 

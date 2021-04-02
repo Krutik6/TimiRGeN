@@ -21,18 +21,18 @@ Dataframe which has a specific prefix infront of each column name.
 Will be stored as an assay in the input MAE.
 }
 \description{
-Adds 'miR_' or 'mRNA_' prefix to colnames of dataframes. Can
-also add any other prefix, if there are other gene types to explore. Colnames
-should be in the following naming system: 'genetype_timepoint.resulttype'.
+Adds 'miR_' or 'mRNA_' genetypes to colnames of dataframes.
+Resulting colnames should be in the following naming system:
+'genetype_timepoint.resulttype'.
 This function is essential for separate analysis of miR-mRNA DE data. If
 using the combined analysis, there is no need to use addPrefix.
 }
 \examples{
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")

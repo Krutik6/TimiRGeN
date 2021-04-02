@@ -43,8 +43,7 @@
 #'                   wp_list = metadata(MAE)[[2]])
 #'
 #' MAE <- turnPercent(MAE = MAE,
-#'                    wikiMatrix = assay(MAE, 1),
-#'                    rowInt = 6)
+#'                    wikiMatrix = assay(MAE, 1))
 #'
 #'MAE <- createClusters(MAE, method = "c",
 #'                     percentMatrix = assay(MAE, 2),
@@ -77,10 +76,7 @@ createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
     # If == s then subset data by common string e.g mRNA, miR
     if (method == 's') {
 
-      if (missing(dataString)) stop('
-                                    dataString is missing.
-                                    Add prefix which was added in the
-                                    addPrefix function e.g. "mRNA" or "miR".')
+      if (missing(dataString)) stop('dataString is missing.  Add prefix which was added in the addPrefix function e.g. "mRNA" or "miR".')
 
       df <- as.data.frame(df)
 

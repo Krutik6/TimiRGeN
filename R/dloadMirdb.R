@@ -23,19 +23,11 @@
 #' }
 dloadMirdb <- function(MAE, species, orgDB){
 
-  if (missing(MAE)) stop('
-                          MAE is missing.
-                          Add MAE which will have output from dloadMirdb stored
-                          within. Please use mirMrnaInt first.')
+  if (missing(MAE)) stop('MAE is missing. Add MAE which will have output from dloadMirdb stored within. Please use mirMrnaInt first.')
 
-  if (missing(species)) stop('
-                              species is missing.
-                              Add initials of the species of interest
-                              e.g "hsa" or "mmu".')
+  if (missing(species)) stop('species is missing. Add initials of the species of interest e.g "hsa" or "mmu".')
 
-  if (missing(orgDB)) stop('
-                           orgDB is missing.
-                           Add a species library e.g. org.Hs.eg.db.')
+  if (missing(orgDB)) stop('orgDB is missing. Add a species library e.g. org.Hs.eg.db.')
 
   miR <- NULL
 

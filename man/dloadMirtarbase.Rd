@@ -25,11 +25,8 @@ the miRTarBase database http://mirtarbase.cuhk.edu.cn/php/download.php
 are used.
 }
 \examples{
-\dontrun{
-
 MAE <- MultiAssayExperiment()
 
 MAE <- dloadMirtarbase(MAE, "mmu")
 
-}
 }

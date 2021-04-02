@@ -4,15 +4,13 @@
 \alias{savePlots}
 \title{savePlots}
 \usage{
-savePlots(largeList, maxInt, quickType, fileType = '', width, height)
+savePlots(largeList, maxInt, fileType = '', width, height)
 }
 \arguments{
 \item{largeList}{A large list containing GSEA results. This should be
 stored as metadata within the MAE used in the enrichWiki function.}
 
 \item{maxInt}{Integer, number of samples in data set.}
-
-\item{quickType}{quickDot or quickBar. This will be the plot type.}
 
 \item{fileType}{Type of file for images to be exported as: "png", "tiff",
 "svg" or "jpeg".}

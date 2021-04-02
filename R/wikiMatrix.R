@@ -25,27 +25,11 @@
 #'                   wp_list = metadata(MAE)[[2]])
 wikiMatrix <- function(MAE, ID_list, wp_list){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE which will store the results of
-                           wikiMatrix. Please use the eNames and wikiList
-                           functions first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE which will store the results of wikiMatrix. Please use the eNames and wikiList functions first.')
 
-    if (missing(ID_list)) stop('
-                               ID_list is missing.
-                               Add list of lists of gene IDs. Please
-                               use the eNames function before using wikiMatrix.
-                               Output of eNames should be stored as metadata
-                               within the MAE used in the eNames function.')
+    if (missing(ID_list)) stop('ID_list is missing. Add list of lists of gene IDs. Please use the eNames function before using wikiMatrix. Output of eNames should be stored as metadata within the MAE used in the eNames function.')
 
-    if (missing(wp_list)) stop('
-                               wp_list is missing.
-                               Add list of lists of wikipathways
-                               and associated entrezgene or ensembl IDs.
-                               Please use the wikiList function before using
-                               wikiMatrix. Output of wikiList should be stored
-                               as metadata within the MAE used in the
-                               wikiList function.')
+    if (missing(wp_list)) stop('wp_list is missing. Add list of lists of wikipathways and associated entrezgene or ensembl IDs. Please use the wikiList function before using wikiMatrix. Output of wikiList should be stored as metadata within the MAE used in the wikiList function.')
 
     # Convert list into matrix
     wmat <- sapply(wp_list, function(x) {

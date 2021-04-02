@@ -15,7 +15,7 @@ function. Data can be retrieved using [[i]][[j]] on the output of enrichWiki.}
 \item{Y}{String which is associated to the nested dataframe selected for X.
 This is the output from the enrichWiki function. It will be stored as
 metadata within the MAE used in the enrichWiki function. Data can
-be retrieved using [[i]][j] on the output of enrichWiki.}
+be retrieved using names([[i]][j]) on the output of enrichWiki.}
 }
 \value{
 Bar plot showing which pathways are most enriched for genes found
@@ -43,7 +43,7 @@ MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
                    path_name = assay(MAE, 2), ID = "ENTREZID",
                    universe = assay(MAE, 1)[[2]])
 
-q <- quickBar(X = metadata(MAE)[[2]][[1]], Y = metadata(MAE)[[2]][1])
+q <- quickBar(X = metadata(MAE)[[2]][[1]], Y = names(metadata(MAE)[[2]][1]))
 
 # to view bar plot enter plot(q)
 }

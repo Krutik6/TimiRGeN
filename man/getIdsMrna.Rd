@@ -17,7 +17,7 @@ function. Please read vignette for nomenclature guidance.}
 \item{mirror}{String to identify which biomaRt server is best. This is based
 on location. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'www'.}
 
-\item{species}{Species of interest which includes}
+\item{species}{Species of interest. E.g. mmusculus or hsapiens.}
 }
 \value{
 2 new dataframes in the MAE. One with entrez information and
@@ -28,9 +28,9 @@ getIdsMrna will produce ensembl and entrez ID dataframes
 for mRNAs. These will be stored as 2 individual assays within a MAE.
 }
 \examples{
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-mRNA <- mRNA[1:20,]
+mRNA <- mm_mRNA[1:20,]
 
 MAE <- startObject(miR = NULL, mRNA = mRNA)
 

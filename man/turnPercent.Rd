@@ -4,7 +4,7 @@
 \alias{turnPercent}
 \title{turnPercent}
 \usage{
-turnPercent(MAE, wikiMatrix, rowInt)
+turnPercent(MAE, wikiMatrix)
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment which will store the output from
@@ -13,11 +13,6 @@ wikiMatrix function.}
 
 \item{wikiMatrix}{Numeric matrix of wikipathways and samples. This should be
 stored as an assay within the MAE used in the wikiMatrix function.}
-
-\item{rowInt}{Integer representing the row that contains the total number of
-genes per wikipathway. This will be 1+ the number of samples in your input
-data. For example, rowInt = 6 in the example mouse data analysis because
-there are 5 time points.}
 }
 \value{
 A percentage matrix which contrasts genes found in pathways and
@@ -37,7 +32,5 @@ metadata(MAE)[["w_list"]] <- w_list_mouse[1:10]
 MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 
-MAE <- turnPercent(MAE = MAE,
-                   wikiMatrix = assay(MAE, 1),
-                   rowInt = 6)
+MAE <- turnPercent(MAE = MAE, wikiMatrix = assay(MAE, 1))
 }

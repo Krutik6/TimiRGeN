@@ -6,14 +6,10 @@
 #' wikiMatrix function.
 #' @param wikiMatrix Numeric matrix of wikipathways and samples. This should be
 #' stored as an assay within the MAE used in the wikiMatrix function.
-#' @param rowInt Integer representing the row that contains the total number of
-#' genes per wikipathway. This will be 1+ the number of samples in your input
-#' data. For example, rowInt = 6 in the example mouse data analysis because
-#' there are 5 time points.
 #' @return A percentage matrix which contrasts genes found in pathways and
 #' samples. Output will be stored as an assay within the input MAE.
 #' @export
-#' @usage turnPercent(MAE, wikiMatrix, rowInt)
+#' @usage turnPercent(MAE, wikiMatrix)
 #' @examples
 #' MAE <- MultiAssayExperiment()
 #'
@@ -24,30 +20,14 @@
 #' MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
 #'                   wp_list = metadata(MAE)[[2]])
 #'
-#' MAE <- turnPercent(MAE = MAE,
-#'                    wikiMatrix = assay(MAE, 1),
-#'                    rowInt = 6)
-turnPercent <- function(MAE, wikiMatrix, rowInt){
+#' MAE <- turnPercent(MAE = MAE, wikiMatrix = assay(MAE, 1))
+turnPercent <- function(MAE, wikiMatrix){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. Output of turnPercent will be
-                           stored within this MAE. Please use wikiMatrix first.
-                           ')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. Output of turnPercent will be stored within this MAE. Please use wikiMatrix first.')
 
-    if (missing(wikiMatrix)) stop('
-                                  wikiMatrix is missing.
-                                  Add matrix of wikipathways and samples.
-                                  Please use the wikiMatrix function before
-                                  using turnPercent. Output of wikiMatrix
-                                  should be stored as an assay within the MAE
-                                  used in the wikiMatrix function.')
+    if (missing(wikiMatrix)) stop('wikiMatrix is missing. Add matrix of wikipathways and samples. Please use the wikiMatrix function before using turnPercent. Output of wikiMatrix should be stored as an assay within the MAE used in the wikiMatrix function.')
 
-    if (missing(rowInt)) stop('
-                              rowInt is missing.
-                              Add an integer which represents the row that
-                              contains the total number of genes. Should be
-                              1+ the total number of samples.')
+    rowInt <- nrow(wikiMatrix)
 
     df1 <- as.matrix(wikiMatrix)
 

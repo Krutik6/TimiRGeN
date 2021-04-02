@@ -8,7 +8,7 @@ Wmat <- readRDS("wikimatrix.rds")
 MAE <- MultiAssayExperiment(list("Wikimatrix" = Wmat))
 
 #test TurnPercent
-MAE <- turnPercent(MAE, wikiMatrix = assay(MAE, 1), rowInt = 6)
+MAE <- turnPercent(MAE, wikiMatrix = assay(MAE, 1))
 
 #internal checks
 df1 <- as.matrix(assay(MAE, 1))

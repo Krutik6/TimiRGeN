@@ -32,7 +32,7 @@ from the getIds functions.}
 getIds results have not been changed, it should be "GENENAME". Default has
 been left as "GENENAME".}
 
-\item{name}{= New name of the assay. Should be a unique string. Remember
+\item{name}{New name of the assay. Should be a unique string. Remember
 each assay in a MAE must have a unique name.}
 }
 \value{
@@ -45,8 +45,7 @@ diffExpressRes will produce a dataframe which contains data
 for only one result type, along with an ID of choice. It is recommended to
 use this function on a DE results which represents abundance such as log2fc
 or average expression, as this data will be averaged and correlated later in
-the analysis.
-This is to be used for miR and mRNA data individually.
+the analysis. This is to be used for miR and mRNA data individually.
 }
 \examples{
 library(org.Mm.eg.db)

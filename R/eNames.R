@@ -8,24 +8,19 @@
 #' @param gene_IDs List of DE data and associated gene IDs. This is the
 #' output from the addIds function, this should be found as metadata in
 #' the MAE used in the addIds function.
-#' @param ID_Column Integer representing the gene ID column in each dataframe.
-#' This will be the last column in each dataframe, but will vary based on the
-#' input data. This should be 2+ the number of DE results per
-#' time point. e.g. if each time point has log2fc's and adjPvalue's, then the
-#' fourth column will contain the gene ID information.
 #' @return A single list of entrez/ ensembl IDs for each time point. Output
 #' will be stored as metadata in the input MAE.
 #' @export
 #' @importFrom stats complete.cases
-#' @usage eNames(MAE, method = '', gene_IDs, ID_Column)
+#' @usage eNames(MAE, method = '', gene_IDs)
 #' @examples
 #'library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' Data <- startObject(miR = miR, mRNA = mRNA)
+#' Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' Data <- getIdsMir(Data, assay(Data, 1), org.Mm.eg.db, 'mmu')
 #'
@@ -45,40 +40,22 @@
 #'               filtered_genelist = metadata(Data)[[2]],
 #'               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 7))
 #'
-#' Data <- eNames(MAE = Data, method = "c", gene_IDs = metadata(Data)[[3]],
-#'                ID_Column = 4)
-eNames <- function(MAE, method, gene_IDs, ID_Column){
+#' Data <- eNames(MAE = Data, method = "c", gene_IDs = metadata(Data)[[3]])
+eNames <- function(MAE, method, gene_IDs){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MultiAssayExperiment. The results of eNames
-                           will be stored in the MAE. Please use the addIds
-                           function first.')
+    if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment. The results of eNames will be stored in the MAE. Please use the addIds function first.')
 
-    if (missing(method)) stop('
-                               method is missing.
-                               Please add method "c" for combined analysis
-                               or "s" for separated analysis.')
+    if (missing(method)) stop('method is missing. Please add method "c" for combined analysis or "s" for separated analysis.')
 
-    if (missing(gene_IDs)) stop('
-                                 gene_IDs is missing.
-                                 Add a list of nested dataframes with
-                                 entrezID/ ensembl gene name information.
-                                 Please use the addIDs function first. Output
-                                 of the addIds function will be stored as
-                                 metadata of the MAE used in the addIds
-                                 function.')
-
-    if (missing(ID_Column)) stop('
-                                  ID_Column is missing.
-                                  Add an integer representing the column which
-                                  contains gene ID information. This should be
-                                  2+ the number of DE results per time point.')
+    if (missing(gene_IDs)) stop('gene_IDs is missing. Add a list of nested dataframes with entrezID/ ensembl gene name information. Please use the addIDs function first. Output of the addIds function will be stored as metadata of the MAE used in the addIds function.')
 
     metadata <- `metadata<-` <- NULL
 
     # If c is choses
     if (method == 'c') {
+
+      ID_Column <- ncol(gene_IDs[[1]])
+
         # Retreive all the string from the ID_Column from each list
         e <- lapply(gene_IDs, function(x){x[[ID_Column]]})
 
@@ -90,6 +67,8 @@ eNames <- function(MAE, method, gene_IDs, ID_Column){
     return(MAE)
 
     } else if (method == 's') {
+
+      ID_Column <- ncol(gene_IDs[[1]][[1]])
 
         # Retrieve all the string from the ID_Column from each list within
         # a list

@@ -20,11 +20,11 @@
 #' @export
 #' @usage significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 #' @examples
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' Data <- startObject(miR = miR, mRNA = mRNA)
+#' Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
 #'                      mRNA_data = assay(Data, 2))
@@ -37,33 +37,15 @@
 #'                         maxVal = 0.05, stringVal = "adjPVal")
 significantVals <- function(MAE, method, geneList, maxVal, stringVal){
 
-    if (missing(MAE)) stop('
-                              MAE is missing.
-                              Add a MultiAssayExperiment. Output of
-                              significantVals will be stored in the MAE.
-                              Please use the genesList function first')
+    if (missing(MAE)) stop('MAE is missing. Add a MultiAssayExperiment. Output of significantVals will be stored in the MAE. Please use the genesList function first')
 
-    if (missing(method)) stop('
-                              method is missing.
-                              Please add method "c" for combined analysis or
-                              "s" for separated analysis')
+    if (missing(method)) stop('method is missing. Please add method "c" for combined analysis or "s" for separated analysis')
 
-    if(missing(geneList)) stop('
-                               geneList is missing.
-                               Add list of nested dataframes. Please use
-                               the genesList function first. Results of
-                               genesList should be stored in the metadata of
-                               the MAE used in the genesList function.')
+    if(missing(geneList)) stop('geneList is missing. Add list of nested dataframes. Please use the genesList function first. Results of genesList should be stored in the metadata of the MAE used in the genesList function.')
 
-    if(missing(maxVal)) stop('
-                              maxVal is missing.
-                              Add number as cutoff threshold e.g. 0.05.')
+    if(missing(maxVal)) stop('maxVal is missing. Add number as cutoff threshold e.g. 0.05.')
 
-    if(missing(stringVal)) stop('
-                                 stringVal is missing.
-                                 Add differential expression result type
-                                 to use for filtration e.g. "pval", "adjPval",
-                                "qVal".')
+    if(missing(stringVal)) stop('stringVal is missing. Add differential expression result type to use for filtration e.g. "pval", "adjPval", "qVal".')
 
     metadata <- `metadata<-` <- NULL
 

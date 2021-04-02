@@ -25,7 +25,6 @@ miR-mRNA interactions from the species of interest will be extracted.
 }
 \examples{
 \dontrun{
-
 MAE <- MultiAssayExperiment()
 
 MAE <-dloadTargetscan(MAE, "mmu")

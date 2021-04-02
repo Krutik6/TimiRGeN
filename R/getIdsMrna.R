@@ -8,16 +8,16 @@
 #' function. Please read vignette for nomenclature guidance.
 #' @param mirror String to identify which biomaRt server is best. This is based
 #' on location. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'www'.
-#' @param species Species of interest which includes
+#' @param species Species of interest. E.g. mmusculus or hsapiens.
 #' @return 2 new dataframes in the MAE. One with entrez information and
 #' the other with ensembl gene ID information.
 #' @export
 #' @importFrom biomaRt useEnsembl getBM
 #' @usage getIdsMrna(MAE, mRNA, mirror, species)
 #' @examples
-#' mRNA <- mm_mRNA
+#'data(mm_mRNA)
 #'
-#' mRNA <- mRNA[1:20,]
+#' mRNA <- mm_mRNA[1:20,]
 #'
 #' MAE <- startObject(miR = NULL, mRNA = mRNA)
 #'
@@ -25,17 +25,11 @@
 #'                       species = 'mmusculus')
 getIdsMrna <- function(MAE, mRNA, mirror = 'www', species){
 
-    if(missing(MAE)) stop('
-                          MAE is missing.
-                          Add MAE to store output of getIdsMrna.
-                          Please use startObject first.')
+    if(missing(MAE)) stop('MAE is missing. Add MAE to store output of getIdsMrna. Please use startObject first.')
 
-    if (missing(mRNA)) stop('
-                           mRNA is missing.
-                           Add mRNA dataframe. Please use startObject first.
-                           The output of startObject will be stored as an
-                           assay within the MAE used in the startObject
-                           function.')
+    if (missing(mRNA)) stop('mRNA is missing. Add mRNA dataframe. Please use startObject first. The output of startObject will be stored as an assay within the MAE used in the startObject function.')
+
+    if (missing(species)) stop('species is missing. Add species of interest e.g. "mmusculus", "hsapiens"')
 
     # Get a  mart
     mart <- suppressMessages(biomaRt::useEnsembl("ensembl",

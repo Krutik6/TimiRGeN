@@ -1,9 +1,9 @@
 #' @title combineGenes
 #' @description Combines miR and mRNA data into one dataframe. Input columns
-#' should be written as :timepoint.DifferentialExpressionResultType e.g.
+#' should be written as : timepoint.DifferentialExpressionResultType e.g.
 #' D1.log2fc or H6.adjPval. Column names should be the same for miR and mRNA
 #' data. If a more detailed explanation of column nomenclature is needed please
-#' read the vignette.combineGenes is essential for combined analysis of miR-mRNA
+#' read the vignette. combineGenes is essential for combined analysis of miR-mRNA
 #' data. If using separate analysis, there is no need to use combineGenes.
 #' @param MAE Input MAE which stores results from combineGenes. It is
 #' recommended to use the MAE which was used in startObject.
@@ -21,11 +21,11 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' MAE <- combineGenes(MAE = MAE, miR_data = assay(MAE, 1),
 #'                     mRNA_data = assay(MAE, 2))

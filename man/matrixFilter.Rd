@@ -12,7 +12,7 @@ matrixFilter(MAE, miningMatrix, negativeOnly, predictedOnly,
 recommended to use the same MAE which stores the results from
 dataMiningMatrix.}
 
-\item{miningMatrix}{A Large correlation matrix which has miR-mRNA
+\item{miningMatrix}{A large correlation matrix which has miR-mRNA
 validation information from targetscans, mirdb and mirtarbase.
 This is output from dataMiningMatrix, and should be stored as an assay within
 the MAE used in the dataMiningMatrix function.}
@@ -39,16 +39,16 @@ in the input MAE.
 \description{
 Filters out miR-mRNA interactions based on how many times an
 interaction has been predicted and/ or validated. miR-mRNA interactions can
-also be filtered by averaged correlations of DE values (log2fc or ave exp).
+also be filtered by correlations of expression values (log2fc or ave exp).
 Negatively correlating miR-mRNA interactions can be filtered for, and degree
 of correlation is also a filterable parameter.
 }
 \examples{
 Int_matrix <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                       "mmu-miR-27a-3p:Odc1"),
-                        avecor = c(-0.9191653, 0.7826041),
+                        corr = c(-0.9191653, 0.7826041),
                         miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
-                        mRNA = c("Acss1", "Acss1"),
+                        mRNA = c("Acss1", "Odc1"),
                         miR_Entrez = c(NA, NA),
                         mRNA_Entrez = c(68738, 18263),
                         TargetScan = c(1, 0),

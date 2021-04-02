@@ -35,11 +35,11 @@ significantly differentially expressed. Each sample will be filtered
 independently.
 }
 \examples{
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-Data <- startObject(miR = miR, mRNA = mRNA)
+Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))

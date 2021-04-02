@@ -28,7 +28,7 @@ network.
 \examples{
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                      "mmu-miR-27a-3p:Odc1"),
-                      avecor = c(-0.9191653, 0.7826041),
+                      corr = c(-0.9191653, 0.7826041),
                       miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
                       mRNA = c("Acss1", "Acss1"),
                       miR_Entrez = c(NA, NA),

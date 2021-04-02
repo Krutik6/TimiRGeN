@@ -10,8 +10,7 @@ MAE <- MultiAssayExperiment()
 metadata(MAE)[["ensembl_genes"]] <- ensembl_genes
 
 #test function
-MAE<- eNames(MAE, method = 's',  gene_IDs = metadata(MAE)[[1]],
-              ID_Column = 4)
+MAE<- eNames(MAE, method = 's',  gene_IDs = metadata(MAE)[[1]])
 
 #check 1
 test_that("e_list has 10 lists", {

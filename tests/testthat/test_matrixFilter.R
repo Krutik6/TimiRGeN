@@ -4,7 +4,7 @@ library(testthat)
 
 #load data
 DatMat <- readRDS("MiningMatrix.rds")
-
+names(DatMat)[[1]] <- "corr"
 MAE <- MultiAssayExperiment()
 
 #run function
@@ -19,15 +19,11 @@ test_that("filt_df aspects", {
     length(rownames(assay(MAE, 1))))
 })
 
-# edit to create some interactions
-DatMat$Pred_Fun[1:5] <- 1
-
 #continue
 MAE2 <- MultiAssayExperiment()
 
 MAE2 <- matrixFilter(MAE2, miningMatrix = DatMat, predictedOnly = FALSE,
-                         threshold = 1,
-                         negativeOnly = FALSE)
-
+                         threshold = 0,
+                         negativeOnly = FALSE, maxCor = -0.85)
 #save data
 saveRDS(assay(MAE2, 1), "filt_df.rds", compress = "xz")

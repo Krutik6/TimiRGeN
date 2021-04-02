@@ -2,8 +2,8 @@
 #' @description Creates a dataframe which can be imported into pathvisio by use
 #' of the the MAPP plugin. This will add the filtered miRs to the wikipathway of
 #' interest on pathvisio. Follow instructions found in the vignette which show
-#' how to save this file and further instructions found in
-#' /inst/Pathvisio_GRN_guide.pdf to see how this can help in GRN construction.
+#' how to save this file and further instructions found in the issues section
+#' of the TimiRGeN gihub https://github.com/Krutik6/TimiRGeN/issues/2.
 #' @param MAE MultiAssayExperiment to store the output of makeMapp. It
 #' is recommended to use the same MAE which stores the output from
 #' matrixFilter.
@@ -23,11 +23,11 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR, mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
@@ -37,7 +37,7 @@
 #'                                      "mmu-miR-27a-3p:Odc1"),
 #'                       avecor = c(-0.9191653, 0.7826041),
 #'                       miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
-#'                       mRNA = c("Acss1", "Acss1"),
+#'                       mRNA = c("Acss1", "Odc1"),
 #'                       miR_Entrez = c(NA, NA),
 #'                       mRNA_Entrez = c(68738, 18263),
 #'                       TargetScan = c(1, 0),
@@ -50,31 +50,13 @@
 #'                 dataType = 'L')
 makeMapp <- function(MAE, filt_df, miR_IDs_adj, dataType){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. This will store the output of
-                           makeMapp. Please use matrixFilter first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of makeMapp. Please use matrixFilter first.')
 
-    if (missing(filt_df)) stop('
-                               filt_df is missing.
-                               Add dataframe of filtered miR-mRNA interactions.
-                               Please use the matrixFilter function first.
-                               Output of matrixFilter should be stored as an
-                               assay within the MAE used in the matrixFilter
-                               function.')
+    if (missing(filt_df)) stop('filt_df is missing. Add dataframe of filtered miR-mRNA interactions. Please use the matrixFilter function first. Output of matrixFilter should be stored as an assay within the MAE used in the matrixFilter function.')
 
-    if (missing(miR_IDs_adj)) stop('
-                                   miR_IDs_adj is missing.
-                                   Add adjusted miR gene ID data. Please use the
-                                   getIdsMirHuman or getIdsMirMouse function
-                                   first. Output of a getIdsMir function should
-                                   be stored as an assay within the MAE used in
-                                   the getIdsMir function.')
+    if (missing(miR_IDs_adj)) stop('miR_IDs_adj is missing. Add adjusted miR gene ID data. Please use the getIdsMir function first. Output of a getIdsMir function should be stored as an assay within the MAE used in the getIdsMir function.')
 
-    if (missing(dataType)) stop('
-                                dataType is missing.
-                                Add a string. "En" for ensembl or "L"
-                                for entrez.')
+    if (missing(dataType)) stop('dataType is missing. Add a string. "En" for ensembl or "L" for entrez.')
 
     # Merge filtered data frame of interactions and adjusted miR IDs
     X <- merge(x = filt_df, y = miR_IDs_adj, by.x = "miR", by.y = "GENENAME")

@@ -18,20 +18,11 @@
 #' @usage wikiList(MAE, stringSpecies = '', stringSymbol = '')
 wikiList <- function(MAE, stringSpecies, stringSymbol){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. Results of wikiList will be stored in this
-                           MAE.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. Results of wikiList will be stored in this MAE.')
 
-    if (missing(stringSpecies)) stop('
-                                      stringSpecies is missing.
-                                      Add a species name e.g. "Homo
-                                      sapiens" or "Mus musculus".')
+    if (missing(stringSpecies)) stop('stringSpecies is missing. Add a species name e.g. "Homo sapiens" or "Mus musculus".')
 
-    if (missing(stringSymbol)) stop('
-                                     stringSymbol is missing.
-                                     Add a symbol type e.g. "En" or "L".
-                                    ')
+    if (missing(stringSymbol)) stop('stringSymbol is missing. Add a symbol type e.g. "En" or "L".')
 
     metadata <- `metadata<-` <- NULL
 

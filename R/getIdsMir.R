@@ -22,37 +22,24 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
 #' # Make sure miRNA gene name nomenclature is correct for TimiRGeN analysis!
 #'
-#' miR <- miR[1:100,]
+#' miR <- mm_miR[1:100,]
 #'
 #' MAE <- startObject(miR = miR, mRNA = NULL)
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, miRPrefix = 'mmu')
 getIdsMir <- function(MAE, miR, orgDB, miRPrefix){
 
-    if(missing(MAE)) stop('
-                          MAE is missing.
-                          Add MAE to store output of getIdsMir.
-                          Please use startObject first.');
+    if(missing(MAE)) stop('MAE is missing. Add MAE to store output of getIdsMir. Please use startObject first.');
 
-    if (missing(miR)) stop('
-                           miR is missing.
-                           Add microRNA dataframe. Please use startObject
-                           first. The output of startObject will be stored as an
-                           assay within the MAE used in the startObject
-                           function.')
+    if (missing(miR)) stop('miR is missing. Add microRNA dataframe. Please use startObject first. The output of startObject will be stored as an assay within the MAE used in the startObject function.')
 
-  if(missing(orgDB)) stop('
-                          orgDB is missing.
-                          Add org.xx.eg.db package which is relevant for the
-                          analysis.');
+    if(missing(orgDB)) stop('orgDB is missing. Add org.xx.eg.db package which is relevant for the analysis.');
 
-  if(missing(miRPrefix)) stop('
-                          miRPrefix is missing.
-                          Add microRNA prefix e.g. mmu for mouse or rno for rat.');
+    if(missing(miRPrefix)) stop('miRPrefix is missing. Add microRNA prefix e.g. "mmu" for mouse or "rno" for rat.');
 
         miR$Genes <- miR$MicroRNA <- rownames(miR)
 

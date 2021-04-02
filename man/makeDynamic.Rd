@@ -22,7 +22,7 @@ average expression) from mRNA specific differential expression, along with
 gene IDs. This is the output from diffExpressRes. Output of diffExpressRes
 should be stored as an assay within the MAE used in diffExpressRes.}
 
-\item{miR_IDs_adj}{Dataframe which contain adjusted gene IDs from miR data.
+\item{miR_IDs_adj}{Dataframe which contains adjusted gene IDs from miR data.
 Either miR_adjusted_entrez or miR_adjusted_ensembl. Should be found
 as an assay in the MAE used a getIdsMir function.}
 
@@ -38,9 +38,9 @@ as an assay in the input MAE.
 \description{
 Produces a dataframe that can be imported into pathvisio
 to show how changes in genes expression levels over the time course. Follow
-instructions found in the vignette which show on how to save this file and
-further instructions found in /inst/Pathvisio_GRN_guide.pdf to see how
-this can help in GRN construction.
+instructions found in the vignette which show how to save this file and
+further instructions found in the issues section of the TimiRGeN gihub
+https://github.com/Krutik6/TimiRGeN/issues/2.
 }
 \examples{
 library(org.Mm.eg.db)

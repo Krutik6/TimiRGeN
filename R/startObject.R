@@ -18,24 +18,16 @@
 #' @importFrom MultiAssayExperiment MultiAssayExperiment
 #' @usage startObject(miR, mRNA)
 #' @examples
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 startObject <- function(miR, mRNA){
 
-    if (missing(miR)) stop('
-                           miR is missing.
-                           Add microRNAs. Rows should be gene names and columns
-                           should be DE results. Nomenclature is explained in
-                           detail within the vignette.')
+    if (missing(miR)) stop('miR is missing. Add microRNAs. Rows should be gene names and columns should be DE results. Nomenclature is explained in detail within the vignette.')
 
-    if (missing(mRNA)) stop('
-                            mRNA is missing.
-                            Add mRNAs. Rows should be gene names and columns
-                            should be DE results. Nomenclature is explained in
-                            detail within the vignette.')
+    if (missing(mRNA)) stop('mRNA is missing. Add mRNAs. Rows should be gene names and columns should be DE results. Nomenclature is explained in detail within the vignette.')
 
     Data <- list("miR" = as.data.frame(miR), "mRNA" = as.data.frame(mRNA))
 

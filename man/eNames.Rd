@@ -4,7 +4,7 @@
 \alias{eNames}
 \title{eNames}
 \usage{
-eNames(MAE, method = '', gene_IDs, ID_Column)
+eNames(MAE, method = '', gene_IDs)
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment which will store output of eNames.
@@ -16,12 +16,6 @@ analysis.}
 \item{gene_IDs}{List of DE data and associated gene IDs. This is the
 output from the addIds function, this should be found as metadata in
 the MAE used in the addIds function.}
-
-\item{ID_Column}{Integer representing the gene ID column in each dataframe.
-This will be the last column in each dataframe, but will vary based on the
-input data. This should be 2+ the number of DE results per
-time point. e.g. if each time point has log2fc's and adjPvalue's, then the
-fourth column will contain the gene ID information.}
 }
 \value{
 A single list of entrez/ ensembl IDs for each time point. Output
@@ -34,11 +28,11 @@ addIds function.
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-Data <- startObject(miR = miR, mRNA = mRNA)
+Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 Data <- getIdsMir(Data, assay(Data, 1), org.Mm.eg.db, 'mmu')
 
@@ -58,6 +52,5 @@ Data <- addIds(MAE = Data, method = "c",
               filtered_genelist = metadata(Data)[[2]],
               miR_IDs = assay(Data, 3), mRNA_IDs = assay(Data, 7))
 
-Data <- eNames(MAE = Data, method = "c", gene_IDs = metadata(Data)[[3]],
-               ID_Column = 4)
+Data <- eNames(MAE = Data, method = "c", gene_IDs = metadata(Data)[[3]])
 }

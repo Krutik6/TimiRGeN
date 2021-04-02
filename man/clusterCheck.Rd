@@ -35,8 +35,7 @@ MAE <- wikiMatrix(MAE, ID_list = metadata(MAE)[[1]],
                   wp_list = metadata(MAE)[[2]])
 
 MAE <- turnPercent(MAE = MAE,
-                   wikiMatrix = assay(MAE, 1),
-                   rowInt = 6)
+                   wikiMatrix = assay(MAE, 1))
 
 MAE <- createClusters(MAE, method = "c",
                     percentMatrix = assay(MAE, 2),

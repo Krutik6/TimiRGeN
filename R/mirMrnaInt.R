@@ -62,35 +62,13 @@
 mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt){
 
 
-        if (missing(MAE)) stop('
-                               MAE is missing.
-                               Add MAE. Output from mirMrnaInt will be stored in
-                               the MAE. Please used the diffExpressRes and
-                               wikiMrna functions first.')
+        if (missing(MAE)) stop('MAE is missing. Add MAE. Output from mirMrnaInt will be stored in the MAE. Please used the diffExpressRes and wikiMrna functions first.')
 
-        if (missing(miR_express)) stop("
-                                       miR_express is missing.
-                                       Add a dataframe with miR abundance
-                                       values and gene IDs. Please use the
-                                       diffExpressRes function on miR data
-                                       first. Output of diffExpressRes will be
-                                       stored as an assay within the MAE used
-                                       in the diffExpressRes function.")
+        if (missing(miR_express)) stop("miR_express is missing. Add a dataframe with miR abundance values and gene IDs. Please use the diffExpressRes function on miR data first. Output of diffExpressRes will be stored as an assay within the MAE used in the diffExpressRes function.")
 
-        if (missing(GenesofInterest)) stop("
-                                           GenesofInterest is missing.
-                                           Add a dataframe containing mRNAs
-                                           found in the wikipathway of interest
-                                           and in the input mRNA data. Please
-                                           use the wikiMrna function. Results
-                                           from wikiMrna will be stored as
-                                           an assay the MAE used in the
-                                           wikiMrna function.")
+        if (missing(GenesofInterest)) stop("GenesofInterest is missing. Add a dataframe containing mRNAs found in the wikipathway of interest and in the input mRNA data. Please use the wikiMrna function. Results from wikiMrna will be stored as an assay the MAE used in the wikiMrna function.")
 
-        if (missing(maxInt)) stop("
-                                   maxInt is missing.
-                                   Add an integer which represents the number
-                                   of time points / samples in your data set.")
+        if (missing(maxInt)) stop("maxInt is missing. Add an integer which represents the number of time points / samples in your data set.")
 
         #Make matrix of the names of miRs and mRNAs of interest
         allnames <- expand.grid(rownames(miR_express),

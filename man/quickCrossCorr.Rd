@@ -34,7 +34,9 @@ A cross correlation plot.
 \description{
 Plots a cross-correlation plot to compare the miRNA and mRNA of
 a selected pair. This is a useful test of the similarities between the the
-two time series.
+two time series. It tracks movement of two time series relative to one
+another to determine how well they match and at which point
+the best match occurs.
 }
 \examples{
 library(org.Mm.eg.db)

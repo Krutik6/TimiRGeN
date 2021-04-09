@@ -332,3 +332,7 @@ pair-wise differential expression analysis: quickFuzz.
 * Updated vignette with two new sections for alterative analysis methods:
 for non-pairwise DE and for multivariate datasets.
 * Removed unncecassary parameter calls in eNames and turnPercent functions.
+
+TimiRGeN v1.1.5 (Date: 09/04/2021)
+===============================
+* Minor bug fix for R 4.1 - current developmental version. Lines 841-845 of the vignette were leading to unkown errors during vignette building on Bioconductor.

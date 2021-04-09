@@ -18,10 +18,12 @@ Regression plot between a miRNA:mRNA pair.
 }
 \description{
 quickReg will produce a regression plot between a miRNA:mRNA
-pair. An abline wil be generated. Odds ratio will be calculated from
+pair. An abline wil be generated. Odds-ratio will be calculated from
 the coefficient. Confident intervals at 95% will be caclulated from the
 coefficient also. This is a useful method to identify the relationship
-between a miRNA:mRNA pair over time.
+between a miRNA:mRNA pair over time. The higher the odds-ratio the greater
+the correlation between the two time series. The smaller the 95% confidence
+intervals range, the more confident we can be about plotting the abline.
 }
 \examples{
 library(org.Mm.eg.db)

@@ -837,7 +837,7 @@ load("../inst/extdata/w_list_human.rda")
 metadata(MAE2)[['wikilist']] <- w_list_human
 ```
 
-```{r create_percent_matrix, warning=FALSE, message=FALSE}
+```{r create_percent_matrix, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
                    wp_list = metadata(MAE2)[[2]])
 

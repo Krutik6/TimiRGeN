@@ -1040,7 +1040,7 @@ knitr::include_graphics("reg1.png")
 knitr::include_graphics("reg2.png")
 ```
 
-It seems we can be confident that the `Ifg1-mmu-miR-18a-5p` interaction has stronger relationship in the FA dataset, than in the FA dataset due to the higher odd-ratio and the lower range of the 95% confidence intervals.
+It seems we can be confident that the `Ifg1-mmu-miR-18a-5p` interaction has stronger relationship in the FA dataset, than in the UUO dataset due to the higher odd-ratio and the lower range of the 95% confidence intervals.
 
 # References
 

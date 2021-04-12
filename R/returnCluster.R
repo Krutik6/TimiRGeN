@@ -44,7 +44,6 @@ returnCluster <-function(MAE, clusterData, whichCluster, fitCluster = 0.99){
 
     X <- as.data.frame(clusterData)
 
-
     # Remove pathways from cluster which have a fit score lower than fitCluster
     singlecluster <- X[which(X[,whichCluster] > fitCluster),]
 

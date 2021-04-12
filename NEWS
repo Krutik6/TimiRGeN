@@ -336,3 +336,8 @@ for non-pairwise DE and for multivariate datasets.
 TimiRGeN v1.1.5 (Date: 09/04/2021)
 ===============================
 * Minor bug fix for R 4.1 - current developmental version. Lines 841-845 of the vignette were leading to unkown errors during vignette building on Bioconductor.
+
+TimiRGeN v1.1.6 (Date: 12/04/2021)
+===============================
+* Minor bug fix for R 4.1 - current developmental version. returnClusters test file had a bug releted to S4Vectors. This file was removed.
+* Corrected typo on vignette.

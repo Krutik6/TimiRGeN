@@ -341,3 +341,8 @@ TimiRGeN v1.1.6 (Date: 12/04/2021)
 ===============================
 * Minor bug fix for R 4.1 - current developmental version. returnClusters test file had a bug releted to S4Vectors. This file was removed.
 * Corrected typo on vignette.
+
+TimiRGeN v1.1.7 (Date: 16/04/2021)
+===============================
+* Added rmarkdown to Suggested packages in the DESCRIPTION file.
+

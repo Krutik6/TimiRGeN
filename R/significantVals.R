@@ -20,9 +20,10 @@
 #' @export
 #' @usage significantVals(MAE, method = '', geneList, maxVal, stringVal = '')
 #' @examples
-#' data(mm_miR)
 #'
-#' data(mm_mRNA)
+#' miR <- mm_miR[1:50,]
+#'
+#' mRNA <- mm_mRNA[1:100,]
 #'
 #' Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'

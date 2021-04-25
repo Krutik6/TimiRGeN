@@ -4,7 +4,7 @@
 \alias{getIdsMrna}
 \title{getIdsMrna}
 \usage{
-getIdsMrna(MAE, mRNA, mirror, species)
+getIdsMrna(MAE, mRNA, mirror, species, orgDB)
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment to store the output of getIdsMrna.
@@ -18,6 +18,9 @@ function. Please read vignette for nomenclature guidance.}
 on location. Either 'useast', 'uswest', 'asia' or 'www'. Default is 'www'.}
 
 \item{species}{Species of interest. E.g. mmusculus or hsapiens.}
+
+\item{orgDB}{org.xx.eg.db package which corresponds to the species being
+analysed.}
 }
 \value{
 2 new dataframes in the MAE. One with entrez information and
@@ -26,8 +29,13 @@ the other with ensembl gene ID information.
 \description{
 getIdsMrna will produce ensembl and entrez ID dataframes
 for mRNAs. These will be stored as 2 individual assays within a MAE.
+
+This function will attempt to use biomaRt in the first instance. If server
+issues occur, it will instead use clusterProfiler. Generally biomaRt has
+more annotation IDs, but the results between these methods will vary.
 }
 \examples{
+library(org.Mm.eg.db)
 data(mm_mRNA)
 
 mRNA <- mm_mRNA[1:20,]
@@ -35,5 +43,5 @@ mRNA <- mm_mRNA[1:20,]
 MAE <- startObject(miR = NULL, mRNA = mRNA)
 
 MAE <- getIdsMrna(MAE = MAE, mRNA = assay(MAE, 2), mirror = 'useast',
-                      species = 'mmusculus')
+                      species = 'mmusculus', orgDB = org.Mm.eg.db)
 }

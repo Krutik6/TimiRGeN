@@ -346,3 +346,12 @@ TimiRGeN v1.1.7 (Date: 16/04/2021)
 ===============================
 * Added rmarkdown to Suggested packages in the DESCRIPTION file.
 
+TimiRGeN v1.1.8 (Date: 25/04/2021)
+===============================
+* getIdsMrna now has a back-up system in place. If biomaRt connection cannot
+be established, then clusterprofiler will be used instead. Methods will be
+stated to users.
+* quickTC code has been simplified and gene ordering bug is now fixed.
+* Vignette has been updated to account for new getIdMrna back-up.
+* Fewer genes will be used in example codes to reduce the usage of biomaRt
+servers.

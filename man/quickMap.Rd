@@ -26,7 +26,7 @@ mRNA <- mm_mRNA[1:200,]
 MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
-MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', orgDB = org.Mm.eg.db)
 
 
 MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',

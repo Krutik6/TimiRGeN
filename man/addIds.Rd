@@ -38,15 +38,15 @@ getIdsMrna functions, both are needed for addIds.
 \examples{
 library(org.Mm.eg.db)
 
-data(mm_miR)
+miR <- mm_miR[1:50,]
 
-data(mm_mRNA)
+mRNA <- mm_mRNA[1:100,]
 
 Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 Data <- getIdsMir(Data, assay(Data, 1), orgDB = org.Mm.eg.db, 'mmu')
 
-Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast', 'mmusculus')
+Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast', 'mmusculus', orgDB = org.Mm.eg.db)
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))

@@ -37,9 +37,9 @@
 #' @importFrom stringr str_extract
 #' @usage genesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 #' @examples
-#' data(mm_miR)
+#' miR <- mm_miR[1:50,]
 #'
-#' data(mm_mRNA)
+#' mRNA <- mm_mRNA[1:100,]
 #'
 #' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'

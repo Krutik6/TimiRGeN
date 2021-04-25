@@ -52,9 +52,9 @@ Make sure to follow colname nomenclature carefully. Please refer to
 the vignette for more details on the nomenclature.
 }
 \examples{
-data(mm_miR)
+miR <- mm_miR[1:50,]
 
-data(mm_mRNA)
+mRNA <- mm_mRNA[1:100,]
 
 MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 

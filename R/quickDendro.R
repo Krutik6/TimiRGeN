@@ -20,16 +20,16 @@
 #' @importFrom ggplot2 theme_bw element_line element_blank
 #' @examples
 #' library(org.Mm.eg.db)
-#' 
-#' miR <- mm_miR[1:100,]
-#' 
-#' mRNA <- mm_mRNA[1:200,]
+#'
+#' miR <- mm_miR[1:50,]
+#'
+#' mRNA <- mm_mRNA[1:100,]
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
-#' 
-#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+#'
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', orgDB = org.Mm.eg.db)
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 3),

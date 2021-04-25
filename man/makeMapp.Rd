@@ -37,15 +37,15 @@ of the TimiRGeN gihub https://github.com/Krutik6/TimiRGeN/issues/2.
 \examples{
 library(org.Mm.eg.db)
 
-data(mm_miR)
+miR <- mm_miR[1:50,]
 
-data(mm_mRNA)
+mRNA <- mm_mRNA[1:100,]
 
 MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 
-MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', orgDB = org.Mm.eg.db)
 
 Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
                                      "mmu-miR-27a-3p:Odc1"),

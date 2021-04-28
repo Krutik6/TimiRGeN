@@ -11,10 +11,12 @@
 #' an ID type.
 #' @param maxInt Maximum number of data samples in your datasets e.g. how many
 #' time points.
+#' @param corMeth Add string : "pearson", "spearman" or "kendall". Default is
+#' "pearson".
 #' @return A matrix of each mRNA and miR interaction and averaged correlations.
 #' @importFrom stats cor
 #' @noRd
-corrTable <- function(names, miR_exprs, mRNA_wiki, maxInt){
+corrTable <- function(names, miR_exprs, mRNA_wiki, maxInt, corMeth = "pearson"){
 
     # Each miR and mRNA could interact so extract their names
     n1 <- as.character(names[1])
@@ -23,7 +25,8 @@ corrTable <- function(names, miR_exprs, mRNA_wiki, maxInt){
 
     # Create correlation
     r <- stats::cor(as.numeric(miR_exprs[n1, seq_len(maxInt)]),
-                    as.numeric(mRNA_wiki[n2, seq_len(maxInt)]))
+                    as.numeric(mRNA_wiki[n2, seq_len(maxInt)]),
+                    method = corMeth)
 
     # Create correlation matrix
     data.frame(row.names = paste(n1,":",n2, sep = ""),

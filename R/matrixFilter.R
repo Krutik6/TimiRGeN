@@ -19,7 +19,7 @@
 #' interaction be found in? If predictedOnly = TRUE, then maximum threshold is
 #' 2.
 #' @param maxCor Number from -1 to 1. What is the highest average correlation
-#' that is allowed? Default is 1. The lower the maxCor, the stricter the
+#' that is allowed? Default is -0.5. The lower the maxCor, the stricter the
 #' filtering.
 #' @return Filtered miR-mRNA interactions that are specific for a signalling
 #' pathway of interest and the input data. Output will be stored as an assay
@@ -46,7 +46,7 @@
 #' MAE <- matrixFilter(MAE, miningMatrix = Int_matrix, negativeOnly = TRUE,
 #'                         threshold = 1, predictedOnly = FALSE)
 matrixFilter <- function(MAE, miningMatrix, negativeOnly = TRUE,
-                         predictedOnly = TRUE, threshold = 1, maxCor = 1){
+                         predictedOnly = TRUE, threshold = 1, maxCor = -0.5){
 
     if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of matrixFilter. Please use dataMiningMatrix first.')
 

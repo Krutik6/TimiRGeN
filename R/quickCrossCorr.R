@@ -67,12 +67,24 @@
 quickCrossCorr <- function(filt_df, pair, miRNA_exp, mRNA_exp, scale=FALSE,
                            Interpolation=FALSE, timecourse){
 
+  x <- miRNA_exp
+
+  x$ID <- NULL
+
+  if(length(colnames(x)) < 5) {
+    print('Warning: Fewer than five time points detected. This dataset is not suitable for cross-correlation analysis!')
+  }
+
   Int <- pickPair(filt_df, pair, miRNA_exp, mRNA_exp, scale)
 
 
   if (Interpolation == TRUE) {
 
     if (missing(timecourse)) stop('timecourse is missing. How many time points to interpolate over? This should be the whole time course.')
+
+    if(length(colnames(x)) < 5) {
+      print('Warning: Fewer than five time points detected. This dataset is not suitable for interpolation analysis!')
+    }
 
     Int <- FreqProf::approxm(as.data.frame(Int), timecourse,
 

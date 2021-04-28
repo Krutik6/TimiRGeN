@@ -46,7 +46,8 @@ Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 Data <- getIdsMir(Data, assay(Data, 1), orgDB = org.Mm.eg.db, 'mmu')
 
-Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast', 'mmusculus', orgDB = org.Mm.eg.db)
+Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast',
+                   species = 'mmusculus', orgDB = org.Mm.eg.db)
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))

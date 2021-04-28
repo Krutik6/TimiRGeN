@@ -61,7 +61,6 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species, orgDB){
 
     gene_data <- cbind(mRNA, rownames(mRNA))
 
-
     # Merge retrieved IDs to input data
     m_dat <- merge(x = gene_data, y = glist, by.x = 'rownames(mRNA)',
                    by.y = 'external_gene_name', all = TRUE)
@@ -78,17 +77,20 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species, orgDB){
     # used instead
 
     if("try-error" %in% class(t)) {
-      print("BiomaRt server connection was not established so ClusterProfiler will be used instead.")
+
+      if(missing(orgDB)) stop('orgDB is missing. Add org.xx.eg.db package which is relevant for the analysis.');
+
+      print("BiomaRt server connection was not established (internet connection failure, server issues, or mispelled species/ mirror) so ClusterProfiler will be used instead.")
 
       mRNA_entrez <- suppressMessages(suppressWarnings(clusterProfiler::bitr(geneID = rownames(mRNA),
                                                                              fromType = "SYMBOL",
                                                                              toType = "ENTREZID",
-                                                                             OrgDB = orgDB)))
+                                                                             OrgDb = orgDB)))
       colnames(mRNA_entrez) <- c("GENENAME", "ID")
       mRNA_ensembl <- suppressMessages(suppressWarnings(clusterProfiler::bitr(geneID = rownames(mRNA),
                                                                               fromType = "SYMBOL",
                                                                               toType = "ENSEMBL",
-                                                                              OrgDB = orgDB)))
+                                                                              OrgDb = orgDB)))
       colnames(mRNA_ensembl) <- c("GENENAME", "ID")
       mRNA_entrez <- mRNA_entrez[!duplicated(mRNA_entrez$GENENAME),]
       mRNA_ensembl <- mRNA_ensembl[!duplicated(mRNA_ensembl$GENENAME),]

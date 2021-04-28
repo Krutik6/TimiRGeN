@@ -342,7 +342,7 @@ TimiRGeN v1.1.6 (Date: 12/04/2021)
 * Minor bug fix for R 4.1 - current developmental version. returnClusters test file had a bug releted to S4Vectors. This file was removed.
 * Corrected typo on vignette.
 
-TimiRGeN v1.1.7 (Date: 16/04/2021)
+TimiRGeN v1.0.5(R) |TimiRGeN v1.1.7(D) (Date: 16/04/2021)
 ===============================
 * Added rmarkdown to Suggested packages in the DESCRIPTION file.
 
@@ -355,3 +355,15 @@ stated to users.
 * Vignette has been updated to account for new getIdMrna back-up.
 * Fewer genes will be used in example codes to reduce the usage of biomaRt
 servers.
+
+TimiRGeN v1.0.6(R) | v1.1.81(D) (Date: 28/04/2021)
+===============================
+* Changed colour scheme of quickMap. Now it shows correlation scores more
+clearly. Also numbered the pairs to make selection easier for users.
+* Added correlation methods (pearson, spearman, kendall) as options when using
+mirMrnaInt function.
+* Added warnings when users are attempting to use cross-correlation,
+interpolation and regression analyses methods while using a dataset with <5
+time points. This is to stop over-estimations.
+* Descibed these updates in the vignette.
+* Re-added the vignette.

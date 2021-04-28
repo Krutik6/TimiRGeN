@@ -28,7 +28,7 @@ interaction be found in? If predictedOnly = TRUE, then maximum threshold is
 2.}
 
 \item{maxCor}{Number from -1 to 1. What is the highest average correlation
-that is allowed? Default is 1. The lower the maxCor, the stricter the
+that is allowed? Default is -0.5. The lower the maxCor, the stricter the
 filtering.}
 }
 \value{

@@ -4,7 +4,7 @@
 \alias{mirMrnaInt}
 \title{mirMrnaInt}
 \usage{
-mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt)
+mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt, corMeth)
 }
 \arguments{
 \item{MAE}{MultiAssayExperiment which will store the output of mirMrnaInt.
@@ -26,6 +26,9 @@ for miR_express and GenesofInterest.}
 \item{maxInt}{Integer. Should be equal to number of samples in both mRNA and
 miR data e.g. number of different time points. In the example it is 5 because
 there are 5 time points.}
+
+\item{corMeth}{Add string : "pearson", "spearman" or "kendall". Default is
+"pearson".}
 }
 \value{
 A large correlation matrix which contains averaged miR-mRNA
@@ -72,5 +75,5 @@ MIR <- data.frame(row.names = c("mmu-miR-101a-3p", "mmu-miR-101a-5p",
 MAE <- MultiAssayExperiment()
 
 MAE <- mirMrnaInt(MAE, miR_express = MIR, GenesofInterest = G,
-                     maxInt = 5)
+                     maxInt = 5, corMeth = "pearson")
 }

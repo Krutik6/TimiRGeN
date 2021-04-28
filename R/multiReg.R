@@ -20,16 +20,16 @@
 #' @importFrom stringr str_detect
 #' @examples
 #' library(org.Mm.eg.db)
-#' 
+#'
 #' miR <- mm_miR[1:100,]
-#' 
+#'
 #' mRNA <- mm_mRNA[1:200,]
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
-#' 
-#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+#'
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', )
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 3),
@@ -74,6 +74,14 @@ multiReg <- function(MAE, gene_interest, mRNAreg = TRUE,
   if (missing(mRNA_exp)) stop('mRNA_exp is missing. Add assay/ dataframe created by the diffExpressRes function used on mRNA expression data/ DE data.')
 
   mRNA <- miR <- NULL
+
+  x <- miRNA_exp
+
+  x$ID <- NULL
+
+  if(length(colnames(x)) < 5) {
+    print('Warning: Fewer than five time points detected. This dataset is not suitable for regression based predictions! Results may be overestimated.')
+  }
 
   Data <- rbind(miRNA_exp, mRNA_exp)
 

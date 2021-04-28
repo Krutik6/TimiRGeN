@@ -40,7 +40,7 @@ MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 
-MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', orgDB = org.Mm.eg.db)
 
 
 MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
@@ -55,7 +55,7 @@ MAE <- diffExpressRes(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
 
 Filt_df <- data.frame(row.names = c("mmu-miR-145a-3p:Adamts15",
                                    "mmu-miR-146a-5p:Acy1"),
-                     corr = c(-0.9191653, 0.7826041),
+                     corr = c(-0.9191653, -0.7826041),
                      miR = c("mmu-miR-145a-3p", "mmu-miR-146a-5p"),
                      mRNA = c("Adamts15", "Acy1"),
                      miR_Entrez = c(387163, NA),

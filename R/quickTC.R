@@ -64,11 +64,27 @@ quickTC <- function(filt_df, pair, miRNA_exp, mRNA_exp, scale=FALSE,
 
   Time <- Expression <- Gene <- NULL
 
+  x <- miRNA_exp
+
+  x$ID <- NULL
+
+  if(length(colnames(x)) < 5) {
+    print('Warning: Fewer than five time points detected. Correlation results may be overestimated!')
+  }
+
   Int <- pickPair(filt_df, pair, miRNA_exp, mRNA_exp, scale)
 
   if (Interpolation == TRUE) {
 
     if (missing(timecourse)) stop('timecourse is missing. How many time points to interpolate over? This should be the whole time course.')
+
+    x <- miRNA_exp
+
+    x$ID <- NULL
+
+    if(length(colnames(x)) < 5) {
+      print('Warning: Fewer than five time points detected. This dataset is not suitable for interpolation analysis!')
+    }
 
     Int <- FreqProf::approxm(as.data.frame(Int), timecourse,
 
@@ -94,15 +110,15 @@ quickTC <- function(filt_df, pair, miRNA_exp, mRNA_exp, scale=FALSE,
 
   colnames(Melted)[3] <- "Expression"
 
-  miR <- unique(Melted$Gene)[[1]]
+  miR <- as.character(unique(Melted$Gene)[[1]])
 
-  mRNA <- unique(Melted$Gene)[[2]]
+  mRNA <- as.character(unique(Melted$Gene)[[2]])
 
   Melted$Gene <- factor(Melted$Gene, levels = c(mRNA, miR)) # define order/levels
 
   ggplot(Melted, aes(x = Time, y = Expression, group = Gene, color = Gene)) +
 
-    geom_line(size = 2) + # simplified
+    geom_line(size = 3) + # simplified
 
     scale_colour_manual(values = c("Red", "Blue")) +
 

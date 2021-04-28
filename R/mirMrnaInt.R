@@ -21,12 +21,14 @@
 #' @param maxInt Integer. Should be equal to number of samples in both mRNA and
 #' miR data e.g. number of different time points. In the example it is 5 because
 #' there are 5 time points.
+#' @param corMeth Add string : "pearson", "spearman" or "kendall". Default is
+#' "pearson".
 #' @return A large correlation matrix which contains averaged miR-mRNA
 #' time series information for every possible miR-mRNA interaction between the
 #' genes of interest and all the miRs. Output will be stored as an assay in
 #' the input MAE.
 #' @export
-#' @usage mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt)
+#' @usage mirMrnaInt(MAE, miR_express, GenesofInterest, maxInt, corMeth)
 #' @examples
 #' G <- data.frame(row.names = c("Acaa1a", "Acadm", "Acss1", "Adh1"),
 #'                 "D1.Log2FC" = c("-1.2944593","-2.0267432","-2.1934942",
@@ -58,8 +60,8 @@
 #'MAE <- MultiAssayExperiment()
 #'
 #'MAE <- mirMrnaInt(MAE, miR_express = MIR, GenesofInterest = G,
-#'                      maxInt = 5)
-mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt){
+#'                      maxInt = 5, corMeth = "pearson")
+mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt, corMeth = "pearson"){
 
 
         if (missing(MAE)) stop('MAE is missing. Add MAE. Output from mirMrnaInt will be stored in the MAE. Please used the diffExpressRes and wikiMrna functions first.')
@@ -80,7 +82,8 @@ mirMrnaInt <- function(MAE, miR_express, GenesofInterest, maxInt){
                                                 corrTable,
                                                 miR_express,
                                                 GenesofInterest,
-                                                maxInt = maxInt))
+                                                maxInt = maxInt,
+                                                corMeth = corMeth))
 
         MAE2 <- suppressMessages(MultiAssayExperiment(list(
                                       interactions_df = interactions_df)))

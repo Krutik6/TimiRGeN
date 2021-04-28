@@ -31,7 +31,8 @@
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Hs.eg.db, 'hsa')
 #'
-#' MAE <- getIdsMrna(MAE, assay(MAE, 2), mirror = 'useast', 'hsapiens')
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), mirror = 'useast', 'hsapiens',
+#'                   orgDB = org.Hs.eg.db)
 #'
 #' MAE <- combineGenes(MAE, miR_data = assay(MAE, 1),
 #'                     mRNA_data = assay(MAE, 2))

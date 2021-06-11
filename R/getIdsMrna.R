@@ -102,10 +102,10 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species, orgDB){
     mRNA_entrez <- mRNA_entrez[complete.cases(mRNA_entrez$ID),]
     mRNA_ensembl <- mRNA_ensembl[complete.cases(mRNA_ensembl$ID),]
     # Save to MAE object
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(mRNA_entrez = mRNA_entrez,
-                                                       mRNA_ensembl = mRNA_ensembl)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(mRNA_entrez = mRNA_entrez,
+                                                       mRNA_ensembl = mRNA_ensembl))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

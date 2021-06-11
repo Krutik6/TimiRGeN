@@ -110,11 +110,11 @@ createClusters <- function(MAE, method, percentMatrix, noClusters = 5,
         }
 
     # Save data in MAE
-    MAE2 <- suppressMessages(MultiAssayExperiment(list("ClusterData" = X,
-                                                       "MfuzzData" = Eset_st)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list("ClusterData" = X,
+                                                       "MfuzzData" = Eset_st))))
     metadata(MAE2)[["Clusters"]] <- Clusters
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

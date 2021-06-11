@@ -78,9 +78,9 @@ makeMapp <- function(MAE, filt_df, miR_IDs_adj, dataType){
 
     MAPPdata$ord <- NULL
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list('MAPPdata' = MAPPdata)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list('MAPPdata' = MAPPdata))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

@@ -70,10 +70,10 @@ matrixFilter <- function(MAE, miningMatrix, negativeOnly = TRUE,
     # Maximum average correlation
         Filter3 <- Filter2[which(Filter2$corr <= maxCor),]
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(
-                            list("Filtered_Int" = Filter3)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(
+                            list("Filtered_Int" = Filter3))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

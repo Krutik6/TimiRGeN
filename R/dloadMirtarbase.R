@@ -42,10 +42,10 @@ dloadMirtarbase <- function(MAE, species){
                               miRTarBase_mRNA = miRTarBase_s$Target.Gene)
 
   #Store in a MAE
-  MAE2 <- suppressMessages(MultiAssayExperiment(list(
-                              'miRTarBase_res' = miRTarBase_df)))
+  MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(
+                              'miRTarBase_res' = miRTarBase_df))))
 
-  MAE <- c(MAE, MAE2)
+  MAE <- suppressWarnings(c(MAE, MAE2))
 
   return(MAE)
 }

@@ -55,8 +55,8 @@ combineGenes <- function(MAE, miR_data, mRNA_data){
     genetic_data <- as.data.frame(rbind(miR_data, mRNA_data))
 
     # Combine with MAE object
-    MAE <- c(MAE, suppressMessages(MultiAssayExperiment(experiments = list(
-                                              "genetic_data" = genetic_data))))
+    MAE <- suppressWarnings(c(MAE, suppressMessages(MultiAssayExperiment(experiments = list(
+                                              "genetic_data" = genetic_data)))))
 
     return(MAE)
 }

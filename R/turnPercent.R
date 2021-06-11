@@ -37,10 +37,10 @@ turnPercent <- function(MAE, wikiMatrix){
     # Round to 2 decimal places
     X <- format(round(X, 2), nsmall = 2)
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(
-                             "Percentmatrix" = as.data.frame(X))))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(
+                             "Percentmatrix" = as.data.frame(X)))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

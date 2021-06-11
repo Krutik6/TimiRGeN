@@ -78,11 +78,11 @@ gmtEnsembl <- function(MAE, path_gene, path_data, orgDB){
     names(path_data_ensembl_corrected)[2] <- 'gene'
 
     # Save to MAE object
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(
                 'path_gene_ensembl' = path_gene_ensembl,
                 'path_data_ensembl' = path_data_ensembl_corrected
-    )))
+    ))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 return(MAE)
 }

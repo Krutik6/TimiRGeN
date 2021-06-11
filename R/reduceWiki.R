@@ -35,11 +35,11 @@ reduceWiki <- function(MAE, path_data, stringWiki){
     # retrieve data from one pathway
     singlewiki <- path_data[which(path_data$name == stringWiki),]
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(x = singlewiki)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(x = singlewiki))))
 
     # give new file unique name
     names(MAE2) <- stringWiki
 
-    MAE <- suppressMessages(c(MAE, MAE2))
+    MAE <- suppressWarnings(suppressMessages(c(MAE, MAE2)))
     return(MAE)
 }

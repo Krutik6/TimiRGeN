@@ -42,7 +42,7 @@ MAE <- startObject(miR = miR, mRNA = mRNA)
 
 MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 
-MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', org.Mm.eg.db)
 
 MAE <- dloadGmt(MAE = MAE, species = "Mus musculus")
 

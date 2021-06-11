@@ -56,11 +56,11 @@ returnCluster <-function(MAE, clusterData, whichCluster, fitCluster = 0.99){
 
     fit <- fitCluster
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(x = singlecluster)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(x = singlecluster))))
 
     # Paste unique name
     names(MAE2) <- paste0(a, cl, b, fit)
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 return(MAE)
 }

@@ -367,3 +367,12 @@ interpolation and regression analyses methods while using a dataset with <5
 time points. This is to stop over-estimations.
 * Descibed these updates in the vignette.
 * Re-added the vignette.
+
+TimiRGeN v1.2.01(R) | v1.3.01(D) (Date: 11/06/2021)
+===============================
+* Added suppressWarnings to calls for creating or combining new
+MultiAssayExperiments.
+* Added N param to quickBar so now users can define how many pathways to view
+when displaying results fom overrepresentation analysis.
+* Editted examples section of wikiMrna to reduce errors.
+* Added CITATION file.

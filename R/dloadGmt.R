@@ -57,12 +57,12 @@ dloadGmt <- function(MAE, species){
 
   path_data <- as.data.frame(pathways%>%dplyr::select(wpid,gene,name))
 
-  MAE2 <- suppressMessages(MultiAssayExperiment(list("path_gene" = path_gene,
+  MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list("path_gene" = path_gene,
                                                      "path_name" = path_name,
-                                                     "path_data" = path_data)
+                                                     "path_data" = path_data))
   ))
 
-  MAE <- c(MAE, MAE2)
+  MAE <- suppressWarnings(c(MAE, MAE2))
 
   return(MAE)
 }

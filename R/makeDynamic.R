@@ -94,9 +94,9 @@ makeDynamic <- function(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
     # Add L or En as a new column to data frame
     Dynamic <- cbind(Dynamic, dataType)
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list('Dynamic' = Dynamic)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list('Dynamic' = Dynamic))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

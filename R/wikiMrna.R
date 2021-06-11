@@ -28,7 +28,7 @@
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', org.Mm.eg.db)
 #'
 #' MAE <- dloadGmt(MAE = MAE, species = "Mus musculus")
 #'
@@ -61,14 +61,14 @@ wikiMrna <- function(MAE, mRNA_express, singleWiki, stringWiki){
     # Find which genes from data and from selected pathway are the same
     GenesofInterest <- mRNAs[which(mRNAs$ID %in% pathway[,2]),]
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(x = GenesofInterest)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(x = GenesofInterest))))
 
     # unique name for each pathway
     a <- "GoI_"
 
     names(MAE2) <- paste0(a, stringWiki)
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
     return(MAE)
 }

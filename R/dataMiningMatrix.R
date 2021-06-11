@@ -57,9 +57,9 @@ dataMiningMatrix <- function(MAE, corrTable, targetscan , mirdb,
   X$Pred_Fun <- X$Pred_only + X$miRTarBase
 
   # Add to MAE object
-  MAE2 <- suppressMessages(MultiAssayExperiment(list("Int_Matrix" = X)))
+  MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list("Int_Matrix" = X))))
 
-  MAE <- c(MAE, MAE2)
+  MAE <- suppressWarnings(c(MAE, MAE2))
 
   return(MAE)
 }

@@ -39,9 +39,9 @@ wikiMatrix <- function(MAE, ID_list, wp_list){
 
     wmat2 <- as.data.frame(rbind(wmat, Total = unlist(L)))
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list("wikimatrix" = wmat2)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list("wikimatrix" = wmat2))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
     return(MAE)
 }

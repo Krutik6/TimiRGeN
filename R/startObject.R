@@ -31,7 +31,7 @@ startObject <- function(miR, mRNA){
 
     Data <- list("miR" = as.data.frame(miR), "mRNA" = as.data.frame(mRNA))
 
-    MAE <- suppressMessages(MultiAssayExperiment(experiments = Data))
+    MAE <- suppressWarnings(suppressMessages(MultiAssayExperiment(experiments = Data)))
 
     return(MAE)
 }

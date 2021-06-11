@@ -77,12 +77,12 @@ diffExpressRes <- function(MAE, df, dataType, genes_ID, idColumn = 'GENENAME',
     merged[[1]] <- NULL
 
     # Add to MAE object
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(x = merged)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(x = merged))))
 
     # Change names of new MAE2 object
     names(MAE2) <- name
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
     return(MAE)
 }

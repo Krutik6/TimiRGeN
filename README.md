@@ -6,7 +6,7 @@ email: K.Patel5@newcastle.ac.uk
 
 date: "25 04 2021"
 
-citation: Coming soon...
+citation: K Patel, S Chandrasegaran, I M Clark, C J Proctor, D A Young, D P Shanley, TimiRGeN: R/Bioconductor package for time series microRNA-mRNA integration and analysis, Bioinformatics, 2021;, btab377, https://doi.org/10.1093/bioinformatics/btab377
 
 The TimiRGeN package is made for researchers that wish to further analyse time series microRNA-mRNA data sets after differential expression analysis.
 TimiRGeN offers users the ability to integrate the multi-omic data, 

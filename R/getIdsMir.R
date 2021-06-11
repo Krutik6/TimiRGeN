@@ -90,7 +90,7 @@ getIdsMir <- function(MAE, miR, orgDB, miRPrefix){
         rownames(miR_merged) <- miR_merged$Genes
 
         # Save to MAE object
-        MAE2 <- suppressMessages(MultiAssayExperiment(list(
+        MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(
                                         miR_entrez = data.frame(cbind(
                                         GENENAME = rownames(miR_merged),
                                         ID = miR_merged$ENTREZID)),
@@ -102,8 +102,8 @@ getIdsMir <- function(MAE, miR, orgDB, miRPrefix){
                                         ID = miR_merged$ENTREZID_adjusted)),
                                         miR_adjusted_ensembl = data.frame(cbind(
                                         GENENAME = rownames(miR_merged),
-                                        ID = miR_merged$ENSEMBL_adjusted))
+                                        ID = miR_merged$ENSEMBL_adjusted)))
                                         )))
-        MAE <- c(MAE, MAE2)
+        MAE <- suppressWarnings(c(MAE, MAE2))
         return(MAE)
 }

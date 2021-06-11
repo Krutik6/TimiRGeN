@@ -69,10 +69,10 @@ dloadMirdb <- function(MAE, species, orgDB){
 
 
   #Store in MAE
-  MAE2 <- suppressMessages(MultiAssayExperiment(list('miRDB_res' = miRDB_df)
-  ))
+  MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list('miRDB_res' = miRDB_df)
+  )))
 
-  MAE <- c(MAE, MAE2)
+  MAE <- suppressWarnings(c(MAE, MAE2))
 
   return(MAE)
 }

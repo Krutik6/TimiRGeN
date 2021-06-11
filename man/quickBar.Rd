@@ -4,7 +4,7 @@
 \alias{quickBar}
 \title{quickBar}
 \usage{
-quickBar(X, Y)
+quickBar(X, Y, N)
 }
 \arguments{
 \item{X}{Dataframes within a list including count information, confidence
@@ -16,6 +16,8 @@ function. Data can be retrieved using [[i]][[j]] on the output of enrichWiki.}
 This is the output from the enrichWiki function. It will be stored as
 metadata within the MAE used in the enrichWiki function. Data can
 be retrieved using names([[i]][j]) on the output of enrichWiki.}
+
+\item{N}{Integer representing number of pathways to display. Default is 15.}
 }
 \value{
 Bar plot showing which pathways are most enriched for genes found

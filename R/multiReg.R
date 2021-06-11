@@ -130,9 +130,9 @@ multiReg <- function(MAE, gene_interest, mRNAreg = TRUE,
 
   DF <- cbind(Time, DF)
 
-  MAE2 <- suppressMessages(MultiAssayExperiment(list(gene_interest = DF)))
+  MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(gene_interest = DF))))
 
-  MAE <- c(MAE, MAE2)
+  MAE <- suppressWarnings(c(MAE, MAE2))
 
   return(MAE)
 

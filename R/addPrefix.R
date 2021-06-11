@@ -42,15 +42,15 @@ addPrefix <- function(MAE, gene_df, prefixString){
                                              sep = '_'),
             no = print('miR/mRNA info is fine'))
     # Add to MAE
-    MAE2 <- suppressMessages(MultiAssayExperiment(experiments = list(
-                                                                x = gene_df)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(experiments = list(
+                                                                x = gene_df))))
 
     # Add prefix to column names
     x <- paste(prefixString, "p", sep = "_")
 
     names(MAE2) <- x
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
 return(MAE)
 }

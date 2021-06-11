@@ -13,14 +13,15 @@
 #' This is the output from the enrichWiki function. It will be stored as
 #' metadata within the MAE used in the enrichWiki function. Data can
 #' be retrieved using names([[i]][j]) on the output of enrichWiki.
+#' @param N Integer representing number of pathways to display. Default is 15.
 #' @return Bar plot showing which pathways are most enriched for genes found
 #' at each time point ("c") or at each time point within a gentype ("s").
 #' @export
 #' @importFrom ggplot2 ggplot aes geom_bar scale_fill_continuous labs theme
 #' @importFrom ggplot2 unit element_rect
-#' @importFrom  ggplot2 element_text ggtitle coord_flip
+#' @importFrom ggplot2 element_text ggtitle coord_flip
 #' @importFrom stats reorder p.adjust
-#' @usage quickBar(X, Y)
+#' @usage quickBar(X, Y, N)
 #' @examples
 #' library(org.Mm.eg.db)
 #'
@@ -38,7 +39,7 @@
 #' q <- quickBar(X = metadata(MAE)[[2]][[1]], Y = names(metadata(MAE)[[2]][1]))
 #'
 #' # to view bar plot enter plot(q)
-quickBar <- function(X, Y){
+quickBar <- function(X, Y, N=15){
 
     if (missing(X)) stop('X is missing. Input nested dataframe which is output from enrichWiki. Should be in the metadata of the MAE used in the enrichWiki function, and this can be retrieved using metadata(MAE)[[i]][[j]].')
 
@@ -46,7 +47,7 @@ quickBar <- function(X, Y){
 
   Description <- Count <- NULL
 
-    ggplot2::ggplot(head(X[which(X$p.adjust < 0.05),],n = 15),
+    ggplot2::ggplot(head(X[which(X$p.adjust < 0.05),],n = N),
                     aes(x=reorder(Description, -p.adjust),
                         y=Count,
                         fill=-p.adjust)) +

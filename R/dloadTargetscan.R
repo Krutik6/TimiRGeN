@@ -60,10 +60,10 @@ dloadTargetscan <- function(MAE, species){
                                  Targetscans_miR = TargetScans_s$Transcript,
                                  Targetscans_mRNA = TargetScans_s$ID)
 
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(
-      'Targetscans_res' = Targetscans_df)))
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(
+      'Targetscans_res' = Targetscans_df))))
 
-    MAE <- c(MAE, MAE2)
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
     return(MAE)
 
@@ -87,9 +87,10 @@ dloadTargetscan <- function(MAE, species){
                                  Targetscans_mRNA = TargetScans_s$ID2)
 
     #Store in a MAE
-    MAE2 <- suppressMessages(MultiAssayExperiment(list(
-      'Targetscans_res' = Targetscans_df)))
-    MAE <- c(MAE, MAE2)
+    MAE2 <- suppressWarnings(suppressMessages(MultiAssayExperiment(list(
+                                         'Targetscans_res' = Targetscans_df))))
+
+    MAE <- suppressWarnings(c(MAE, MAE2))
 
     return(MAE)
 

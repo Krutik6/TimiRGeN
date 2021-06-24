@@ -221,7 +221,7 @@ This is standard overrepresentation analysis, here the `enrichWiki` function wra
 
 Note. Making multiple separate MAE objects makes it easier to work with all the generated data files. 
 
-```{r enrichwiki, warning=FALSE, message=FALSE}
+```{r enrichwiki, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- enrichWiki(MAE = MAE2, method = 'c',
                   ID_list = metadata(MAE)[[4]],
                   orgDB = org.Mm.eg.db,
@@ -286,7 +286,12 @@ This method starts by importing all mouse WikiPathways and associated gene IDs. 
 metadata(MAE2)[["wp_list"]] <- w_list_mouse
 ```
 
-```{r wikiMatrix, message=FALSE, warning=FALSE}
+```{r wikiMatrix_Real, message=FALSE, warning=FALSE, echo=FALSE}
+MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
+                   wp_list = metadata(MAE2)[[1]])
+```
+
+```{r wikiMatrix_Show, message=FALSE, warning=FALSE, eval=FALSE}
 MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
                    wp_list = metadata(MAE2)[[2]])
 ```
@@ -806,7 +811,7 @@ For this, users will need to create their own universe (list of annotation IDs
 stored as characters). For this dataset a list of available annotation IDs
 was created using downloadable data from [Agilent-019118 Human miRNA Microarray 2.0 G4470B (miRNA ID version)](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL8227) and [Illumina HumanWG-6 v3.0 expression beadchip](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL6884). 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=FALSE}
 data("hs_probes")
 
 MAE2 <- enrichWiki(MAE = MAE2, method = 's',

@@ -376,3 +376,8 @@ MultiAssayExperiments.
 when displaying results fom overrepresentation analysis.
 * Editted examples section of wikiMrna to reduce errors.
 * Added CITATION file.
+
+TimiRGeN v1.2.01(R) | v1.3.02(D) (Date: 24/06/2021)
+===============================
+* Changed enrichWiki functions to Eval=FALSE in the vignette as an attempt
+to avoid errors in Bioc 3.14 checks.

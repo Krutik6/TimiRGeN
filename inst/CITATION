@@ -1,3 +1,6 @@
+note <- sprintf("R package version %s", meta$Version)
+
+
 citEntry(entry="article",
          title = "TimiRGeN: R/Bioconductor package for time series microRNA-mRNA integration and analysis",
          author = personList( as.person("Krutik Patel"),
@@ -5,8 +8,9 @@ citEntry(entry="article",
                               as.person("Ian M Clark"),
                               as.person("Carol J Proctor"),
                               as.person("David A Young"),
-                              as.person("Daryl P Shanley"))
-         year = 2021,
+                              as.person("Daryl P Shanley")),
+         year = "2021",
+         note = note,
          journal = "Bioinformatics",
          doi = "https://doi.org/10.1093/bioinformatics/btab377",
          textVersion = 

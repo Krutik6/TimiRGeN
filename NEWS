@@ -385,3 +385,9 @@ to avoid errors in Bioc 3.14 checks.
 TimiRGeN v1.2.01(R) | v1.3.02(D) (Date: 30/06/2021)
 ===============================
 * Altered CITATION file added to the inst folder.
+
+TimiRGeN v v1.5.02(D) (Date: 20/02/2022)
+===============================
+* Minor bug fix for multiReg.
+* Updated maintainer information.
+* Updated readme file.

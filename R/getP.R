@@ -8,7 +8,7 @@
 #' @importFrom stats pf
 getP <- function (modelobject) {
 
-  if (class(modelobject) != "lm") stop("Not an object of class 'lm' ")
+  if (!is(modelobject, "lm"))  stop("Not an object of class 'lm' ")
 
   f <- summary(modelobject)$fstatistic
 

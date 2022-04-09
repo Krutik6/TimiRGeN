@@ -4,7 +4,7 @@ author: "Krutik Patel, Bioinformatician at Newcastle University UK"
 
 email: nkp68@newcastle.ac.uk
 
-date: "20 02 2022"
+date: "09 04 2022"
 
 citation: K Patel, S Chandrasegaran, I M Clark, C J Proctor, D A Young, D P Shanley, TimiRGeN: R/Bioconductor package for time series microRNA-mRNA integration and analysis, Bioinformatics, 2021;, btab377, https://doi.org/10.1093/bioinformatics/btab377
 

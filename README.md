@@ -2,7 +2,7 @@
 
 author: "Krutik Patel, Bioinformatician at Newcastle University UK"
 
-email: nkp68@newcastle.ac.uk
+email: krutik.patel@newcastle.ac.uk
 
 date: "09 04 2022"
 

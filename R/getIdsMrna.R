@@ -41,7 +41,7 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species, orgDB){
     # Get a  mart
     t <- try(mart <- suppressMessages(biomaRt::useEnsembl("ensembl",
                                                         dataset = paste0(species,"_gene_ensembl"),
-                                                        host = paste0(mirror,".ensembl.org"))))
+                                                        host = paste0("https://",mirror,".ensembl.org"))))
 
     # If ensembl servers work the following code will occur
     if("Mart" %in% class(t)) {

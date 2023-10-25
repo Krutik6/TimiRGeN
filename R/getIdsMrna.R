@@ -41,7 +41,7 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species, orgDB){
     # Get a  mart
     t <- try(mart <- suppressMessages(biomaRt::useEnsembl("ensembl",
                                                         dataset = paste0(species,"_gene_ensembl"),
-                                                        host = paste0(mirror,".ensembl.org"))))
+                                                        host = paste0("https://",mirror,".ensembl.org"))))
 
     # If ensembl servers work the following code will occur
     if("Mart" %in% class(t)) {
@@ -80,7 +80,7 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species, orgDB){
 
       if(missing(orgDB)) stop('orgDB is missing. Add org.xx.eg.db package which is relevant for the analysis.');
 
-      print("BiomaRt server connection was not established (internet connection failure, server issues, or mispelled species/ mirror) so ClusterProfiler will be used instead.")
+      print("BiomaRt server connection was not established (internet connection failure or server issues) so ClusterProfiler will be used instead.")
 
       mRNA_entrez <- suppressMessages(suppressWarnings(clusterProfiler::bitr(geneID = rownames(mRNA),
                                                                              fromType = "SYMBOL",

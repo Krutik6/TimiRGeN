@@ -32,7 +32,7 @@ dloadGmt <- function(MAE, species){
 
   #back-up download if current gmt files not yet ready
   if("try-error" %in% class(t)){x <- rWikiPathways::downloadPathwayArchive(
-                                                      date = "20230310",
+                                                      date = "20220110",
                                                       organism=species,
                                                       format = "gmt")}
   # load file

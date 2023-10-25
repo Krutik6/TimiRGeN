@@ -236,7 +236,7 @@ function.
 
 For an alternative test, a unique `universe` can be used e.g. all probes found in a microarray or all known genes expressed in a cell type. This is done in section 3.
 
-### Plot GSEA
+### Plot Enrichments
 
 ```{r Quickbar, warning=FALSE, message=FALSE, eval=FALSE}
 savePlots(largeList = metadata(MAE2)[[1]],
@@ -244,7 +244,7 @@ savePlots(largeList = metadata(MAE2)[[1]],
           fileType = "jpeg")
 ```
 
-To plot results from GSEA, the `savePlots` function can save all plots in the
+To plot results from Overrepresentation analysis, the `savePlots` function can save all plots in the
 current working directory, and the plots can be saved to file in 
 a variety of formats.
 
@@ -830,7 +830,7 @@ savePlots(largeList = metadata(MAE2)[[1]], maxInt = 6,
 ```
 
 Note. If there are not enough enriched pathways found with the `"s"` method,
-over representation analysis will fail. This occurs often with microRNA data because not many pathways have microRNAs within them. If this occurs, try to use the `"c"` method for miR-mRNA GSEA analysis.
+over representation analysis will fail. This occurs often with microRNA data because not many pathways have microRNAs within them. If this occurs, try to use the `"c"` method for miR-mRNA enrichment analysis.
 
 ## Temporal Clustering Method on Separated Data
 

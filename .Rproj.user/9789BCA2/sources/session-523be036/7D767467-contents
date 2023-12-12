@@ -1,0 +1,42 @@
+library(TimiRGeN)
+library(org.Mm.eg.db)
+
+data("mm_miR")
+data("mm_mRNA")
+
+MAE <- startObject(mm_miR, mm_mRNA)
+
+MAE <- getIdsMir(MAE = MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, miRPrefix = 'mmu')
+MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'mmusculus', orgDB = org.Mm.eg.db)
+
+MAE <- combineGenes(MAE = MAE, miR_data = assay(MAE, 1), assay(MAE, 2))
+MAE <- genesList(MAE = MAE, method = 'c',genetic_data = assay(MAE, 9),timeString = "D")
+MAE <- significantVals(MAE = MAE, method = 'c',geneList =metadata(MAE)[[1]],  maxVal = 0.05, stringVal = "adjPVal")
+
+MAE <- addIds(MAE = MAE, method = 'c', filtered_genelist = metadata(MAE)[[2]],
+              miR_IDs = assay(MAE, 3), mRNA_IDs = assay(MAE, 7))
+MAE <- eNames(MAE = MAE, method = 'c', gene_IDs = metadata(MAE)[[3]])
+
+MAE2 <- MultiAssayExperiment()
+
+load("inst/extdata/mm_gmt.rda")
+MAE2 <- mm_gmt
+
+MAE2 <- enrichWiki(MAE = MAE2, method = 'c',
+                   ID_list = metadata(MAE)[[4]],
+                   orgDB = org.Mm.eg.db,
+                   path_gene = assay(MAE2, 1),
+                   path_name = assay(MAE2, 2),
+                   ID = "ENTREZID",
+                   universe = assay(MAE2, 1)[[2]])
+
+
+metadata(MAE2)[["wp_list"]] <- w_list_mouse
+
+MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
+                   wp_list = metadata(MAE2)[[2]])
+MAE2 <- turnPercent(MAE = MAE2, wikiMatrix = assay(MAE2, 4))
+
+MAE2 <- createClusters(MAE = MAE2, method = "c",
+                       percentMatrix = assay(MAE2, 5),
+                       noClusters = 4, variance = 0.5)

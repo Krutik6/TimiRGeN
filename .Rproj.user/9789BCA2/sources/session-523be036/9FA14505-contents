@@ -1,0 +1,9 @@
+library(BiocCheck)
+BiocCheck::BiocCheck(package = "../TimiRGeN//")
+
+library(devtools)
+check_win_devel(
+  pkg = "../TimiRGeN//",
+  args = NULL,
+  manual = TRUE,
+  email = "nkp68@newcastle.ac.uk")

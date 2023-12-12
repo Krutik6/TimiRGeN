@@ -1,0 +1,411 @@
+smiRk v0.2.6 (Date: 21/10/2019)
+===============================
+Changes :
+
+* Removed examples for dloadmiRDB and dloadTargetScans as they take up too much time.
+* Added BiocManager to NAMESPACE and DESCRIPTION as a package to import.
+
+smiRk v0.2.6 (Date: 23/10/2019)
+===============================
+Changes :
+
+* Added more biocViews e.g. Networks, Visualisation, miRNA.
+* Tidied up code in man and R files.
+* 5 Notes in Bc and 1 Note in CMD check.
+
+smiRk v0.3.0 (Date: 17/12/2019)
+===============================
+Changes :
+
+* Editted get_mRNA functions to make the download process faster. UseEnsembl rather than useMart.
+* Editted Quickdot and Quickbar to make them look nicer and warnings have been fixed.
+* CytoMake works now.
+* MatrixFilter can now filter by average correlation.
+* Enames now has ID_Column as a parameter rather than entezColumn.
+
+smiRk v0.3.1 (Date: 19/12/2019)
+===============================
+Changes :
+
+* Fixed many notes in the CMD check.
+* Now using dev.new() instead of x11().
+
+smiRk v0.3.2 (Date: 20/12/2019)
+===============================
+Changes :
+
+* getIDs_miR_mousetohuman is not <= 50 lines.
+* New internal function non_unique was created and test made.
+
+smiRk v0.3.3 (Date: 30/12/2019)
+===============================
+Changes :
+
+* Updated vignette.
+* Fixed error in test_getIDs_miR_mousetohuman.
+
+smiRk v0.3.4 (Date: 31/12/2019)
+===============================
+Changes :
+
+* Made changes to tests so they run quicker.
+* Made changes to some examples so they run quicker.
+
+smiRk v0.3.5 (Date: 04/01/2020)
+===============================
+Changes :
+
+* Reduced tests time greatly.
+* Updated vignette.
+
+smiRk v0.3.6 (Date: 09/01/2020)
+===============================
+Changes :
+
+* Created a HTML version of vignette.
+* Added references to the vignette.
+
+smiRk v0.99 (Date: 13/01/2020)
+===============================
+Changes :
+
+* Finnished Vignette and all checks.
+* CMD + unit tests = 0E, 0W, 1N.
+* Biocondutor checks = 0E, 0W, 3N.
+* Will link this version to github repo and submit to bioconductor.
+
+smiRk v0.99.01 (Date: 15/01/2020)
+===============================
+Changes :
+
+* Sorted out unit tests so that test_check("smiRk") will start from CMD check
+
+smiRk v0.99.02 (Date: 16/01/2020)
+===============================
+Changes :
+
+* Using a faster method to Get ensembl and entrez IDs from the data.
+* CURL error sorted.
+
+smiRk v0.99.03 (Date: 17/01/2020)
+===============================
+Changes :
+
+* Fixed windows build error by removing xlsx file earlier in dloadmiRTarBase function.
+* Removed excess files within functions: dloadmiRTarBase, dloadTargetscans, downloadGMT.
+
+smiRk v0.99.04 (Date: 17/01/2020)
+===============================
+Changes :
+
+* Minor edits of getIDs_miR_humantomouse because there were some duplication issues.
+* Will try to submit this version to Bioconductor as a depends on R 4.0.0 package.
+
+smiRk v0.99.05 (Date: 27/01/2020)
+===============================
+Changes :
+
+* Changed back to 3.6.2 to edit the package.
+* Names now function in SavePlots.
+
+TimiRGeN v0.99.1 (Date: 11/02/2020)
+===============================
+* Officially have changed the name form smiRk to TimiRGeN for 2 reasons 1) a previous paper has be found to use a similiar name, 2) this name reflect the package more.
+* Have started the process of changing the format from data frames/ lists to multiassayexperiment (MAE).
+
+TimiRGeN v0.99.11 (Date: 12/02/2020)
+===============================
+* Fixed bug introduced to getIDs_miR_mousetohuman.
+* Changes sections of the vignette and tests to adhere to new structure of the package.
+
+TimiRGeN v0.99.2 (Date: 13/02/2020)
+===============================
+* Package now passes all checks with MAE.
+
+TimiRGeN v0.99.21 (Date: 16/02/2020)
+===============================
+* Added description column to ClusterData.
+* Fixed bug in Saveplots.
+* Added a pdf file to explain how to create GRNs from TimiRGeN.
+
+TimiRGeN v0.99.22 (Date: 18/02/2020)
+===============================
+* Reduced check and tests time to ~7 minutes.
+* Changed function name to dloadData.
+* Editted SavePlots function again to make output larger.
+* Will get this package ready for a github upload.
+* Compressed GRN construction pdf file.
+
+TimiRGeN v0.99.24 (Date: 19/02/2020)
+===============================
+* Editted vignette.
+* Tested on windows - no errors or warnings but >20m check + tests time.
+
+TimiRGeN v0.99.3 (Date: 19/02/2020)
+===============================
+* Uploaded on TimiRGeN github and preparing bioconductor build.
+
+TimiRGeN v0.99.31 (Date: 19/02/2020)
+===============================
+* Uploaded on TimiRGeN github and preparing bioconductor build.
+
+TimiRGeN v0.99.32 (Date: 19/02/2020)
+===============================
+* Removed global variables are no longer removed as it causes errors in bioconductor checks.
+
+TimiRGeN v0.99.322 (Date: 22/02/2020)
+===============================
+* Made gmt files available as data for the vignette.
+* Editted dloadGMT function to hopefully work in bioconductor submission.
+
+TimiRGeN v0.99.323 (Date: 22/02/2020)
+===============================
+* Changes Pmat to be stored as metadata rather than in ExperimentList.
+
+TimiRGeN v0.99.324 (Date: 25/02/2020)
+===============================
+* Added the mining matrix as a internal data set so the databases do not have to be downloaded during vignette-building. This is causing an error on the bioconductor systems as their system cannot download these files during build.
+
+TimiRGeN v0.99.325 (Date: 25/02/2020)
+===============================
+* Changed Pmat to be stored in metadata in tests and ReturnClusters Example.
+
+TimiRGeN v0.99.326 (Date: 25/02/2020)
+===============================
+* Changed tests to match testthat results from bioconductor.
+
+TimiRGeN v0.99.4 (Date: 24/03/2020)
+===============================
+* Now using MAE accessors instead of @/$ to access data in MAE objects.
+* Changed all functions to report back to common MAE objects.
+* Changed dloadmiRTarBase and miRTarBase_data to internally stored data, this was due to miRTarBase servers being down, most likely due to COVID-19 related reasons.
+* Removed several functions which were too 'experimental' i.e get_IDs_miR_mousetohuman, get_IDs_mouse_mousetohuman because they were too clunky and prone to bugs. May re-release these in future updates of the package.
+* Changed vignette to use be more streamline, more to the point and use MAE object more approproately.
+* Vast majority of code now only uses <- to assign new objects.
+* Using indents to make the code easier to read.
+* Added some description to some R functions.
+
+TimiRGeN v0.99.415 (Date: 25/03/2020)
+===============================
+* Remade CreateCluster function so that it does not cause errors during bioconductor checks.
+* Removed some tests to speed up bioconductor checks.
+* Modified some examples to speed up bioconductor checks.
+* Reduced size of help files by re-formatting descriptions.
+
+TimiRGeN v0.99.4152 (Date: 18/04/2020)
+===============================
+* Added data files to get around using CreateClusters in vignette, this seems
+to cause a bug in some systems.
+
+TimiRGeN v0.99.4154 (Date: 22/04/2020)
+===============================
+* Changed function names to be consistent with captionCaps format.
+* Updated vignette and reformated the contents method.
+* Changed data file names, now no data files start with a Cap.
+
+TimiRGeN v0.99.4155 (Date: 27/04/2020)
+===============================
+* Moved most packages TimiRGeN depends on to dependencies, and removed these
+packages in examples and from the vignette.
+* Fixed bugs in createClusters and dloadMirtarbase.
+* Removed library calls from the tests.
+
+TimiRGeN v0.99.4156 (Date: 27/05/2020)
+===============================
+* Only have MultiAssayExperiments() and Mfuzz() in depends on.
+* org.Hs.eg.db() and org.Mm.eg.db() have been moved to suggests as
+usually only one or the other will be needed.
+* Removed @exports from internal functions: nonUnique, micrornaFull and
+corrTable.
+packages in examples and from the vignette.
+* Re-instated dloadMirtarbase and mirtarbaseData as the miRTarBase server is back online, updated vignette to respect this.
+* Cleaed up R code, adding spaces between lines in examples and in function code, ordering @exports, @imports/importsFrom and @usage in a consistent order and removed blank spaces from @'s in R code.
+* Fixed many spelling errors/ artifacts in code descriptions and if (missing(x)) stop('y') calls.
+* Added a :: to most function calls within functions.
+* Editted inst/Pathvisio_GRN_guide.pdf.
+
+TimiRGeN v0.99.4157 (Date: 01/08/2020)
+===============================
+* Functions and tests now only use <- in code, and not ->.
+* Checked through entirety of functions, tests and the vigentte to correct
+spelling errors and grammar. Typos have been corrected for.
+* Corrected vignette heading/ subheading grammar and ordering. Now the
+vignette has clearer headings and subheadings and the order makes more logical
+sense.
+* TimiRGeN now exports 44 objects, this includes 38 functions and 6 datasets.
+This is down from 55 objects.
+* The 6 remaining datasets have more clearer and detailed explanations on why
+they exist in TimiRGeN.
+* 7 rda files can be found in /inst/extdata. These are helper files soley
+used for vignette building. They are not be to seen by users. They are:
+clusterdata.rda, clusters.rda, hs_gmt.rda, Int_data.rda, mfuzzdata.rda,
+mm_gmt.rda and w_list_human.rda.
+* getIds functions now do not contain information from any other getIds
+function.
+* All functions have more detailed param descriptions. This includes a very
+clear description of which MAE objects to use at every instance of this
+package.
+* Added a final hashed out line on the examples on quickBar and quickDot to tell users to use plot(q) to see the plots. These examples will not plot automatically because the following error occurs if quickBar or quickDot attempts to be plotted during cmd check:
+`Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  : font family '2' not found in PostScript font database
+Error in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y,  : invalid font type`
+* Changes if missing statements to be clearer and more direct to what is needed in every instance. Especially for inputs which require data from a MAE. Here, specifics such as previous function, which MAE and where in the MAE is included. This has been done for every function.
+* Functions: dloadTargetscan, dloadMirdb, dloadMirtarbase have been respectfully combined with former functions: targetscansData, mirdbData, mirtarbaseData to reduce the number of functions, exported symbols and to streamline the package as a whole.
+* Vignette has been corrected for these changes.
+* Function dataMiningMatrix has been changed to a) be more user friendly, b) more flexible as now the function will work no matter how many databases can be downloaded (in case of server issues), and c) only uses R base functions.
+* Tidyverse no longer needs to be loaded now, this has been removed from the package and from the vignette references.
+* RCy3 now also loads cytoscapeping(), now it avoids needing to call the package.
+* Language in the vignette has been editted to be clearer at points.
+* Descriptions of most functions have been editted to provide clearer details.
+* @noRd has been added to internal functions: corrTable, mirnaFull and nonUnique.
+* Examples have been checked to be able to be copied into a new R script and run, they all work this way. Even donttest/ functions.
+* useast server of biomart has been unreliable in this last week so have changed to use 'www' for getIdsMrna functions for the time being.
+
+TimiRGeN v0.99.4158 (Date: 01/08/2020)
+===============================
+* Changed e_list.rda to e_list_mouse.rda to match naming style of other datasets.
+
+TimiRGeN v0.99.4159 (Date: 12/09/2020)
+===============================
+* donttest /dontrun examples now work correctly.
+* Major spelling/ grammar edits done on functions and vignette.
+* Updated to the latest version of miRTarBase.
+* Updated references in the vignette.
+* dloatGmt will now download the most current wikipathways gmt files.
+* miRTarBase v 8.0 now used. Reference has been updated.
+* Vignette now showcasing Lung Fibrosis as example. Complement and Coagulation pathway was removed from the mouse wikipathways database.
+* Package is now on bioconductor devel.
+* Updated package description.
+* Updated Pathvisio_GRN_guide.pdf file in the Inst directory.
+* Fixed wikiList function.
+* Removed unit tests which took more than 1 second to complete.
+* Removed unit tests which took more than 1 second to complete.
+
+TimiRGeN v0.99.4160 (Date: 24/10/2020)
+===============================
+* Fixed bug in dataMiningMatrix. Now it will work even if a database is not
+downloaded.
+* Fixed NEWS file so unsuccessful builds are no longer in the report.
+* Added URL and Bug reports sections in DESCRIPTION file.
+
+#####Released###################################################################
+
+TimiRGeN v1.0.1 (Date: 12/11/2020)
+===============================
+* Fixed bug in dloadGmt function.
+* Changed 'www' to 'useast' when using getIdsMrna function because 'www' calls
+are not always found.
+
+TimiRGeN v1.0.2 (Date: 29/11/2020)
+===============================
+* Increased text size and general aresthetics of quickBar and quickDot.
+* Included otions(timout =180) in vignette, before database information is
+downloaded. Also informed users that timeouts may occur, and if it does,
+increase timout.
+* Updated savePlots. Now plots are larger, have better resultion and users can
+adjust height and width to suit their analysis.
+
+TimiRGeN v1.0.3 (Date: 25/01/2021)
+===============================
+* Added back-up download for dloadGmt incase current version of wikipathways Gmt is unavailable.
+* Changed the following functions : getIdsMiR, getIdsMrna, dloadGmt so more species can be analysed. Rat and zebrafish has been tested.
+* Fixed print message in savePlots.
+* Editted vignette to correpsond to changes.
+* Fixed bug in test_significantVals_c.
+* Added more image option parameters for to quickFuzz.
+
+TimiRGeN v1.0.4 (Date: 02/04/2021)
+===============================
+* MAJOR UPDATES
+* Added new functions for longitudinal miRNA-mRNA pair analysis:
+pickPair, quickCrossCorr, quickMap, quickTC.
+* Added new functions for clustering of genes involved in miRNA-mRNAs
+interactions: clustPrep, hClustPrep, quickDendro, quickDMap, quickHClust,
+quickPathwayTC.
+* Added new functions for miRNA-mRNA pair regression and multi interaction
+regression: getP, multiReg, linearReg, quickReg, quickTCPred.
+* Added new functions to accomidate input data that has not been analysed with
+pair-wise differential expression analysis: createClusters2, clusterList.
+* Altered functions to accomidate nput data that has not been analysed with
+pair-wise differential expression analysis: quickFuzz.
+* Removed unneeded/ awkward functions: quickDot.
+* Added pathwayname parametere to quickNet.
+* Updated vignette with two new sections for alterative analysis methods:
+for non-pairwise DE and for multivariate datasets.
+* Removed unncecassary parameter calls in eNames and turnPercent functions.
+
+TimiRGeN v1.1.5 (Date: 09/04/2021)
+===============================
+* Minor bug fix for R 4.1 - current developmental version. Lines 841-845 of the vignette were leading to unkown errors during vignette building on Bioconductor.
+
+TimiRGeN v1.1.6 (Date: 12/04/2021)
+===============================
+* Minor bug fix for R 4.1 - current developmental version. returnClusters test file had a bug releted to S4Vectors. This file was removed.
+* Corrected typo on vignette.
+
+TimiRGeN v1.0.5(R) |TimiRGeN v1.1.7(D) (Date: 16/04/2021)
+===============================
+* Added rmarkdown to Suggested packages in the DESCRIPTION file.
+
+TimiRGeN v1.1.8 (Date: 25/04/2021)
+===============================
+* getIdsMrna now has a back-up system in place. If biomaRt connection cannot
+be established, then clusterprofiler will be used instead. Methods will be
+stated to users.
+* quickTC code has been simplified and gene ordering bug is now fixed.
+* Vignette has been updated to account for new getIdMrna back-up.
+* Fewer genes will be used in example codes to reduce the usage of biomaRt
+servers.
+
+TimiRGeN v1.0.6(R) | v1.1.81(D) (Date: 28/04/2021)
+===============================
+* Changed colour scheme of quickMap. Now it shows correlation scores more
+clearly. Also numbered the pairs to make selection easier for users.
+* Added correlation methods (pearson, spearman, kendall) as options when using
+mirMrnaInt function.
+* Added warnings when users are attempting to use cross-correlation,
+interpolation and regression analyses methods while using a dataset with <5
+time points. This is to stop over-estimations.
+* Descibed these updates in the vignette.
+* Re-added the vignette.
+
+TimiRGeN v1.2.01(R) | v1.3.01(D) (Date: 11/06/2021)
+===============================
+* Added suppressWarnings to calls for creating or combining new
+MultiAssayExperiments.
+* Added N param to quickBar so now users can define how many pathways to view
+when displaying results fom overrepresentation analysis.
+* Editted examples section of wikiMrna to reduce errors.
+* Added CITATION file.
+
+TimiRGeN v1.2.01(R) | v1.3.02(D) (Date: 24/06/2021)
+===============================
+* Changed enrichWiki functions to Eval=FALSE in the vignette as an attempt
+to avoid errors in Bioc 3.14 checks.
+
+TimiRGeN v1.2.01(R) | v1.3.02(D) (Date: 30/06/2021)
+===============================
+* Altered CITATION file added to the inst folder.
+
+TimiRGeN v v1.5.02(D) (Date: 20/02/2022)
+===============================
+* Minor bug fix for multiReg.
+* Updated maintainer information.
+* Updated readme file.
+
+TimiRGeN v v1.5.2(D) (Date: 09/04/2022)
+===============================
+* Fix merge conflict.
+
+TimiRGeN v v1.5.4(D) (Date: 26/10/2023)
+===============================
+* Test update
+* Readme update
+
+TimiRGeN v v1.13.3(D) (Date: 06/11/2023)
+===============================
+* Test update
+* Vignette building bug testing
+TimiRGeN v v1.13.2(D) (Date: 06/11/2023)
+===============================
+* Test update
+* BUg check - vignette building error

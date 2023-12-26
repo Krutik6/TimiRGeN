@@ -416,3 +416,7 @@ TimiRGeN v v1.13.4(D) (Date: 06/11/2023)
 TimiRGeN v v1.13.2(D) (Date: 12/12/2023)
 ===============================
 * Changed vignette to avoid bugs.
+
+TimiRGeN v v1.13.3(D) (Date: 26/12/2023)
+===============================
+* Re-trying git merge for bioconductor.
